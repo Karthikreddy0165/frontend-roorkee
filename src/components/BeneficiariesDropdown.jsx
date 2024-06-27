@@ -5,7 +5,6 @@ const categories = dummyData.map(item => item.beneficiary_category);
 const uniqueCategories = [...new Set(categories)];
 
 const BeneficiaryDropdownMenu = React.forwardRef(({ selectedBeneficiaries, setSelectedBeneficiaries, setBeneficiaryName }, ref) => {
-  const [dropdownStyle, setDropdownStyle] = useState({});
   const [tempSelectedBeneficiaries, setTempSelectedBeneficiaries] = useState([...selectedBeneficiaries]);
   const [isShow, setIsShow] = useState(false);
 
@@ -34,19 +33,25 @@ const BeneficiaryDropdownMenu = React.forwardRef(({ selectedBeneficiaries, setSe
     });
   };
 
-  useEffect(() => {
+  const calculateInitialPosition = () => {
+    const beneficiaryBtn = document.getElementById('beneficiaryBtn');
+    if (beneficiaryBtn) {
+      const { top, left } = beneficiaryBtn.getBoundingClientRect();
+      return {
+        top: `${top + window.scrollY + 31}px`,
+        left: `${left + window.scrollX}px`,
+      };
+    }
+    return {}; // Return a default position or an empty object if the button is not found
+  };
+
+  const [dropdownStyle, setDropdownStyle] = useState(calculateInitialPosition);
+ useEffect(() => {
     const updatePosition = () => {
-      const beneficiaryBtn = document.getElementById('beneficiaryBtn');
-      if (beneficiaryBtn) {
-        const { top, left } = beneficiaryBtn.getBoundingClientRect();
-        setDropdownStyle({
-          top: `${top + window.scrollY + 31}px`,
-          left: `${left + window.scrollX}px`,
-        });
-      }
+      const newPosition = calculateInitialPosition(); // Use the same function to calculate the new position
+      setDropdownStyle(newPosition);
     };
 
-    updatePosition();
     window.addEventListener('resize', updatePosition);
     return () => window.removeEventListener('resize', updatePosition);
   }, []);

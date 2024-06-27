@@ -5,7 +5,6 @@ const categories = dummyData.map(item => item.category);
 const uniqueCategories = [...new Set(categories)];
 
 const DepartmentDropdownMenu = React.forwardRef(({ selectedDepartments, setSelectedDepartments, setDepartmentName }, ref) => {
-  const [dropdownStyle, setDropdownStyle] = useState({});
   const [tempSelectedDepartments, setTempSelectedDepartments] = useState([...selectedDepartments]);
   const [isShow, setIsShow] = useState(false);
 
@@ -34,26 +33,31 @@ const DepartmentDropdownMenu = React.forwardRef(({ selectedDepartments, setSelec
     });
   };
 
-  useEffect(() => {
-    const updatePosition = () => {
-      const stateBtn = document.getElementById('departmentBtn');
-      if (stateBtn) {
-        const { top, left } = stateBtn.getBoundingClientRect();
-        setDropdownStyle({
-          top: `${top + window.scrollY + 31}px`,
-          left: `${left + window.scrollX}px`,
-        });
-      }
-    };
-
-    updatePosition();
-    window.addEventListener('resize', updatePosition);
-    return () => window.removeEventListener('resize', updatePosition);
-  }, []);
-
-  const handleClearAll = () => {
-    setTempSelectedDepartments([]);
+  const calculateInitialPosition = () => {
+    const stateBtn = document.getElementById('departmentBtn');
+    if (stateBtn) {
+      const { top, left } = stateBtn.getBoundingClientRect();
+      return {
+        top: `${top + window.scrollY + 31}px`,
+        left: `${left + window.scrollX}px`,
+      };
+    }
+    return {}; // Return a default position or an empty object if the button is not found
   };
+
+  const [dropdownStyle, setDropdownStyle] = useState(calculateInitialPosition);
+  useEffect(() => {
+      const updatePosition = () => {
+        const newPosition = calculateInitialPosition(); // Use the same function to calculate the new position
+        setDropdownStyle(newPosition);
+      };
+
+      window.addEventListener('resize', updatePosition);
+      return () => window.removeEventListener('resize', updatePosition);
+    }, []);
+    const handleClearAll = () => {
+      setTempSelectedDepartments([]);
+    };
 
   const applySelections = () => {
     setSelectedDepartments([...tempSelectedDepartments]);
