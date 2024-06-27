@@ -12,9 +12,9 @@ export default function Tabs(props) {
   return (
     <div>
       <BackButton/>
-    <div className="my-[20px] flex justify-center items-center">
+    <div className="my-[20px] flex justify-center items-center gap-[15px]">
       <button
-        className={`flex-grow text-center font-sm py-[16px] px-[16px] rounded-[8px] text-semibold border-none text-[16px] cursor-pointer font-sans ${
+        className={`flex-grow text-center font-sm p-[12px] rounded-[8px] text-semibold border-none text-[14px] cursor-pointer font-sans ${
           activeTab === "Schemes"
             ? "bg-button-blue text-white"
             : "bg-hover-gray hover:bg-button-blue hover:text-white"
@@ -24,7 +24,7 @@ export default function Tabs(props) {
         Schemes
       </button>
       <button
-        className={`flex-grow text-center font-sm py-[16px] px-[16px] rounded-[8px] text-semibold border-none text-[16px] cursor-pointer font-sans ${
+        className={`flex-grow text-center font-sm p-[12px] rounded-[8px] text-semibold border-none text-[14px] cursor-pointer font-sans ${
           activeTab === "Job Openings"
             ? "bg-button-blue text-white"
             : "bg-hover-gray hover:bg-button-blue hover:text-white"
@@ -34,7 +34,7 @@ export default function Tabs(props) {
         Job Openings
       </button>
       <button
-        className={`flex-grow text-center font-sm py-[16px] px-[16px] rounded-[8px] text-semibold border-none text-[16px] cursor-pointer font-sans ${
+        className={`flex-grow text-center font-sm p-[12px] rounded-[8px] text-semibold border-none text-[14px] cursor-pointer font-sans ${
           activeTab === "Scholarships"
             ? "bg-button-blue text-white"
             : "bg-hover-gray hover:bg-button-blue hover:text-white"
