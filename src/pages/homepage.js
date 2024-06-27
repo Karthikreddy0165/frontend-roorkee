@@ -29,7 +29,7 @@ const HomePage = () => {
               textAlign: "center",
             }}
           >
-            Welcome <span>IronMan</span>
+            Welcome <span></span>
           </h1>
           <p
             className="text-lg"
