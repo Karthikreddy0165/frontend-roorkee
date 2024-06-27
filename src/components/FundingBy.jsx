@@ -5,7 +5,6 @@ const categories = dummyData.map(item => item.funding_by);
 const uniqueCategories = [...new Set(categories)];
 
 const FundingByDropdownMenu = React.forwardRef(({ selectedFunders, setSelectedFunders, setFunderName }, ref) => {
-  const [dropdownStyle, setDropdownStyle] = useState({});
   const [tempSelectedFunders, setTempSelectedFunders] = useState([...selectedFunders]);
   const [isShow, setIsShow] = useState(false);
 
@@ -34,19 +33,25 @@ const FundingByDropdownMenu = React.forwardRef(({ selectedFunders, setSelectedFu
     });
   };
 
-  useEffect(() => {
+  const calculateInitialPosition = () => {
+    const fundBtn = document.getElementById('fundingbyBtn');
+    if (fundBtn) {
+      const { top, left } = fundBtn.getBoundingClientRect();
+      return {
+        top: `${top + window.scrollY + 31}px`,
+        left: `${left + window.scrollX}px`,
+      };
+    }
+    return {}; // Return a default position or an empty object if the button is not found
+  };
+
+  const [dropdownStyle, setDropdownStyle] = useState(calculateInitialPosition);
+ useEffect(() => {
     const updatePosition = () => {
-      const fundBtn = document.getElementById('fundingbyBtn');
-      if (fundBtn) {
-        const { top, left } = fundBtn.getBoundingClientRect();
-        setDropdownStyle({
-          top: `${top + window.scrollY + 31}px`,
-          left: `${left + window.scrollX}px`,
-        });
-      }
+      const newPosition = calculateInitialPosition(); // Use the same function to calculate the new position
+      setDropdownStyle(newPosition);
     };
 
-    updatePosition();
     window.addEventListener('resize', updatePosition);
     return () => window.removeEventListener('resize', updatePosition);
   }, []);
