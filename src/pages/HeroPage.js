@@ -2,7 +2,6 @@ import React from "react";
 import NavBar from "@/components/NavBar";
 import Image from "next/image";
 import MainPageImage from ".././assets/backgroundimg.png";
-// import MainPageImage from ".././"
 
 import Tabs from "@/components/Tabs";
 import Schemes from "@/components/Schemes";
