@@ -1,9 +1,16 @@
-import HomePage from "./homepage"
-export default function index() {
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+
+export default function Index() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/HomePage");
+  }, [router]);
 
   return (
     <>
-      <HomePage/>
+      {/* This can be left empty or include some loading state if needed */}
     </>
-  )
+  );
 }
