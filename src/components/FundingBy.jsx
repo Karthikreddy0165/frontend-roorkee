@@ -1,12 +1,10 @@
-import dummyData from '../dummyData.json';
 import React, { useEffect, useState } from 'react';
 
-const categories = dummyData.map(item => item.funding_by);
-const uniqueCategories = [...new Set(categories)];
-
-const FundingByDropdownMenu = React.forwardRef(({ selectedFunders, setSelectedFunders, setFunderName }, ref) => {
+const FundingByDropdownMenu = React.forwardRef(({ selectedFunders, setSelectedFunders, setFunderName, data }, ref) => {
   const [tempSelectedFunders, setTempSelectedFunders] = useState([...selectedFunders]);
   const [isShow, setIsShow] = useState(false);
+  const categories = data.map(item => item.funding_pattern);
+  const uniqueCategories = [...new Set(categories)];
 
   const toggleShow = () => {
     setIsShow(!isShow);

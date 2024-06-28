@@ -28,7 +28,7 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
             {/* Scheme name */}
             <div className="pt-2 w-full sm:max-w-3xl flex justify-between items-center">
               <h1 className="mr-4 text-[20px] font-bold leading-normal font-inter text-[#0A0A0A]">
-                {scheme.scheme_name || "Data is not available"}
+                {scheme.title || "Data is not available"}
               </h1>
             </div>
             {/* Last update date */}
@@ -54,7 +54,7 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
               <div className="flex items-start pb-2 pt-2">
                 <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">Title</h1>
                 <p className="ml-2 flex-1">
-                  {scheme.scheme_name || "Data is not available"}
+                  {scheme.title || "Data is not available"}
                 </p>
               </div>
               <hr/>
@@ -63,7 +63,7 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
               <div className="flex items-start pb-2 pt-2">
                 <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">Who can apply</h1>
                 <p className="ml-2 flex-1">
-                  {scheme.beneficiary_category || "Data is not available"}
+                  {scheme.beneficiaries || "Data is not available"}
                 </p>
               </div>
               <hr />

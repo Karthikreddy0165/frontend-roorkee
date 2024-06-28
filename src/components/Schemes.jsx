@@ -10,6 +10,7 @@ import IncomeDropdownMenu from "./IncomeDropdown";
 import FundingByDropdownMenu from "./FundingBy";
 
 export default function Schemes() {
+  const [data, setData] = useState(null);
   const [stateName, setStateName] = useState("");
   const [departmentName, setDepartmentName] = useState("");
   const [beneficiaryName, setBeneficiaryName] = useState("");
@@ -20,6 +21,15 @@ export default function Schemes() {
   const [selectedAges, setSelectedAges] = useState([]);
   const [selectedIncomes, setSelectedIncomes] = useState([]);
   const [selectedFunders, setSelectedFunders] = useState([]);
+
+  useEffect(() => {
+    const fetchState = async () => {
+      const response = await fetch("/api/fetchSchemes");
+      const data = await response.json();
+      setData(data);
+    };
+    fetchState();
+  }, []);
 
   const [dropDownStates, setDropDownStates] = useState({
     dropDownOpen: false,
@@ -154,6 +164,7 @@ export default function Schemes() {
           selectedDepartments={selectedDepartments}
           setSelectedDepartments={setSelectedDepartments}
           setDepartmentName={setDepartmentName}
+          data = {data}
         />
       )}
       {dropDownStates.beneficiaryOpen && (
@@ -162,20 +173,7 @@ export default function Schemes() {
           selectedBeneficiaries={selectedBeneficiaries}
           setSelectedBeneficiaries={setSelectedBeneficiaries}
           setBeneficiaryName={setBeneficiaryName}
-        />
-      )}
-      {dropDownStates.ageOpen && (
-        <AgeDropdownMenu
-          ref={ageDropdownRef}
-          selectedAges={selectedAges}
-          setSelectedAges={setSelectedAges}
-        />
-      )}
-      {dropDownStates.incomeOpen && (
-        <IncomeDropdownMenu
-          ref={incomeDropdownRef}
-          selectedIncomes={selectedIncomes}
-          setSelectedIncomes={setSelectedIncomes}
+          data = {data}
         />
       )}
       {dropDownStates.fundersOpen && (
@@ -184,9 +182,11 @@ export default function Schemes() {
           selectedFunders={selectedFunders}
           setSelectedFunders={setSelectedFunders}
           setFunderName={setFunderName}
+          data = {data}
         />
       )}
       <Categories
+        data = {data}
         selectedDepartments={selectedDepartments}
         selectedBeneficiaries={selectedBeneficiaries}
         selectedAges={selectedAges}

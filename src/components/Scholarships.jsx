@@ -10,6 +10,7 @@ import IncomeDropdownMenu from "./IncomeDropdown";
 import FundingByDropdownMenu from "./FundingBy";
 
 export default function Scholarships() {
+  const [data, setData] = useState(null); // [1]
   const [stateName, setStateName] = useState("");
   const [departmentName, setDepartmentName] = useState("");
   const [beneficiaryName, setBeneficiaryName] = useState("");
@@ -20,6 +21,15 @@ export default function Scholarships() {
   const [selectedAges, setSelectedAges] = useState([]);
   const [selectedIncomes, setSelectedIncomes] = useState([]);
   const [selectedFunders, setSelectedFunders] = useState([]);
+
+  useEffect(() => {
+    const fetchState = async () => {
+      const response = await fetch("/api/fetchSchemes");
+      const data = await response.json();
+      setData(data);
+    };
+    fetchState();
+  }, []);
 
   const [dropDownStates, setDropDownStates] = useState({
     dropDownOpen: false,
@@ -154,6 +164,7 @@ export default function Scholarships() {
           selectedDepartments={selectedDepartments}
           setSelectedDepartments={setSelectedDepartments}
           setDepartmentName={setDepartmentName}
+          data = {data}
         />
       )}
       {dropDownStates.beneficiaryOpen && (
@@ -162,6 +173,7 @@ export default function Scholarships() {
           selectedBeneficiaries={selectedBeneficiaries}
           setSelectedBeneficiaries={setSelectedBeneficiaries}
           setBeneficiaryName={setBeneficiaryName}
+          data = {data}
         />
       )}
       {dropDownStates.ageOpen && (
@@ -169,6 +181,7 @@ export default function Scholarships() {
           ref={ageDropdownRef}
           selectedAges={selectedAges}
           setSelectedAges={setSelectedAges}
+          data = {data}
         />
       )}
       {dropDownStates.incomeOpen && (
@@ -176,6 +189,7 @@ export default function Scholarships() {
           ref={incomeDropdownRef}
           selectedIncomes={selectedIncomes}
           setSelectedIncomes={setSelectedIncomes}
+          data = {data}
         />
       )}
       {dropDownStates.fundersOpen && (
@@ -184,6 +198,7 @@ export default function Scholarships() {
           selectedFunders={selectedFunders}
           setSelectedFunders={setSelectedFunders}
           setFunderName={setFunderName}
+          data = {data}
         />
       )}
       <Categories
@@ -192,6 +207,7 @@ export default function Scholarships() {
         selectedAges={selectedAges}
         selectedFunders={selectedFunders}
         selectedIncomes
+        data={data}
       />
     </div>
   );
