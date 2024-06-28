@@ -10,43 +10,25 @@ const HomePage = () => {
     router.push("/HeroPage");
   };
 
-  const iconStyle = "w-[33.173px] h-[33.173px] flex-shrink-0 opacity-50";
+  const iconStyle = " w-[33.173px] h-[33.173px] flex-shrink-0 opacity-50";
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-white text-black " style={{ maxWidth: "80%", margin: "0 auto" }}>
+      <div
+        className="flex flex-col items-center justify-center min-h-screen bg-white text-black "
+        style={{ maxWidth: "80%", margin: "0 auto" }}
+      >
         {/* First Child */}
         <div className="text-center mt-[-200px] py-8">
-          <h1
-            className="text-3xl font-bold mb-"
-            style={{
-              color: "var(--Gray-100, #0A0A0A)",
-              fontFamily: "Inter",
-              fontSize: "20px",
-              fontStyle: "normal",
-              fontWeight: "600",
-              lineHeight: "normal",
-              textAlign: "center",
-            }}
-          >
-            Welcome <span>IronMan</span>
+          <h1 className="text-2xl font-bold mb-4 text-gray-700 font-inter text-center">
+            <span>Welcome</span>
           </h1>
-          <p
-            className="text-lg"
-            style={{
-              alignSelf: "stretch",
-              color: "var(--Gray-100, #0A0A0A)",
-              textAlign: "center",
-              fontFamily: "Inter",
-              fontSize: "16px",
-              fontStyle: "normal",
-              fontWeight: "400",
-              lineHeight: "28.8px", // 180%
-            }}
-          >
+
+          <p className="">
             Find the right govt benefit, employment opportunity and scholarships
             for you here.
           </p>
+
           <div className="flex items-center justify-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -75,16 +57,18 @@ const HomePage = () => {
           </div>
         </div>
 
-        <h1 className="py-8">Choose what you want to explore further</h1>
+        <h1 className="py-8 text-center font-inter font-medium text-lg">
+          Choose what you want to explore further
+        </h1>
 
         {/* Second Child */}
         <div className="flex flex-row items-center justify-center gap-4">
-          <div className="flex flex-col items-stretch">
+          <div className="flex flex-col ">
             <button
               className="relative flex flex-col items-start justify-center p-8 gap-4 flex-1 text-[#3431BB] font-semibold border border-[#3431BB] bg-white rounded-lg hover:bg-[#3431BB] group"
               onClick={handleSchemesClick}
             >
-              <div className="absolute top-4 left-4 flex items-center justify-center w-16 h-16 p-[15.36px] rounded-full bg-[#EEF] group-hover:bg-white">
+              <div className="absolute top-4 left-8 flex items-center justify-center w-16 h-16 p-[15.36px] rounded-full bg-[#EEF] group-hover:bg-white">
                 <FaRegFileAlt
                   className={`${iconStyle} group-hover:text-blue-500`}
                 />
@@ -92,37 +76,38 @@ const HomePage = () => {
               <span className="mt-16 text-2xl font-semibold leading-normal group-hover:text-white">
                 Govt. Benefits
               </span>
-              <span className="text-[#616161] text-lg font-medium leading-[1.8] group-hover:text-gray-400">
+              <span className="text-[#616161] text-lg text-left font-medium leading-[1.8] group-hover:text-gray-400">
                 Browse 1000+ govt schemes at one place.
               </span>
             </button>
           </div>
 
-          <div className="flex flex-col items-stretch">
+          <div className="flex flex-col ">
             <button
               className="relative flex flex-col items-start justify-center p-8 gap-4 flex-1 text-[#3431BB] font-semibold border border-[#3431BB] bg-white rounded-lg hover:bg-[#3431BB] group"
               onClick={handleSchemesClick}
             >
-              <div className="absolute top-4 left-4 flex items-center justify-center w-16 h-16 p-[15.36px] rounded-full bg-[#EEF] group-hover:bg-white">
+              <div className="absolute top-4 left-8 flex items-center justify-center w-16 h-16 p-[15.36px] rounded-full bg-[#EEF] group-hover:bg-white">
                 <HiOutlineBriefcase
                   className={`${iconStyle} group-hover:text-blue-500`}
                 />
               </div>
-              <span className="mt-16 text-2xl font-semibold leading-normal group-hover:text-white">
-                Employment Opportunities
+              <span className="mt-16 text-2xl font-semibold text-left leading-normal group-hover:text-white flex gap-1">
+                <div>Employment</div>
+                <div>Opportunities</div>
               </span>
-              <span className="text-[#616161] text-lg font-medium leading-[1.8] group-hover:text-gray-400">
+              <span className="text-[#616161] text-lg text-left font-medium leading-[1.8] group-hover:text-gray-400">
                 Apply to job openings across 50+ departments.
               </span>
             </button>
           </div>
 
-          <div className="flex flex-col items-stretch">
+          <div className="flex flex-col ">
             <button
               className="relative flex flex-col items-start justify-center p-8 gap-4 flex-1 text-[#3431BB] font-semibold border border-[#3431BB] bg-white rounded-lg hover:bg-[#3431BB] group"
               onClick={handleSchemesClick}
             >
-              <div className="absolute top-4 left-4 flex items-center justify-center w-16 h-16 p-[15.36px] rounded-full bg-[#EEF] group-hover:bg-white">
+              <div className="absolute top-4 left-8 flex items-center justify-center w-16 h-16 p-[15.36px] rounded-full bg-[#EEF] group-hover:bg-white">
                 <PiCurrencyInr
                   className={`${iconStyle} group-hover:text-blue-500`}
                 />
@@ -130,7 +115,7 @@ const HomePage = () => {
               <span className="mt-16 text-2xl font-semibold leading-normal group-hover:text-white">
                 Scholarships
               </span>
-              <span className="text-[#616161] text-lg font-medium leading-[1.8] group-hover:text-gray-400">
+              <span className="text-[#616161] text-lg text-left font-medium leading-[1.8] group-hover:text-gray-400 ">
                 Get govt scholarships for your education.
               </span>
             </button>
