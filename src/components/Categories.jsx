@@ -50,7 +50,7 @@ export default function Categories(props) {
                 {item.scheme_name}
               </p>
               <p className="font-inter text-[14px] opacity-60 leading-{21.6px} mb-[10px] line-clamp-2" onClick={() => handleClick(item.id)}role="button" tabIndex="0"><span className = "font-semibold">Description: </span>{item.scheme_objective}</p>
-              <p className="font-inter text-[12px] text-apply-date leading-{24px}" onClick={() => handleClick(item.id)}role="button" tabIndex="0">Last date to apply: <span className = "font-bold">20th June 2023</span></p>
+              <p className="font-inter text-[12px] text-apply-date leading-{24px}" onClick={() => handleClick(item.id)}role="button" tabIndex="0">Last date to apply: <span className = "font-bold">20th July 2024</span></p>
             </div>
           </div>
         ))
