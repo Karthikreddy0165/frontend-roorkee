@@ -10,7 +10,7 @@ export default function Index() {
 
   return (
     <>
-      {/* This can be left empty or include some loading state if needed */}
+      {/* I am not adding anything in it  */}
     </>
   );
 }
