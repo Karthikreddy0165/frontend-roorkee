@@ -5,7 +5,7 @@ export default function Index() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("/HomePage");
+    router.push("/homepage");
   }, [router]);
 
   return (
