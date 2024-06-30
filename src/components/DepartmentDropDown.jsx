@@ -1,12 +1,10 @@
-import dummyData from '../dummyData.json';
 import React, { useEffect, useState } from 'react';
 
-const categories = dummyData.map(item => item.category);
-const uniqueCategories = [...new Set(categories)];
-
-const DepartmentDropdownMenu = React.forwardRef(({ selectedDepartments, setSelectedDepartments, setDepartmentName }, ref) => {
+const DepartmentDropdownMenu = React.forwardRef(({ selectedDepartments, setSelectedDepartments, setDepartmentName, data }, ref) => {
   const [tempSelectedDepartments, setTempSelectedDepartments] = useState([...selectedDepartments]);
   const [isShow, setIsShow] = useState(false);
+  const categories = data.map(item => item.department);
+  const uniqueCategories = [...new Set(categories)];
 
   const toggleShow = () => {
     setIsShow(!isShow);

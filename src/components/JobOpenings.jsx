@@ -8,8 +8,10 @@ import BeneficiaryDropdownMenu from "./BeneficiariesDropdown";
 import AgeDropdownMenu from "./AgeDropdown";
 import IncomeDropdownMenu from "./IncomeDropdown";
 import FundingByDropdownMenu from "./FundingBy";
+import dummyData from "../dummyData.json";
 
 export default function JobOpenings() {
+  const [data, setData] = useState(null);
   const [stateName, setStateName] = useState("");
   const [departmentName, setDepartmentName] = useState("");
   const [beneficiaryName, setBeneficiaryName] = useState("");
@@ -20,6 +22,15 @@ export default function JobOpenings() {
   const [selectedAges, setSelectedAges] = useState([]);
   const [selectedIncomes, setSelectedIncomes] = useState([]);
   const [selectedFunders, setSelectedFunders] = useState([]);
+
+  useEffect(() => {
+    const fetchState = async () => {
+      const response = await fetch("/api/fetchSchemes");
+      const data = await response.json();
+      setData(data);
+    };
+    fetchState();
+  }, []);
 
   const [dropDownStates, setDropDownStates] = useState({
     dropDownOpen: false,
@@ -154,6 +165,7 @@ export default function JobOpenings() {
           selectedDepartments={selectedDepartments}
           setSelectedDepartments={setSelectedDepartments}
           setDepartmentName={setDepartmentName}
+          data = {data}
         />
       )}
       {dropDownStates.beneficiaryOpen && (
@@ -162,6 +174,7 @@ export default function JobOpenings() {
           selectedBeneficiaries={selectedBeneficiaries}
           setSelectedBeneficiaries={setSelectedBeneficiaries}
           setBeneficiaryName={setBeneficiaryName}
+          data = {data}
         />
       )}
       {dropDownStates.ageOpen && (
@@ -169,6 +182,8 @@ export default function JobOpenings() {
           ref={ageDropdownRef}
           selectedAges={selectedAges}
           setSelectedAges={setSelectedAges}
+          data = {data}
+          
         />
       )}
       {dropDownStates.incomeOpen && (
@@ -176,6 +191,7 @@ export default function JobOpenings() {
           ref={incomeDropdownRef}
           selectedIncomes={selectedIncomes}
           setSelectedIncomes={setSelectedIncomes}
+          data = {data}
         />
       )}
       {dropDownStates.fundersOpen && (
@@ -184,6 +200,7 @@ export default function JobOpenings() {
           selectedFunders={selectedFunders}
           setSelectedFunders={setSelectedFunders}
           setFunderName={setFunderName}
+          data = {data}
         />
       )}
       <Categories
@@ -192,6 +209,7 @@ export default function JobOpenings() {
         selectedAges={selectedAges}
         selectedFunders={selectedFunders}
         selectedIncomes
+        data = {data}
       />
     </div>
   );
