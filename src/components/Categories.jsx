@@ -7,7 +7,7 @@ export default function Categories(props) {
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
 
   useEffect(() => {
-    if (props.data) {
+    if (Array.isArray(props.data)) {
       let filtered = props.data;
 
       if (props.selectedDepartments && props.selectedDepartments.length > 0) {
@@ -23,6 +23,8 @@ export default function Categories(props) {
       // Add other filters as needed...
 
       setFilteredData(filtered);
+    } else {
+      setFilteredData([]);
     }
   }, [props.data, props.selectedDepartments, props.selectedBeneficiaries, props.selectedFunders, props.selectedIncomes, props.selectedAges]);
 
@@ -35,7 +37,7 @@ export default function Categories(props) {
   };
 
   if (props.data === null) {
-    return <div className = "text-onclick-btnblue mt-[120px] italic flex justify-center items-center text-[18px]">Loading...</div>;
+    return <div className="text-onclick-btnblue mt-[120px] italic flex justify-center items-center text-[18px]">Loading...</div>;
   }
 
   if (props.data.length === 0 || filteredData.length === 0) {
@@ -51,7 +53,7 @@ export default function Categories(props) {
 
   return (
     <div>
-      {filteredData.map(item => (
+      {Array.isArray(filteredData) && filteredData.map(item => (
         <div className="flex items-center justify-start self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100" key={item.id}>
           <div className="flex items-center justify-center bg-update-bg px-[8px] py-[6px] rounded-bl-[4px] rounded-br-[4px] gap-[10px] absolute top-[0px] right-[16px]">
             <h1 className="text-update-clr text-[12px] text-semibold text-center font-inter">New Update</h1>
