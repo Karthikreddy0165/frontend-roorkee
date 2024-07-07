@@ -1,6 +1,6 @@
+import React, { useState, useRef, useEffect } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
-import React, { useState, useRef, useEffect } from "react";
 import Categories from "./Categories";
 import DropdownMenu from "./DropdownMenu";
 import DepartmentDropdownMenu from "./DepartmentDropDown";
@@ -24,9 +24,16 @@ export default function Schemes() {
 
   useEffect(() => {
     const fetchState = async () => {
-      const response = await fetch("/api/fetchSchemes");
-      const data = await response.json();
-      setData(data);
+      try {
+        const response = await fetch("http://3.25.199.183:8000/api/schemes");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setData(data);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
     };
     fetchState();
   }, []);
