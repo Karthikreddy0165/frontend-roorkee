@@ -15,7 +15,10 @@ const LoginPage = () => {
   };
 
   const handleAfterLogin = () => {
-    router.push("/HeroPage");
+    router.push("/loginSucc");
+    setTimeout(()=>{
+      router.push("/HeroPage")
+    }, 2000)
   };
 
   return (

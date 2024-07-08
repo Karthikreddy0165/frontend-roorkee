@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import ApplyModal from "../pages/content";
+import SavedModal from "@/pages/model/savedModal";
 
 export default function Categories(props) {
   const [filteredData, setFilteredData] = useState([]);
   const [selectedScheme, setSelectedScheme] = useState(null); // State to hold the selected scheme
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+  const [isSavedModalOpen, setIsSavedModalOpen] = useState(false); // State to control saved modal visibility
 
   useEffect(() => {
     if (Array.isArray(props.data)) {
@@ -90,16 +92,18 @@ export default function Categories(props) {
             className="flex items-center justify-start self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100"
             key={item.id}
           >
-
-
             <div className="flex ">
               <div className="flex items-center justify-center bg-update-bg px-[8px] py-[6px] m-2 rounded-[4px] gap-[10px] absolute top-[4px] left-[16px]">
                 <h1 className="text-update-clr text-[12px] text-semibold text-center font-inter">
                   New Update
                 </h1>
               </div>
-              <div className=" absolute top-[6px] right-[16px]">
+              <div
+                className="absolute top-[6px] right-[16px]"
+                onClick={() => setIsSavedModalOpen(true)}
+              >
                 <svg
+                  className="hover:bg-blue-500"
                   xmlns="http://www.w3.org/2000/svg"
                   width="28"
                   height="28"
@@ -113,7 +117,6 @@ export default function Categories(props) {
                 </svg>
               </div>
             </div>
-
 
             <div className="py-[10px] px-[10px] mt-6">
               <p
@@ -134,13 +137,23 @@ export default function Categories(props) {
                 {item.description}
               </p>
 
-              <p className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[10px] line-clamp-2 text-decoration-line: underline ">{item.department.department_name}</p>
+              <p className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[10px] line-clamp-2 text-decoration-line: underline ">
+                {item.department.department_name}
+              </p>
 
               <div className="flex gap-5">
-              <div className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">{item.department.state}</div>
+                <div className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">
+                  {item.department.state}
+                </div>
 
-                <div className="flex items-center justify-center pr-2 pl-2 py-[5px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">{item.beneficiaries.length > 0 ? item.beneficiaries[0].beneficiary_type : 'No beneficiaries specified'}</div>
-                <div className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">Community</div>
+                <div className="flex items-center justify-center pr-2 pl-2 py-[5px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">
+                  {item.beneficiaries.length > 0
+                    ? item.beneficiaries[0].beneficiary_type
+                    : "No beneficiaries specified"}
+                </div>
+                <div className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">
+                  Community
+                </div>
               </div>
               <p
                 className=" font-inter text-[12px] text-apply-date leading-[24px] mt-4"
@@ -149,7 +162,9 @@ export default function Categories(props) {
                 tabIndex="0"
               >
                 Last date to apply:{" "}
-                <span className="font-bold">{item.valid_upto.split("T")[0]}</span>
+                <span className="font-bold">
+                  {item.valid_upto.split("T")[0]}
+                </span>
               </p>
             </div>
           </div>
@@ -160,6 +175,9 @@ export default function Categories(props) {
           onRequestClose={() => setIsModalOpen(false)}
           scheme={selectedScheme}
         />
+      )}
+      {isSavedModalOpen && (
+        <SavedModal isOpen={isSavedModalOpen} onRequestClose={() => setIsSavedModalOpen(false)} />
       )}
     </div>
   );
