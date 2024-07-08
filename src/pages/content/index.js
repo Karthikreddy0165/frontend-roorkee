@@ -78,7 +78,7 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
               <div className="flex items-start pb-2">
                 <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">Department</h1>
                 <p className="ml-2 flex-1">
-                  {matchedDepartment ? matchedDepartment.id : "Unable to fetch data"}
+                  {matchedDepartment ? matchedDepartment.department_name : "Unable to fetch data"}
                 </p>
               </div>
               <hr />
@@ -98,6 +98,15 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
                 </p>
               </div>
               <hr />
+
+              <div className="flex items-start pb-2 pt-2">
+                <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">Sponsored By</h1>
+                <p className="ml-2 flex-1">
+                {matchedScheme && matchedScheme.sponsors && matchedScheme.sponsors.length > 0 ? matchedScheme.sponsors[0].sponsor_type : "Unable to fetch data"}
+                </p>
+              </div>
+              <hr />
+
             </div>
 
             {/* Apply button */}

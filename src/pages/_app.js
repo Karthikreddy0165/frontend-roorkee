@@ -1,10 +1,13 @@
 import "@/styles/globals.css";
 import { PrimeReactProvider } from 'primereact/api';
+import { FormProvider } from '../Context/FormContext';
 
 export default function App({ Component, pageProps }) {
   return (
-    <PrimeReactProvider>
-      <Component {...pageProps} />;
-    </PrimeReactProvider>
+    <FormProvider>
+      <PrimeReactProvider>
+        <Component {...pageProps} />
+      </PrimeReactProvider>
+    </FormProvider>
   );
 }
