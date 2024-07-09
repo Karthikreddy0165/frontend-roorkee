@@ -5,18 +5,11 @@ import { Formik } from "formik";
 import loginperson from "../assets/image.png";
 import { FaAngleDown } from "react-icons/fa6";
 import { useRouter } from "next/router";
+import { useFormData } from "../Context/FormContext";
 
 const CreateAcc02 = () => {
-
-    const router = useRouter();
-    const handlePage3Click = () => {
-        router.push("/createAcc03");
-      };
-
-  // List of all states and union territories of India
-  const statesAndUTs = [
-    "Andaman and Nicobar Islands","Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chandigarh","Chhattisgarh","Dadra and Nagar Haveli and Daman and Diu","Delhi","Goa","Gujarat","Haryana","Himachal Pradesh","Jammu and Kashmir","Jharkhand","Karnataka","Kerala","Ladakh","Lakshadweep","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Puducherry","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal"
-  ];
+  const router = useRouter();
+  const { updateFormData } = useFormData();
 
   return (
     <div className="flex h-screen overflow-hidden -mb-6">
@@ -30,7 +23,6 @@ const CreateAcc02 = () => {
             openings for all states in one place.
           </p>
         </div>
-
         <div className="absolute bottom-0 right-0">
           <Image
             className="z-10 image-opacity transform -scale-x-100"
@@ -40,7 +32,6 @@ const CreateAcc02 = () => {
             height={200}
           />
         </div>
-
         <div className="absolute bottom-8">
           <Image
             className="z-0 image-opacity opacity-20"
@@ -51,7 +42,6 @@ const CreateAcc02 = () => {
           />
         </div>
       </div>
-
       <div className="w-1/2 flex items-center justify-center">
         <Formik
           initialValues={{
@@ -62,7 +52,8 @@ const CreateAcc02 = () => {
             state: "",
           }}
           onSubmit={(values) => {
-            console.log(values);
+            updateFormData(values);
+            router.push("/createAcc03");
           }}
         >
           {(formik) => (
@@ -90,7 +81,6 @@ const CreateAcc02 = () => {
                   value={formik.values.name}
                 />
               </div>
-
               <div className="flex mb-4">
                 <div className="w-1/2 mr-4">
                   <label
@@ -109,7 +99,6 @@ const CreateAcc02 = () => {
                     value={formik.values.age}
                   />
                 </div>
-
                 <div className="w-1/2 relative">
                   <label
                     className="block text-gray-700 text-sm font-bold mb-2"
@@ -119,90 +108,64 @@ const CreateAcc02 = () => {
                   </label>
                   <div className="relative">
                     <select
-                      className="block appearance-none w-full bg-white border border-gray-400 text-gray-700 py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       id="gender"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       value={formik.values.gender}
                     >
-                      <option value="">Select your gender</option>
+                      <option value="">Select Gender</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
-                      <option value="others">Others</option>
+                      <option value="other">Other</option>
                     </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                      <FaAngleDown />
-                    </div>
+                    <FaAngleDown className="absolute right-3 top-3 pointer-events-none" />
                   </div>
                 </div>
               </div>
-
-              <div className="flex mb-4">
-                <div className="w-1/2 mr-4">
-                  <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
-                    htmlFor="community"
-                  >
-                    Community
-                  </label>
-                  <div className="relative">
-                    <select
-                      className="block appearance-none w-full bg-white border border-gray-400 text-gray-700 py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
-                      id="community"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.community}
-                    >
-                      <option value="">Select your community</option>
-                      <option value="community01">Community 01</option>
-                      <option value="community02">Community 02</option>
-                      <option value="community03">Community 03</option>
-                      <option value="community04">Community 04</option>
-                      <option value="community05">Community 05</option>
-                    </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                      <FaAngleDown />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="w-1/2 relative">
-                  <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
-                    htmlFor="state"
-                  >
-                    State
-                  </label>
-                  <div className="relative">
-                    <div className="select-wrapper">
-                      <select
-                        className="block appearance-none w-full bg-white border border-gray-400 text-gray-700 py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500 overflow-y-auto max-h-48"
-                        id="state"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.state}
-                      >
-                        <option value="">Select your state</option>
-                        {statesAndUTs.map((state, index) => (
-                          <option key={index} value={state}>
-                            {state}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                      <FaAngleDown />
-                    </div>
-                  </div>
-                </div>
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="community"
+                >
+                  Community
+                </label>
+                <select
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="community"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.community}
+                >
+                  <option value="">Select Community</option>
+                  <option value="gen">General</option>
+                  <option value="obc">OBC</option>
+                  <option value="sc">SC</option>
+                  <option value="st">ST</option>
+                </select>
               </div>
-
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="state"
+                >
+                  State
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="state"
+                  type="text"
+                  placeholder="Enter your state"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.state}
+                />
+              </div>
               <div className="absolute bottom-[200px]">
-                <span className="mr-2 mr-[350px]">2/3</span>
+                <span className="mr-2 pr-[350px]">2/3</span>
                 <button
                   className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
-                  onClick={handlePage3Click}
                 >
                   Continue
                 </button>

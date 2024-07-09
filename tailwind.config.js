@@ -1,11 +1,10 @@
-// tailwind.config.js
 module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend:  {
+    extend: {
       colors: {
         'button-blue': '#3F3BE1',
         'custom-gray': '#dddada',
@@ -20,13 +19,16 @@ module.exports = {
         'button-text': '#616161',
       },
       spacing: {
-        '0.5px': '0.03125rem',
+        '0.5px': '0.03125rem', // Custom spacing utility
       },
       fontSize: {
-        '36px': '36px',
+        '36px': '36px', // Custom font size utility
       },
-    }
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'], // Custom font family
+      },
+    },
   },
   variants: {},
   plugins: [],
-}
+};
