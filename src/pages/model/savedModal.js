@@ -1,7 +1,16 @@
 import React from 'react';
 import { FaAngleRight } from "react-icons/fa6";
+import { useRouter } from 'next/router';
 
 const SavedModal = ({ isOpen, onRequestClose }) => {
+    const router = useRouter();
+    const handleRoutetoLoginPage=()=>{
+        router.push("/loginpage")
+    }
+    const handleRoutetoCreateacco1=()=>{
+        router.push("/createAcc01")
+    }
+
     if (!isOpen) return null;
 
     return (
@@ -23,11 +32,13 @@ const SavedModal = ({ isOpen, onRequestClose }) => {
                 <hr className="my-4 w-full border-gray-300" />
                 <div>
                     <h1 className="text-lg mb-2">To save, please login to your account.</h1>
-                    <button className="bg-[#3431BB] text-white px-4 py-2 rounded-lg mb-4 w-full flex justify-center items-center">
+                    <button className="bg-[#3431BB] text-white px-4 py-2 rounded-lg mb-4 w-full flex justify-center items-center"
+                    onClick={handleRoutetoLoginPage}>
                         Login
                     </button>
                     <p className="text-sm text-center">Don't have an account? 
-                        <span className="underline text-sm text-[#3431BB] inline-flex items-center ml-2 transition duration-300 hover:text-blue-600 cursor-pointer">
+                        <span className="underline text-sm text-[#3431BB] inline-flex items-center ml-2 transition duration-300 hover:text-blue-600 cursor-pointer"
+                        onClick={handleRoutetoCreateacco1}>
                             Create new account
                             <FaAngleRight className="ml-1"/>
                         </span>

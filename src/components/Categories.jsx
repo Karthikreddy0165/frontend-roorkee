@@ -98,7 +98,7 @@ export default function Categories(props) {
                   New Update
                 </h1>
               </div>
-              <div
+              <button
                 className="absolute top-[6px] right-[16px]"
                 onClick={() => setIsSavedModalOpen(true)}
               >
@@ -115,7 +115,7 @@ export default function Categories(props) {
                     fill="#9E9E9E"
                   />
                 </svg>
-              </div>
+              </button>
             </div>
 
             <div className="py-[10px] px-[10px] mt-6">
@@ -142,22 +142,22 @@ export default function Categories(props) {
               </p>
 
               <div className="flex gap-5">
-                <div className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">
+                <button className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">
                   {item.department.state}
-                </div>
+                </button>
 
-                <div className="flex items-center justify-center pr-2 pl-2 py-[5px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">
+                <button className="flex items-center justify-center pr-2 pl-2 py-[5px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">
                   {item.beneficiaries.length > 0
                     ? item.beneficiaries[0].beneficiary_type
                     : "No beneficiaries specified"}
-                </div>
-                <div className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">
+                </button>
+                {/* <div className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">
                   Community
-                </div>
+                </div> */}
               </div>
               <p
                 className=" font-inter text-[12px] text-apply-date leading-[24px] mt-4"
-                onClick={() => handleClick(item.id)}
+                // onClick={() => handleClick(item.id)}
                 role="button"
                 tabIndex="0"
               >

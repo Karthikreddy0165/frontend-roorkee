@@ -3,6 +3,7 @@ import Image from "next/image";
 import IndialImg from "../assets/ind2.png";
 import { Formik } from "formik";
 import loginperson from "../assets/image.png";
+import { FaAngleDown } from "react-icons/fa6";
 import { useRouter } from "next/router";
 import { useFormData } from "../Context/FormContext";
 
@@ -12,30 +13,38 @@ const CreateAcc03 = () => {
 
   const handleSubmit = async (values) => {
     updateFormData(values);
-
     const completeData = { ...formData, ...values };
 
     try {
-        const response = await fetch("/api/submit", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(completeData),
-        });
-  
-        if (response.ok) {
-          router.push("/accCreatedsucc");
-          setTimeout(() => {
-            router.push("/HeroPage");
-          }, 2000);
-        } else {
-          console.error("Error submitting form");
-        }
-      } catch (error) {
-        console.error("Error:", error);
+      const response = await fetch("/api/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(completeData),
+      });
+
+      if (response.ok) {
+        router.push("/accCreatedsucc");
+        setTimeout(() => {
+          router.push("/HeroPage");
+        }, 2000);
+      } else {
+        console.error("Error submitting form");
       }
-    };
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handlePage2Click = () => {
+    router.push("/createAcc02");
+  };
+
+  const handleHomepageClick = () => {
+    router.push("/HeroPage");
+  };
+
   return (
     <div className="flex h-screen overflow-hidden -mb-6">
       <div className="w-1/2 bg-[#151280] relative flex items-center justify-center">
@@ -70,11 +79,9 @@ const CreateAcc03 = () => {
       <div className="w-1/2 flex items-center justify-center">
         <Formik
           initialValues={{
-            address: formData.address || '',
-            phoneNumber: formData.phoneNumber || '',
-            education: formData.education || '',
-            occupation: formData.occupation || '',
-            income: formData.income || '',
+            qualification: formData.qualification || "",
+            occupation: formData.occupation || "",
+            income: formData.income || "",
           }}
           onSubmit={handleSubmit}
         >
@@ -83,90 +90,111 @@ const CreateAcc03 = () => {
               className="w-full h-full ml-20 mr-24 relative mt-60"
               onSubmit={formik.handleSubmit}
             >
-              <h1 className="text-2xl font-bold mb-4">Tell us more about you</h1>
-              
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="address">
-                  Address
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="address"
-                  type="text"
-                  placeholder="Enter your address"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.address}
-                />
+              <h1 className="text-2xl font-bold">
+                Tell us a little about yourself
+              </h1>
+              <p>Knowing about you will help us find the right schemes for you.</p>
+              <div className="mt-12">
+                <div className="flex mb-4">
+                  <div className="w-1/2 mr-4">
+                    <label
+                      className="block text-gray-700 text-sm font-bold mb-2"
+                      htmlFor="qualification"
+                    >
+                      Highest education qualification
+                    </label>
+                    <div className="relative">
+                      <select
+                        className="block appearance-none w-full bg-white border border-gray-400 text-gray-700 py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
+                        id="qualification"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.qualification}
+                      >
+                        <option value="">Education qualification</option>
+                        <option value="option01">option01</option>
+                        <option value="option02">option02</option>
+                        <option value="option03">option03</option>
+                        <option value="option04">option04</option>
+                      </select>
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <FaAngleDown />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-1/2 relative">
+                    <label
+                      className="block text-gray-700 text-sm font-bold mb-2"
+                      htmlFor="occupation"
+                    >
+                      Occupation
+                    </label>
+                    <div className="relative">
+                      <select
+                        className="block appearance-none w-full bg-white border border-gray-400 text-gray-700 py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
+                        id="occupation"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.occupation}
+                      >
+                        <option value="">Select your occupation</option>
+                        <option value="occupation01">occupation01</option>
+                        <option value="occupation02">occupation02</option>
+                        <option value="occupation03">occupation03</option>
+                        <option value="occupation04">occupation04</option>
+                        <option value="occupation05">occupation05</option>
+                      </select>
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <FaAngleDown />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex mb-4">
+                  <div className="w-1/2 mr-4">
+                    <label
+                      className="block text-gray-700 text-sm font-bold mb-2"
+                      htmlFor="income"
+                    >
+                      Annual income
+                    </label>
+                    <div className="relative">
+                      <select
+                        className="block appearance-none w-full bg-white border border-gray-400 text-gray-700 py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
+                        id="income"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.income}
+                      >
+                        <option value="">Select your income range</option>
+                        <option value="income01">Income01</option>
+                        <option value="income02">Income02</option>
+                        <option value="income03">Income03</option>
+                        <option value="income04">Income04</option>
+                        <option value="income05">Income05</option>
+                      </select>
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <FaAngleDown />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phoneNumber">
-                  Phone Number
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="phoneNumber"
-                  type="text"
-                  placeholder="Enter your phone number"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.phoneNumber}
-                />
-              </div>
-              
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="education">
-                  Education
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="education"
-                  type="text"
-                  placeholder="Enter your education"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.education}
-                />
-              </div>
-              
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="occupation">
-                  Occupation
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="occupation"
-                  type="text"
-                  placeholder="Enter your occupation"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.occupation}
-                />
-              </div>
-              
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="income">
-                  Income
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="income"
-                  type="text"
-                  placeholder="Enter your income"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.income}
-                />
-              </div>
-
               <div className="absolute bottom-[200px]">
-                <span className="mr-2 pr-[350px]">3/3</span>
+                <span className="mr-2 mr-[250px]">3/3</span>
+                <button
+                  className="pr-8 text-[#3431BB]"
+                  onClick={handlePage2Click}
+                  type="button"
+                >
+                  Previous
+                </button>
                 <button
                   className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
+                  onClick={handleHomepageClick}
                 >
-                  Submit
+                  Next
                 </button>
               </div>
             </form>

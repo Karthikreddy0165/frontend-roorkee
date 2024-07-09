@@ -7,7 +7,15 @@ const HomePage = () => {
   const router = useRouter();
 
   const handleSchemesClick = () => {
-    router.push("/HeroPage");
+    router.push("/HeroPage?tab=Schemes");
+  };
+
+  const handleJobsClick = () => {
+    router.push("/HeroPage?tab=Job Openings");
+  };
+
+  const handleScholarshipsClick = () => {
+    router.push("/HeroPage?tab=Scholarships");
   };
 
   const iconStyle = " w-[33.173px] h-[33.173px] flex-shrink-0 opacity-50";
@@ -61,9 +69,11 @@ const HomePage = () => {
           Choose what you want to explore further
         </h1>
 
+
         {/* Second Child */}
         <div className="flex flex-row items-center justify-center gap-4">
           <div className="flex flex-col ">
+
             <button
               className="relative flex flex-col items-start justify-center p-8 gap-4 flex-1 text-[#3431BB] font-semibold border border-[#3431BB] bg-white rounded-lg hover:bg-[#3431BB] group"
               onClick={handleSchemesClick}
@@ -85,7 +95,7 @@ const HomePage = () => {
           <div className="flex flex-col ">
             <button
               className="relative flex flex-col items-start justify-center p-8 gap-4 flex-1 text-[#3431BB] font-semibold border border-[#3431BB] bg-white rounded-lg hover:bg-[#3431BB] group"
-              onClick={handleSchemesClick}
+              onClick={handleJobsClick}
             >
               <div className="absolute top-4 left-8 flex items-center justify-center w-16 h-16 p-[15.36px] rounded-full bg-[#EEF] group-hover:bg-white">
                 <HiOutlineBriefcase
@@ -105,7 +115,7 @@ const HomePage = () => {
           <div className="flex flex-col ">
             <button
               className="relative flex flex-col items-start justify-center p-8 gap-4 flex-1 text-[#3431BB] font-semibold border border-[#3431BB] bg-white rounded-lg hover:bg-[#3431BB] group"
-              onClick={handleSchemesClick}
+              onClick={handleScholarshipsClick}
             >
               <div className="absolute top-4 left-8 flex items-center justify-center w-16 h-16 p-[15.36px] rounded-full bg-[#EEF] group-hover:bg-white">
                 <PiCurrencyInr

@@ -1,49 +1,81 @@
-import { useState } from "react";
-import BackButton from "./BackButton";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function Tabs(props) {
-  const [activeTab, setActiveTab] = useState("Schemes");
+  const router = useRouter();
+  const { tab } = router.query;
+  const [activeTab, setActiveTab] = useState(tab || "Schemes");
+
+  useEffect(() => {
+    if (tab) {
+      setActiveTab(tab);
+      props.setComponent(tab);
+    }
+  }, [tab]);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     props.setComponent(tab);
   };
 
+  const getButtonClass = (tabName) => {
+    return `flex-grow text-center font-sm p-[12px] rounded-t-[8px] text-semibold text-[14px] cursor-pointer font-sans ${
+      activeTab === tabName
+        ? "bg-[#EEEEFF] border-b-[3px] border-[#3431BB]"
+        : "hover:bg-[#EEEEFF] hover:border-b-[3px] hover:border-[#3431BB]"
+    }`;
+  };
+
   return (
-    <div>
-      <BackButton/>
-    <div className="my-[20px] flex justify-center items-center gap-[15px]">
-      <button
-        className={`flex-grow text-center font-sm p-[12px] rounded-[8px] text-semibold border-none text-[14px] cursor-pointer font-sans ${
-          activeTab === "Schemes"
-            ? "bg-button-blue text-white"
-            : "bg-hover-gray hover:bg-button-blue hover:text-white"
-        }`}
-        onClick={() => handleTabClick("Schemes")}
-      >
-        Schemes
-      </button>
-      <button
-        className={`flex-grow text-center font-sm p-[12px] rounded-[8px] text-semibold border-none text-[14px] cursor-pointer font-sans ${
-          activeTab === "Job Openings"
-            ? "bg-button-blue text-white"
-            : "bg-hover-gray hover:bg-button-blue hover:text-white"
-        }`}
-        onClick={() => handleTabClick("Job Openings")}
-      >
-        Job Openings
-      </button>
-      <button
-        className={`flex-grow text-center font-sm p-[12px] rounded-[8px] text-semibold border-none text-[14px] cursor-pointer font-sans ${
-          activeTab === "Scholarships"
-            ? "bg-button-blue text-white"
-            : "bg-hover-gray hover:bg-button-blue hover:text-white"
-        }`}
-        onClick={() => handleTabClick("Scholarships")}
-      >
-        Scholarships
-      </button>
-    </div>
+    <div className="mb-4">
+      {/* Search input */}
+      <div className="flex items-center gap-8 h-14 px-3 rounded-lg border border-gray-300 bg-white mb-8 mr-[200px]">
+        <svg
+          className="w-6 h-6 text-gray-400"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path d="M20 20l-4.585-4.585M10 17a7 7 0 100-14 7 7 0 000 14z"></path>
+        </svg>
+        <input
+          type="text"
+          placeholder="Search schemes, job opportunity or scholarship"
+          className="flex-1 px-2 text-sm bg-transparent focus:outline-none w-64" // Adjust width here
+        />
+      </div>
+
+      
+      <div className="flex justify-center items-center gap-[15px]">
+        <button
+          className={getButtonClass("Schemes")}
+          onClick={() => handleTabClick("Schemes")}
+        >
+          Schemes
+        </button>
+        <button
+          className={getButtonClass("Job Openings")}
+          onClick={() => handleTabClick("Job Openings")}
+        >
+          Job Openings
+        </button>
+        <button
+          className={getButtonClass("Scholarships")}
+          onClick={() => handleTabClick("Scholarships")}
+        >
+          Scholarships
+        </button>
+        <button
+          className={getButtonClass("Saved")}
+          onClick={() => handleTabClick("Saved")}
+        >
+          Saved
+        </button>
+      </div>
+      <hr />
     </div>
   );
 }

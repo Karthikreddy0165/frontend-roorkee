@@ -75,37 +75,54 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
 
             {/* Main data section */}
             <div className="mt-8 space-y-4 w-full sm:max-w-3xl p-4">
-              <div className="flex items-start pb-2">
-                <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">Department</h1>
-                <p className="ml-2 flex-1">
-                  {matchedDepartment ? matchedDepartment.department_name : "Unable to fetch data"}
-                </p>
-              </div>
-              <hr />
 
-              <div className="flex items-start pb-2 pt-2">
-                <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">State</h1>
-                <p className="ml-2 flex-1">
-                  {matchedState ? matchedState.state_name : "Unable to fetch data"}
-                </p>
-              </div>
-              <hr />
+            {matchedDepartment && (
+                <div className="flex items-start pb-2">
+                  <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">Department</h1>
+                  <p className="ml-2 flex-1">{matchedDepartment.department_name}</p>
+                </div>
+              )}
+              {matchedDepartment && <hr />}
+              
+              {matchedState && (
+                <div className="flex items-start pb-2 pt-2">
+                  <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">State</h1>
+                  <p className="ml-2 flex-1">{matchedState.state_name}</p>
+                </div>
+              )}
+              {matchedState && <hr />}
 
-              <div className="flex items-start pb-2 pt-2">
-                <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">Title</h1>
-                <p className="ml-2 flex-1">
-                  {matchedScheme ? matchedScheme.title : "Unable to fetch data"}
-                </p>
-              </div>
-              <hr />
+              {matchedScheme && (
+                <div className="flex items-start pb-2 pt-2">
+                  <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">Title</h1>
+                  <p className="ml-2 flex-1">{matchedScheme.title}</p>
+                </div>
+              )}
+              {matchedScheme && <hr />}
 
-              <div className="flex items-start pb-2 pt-2">
-                <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">Sponsored By</h1>
-                <p className="ml-2 flex-1">
-                {matchedScheme && matchedScheme.sponsors && matchedScheme.sponsors.length > 0 ? matchedScheme.sponsors[0].sponsor_type : "Unable to fetch data"}
-                </p>
-              </div>
-              <hr />
+              {matchedScheme && matchedScheme.beneficiaries[0] && (
+                <div className="flex items-start pb-2 pt-2">
+                  <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">Beneficiary Type</h1>
+                  <p className="ml-2 flex-1">{matchedScheme.beneficiaries[0].beneficiary_type}</p>
+                </div>
+              )}
+              {matchedScheme && matchedScheme.beneficiaries[0] && <hr />}
+
+              {matchedScheme && matchedScheme.sponsors && matchedScheme.sponsors.length > 0 && (
+                <div className="flex items-start pb-2 pt-2">
+                  <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">Sponsored By</h1>
+                  <p className="ml-2 flex-1">{matchedScheme.sponsors[0].sponsor_type}</p>
+                </div>
+              )}
+              {matchedScheme && matchedScheme.sponsors && matchedScheme.sponsors.length > 0 && <hr />}
+
+              {matchedScheme && matchedScheme.documents[0] && (
+                <div className="flex items-start pb-2 pt-2">
+                  <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">Uploaded file</h1>
+                  <p className="ml-2 flex-1">{matchedScheme.documents}</p>
+                </div>
+              )}
+
 
             </div>
 
