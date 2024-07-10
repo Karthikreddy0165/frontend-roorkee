@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import IndialImg from "../assets/ind2.png";
 import { Formik } from "formik";
 import loginperson from "../assets/image.png";
-import { FaAngleDown } from "react-icons/fa6";
+import { FaAngleDown, FaSpinner } from "react-icons/fa"; // Import loading spinner
 import { useRouter } from "next/router";
 import { useFormData } from "../Context/FormContext";
 
 const CreateAcc03 = () => {
   const router = useRouter();
   const { formData, updateFormData } = useFormData();
+  const [isLoading, setIsLoading] = useState(false); // State for loading
 
   const handleSubmit = async (values) => {
+    setIsLoading(true); // Start loading
     updateFormData(values);
     const completeData = { ...formData, ...values };
 
@@ -27,22 +29,20 @@ const CreateAcc03 = () => {
       if (response.ok) {
         router.push("/accCreatedsucc");
         setTimeout(() => {
-          router.push("/HeroPage");
+          router.push("/HeroPageLoginsucc");
         }, 2000);
       } else {
         console.error("Error submitting form");
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setIsLoading(false); // Stop loading
     }
   };
 
   const handlePage2Click = () => {
     router.push("/createAcc02");
-  };
-
-  const handleHomepageClick = () => {
-    router.push("/HeroPage");
   };
 
   return (
@@ -192,9 +192,13 @@ const CreateAcc03 = () => {
                 <button
                   className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
-                  onClick={handleHomepageClick}
+                  disabled={formik.isSubmitting || isLoading}
                 >
-                  Next
+                  {isLoading ? (
+                    <FaSpinner className="animate-spin h-5 w-5 mr-3 inline" />
+                  ) : (
+                    "Next"
+                  )}
                 </button>
               </div>
             </form>

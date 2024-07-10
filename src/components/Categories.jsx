@@ -84,11 +84,48 @@ export default function Categories(props) {
               <p className="font-inter text-[18px] leading-[21.6px] cursor-pointer font-bold mb-[10px] line-clamp-2 w-8/12" onClick={() => handleClick(item.id)} role="button" tabIndex="0">
                 {item.title}
               </p>
-              <p className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[10px] line-clamp-2" onClick={() => handleClick(item.id)} role="button" tabIndex="0"><span className="font-semibold">Description: </span>{item.description}</p>
-              <p className="text-[14px] text-[#616161] underline">Department</p>
-              <p className="font-inter text-[12px] mt-[6px] text-apply-date leading-[24px]" onClick={() => handleClick(item.id)} role="button" tabIndex="0">Last date to apply: <span className="font-bold">20th July 2024</span></p>
+              <p
+                className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[10px] line-clamp-2"
+                onClick={() => handleClick(item.id)}
+                role="button"
+                tabIndex="0"
+              >
+                <span className="font-semibold">Description: </span>
+                {item.description}
+              </p>
+
+              <p className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[10px] line-clamp-2 text-decoration-line: underline ">
+                {item.department.department_name}
+              </p>
+
+              <div className="flex gap-5">
+                <button className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium py-2">
+                  {item.department.state}
+                </button>
+                
+              
+                {item.beneficiaries.length > 0 && item.beneficiaries[0].beneficiary_type !== "N/A" &&(
+                  <button className="flex items-center justify-center pr-2 pl-2 py-[5px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">
+                    {item.beneficiaries[0].beneficiary_type}
+                  </button>
+                )}
+                {/* <div className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">
+                  Community
+                </div> */}
+              </div>
+              <p
+                className=" font-inter text-[12px] text-apply-date leading-[24px] mt-4"
+                // onClick={() => handleClick(item.id)}
+                role="button"
+                tabIndex="0"
+              >
+                Last date to apply:{" "}
+                <span className="font-bold">
+                  {item.valid_upto.split("T")[0]}
+                </span>
+              </p>
             </div>
-            </div>
+          </div>
             <div className="cursor-pointer px-2 py-2 right-[8.25px]" onClick={(e) => toggleBookmark(e, item.id)}>
               {isBookmarked[item.id] ? <GoBookmarkFill className="w-[27.5px] h-[27.5px]" /> : <CiBookmark className="w-[27.5px] h-[27.5px]" />} 
             </div>
