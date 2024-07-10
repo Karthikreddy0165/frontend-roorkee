@@ -68,7 +68,7 @@ const MainPage = () => {
                 <IoIosArrowDown className="text-[#000]" /> 
               </div>
               <div className="flex justify-between items-center mb-4">
-                <span>Occupation</span>
+                <span>Funding by</span>
                 <IoIosArrowDown className="text-[#000]" /> 
               </div>
               <div className="flex justify-between items-center mb-4">
