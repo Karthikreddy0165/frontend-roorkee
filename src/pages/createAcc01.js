@@ -1,15 +1,16 @@
-import React from "react";
-import Image from "next/image";
-import IndialImg from "../assets/ind2.png";
 import { Formik } from "formik";
-import * as Yup from "yup"; // Import Yup for validation
-import loginperson from "../assets/image.png";
+import Image from "next/image";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import * as Yup from "yup"; // Import Yup for validation
 import { useFormData } from "../Context/FormContext";
+import loginperson from "../assets/image.png";
+import IndialImg from "../assets/ind2.png";
 
 const CreateAcc01 = () => {
   const router = useRouter();
   const { updateFormData } = useFormData();
+  const [apiErrors, setApiErrors] = useState({ username: "", email: "" });
 
   // Define validation schema
   const validationSchema = Yup.object().shape({
@@ -78,17 +79,26 @@ const CreateAcc01 = () => {
               .then((response) => response.json())
               .then((result) => {
                 if (result.user) {
-                  // console.log(result);
+                  // Clear any previous errors
+                  setApiErrors({ username: "", email: "" });
                   updateFormData(values);
                   router.push("/createAcc02");
                 } else {
                   console.error(result);
-                  // handle error message from the result
+                  // Handle error message from the result
+                  setApiErrors({
+                    username: result.username ? result.username[0] : "",
+                    email: result.email ? result.email[0] : "",
+                  });
+                  // Clear errors after 3 seconds
+                  setTimeout(() => {
+                    setApiErrors({ username: "", email: "" });
+                  }, 3000);
                 }
               })
               .catch((error) => {
                 console.error(error);
-                // handle error
+                // Handle error
               })
               .finally(() => {
                 setSubmitting(false);
@@ -120,6 +130,9 @@ const CreateAcc01 = () => {
                 {formik.touched.username && formik.errors.username ? (
                   <div className="text-red-500 text-sm">{formik.errors.username}</div>
                 ) : null}
+                {apiErrors.username && (
+                  <div className="text-red-500 text-sm">{apiErrors.username}</div>
+                )}
               </div>
               <div>
                 <label
@@ -140,6 +153,9 @@ const CreateAcc01 = () => {
                 {formik.touched.email && formik.errors.email ? (
                   <div className="text-red-500 text-sm">{formik.errors.email}</div>
                 ) : null}
+                {apiErrors.email && (
+                  <div className="text-red-500 text-sm">{apiErrors.email}</div>
+                )}
               </div>
               <div className="mt-6">
                 <label
