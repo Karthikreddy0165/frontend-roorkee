@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 const DepartmentDropdownMenu = React.forwardRef(({ selectedDepartments, setSelectedDepartments, setDepartmentName, data }, ref) => {
   const [tempSelectedDepartments, setTempSelectedDepartments] = useState([...selectedDepartments]);
   const [isShow, setIsShow] = useState(false);
-  const categories = data ? data.map(item => item.department_name) : [];
+  const categories = data.map(item => item.department.department_name);
   const uniqueCategories = [...new Set(categories)];
 
   const toggleShow = () => {
@@ -45,18 +45,17 @@ const DepartmentDropdownMenu = React.forwardRef(({ selectedDepartments, setSelec
 
   const [dropdownStyle, setDropdownStyle] = useState(calculateInitialPosition);
   useEffect(() => {
-    const updatePosition = () => {
-      const newPosition = calculateInitialPosition(); // Use the same function to calculate the new position
-      setDropdownStyle(newPosition);
+      const updatePosition = () => {
+        const newPosition = calculateInitialPosition(); // Use the same function to calculate the new position
+        setDropdownStyle(newPosition);
+      };
+
+      window.addEventListener('resize', updatePosition);
+      return () => window.removeEventListener('resize', updatePosition);
+    }, []);
+    const handleClearAll = () => {
+      setTempSelectedDepartments([]);
     };
-
-    window.addEventListener('resize', updatePosition);
-    return () => window.removeEventListener('resize', updatePosition);
-  }, []);
-
-  const handleClearAll = () => {
-    setTempSelectedDepartments([]);
-  };
 
   const applySelections = () => {
     setSelectedDepartments([...tempSelectedDepartments]);
@@ -73,11 +72,11 @@ const DepartmentDropdownMenu = React.forwardRef(({ selectedDepartments, setSelec
     return (
       <div style={dropdownStyle} className="absolute text-[13px] text-gray-500 bg-[rgb(255,255,255)] rounded-[8px] w-auto max-w-[600px] flex flex-col whitespace-wrap z-50 pl-[12px] pr-[8px] pt-[16px] pb-[8px] border border-solid border-[#E8EAEE] font-semibold min-w-[280px]" ref={ref}>
         <div className='pl-[8px] pr-[8px] pb-[7px]'>
-          <p className="text-dropdown-heading">DEPARTMENT</p>
+          <p className = "text-dropdown-heading">DEPARTMENT</p>
         </div>
         <div className='pl-[8px] pr-[5px] pb-[7px] pt-[8px] text-gray-400 flex justify-between'>
-          <p className="font-semibold tracking-wider">SELECTED</p>
-          <div className="w-[20px] h-[20px] rounded-full text-[0.7rem] flex justify-center items-center bg-dropdown-blue text-gray-500">{selectedDepartments.length}</div>
+          <p className = "font-semibold tracking-wider">SELECTED</p>
+          <div className = "w-[20px] h-[20px] rounded-full text-[0.7rem] flex justify-center items-center bg-dropdown-blue text-gray-500">{selectedDepartments.length}</div>
         </div>
         <ul className="flex flex-col font-sans list-none p-0 text-xs m-0 gap-0 pb-[8px]">
           {uniqueCategories.filter(item => selectedDepartments.includes(item)).map((item, index) => (
@@ -113,8 +112,8 @@ const DepartmentDropdownMenu = React.forwardRef(({ selectedDepartments, setSelec
     setDepartmentName("");
     return (
       <div style={dropdownStyle} className="absolute text-[13px] text-gray-500 bg-[rgb(255,255,255)] rounded-[8px] w-auto max-w-[600px] flex flex-col whitespace-wrap z-50 pl-[12px] pr-[8px] pt-[16px] pb-[8px] border border-solid border-[#E8EAEE] font-semibold min-w-[280px]" ref={ref}>
-        <div className='pl-[8px] pr-[8px] pb-[7px]'>
-          <p className="text-dropdown-heading">DEPARTMENT</p>
+       <div className='pl-[8px] pr-[8px] pb-[7px]'>
+          <p className = "text-dropdown-heading">DEPARTMENT</p>
         </div>
         <ul className="flex flex-col font-sans list-none p-0 text-xs m-0 gap-0 pb-[8px]">
           {uniqueCategories.map((item, index) => (
