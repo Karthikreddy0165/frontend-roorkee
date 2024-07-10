@@ -1,4 +1,4 @@
-import NavBar from "@/components/NavBar";
+import NavBarWithoutLogin from "@/components/NavBar";
 import Image from "next/image";
 import MainPageImage from ".././assets/backgroundimg.png";
 import BackButton from "@/components/BackButton";
@@ -24,7 +24,7 @@ const MainPage = () => {
 
   return (
     <>
-      <NavBar />
+      <NavBarWithoutLogin/>
       <BackButton />
       <div
         className="relative w-80vw mx-auto mb-8 flex justify-center items-center "

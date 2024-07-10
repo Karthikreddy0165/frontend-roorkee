@@ -1,4 +1,4 @@
-import NavBar from "@/components/NavBarLoginsucc";
+import NavBarAfterLogin from "@/components/NavBarLoginsucc";
 import Image from "next/image";
 import MainPageImage from ".././assets/backgroundimg.png";
 import BackButton from "@/components/BackButton";
@@ -10,21 +10,19 @@ import Tabs from "@/components/Tabs";
 import { useEffect, useState } from "react";
 import Schemes from "../components/Schemes";
 
-const HeroPage = () => {
-  const [component, setComponent] = useState("Job Openings"); // Change default component here
-  const [componentToRender, setComponentToRender] = useState(<JobOpenings />); // Set default component to render here
+const MainPage = () => {
+  const [component, setComponent] = useState("Schemes"); // Changed default component to "Schemes"
+  const [componentToRender, setComponentToRender] = useState(<Schemes />); // Set default component to render here
 
   useEffect(() => {
     if (component === "Schemes") setComponentToRender(<Schemes />);
-    else if (component === "Job Openings")
-      setComponentToRender(<JobOpenings />);
-    else if (component === "Scholarships")
-      setComponentToRender(<Scholarships />);
+    else if (component === "Job Openings") setComponentToRender(<JobOpenings />);
+    else if (component === "Scholarships") setComponentToRender(<Scholarships />);
   }, [component]);
 
   return (
     <>
-      <NavBar />
+      <NavBarAfterLogin/>
       <BackButton />
       <div
         className="relative w-80vw mx-auto mb-8 flex justify-center items-center "
@@ -44,11 +42,8 @@ const HeroPage = () => {
 
       <div style={{ maxWidth: "80%", margin: "0 auto" }}>
         <div style={{ display: "flex" }}>
-          <div style={{ flex: "1 0 25%", maxWidth: "25%", padding: "1rem" }}
-          className="mr-2">
-            <div
-            className="flex justify-between items-center mb-4"
-            >
+          <div style={{ flex: "1 0 25%", maxWidth: "25%", padding: "1rem" }} className="mr-2">
+            <div className="flex justify-between items-center mb-4">
               <h1 style={{ margin: 0 }}>Filter by</h1>
               <p className="text-[#3431BB]" style={{ margin: 0 }}>
                 Clear all filter
@@ -68,7 +63,7 @@ const HeroPage = () => {
                 <IoIosArrowDown className="text-[#000]" /> 
               </div>
               <div className="flex justify-between items-center mb-4">
-                <span>Occupation</span>
+                <span>Funding by</span>
                 <IoIosArrowDown className="text-[#000]" /> 
               </div>
               <div className="flex justify-between items-center mb-4">
@@ -102,4 +97,4 @@ const HeroPage = () => {
   );
 };
 
-export default HeroPage;
+export default MainPage;

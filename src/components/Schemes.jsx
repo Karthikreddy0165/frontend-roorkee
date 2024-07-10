@@ -25,7 +25,7 @@ export default function Schemes() {
   useEffect(() => {
     const fetchState = async () => {
       try {
-        const response = await fetch("http://3.25.199.183:8000/api/schemes");
+        const response = await fetch("http://54.79.141.24:8000/api/schemes");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
