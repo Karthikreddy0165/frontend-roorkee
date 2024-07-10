@@ -1,16 +1,16 @@
+import React, { useState, useRef, useEffect } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
-import React, { useState, useRef, useEffect } from "react";
-import Categories from "./Categories";
-import DropdownMenu from "./DropdownMenu";
-import DepartmentDropdownMenu from "./DepartmentDropDown";
-import BeneficiaryDropdownMenu from "./BeneficiariesDropdown";
-import AgeDropdownMenu from "./AgeDropdown";
-import IncomeDropdownMenu from "./IncomeDropdown";
-import FundingByDropdownMenu from "./FundingBy";
+import Categories from "../components/Categories";
+import DropdownMenu from "../components/DropdownMenu";
+import DepartmentDropdownMenu from "../components/DepartmentDropDown";
+import BeneficiaryDropdownMenu from "../components/BeneficiariesDropdown";
+import AgeDropdownMenu from "../components/AgeDropdown";
+import IncomeDropdownMenu from "../components/IncomeDropdown";
+import FundingByDropdownMenu from "../components/FundingBy";
 
-export default function Scholarships() {
-  const [data, setData] = useState(null); // [1]
+export default function Schemes() {
+  const [data, setData] = useState(null);
   const [stateName, setStateName] = useState("");
   const [departmentName, setDepartmentName] = useState("");
   const [beneficiaryName, setBeneficiaryName] = useState("");
@@ -24,9 +24,16 @@ export default function Scholarships() {
 
   useEffect(() => {
     const fetchState = async () => {
-      const response = await fetch("/api/fetchSchemes");
-      const data = await response.json();
-      setData(data);
+      try {
+        const response = await fetch("http://54.79.141.24:8000/api/schemes");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setData(data);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
     };
     fetchState();
   }, []);
@@ -91,8 +98,9 @@ export default function Scholarships() {
   };
 
   return (
-    <div className="bg-white font-sans mt-0">
-      <h1 className="mt-0 mb-[20px] font-bold text-[28px]">Scholarships</h1>
+    <>
+    <div className="bg-white font-sans">
+      {/* <h1 className="mt-0 mb-[20px] font-bold text-[28px]">Schemes</h1> */}      
       <div className="mt-0 w-full flex flex-wrap gap-[16px] mb-15 font-sans items-center py-[4px] px-[0px] text-gray-600 self-stretch text-button-text">
         <p className="font-normal text-[14px]">Filter schemes by</p>
         <button
@@ -176,22 +184,6 @@ export default function Scholarships() {
           data = {data}
         />
       )}
-      {dropDownStates.ageOpen && (
-        <AgeDropdownMenu
-          ref={ageDropdownRef}
-          selectedAges={selectedAges}
-          setSelectedAges={setSelectedAges}
-          data = {data}
-        />
-      )}
-      {dropDownStates.incomeOpen && (
-        <IncomeDropdownMenu
-          ref={incomeDropdownRef}
-          selectedIncomes={selectedIncomes}
-          setSelectedIncomes={setSelectedIncomes}
-          data = {data}
-        />
-      )}
       {dropDownStates.fundersOpen && (
         <FundingByDropdownMenu
           ref={funderDropdownRef}
@@ -202,13 +194,14 @@ export default function Scholarships() {
         />
       )}
       <Categories
+        data = {data}
         selectedDepartments={selectedDepartments}
         selectedBeneficiaries={selectedBeneficiaries}
         selectedAges={selectedAges}
         selectedFunders={selectedFunders}
         selectedIncomes
-        data={data}
       />
     </div>
+    </>
   );
 }
