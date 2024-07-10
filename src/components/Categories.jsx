@@ -141,20 +141,18 @@ export default function Categories(props) {
                 {item.department.department_name}
               </p>
 
-              <div className="flex gap-5">
-                <button className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">
+              <div className="flex gap-5 ">
+                <button className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium py-1">
                   {item.department.state}
                 </button>
 
                 {item.beneficiaries.length > 0 && (
-  <button className="flex items-center justify-center pr-2 pl-2 py-[5px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium max-w-[150px] overflow-x-auto whitespace-nowrap">
-    {item.beneficiaries.length > 0
-      ? item.beneficiaries[0].beneficiary_type
-      : "No beneficiaries specified"}
-  </button>
-)}
-
-                
+                  <button className="flex items-center justify-center pr-2 pl-2 py-[5px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium max-w-[150px] overflow-x-auto whitespace-nowrap">
+                    {item.beneficiaries.length > 0
+                      ? item.beneficiaries[0].beneficiary_type
+                      : "No beneficiaries specified"}
+                  </button>
+                )}
               </div>
               <p
                 className=" font-inter text-[12px] text-apply-date leading-[24px] mt-4"
@@ -178,7 +176,10 @@ export default function Categories(props) {
         />
       )}
       {isSavedModalOpen && (
-        <SavedModal isOpen={isSavedModalOpen} onRequestClose={() => setIsSavedModalOpen(false)} />
+        <SavedModal
+          isOpen={isSavedModalOpen}
+          onRequestClose={() => setIsSavedModalOpen(false)}
+        />
       )}
     </div>
   );
