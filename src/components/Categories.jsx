@@ -98,7 +98,7 @@ export default function Categories(props) {
                   New Update
                 </h1>
               </div>
-              <button
+              <b
                 className="absolute top-[6px] right-[16px]"
                 onClick={() => setIsSavedModalOpen(true)}
               >
@@ -115,7 +115,7 @@ export default function Categories(props) {
                     fill="#9E9E9E"
                   />
                 </svg>
-              </button>
+              </b>
             </div>
 
             <div className="py-[10px] px-[10px] mt-6">
@@ -146,14 +146,15 @@ export default function Categories(props) {
                   {item.department.state}
                 </button>
 
-                <button className="flex items-center justify-center pr-2 pl-2 py-[5px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">
-                  {item.beneficiaries.length > 0
-                    ? item.beneficiaries[0].beneficiary_type
-                    : "No beneficiaries specified"}
-                </button>
-                {/* <div className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">
-                  Community
-                </div> */}
+                {item.beneficiaries.length > 0 && (
+  <button className="flex items-center justify-center pr-2 pl-2 py-[5px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium max-w-[150px] overflow-x-auto whitespace-nowrap">
+    {item.beneficiaries.length > 0
+      ? item.beneficiaries[0].beneficiary_type
+      : "No beneficiaries specified"}
+  </button>
+)}
+
+                
               </div>
               <p
                 className=" font-inter text-[12px] text-apply-date leading-[24px] mt-4"
