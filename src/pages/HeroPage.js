@@ -10,7 +10,7 @@ import Tabs from "@/components/Tabs";
 import { useEffect, useState } from "react";
 import Schemes from "../components/Schemes";
 
-const MainPage = () => {
+const HeroPageWithoutLogin = () => {
   const [component, setComponent] = useState("Job Openings"); // Change default component here
   const [componentToRender, setComponentToRender] = useState(<JobOpenings />); // Set default component to render here
 
@@ -44,53 +44,10 @@ const MainPage = () => {
 
       <div style={{ maxWidth: "80%", margin: "0 auto" }}>
         <div style={{ display: "flex" }}>
-          <div style={{ flex: "1 0 25%", maxWidth: "25%", padding: "1rem" }}
-          className="mr-2">
-            <div
-            className="flex justify-between items-center mb-4"
-            >
-              <h1 style={{ margin: 0 }}>Filter by</h1>
-              <p className="text-[#3431BB]" style={{ margin: 0 }}>
-                Clear all filter
-              </p>
-            </div>
-            <hr />
+          
+          {/* </div> */}
 
-            {/* filter categories */}
-            <div className="mt-2">
-              {/* Each filter category */}
-              <div className="flex justify-between items-center mb-4">
-                <span>State</span>
-                <IoIosArrowDown className="text-[#000]" /> 
-              </div>
-              <div className="flex justify-between items-center mb-4">
-                <span>Department</span>
-                <IoIosArrowDown className="text-[#000]" /> 
-              </div>
-              <div className="flex justify-between items-center mb-4">
-                <span>Funding by</span>
-                <IoIosArrowDown className="text-[#000]" /> 
-              </div>
-              <div className="flex justify-between items-center mb-4">
-                <span>Beneficiaries</span>
-                <IoIosArrowDown className="text-[#000]" /> 
-              </div>
-              <div className="flex justify-between items-center mb-4">
-                <span>Eligibility criteria</span>
-                <IoIosArrowDown className="text-[#000]" /> 
-              </div>
-              <div className="flex justify-between items-center mb-4">
-                <span>Sponsorship</span>
-                <IoIosArrowDown className="text-[#000]" /> 
-              </div>
-              <div className="flex justify-between items-center mb-4">
-                <span>Scheme type</span>
-                <IoIosArrowDown className="text-[#000]" /> 
-              </div>
-            </div>
-          </div>
-
-          <div style={{ flex: "1 0 75%", maxWidth: "75%" }}>
+          <div style={{ flex: "1 0 75%", maxWidth: "100%" }}>
             <div>
               <Tabs setComponent={setComponent} />
             </div>
@@ -102,4 +59,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default HeroPageWithoutLogin;
