@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 
 const BeneficiaryDropdownMenu = React.forwardRef(({ selectedBeneficiaries, setSelectedBeneficiaries, setBeneficiaryName , data}, ref) => {
@@ -6,9 +5,10 @@ const BeneficiaryDropdownMenu = React.forwardRef(({ selectedBeneficiaries, setSe
   const [isShow, setIsShow] = useState(false);
 
   const categories = data
-  .flatMap(item => item.beneficiaries)
+  .flatMap(item => item.beneficiaries ? item.beneficiaries.flatMap(beneficiary => beneficiary.beneficiary_type.split(', ').map(type => type.trim())) : [])
   .filter(beneficiary => beneficiary !== null && beneficiary !== undefined);
   const uniqueCategories = [...new Set(categories)];
+
 
   const toggleShow = () => {
     setIsShow(!isShow);
