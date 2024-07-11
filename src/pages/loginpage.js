@@ -5,22 +5,62 @@ import { Formik } from "formik";
 import loginperson from "../assets/image.png";
 import { FaAngleRight } from "react-icons/fa6";
 import { useRouter } from "next/router";
-import { FaSpinner } from "react-icons/fa"; // Import a spinner icon
+import { FaSpinner } from "react-icons/fa";
+import { useAuth } from "./AuthContext";
 
 const LoginPage = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth(); // Get the login function from the context
 
   const handleCreate01Click = () => {
     router.push("/accountCreation");
   };
 
-  const handleAfterLogin = () => {
-    router.push("/loginSucc");
-    setTimeout(() => {
-      router.push("/HeroPageLoginsucc");
-    }, 2000);
+  const handleAfterLogin = async (values) => {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      const raw = JSON.stringify({
+        username: values.username,
+        password: values.password,
+      });
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      const response = await fetch("http://3.25.199.183:8000/api/login/", requestOptions);
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || `HTTP error! status: ${response.status}`);
+      }
+
+      console.log("Login successful. Token received:", result.access);
+
+      if (result.access) {
+        const user = { token: result.access, username: values.username };
+        localStorage.setItem("token", result.access);
+        login(result.access, user); // Save token and user information to the context
+        router.push("/loginSucc");
+        setTimeout(() => {
+          router.push("/HeroPageLoginsucc");
+        }, 2000);
+      } else {
+        setErrorMessage("Username or password is invalid");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      setErrorMessage("Username or password is invalid");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -64,46 +104,10 @@ const LoginPage = () => {
             password: "",
           }}
           onSubmit={async (values, { setSubmitting }) => {
-            setErrorMessage(""); // Clear any previous error message
-            setLoading(true); // Set loading to true
-            try {
-              const myHeaders = new Headers();
-              myHeaders.append("Content-Type", "application/json");
-
-              const raw = JSON.stringify({
-                username: values.username,
-                password: values.password,
-              });
-
-              const requestOptions = {
-                method: "POST",
-                headers: myHeaders,
-                body: raw,
-                redirect: "follow",
-              };
-
-              const response = await fetch("http://3.25.199.183:8000/api/login/", requestOptions);
-              const result = await response.json();
-
-              if (!response.ok) {
-                throw new Error(result.message || `HTTP error! status: ${response.status}`);
-              }
-
-              console.log("Login successful. Token received:", result.access);
-
-              if (result.access) {
-                localStorage.setItem("token", result.access); // Store the JWT access token
-                handleAfterLogin(); // Redirect to HeroPage
-              } else {
-                setErrorMessage("Username or password is invalid");
-              }
-            } catch (error) {
-              console.error("Error during login:", error);
-              setErrorMessage("Username or password is invalid");
-            } finally {
-              setSubmitting(false);
-              setLoading(false); // Set loading to false
-            }
+            setErrorMessage("");
+            setLoading(true);
+            handleAfterLogin(values);
+            setSubmitting(false);
           }}
         >
           {(formik) => (
@@ -174,7 +178,7 @@ const LoginPage = () => {
                     type="submit"
                     disabled={formik.isSubmitting}
                   >
-                    Either username or password is incorrect
+                    {errorMessage}
                   </button>
                 </div>
               )}
@@ -220,3 +224,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+

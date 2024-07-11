@@ -3,14 +3,16 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import * as Yup from "yup";
-import { useFormData } from "../Context/FormContext";
+import { useFormData } from "../Context/FormContext"; // Correct import path
 import loginperson from "../assets/image.png";
 import IndialImg from "../assets/ind2.png";
 import { FaSpinner } from "react-icons/fa"; // Import loading spinner
+import { useAuth } from "@/pages/AuthContext"; // Import the Auth context
 
 const CreateAcc01 = () => {
   const router = useRouter();
   const { updateFormData } = useFormData();
+  const { login } = useAuth(); // Get the login function from the context
   const [apiErrors, setApiErrors] = useState({ username: "", email: "" });
   const [isLoading, setIsLoading] = useState(false); // State for loading
 
@@ -83,6 +85,7 @@ const CreateAcc01 = () => {
                 if (result.user) {
                   setApiErrors({ username: "", email: "" });
                   updateFormData(values);
+                  login(result.token, result.user); // Update authState
                   router.push("/personalDetails");
                 } else {
                   console.error(result);

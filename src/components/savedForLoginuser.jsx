@@ -8,9 +8,9 @@ import BeneficiaryDropdownMenu from "../components/BeneficiariesDropdown";
 import AgeDropdownMenu from "../components/AgeDropdown";
 import IncomeDropdownMenu from "../components/IncomeDropdown";
 import FundingByDropdownMenu from "../components/FundingBy";
-import { useTabContext } from "@/Context/TabContext";
 
-export default function Schemes({ setTab }) {
+export default function Saved() {
+  const [data, setData] = useState(null);
   const [stateName, setStateName] = useState("");
   const [departmentName, setDepartmentName] = useState("");
   const [beneficiaryName, setBeneficiaryName] = useState("");
@@ -22,16 +22,10 @@ export default function Schemes({ setTab }) {
   const [selectedIncomes, setSelectedIncomes] = useState([]);
   const [selectedFunders, setSelectedFunders] = useState([]);
 
-  const [data, setData] = useState(null);
-  const { activeTab, searchQuery } = useTabContext(); // Accessing searchQuery from context
   useEffect(() => {
     const fetchState = async () => {
       try {
-        let apiUrl = "http://54.79.141.24:8000/api/schemes"
-        if (searchQuery) {
-              apiUrl += `/search/?q=${encodeURIComponent(searchQuery)}`;
-            }
-        const response = await fetch(apiUrl);
+        const response = await fetch("http://3.25.199.183:8000/api/save_scheme/");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -42,8 +36,8 @@ export default function Schemes({ setTab }) {
       }
     };
     fetchState();
-  }, [activeTab, searchQuery]);
-  
+  }, []);
+
   const [dropDownStates, setDropDownStates] = useState({
     dropDownOpen: false,
     departmentOpen: false,
@@ -92,6 +86,7 @@ export default function Schemes({ setTab }) {
     setDropDownStates((prevState) => {
       const newState = { ...prevState, [key]: !prevState[key] };
       if (!prevState[key]) {
+        // Close other dropdowns when opening a new one
         Object.keys(dropDownStates).forEach((dropdownKey) => {
           if (dropdownKey !== key) {
             newState[dropdownKey] = false;

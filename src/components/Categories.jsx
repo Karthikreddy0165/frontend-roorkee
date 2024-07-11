@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ApplyModal from "../pages/content";
 import { CiBookmark } from "react-icons/ci";
 import { GoBookmarkFill } from "react-icons/go";
+import SavedModal from "@/pages/model/savedModal";
 
 export default function Categories(props) {
   const [filteredData, setFilteredData] = useState([]);
