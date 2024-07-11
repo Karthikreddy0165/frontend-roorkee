@@ -5,20 +5,22 @@ import { Formik } from "formik";
 import loginperson from "../assets/image.png";
 import { FaAngleRight } from "react-icons/fa6";
 import { useRouter } from "next/router";
+import { FaSpinner } from "react-icons/fa"; // Import a spinner icon
 
 const LoginPage = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false); // Add loading state
 
   const handleCreate01Click = () => {
-    router.push("/createAcc01");
+    router.push("/accountCreation");
   };
 
   const handleAfterLogin = () => {
     router.push("/loginSucc");
-    setTimeout(()=>{
-      router.push("/HeroPageLoginsucc")
-    }, 2000)
+    setTimeout(() => {
+      router.push("/HeroPageLoginsucc");
+    }, 2000);
   };
 
   return (
@@ -63,6 +65,7 @@ const LoginPage = () => {
           }}
           onSubmit={async (values, { setSubmitting }) => {
             setErrorMessage(""); // Clear any previous error message
+            setLoading(true); // Set loading to true
             try {
               const myHeaders = new Headers();
               myHeaders.append("Content-Type", "application/json");
@@ -99,6 +102,7 @@ const LoginPage = () => {
               setErrorMessage("Username or password is invalid");
             } finally {
               setSubmitting(false);
+              setLoading(false); // Set loading to false
             }
           }}
         >
@@ -110,9 +114,6 @@ const LoginPage = () => {
               <h1 className="text-2xl font-bold mb-4">
                 Login into your existing account
               </h1>
-              {errorMessage && (
-                <div className="mb-4 text-red-500">{errorMessage}</div>
-              )}
               <div className="">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
@@ -165,13 +166,33 @@ const LoginPage = () => {
                   Forgot password?
                 </a>
               </div>
+
+              {errorMessage && (
+                <div className="mb-4 -mt-4">
+                  <button
+                    className="bg-[#FFE6E6] text-[#DC0000]  py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                    type="submit"
+                    disabled={formik.isSubmitting}
+                  >
+                    Either username or password is incorrect
+                  </button>
+                </div>
+              )}
+
               <div>
                 <button
                   className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline w-full"
                   type="submit"
                   disabled={formik.isSubmitting}
                 >
-                  Continue
+                  {loading ? (
+                    <div className="flex items-center justify-center">
+                      <FaSpinner className="animate-spin mr-2" />
+                      Loading...
+                    </div>
+                  ) : (
+                    "Continue"
+                  )}
                 </button>
               </div>
 

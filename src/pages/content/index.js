@@ -100,7 +100,7 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
               )}
               {matchedScheme && <hr />}
 
-              {matchedScheme && matchedScheme.beneficiaries[0] && (
+              {matchedScheme && matchedScheme.beneficiaries[0] && matchedScheme.beneficiaries[0].beneficiary_type !== "N/A" && (
                 <div className="flex items-start pb-2 pt-2">
                   <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">Beneficiary Type</h1>
                   <p className="ml-2 flex-1">{matchedScheme.beneficiaries[0].beneficiary_type}</p>

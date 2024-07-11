@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import IndialImg from "../assets/ind2.png";
 import { Formik } from "formik";
 import loginperson from "../assets/image.png";
-import { FaAngleDown } from "react-icons/fa6";
+import { FaAngleDown, FaSpinner } from "react-icons/fa"; // Import loading spinner
 import { useRouter } from "next/router";
 import { useFormData } from "../Context/FormContext";
 
 const CreateAcc02 = () => {
   const router = useRouter();
   const { updateFormData } = useFormData();
+  const [isLoading, setIsLoading] = useState(false); // State for loading
 
   return (
     <div className="flex h-screen overflow-hidden -mb-6">
@@ -51,9 +52,14 @@ const CreateAcc02 = () => {
             community: "",
             state: "",
           }}
-          onSubmit={(values) => {
+          onSubmit={(values, { setSubmitting }) => {
+            setIsLoading(true); // Start loading
             updateFormData(values);
-            router.push("/createAcc03");
+            setTimeout(() => { // Simulate API call delay
+              setIsLoading(false); // Stop loading
+              router.push("/proffesionalDetails");
+              setSubmitting(false);
+            }, 2000); // Change this to match the actual API call duration
           }}
         >
           {(formik) => (
@@ -166,8 +172,13 @@ const CreateAcc02 = () => {
                 <button
                   className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
+                  disabled={formik.isSubmitting || isLoading}
                 >
-                  Continue
+                  {isLoading ? (
+                    <FaSpinner className="animate-spin h-5 w-5 mr-3 inline" />
+                  ) : (
+                    "Continue"
+                  )}
                 </button>
               </div>
             </form>

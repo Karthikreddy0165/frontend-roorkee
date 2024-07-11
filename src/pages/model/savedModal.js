@@ -8,7 +8,7 @@ const SavedModal = ({ isOpen, onRequestClose }) => {
         router.push("/loginpage")
     }
     const handleRoutetoCreateacco1=()=>{
-        router.push("/createAcc01")
+        router.push("/accountCreation")
     }
 
     if (!isOpen) return null;

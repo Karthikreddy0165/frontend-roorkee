@@ -2,17 +2,18 @@ import { Formik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import * as Yup from "yup"; // Import Yup for validation
+import * as Yup from "yup";
 import { useFormData } from "../Context/FormContext";
 import loginperson from "../assets/image.png";
 import IndialImg from "../assets/ind2.png";
+import { FaSpinner } from "react-icons/fa"; // Import loading spinner
 
 const CreateAcc01 = () => {
   const router = useRouter();
   const { updateFormData } = useFormData();
   const [apiErrors, setApiErrors] = useState({ username: "", email: "" });
+  const [isLoading, setIsLoading] = useState(false); // State for loading
 
-  // Define validation schema
   const validationSchema = Yup.object().shape({
     username: Yup.string().required("Username is required"),
     email: Yup.string().email("Invalid email address").required("Email is required"),
@@ -57,8 +58,9 @@ const CreateAcc01 = () => {
             email: "",
             password: "",
           }}
-          validationSchema={validationSchema} // Add validation schema
+          validationSchema={validationSchema}
           onSubmit={(values, { setSubmitting }) => {
+            setIsLoading(true); // Start loading
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
@@ -79,18 +81,15 @@ const CreateAcc01 = () => {
               .then((response) => response.json())
               .then((result) => {
                 if (result.user) {
-                  // Clear any previous errors
                   setApiErrors({ username: "", email: "" });
                   updateFormData(values);
-                  router.push("/createAcc02");
+                  router.push("/personalDetails");
                 } else {
                   console.error(result);
-                  // Handle error message from the result
                   setApiErrors({
                     username: result.username ? result.username[0] : "",
                     email: result.email ? result.email[0] : "",
                   });
-                  // Clear errors after 3 seconds
                   setTimeout(() => {
                     setApiErrors({ username: "", email: "" });
                   }, 3000);
@@ -98,10 +97,10 @@ const CreateAcc01 = () => {
               })
               .catch((error) => {
                 console.error(error);
-                // Handle error
               })
               .finally(() => {
                 setSubmitting(false);
+                setIsLoading(false); // Stop loading
               });
           }}
         >
@@ -182,9 +181,13 @@ const CreateAcc01 = () => {
                 <button
                   className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
-                  disabled={formik.isSubmitting}
+                  disabled={formik.isSubmitting || isLoading}
                 >
-                  Continue
+                  {isLoading ? (
+                    <FaSpinner className="animate-spin h-5 w-5 mr-3 inline" />
+                  ) : (
+                    "Continue"
+                  )}
                 </button>
               </div>
             </form>
