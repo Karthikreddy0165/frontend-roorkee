@@ -1,25 +1,22 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useState, useContext } from "react";
 
 const FormContext = createContext();
 
-export const FormProvider = ({ children }) => {
-  const [formData, setFormData] = useState({});
+export const useFormData = () => useContext(FormContext);
 
-  const updateFormData = (newData) => {
-    setFormData((prevData) => ({ ...prevData, ...newData }));
+export const FormProvider = ({ children }) => {
+  const [formState, setFormState] = useState({});
+
+  const updateFormData = (newState) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      ...newState,
+    }));
   };
 
   return (
-    <FormContext.Provider value={{ formData, updateFormData }}>
+    <FormContext.Provider value={{ formData: formState, updateFormData }}>
       {children}
     </FormContext.Provider>
   );
-};
-
-export const useFormData = () => {
-  const context = useContext(FormContext);
-  if (!context) {
-    throw new Error('useFormData must be used within a FormProvider');
-  }
-  return context;
 };

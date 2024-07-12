@@ -8,9 +8,9 @@ import BeneficiaryDropdownMenu from "../components/BeneficiariesDropdown";
 import AgeDropdownMenu from "../components/AgeDropdown";
 import IncomeDropdownMenu from "../components/IncomeDropdown";
 import FundingByDropdownMenu from "../components/FundingBy";
+import { useTabContext } from "@/Context/TabContext";
 
-export default function Schemes() {
-  const [data, setData] = useState(null);
+export default function Schemes({ setTab }) {
   const [stateName, setStateName] = useState("");
   const [departmentName, setDepartmentName] = useState("");
   const [beneficiaryName, setBeneficiaryName] = useState("");
@@ -22,10 +22,16 @@ export default function Schemes() {
   const [selectedIncomes, setSelectedIncomes] = useState([]);
   const [selectedFunders, setSelectedFunders] = useState([]);
 
+  const [data, setData] = useState(null);
+  const { activeTab, searchQuery } = useTabContext(); // Accessing searchQuery from context
   useEffect(() => {
     const fetchState = async () => {
       try {
-        const response = await fetch("http://54.79.141.24:8000/api/schemes");
+        let apiUrl = "http://54.79.141.24:8000/api/schemes"
+        if (searchQuery) {
+              apiUrl += `/search/?q=${encodeURIComponent(searchQuery)}`;
+            }
+        const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -36,8 +42,8 @@ export default function Schemes() {
       }
     };
     fetchState();
-  }, []);
-
+  }, [activeTab, searchQuery]);
+  
   const [dropDownStates, setDropDownStates] = useState({
     dropDownOpen: false,
     departmentOpen: false,
@@ -86,7 +92,6 @@ export default function Schemes() {
     setDropDownStates((prevState) => {
       const newState = { ...prevState, [key]: !prevState[key] };
       if (!prevState[key]) {
-        // Close other dropdowns when opening a new one
         Object.keys(dropDownStates).forEach((dropdownKey) => {
           if (dropdownKey !== key) {
             newState[dropdownKey] = false;

@@ -42,7 +42,7 @@ const CreateAcc03 = () => {
   };
 
   const handlePage2Click = () => {
-    router.push("/createAcc02");
+    router.push("/personalDetails");
   };
 
   return (
