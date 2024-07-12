@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Schemes from "./Schemes"; // Adjust path as per your project structure
+import JobOpenings from "./JobOpenings"; // Adjust path as per your project structure
+import Scholarships from "./Scholarships"; // Adjust path as per your project structure
 
 export default function Tabs(props) {
   const router = useRouter();
@@ -9,13 +12,11 @@ export default function Tabs(props) {
   useEffect(() => {
     if (tab) {
       setActiveTab(tab);
-      props.setComponent(tab);
     }
   }, [tab]);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
-    props.setComponent(tab);
   };
 
   const getButtonClass = (tabName) => {
@@ -48,7 +49,6 @@ export default function Tabs(props) {
         />
       </div>
 
-      
       <div className="flex justify-center items-center gap-[15px]">
         <button
           className={getButtonClass("Schemes")}
@@ -76,6 +76,11 @@ export default function Tabs(props) {
         </button>
       </div>
       <hr />
+
+      {/* Render the corresponding component based on activeTab */}
+      {activeTab === "Schemes" && <Schemes {...props} />}
+      {activeTab === "Job Openings" && <JobOpenings {...props} />}
+      {activeTab === "Scholarships" && <Scholarships {...props} />}
     </div>
   );
 }

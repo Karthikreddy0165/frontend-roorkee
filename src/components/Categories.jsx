@@ -13,6 +13,10 @@ export default function Categories(props) {
     if (props.data) {
       let filtered = props.data;
 
+      if(props.selectedState && props.selectedState.length > 0){
+        filtered = filtered.filter(item => props.selectedState.includes(item.department.state));
+      }
+
       if (props.selectedDepartments && props.selectedDepartments.length > 0) {
         filtered = filtered.filter(item => props.selectedDepartments.includes(item.department.department_name));
       }
@@ -40,7 +44,7 @@ export default function Categories(props) {
       // Set filtered data after applying all filters
       setFilteredData(filtered);
     }
-  }, [props.data, props.selectedDepartments, props.selectedBeneficiaries, props.selectedFunders]);
+  }, [props.data, props.selectedState, props.selectedDepartments, props.selectedBeneficiaries, props.selectedFunders]);
 
 
   const handleClick = (scheme_id) => {
