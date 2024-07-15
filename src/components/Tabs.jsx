@@ -1,5 +1,10 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { useRouter } from "next/router";
+
+import Schemes from "./Schemes"; // Adjust path as per your project structure
+import JobOpenings from "./JobOpenings"; // Adjust path as per your project structure
+import Scholarships from "./Scholarships"; // Adjust path as per your project structure
+
 import { useTabContext } from "@/Context/TabContext";
 
 function SearchInput({ searchQuery, handleSearch }) {
@@ -36,13 +41,11 @@ export default function Tabs(props) {
   useEffect(() => {
     if (tab) {
       setActiveTab(tab);
-      props.setComponent(tab);
     }
   }, [tab]);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
-    props.setComponent(tab);
   };
 
   const handleSearch = (event) => {
@@ -91,6 +94,11 @@ export default function Tabs(props) {
         </button>
       </div>
       <hr />
+
+      {/* Render the corresponding component based on activeTab */}
+      {activeTab === "Schemes" && <Schemes {...props} />}
+      {activeTab === "Job Openings" && <JobOpenings {...props} />}
+      {activeTab === "Scholarships" && <Scholarships {...props} />}
     </div>
   );
 }
