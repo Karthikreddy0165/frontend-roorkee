@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Categories from "../components/Categories";
+
 export default function JopOpenings(props) {
   useEffect(() => {
     const fetchState = async () => {

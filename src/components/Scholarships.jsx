@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import Categories from "../components/Categories";
+
 export default function Scholarships(props) {
   useEffect(() => {
     const fetchState = async () => {
       try {
         props.setData(null);
         const response = await fetch("http://54.79.141.24:8000/api/schemes");
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

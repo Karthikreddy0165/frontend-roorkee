@@ -2,12 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
 import Categories from "../components/Categories";
+
 export default function Schemes(props) {
   useEffect(() => {
     const fetchState = async () => {
       try {
         props.setData(null);
         const response = await fetch("http://54.79.141.24:8000/api/schemes");
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -54,6 +56,7 @@ export default function Schemes(props) {
       if (!prevState[key]) {
         // Close other dropdowns when opening a new one
         Object.keys(props.dropDownStates).forEach((dropdownKey) => {
+
           if (dropdownKey !== key) {
             newState[dropdownKey] = false;
           }
