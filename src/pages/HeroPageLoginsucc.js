@@ -9,15 +9,18 @@ import Scholarships from "@/components/Scholarships";
 import Tabs from "@/components/Tabs";
 import { useEffect, useState } from "react";
 import Schemes from "../components/Schemes";
+import Saved from "@/components/SavedForLoginUser";
 
 const HeroPageAfterLogin = () => {
-  const [component, setComponent] = useState("Schemes"); // Changed default component to "Schemes"
-  const [componentToRender, setComponentToRender] = useState(<Schemes />); // Set default component to render here
+  const [component, setComponent] = useState("Schemes");
+  const [componentToRender, setComponentToRender] = useState(<Schemes/>);
 
   useEffect(() => {
+    console.log("Component to render:", component);
     if (component === "Schemes") setComponentToRender(<Schemes />);
     else if (component === "Job Openings") setComponentToRender(<JobOpenings />);
     else if (component === "Scholarships") setComponentToRender(<Scholarships />);
+    else if (component === "Saved") setComponentToRender(<Saved />);
   }, [component]);
 
   return (

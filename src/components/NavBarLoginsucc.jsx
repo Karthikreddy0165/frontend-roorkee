@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MdExpandMore } from "react-icons/md";
 import { useRouter } from "next/router";
 import { IoIosArrowDown } from "react-icons/io";
-import { useAuth } from "@/pages/AuthContext";
+import { useAuth } from "@/Context/AuthContext";
 import ProfileModal from "@/pages/model/profileModal";
 
 const NavBar = () => {
