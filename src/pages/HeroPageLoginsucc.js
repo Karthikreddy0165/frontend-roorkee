@@ -1,31 +1,80 @@
-import NavBarAfterLogin from "@/components/NavBarLoginsucc";
+import NavBar from "@/components/NavBarLoginsucc";
 import Image from "next/image";
 import MainPageImage from ".././assets/backgroundimg.png";
-import BackButton from "@/components/BackButtonLoginSucc";
+import BackButton from "@/components/BackButton";
 import { IoIosArrowDown } from "react-icons/io";
-
-import JobOpenings from "@/components/JobOpenings";
-import Scholarships from "@/components/Scholarships";
+import { IoIosArrowUp } from "react-icons/io";
 import Tabs from "@/components/Tabs";
-import { useEffect, useState } from "react";
-import Schemes from "../components/Schemes";
-import Saved from "@/components/SavedForLoginUser";
+import { useEffect, useRef, useState } from "react";
+import DropdownMenu from "../components/DropdownMenu";
+import DepartmentDropdownMenu from "../components/DepartmentDropDown";
+import BeneficiaryDropdownMenu from "../components/BeneficiariesDropdown";
+import AgeDropdownMenu from "../components/AgeDropdown";
+import IncomeDropdownMenu from "../components/IncomeDropdown";
+import FundingByDropdownMenu from "../components/FundingBy";
+
 
 const HeroPageAfterLogin = () => {
-  const [component, setComponent] = useState("Schemes");
-  const [componentToRender, setComponentToRender] = useState(<Schemes/>);
+  const [data, setData] = useState(null);
+  const [stateName, setStateName] = useState("");
+  const [departmentName, setDepartmentName] = useState("");
+  const [beneficiaryName, setBeneficiaryName] = useState("");
+  const [funderName, setFunderName] = useState("");
+
+  const [selectedState, setSelectedState] = useState([]);
+  const [selectedDepartments, setSelectedDepartments] = useState([]);
+  const [selectedBeneficiaries, setSelectedBeneficiaries] = useState([]);
+  const [selectedAges, setSelectedAges] = useState([]);
+  const [selectedIncomes, setSelectedIncomes] = useState([]);
+  const [selectedFunders, setSelectedFunders] = useState([]);
+
+  const dropdownRef = useRef();
+  const departmentDropdownRef = useRef();
+  const beneficiaryDropdownRef = useRef();
+  const ageDropdownRef = useRef();
+  const incomeDropdownRef = useRef();
+  const funderDropdownRef = useRef();
+
+  const [dropDownStates, setDropDownStates] = useState({
+    dropDownOpen: false,
+    departmentOpen: false,
+    beneficiaryOpen: false,
+    ageOpen: false,
+    incomeOpen: false,
+    fundersOpen: false,
+  });
 
   useEffect(() => {
-    console.log("Component to render:", component);
-    if (component === "Schemes") setComponentToRender(<Schemes />);
-    else if (component === "Job Openings") setComponentToRender(<JobOpenings />);
-    else if (component === "Scholarships") setComponentToRender(<Scholarships />);
-    else if (component === "Saved") setComponentToRender(<Saved />);
-  }, [component]);
+    setStateName('');
+    setDepartmentName('');
+    setBeneficiaryName('');
+    setFunderName('');
+    setSelectedDepartments([]);
+    setSelectedBeneficiaries([]);
+    setSelectedAges([]);
+    setSelectedIncomes([]);
+    setSelectedFunders([]);
+  },[data])
+
+  const toggleDropdown = (key) => {
+      setDropDownStates((prevState) => {
+      const newState = { ...prevState, [key]: !prevState[key] };
+      if (!prevState[key]) {
+        // Close other dropdowns when opening a new one
+        Object.keys(dropDownStates).forEach((dropdownKey) => {
+          if (dropdownKey !== key) {
+            newState[dropdownKey] = false;
+          }
+        });
+      }
+      return newState;
+    });
+  };
+
 
   return (
     <>
-      <NavBarAfterLogin/>
+      <NavBar/>
       <BackButton />
       <div
         className="relative w-80vw mx-auto mb-8 flex justify-center items-center "
@@ -51,31 +100,64 @@ const HeroPageAfterLogin = () => {
             className="flex justify-between items-center mb-4"
             >
               <h1 style={{ margin: 0 }}>Filter by</h1>
-              <p className="text-[#3431BB]" style={{ margin: 0 }}>
-                Clear all filter
-              </p>
+              {/* <button className="text-[#3431BB]" style={{ margin: 0 }}>
+                Clear all filters
+              </button> */}
             </div>
             <hr />
 
             {/* filter categories */}
             <div className="mt-2">
               {/* Each filter category */}
-              <div className="flex justify-between items-center mb-4">
-                <span>State</span>
-                <IoIosArrowDown className="text-[#000]" /> 
+              <div className="flex justify-between items-center mb-4" onClick={() => toggleDropdown("dropDownOpen")} id="stateBtn">
+                <span>{stateName != "" ? (<span> State <span className = "w-[20px] h-[20px] bg-dropdown-blue text-onclick-btnblue text-[12px] text-semibold rounded-[50%]">{stateName}</span></span>) : "State"}</span>
+                {dropDownStates.dropDownOpen ? <IoIosArrowUp className="text-[#000]"/> : <IoIosArrowDown className="text-[#000]" /> }
               </div>
-              <div className="flex justify-between items-center mb-4">
-                <span>Department</span>
-                <IoIosArrowDown className="text-[#000]" /> 
+              {dropDownStates.dropDownOpen && <DropdownMenu 
+              ref={dropdownRef} 
+              selectedState = {selectedState}
+              setStateName = {setStateName}
+              setSelectedState = {setSelectedState}
+              data = {data}/>}
+              <div className="flex justify-between items-center mb-4" onClick={() => toggleDropdown("departmentOpen")} id="departmentBtn">
+              <span>{departmentName != "" ? (<span> Department <span className = "w-[20px] h-[20px] bg-dropdown-blue text-onclick-btnblue text-[12px] text-semibold rounded-[50%]">{departmentName}</span></span>) : "Department"}</span>
+                {dropDownStates.departmentOpen? <IoIosArrowUp className="text-[#000]" />:<IoIosArrowDown className="text-[#000]" /> }
               </div>
-              <div className="flex justify-between items-center mb-4">
-                <span>Funding by</span>
-                <IoIosArrowDown className="text-[#000]" /> 
+              {dropDownStates.departmentOpen && (
+                  <DepartmentDropdownMenu
+                    ref={departmentDropdownRef}
+                    selectedDepartments={selectedDepartments}
+                    setSelectedDepartments={setSelectedDepartments}
+                    setDepartmentName={setDepartmentName}
+                    data = {data}
+                  />
+                )}
+              <div className="flex justify-between items-center mb-4" onClick={() => toggleDropdown("fundersOpen")} id="fundingbyBtn">
+                <span>{funderName? `Funding by ${funderName}` : "Funding by"}</span>
+                {dropDownStates.fundersOpen? <IoIosArrowUp className="text-[#000]"/> : <IoIosArrowDown className="text-[#000]" /> }
               </div>
-              <div className="flex justify-between items-center mb-4">
-                <span>Beneficiaries</span>
-                <IoIosArrowDown className="text-[#000]" /> 
+              {dropDownStates.fundersOpen && (
+                  <FundingByDropdownMenu
+                    ref={funderDropdownRef}
+                    selectedFunders={selectedFunders}
+                    setSelectedFunders={setSelectedFunders}
+                    setFunderName={setFunderName}
+                    data = {data}
+                  />
+                )}
+              <div className="flex justify-between items-center mb-4" onClick={() => toggleDropdown("beneficiaryOpen")} id="beneficiaryBtn">
+                <span>{beneficiaryName?`Beneficiaries ${beneficiaryName}` :"Beneficiaries"}</span>
+                {dropDownStates.beneficiaryOpen ? <IoIosArrowUp className="text-[#000]"/> : <IoIosArrowDown className="text-[#000]" /> }
               </div>
+              {dropDownStates.beneficiaryOpen && (
+                  <BeneficiaryDropdownMenu
+                    ref={beneficiaryDropdownRef}
+                    selectedBeneficiaries={selectedBeneficiaries}
+                    setSelectedBeneficiaries={setSelectedBeneficiaries}
+                    setBeneficiaryName={setBeneficiaryName}
+                    data = {data}
+                  />
+                )}
               <div className="flex justify-between items-center mb-4">
                 <span>Eligibility criteria</span>
                 <IoIosArrowDown className="text-[#000]" /> 
@@ -94,9 +176,38 @@ const HeroPageAfterLogin = () => {
 
           <div style={{ flex: "1 0 75%", maxWidth: "75%" }}>
             <div>
-              <Tabs setComponent={setComponent} />
+              <Tabs 
+              data = {data}
+              setData = {setData}
+              tateName = {stateName}
+              setStateName = {setStateName}
+              departmentName = {departmentName}
+              setDepartmentName = {setDepartmentName}
+              beneficiaryName = {beneficiaryName}
+              setBeneficiaryName = {setBeneficiaryName}
+              funderName = {funderName}
+              setFunderName = {setFunderName}
+              selectedDepartments = {selectedDepartments}
+              setSelectedDepartments = {setSelectedDepartments}
+              selectedBeneficiaries = {selectedBeneficiaries}
+              setSelectedBeneficiaries = {setSelectedBeneficiaries}
+              selectedState = {selectedState}
+              selectedAges = {selectedAges}
+              setSelectedAges = {setSelectedAges}
+              selectedIncomes = {selectedIncomes}
+              setSelectedIncomes = {setSelectedIncomes}
+              selectedFunders = {selectedFunders}
+              setSelectedFunders = {setSelectedFunders}
+              dropDownStates = {dropDownStates}
+              setDropDownStates = {setDropDownStates}
+              dropdownRef = {dropdownRef}
+              departmentDropdownRef = {departmentDropdownRef}
+              beneficiaryDropdownRef = {beneficiaryDropdownRef}
+              ageDropdownRef = {ageDropdownRef}
+              incomeDropdownRef = {incomeDropdownRef}
+              funderDropdownRef = {funderDropdownRef}
+              />
             </div>
-            <div>{componentToRender}</div>
           </div>
         </div>
       </div>
