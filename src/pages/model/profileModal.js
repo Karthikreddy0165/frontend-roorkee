@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
-import { useAuth } from "../AuthContext";
+import { useAuth } from "../../Context/AuthContext";
 
 const ProfileModal = ({ onClose }) => {
   const { authState } = useAuth(); // Get the authenticated user's information from context

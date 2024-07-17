@@ -1,16 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import IndialImg from "../assets/ind2.png";
 import { Formik } from "formik";
 import loginperson from "../assets/image.png";
-import { FaAngleDown, FaSpinner } from "react-icons/fa"; // Import loading spinner
+import { FaAngleDown, FaSpinner } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { useFormData } from "../Context/FormContext";
+import { useAuth } from "../Context/AuthContext";
 
 const CreateAcc02 = () => {
   const router = useRouter();
   const { updateFormData } = useFormData();
-  const [isLoading, setIsLoading] = useState(false); // State for loading
+  const { token } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    console.log("User token:", token);
+  }, [token]);
+
+  const handleSubmit = (values, { setSubmitting }) => {
+    setIsLoading(true);
+
+    const requestBody = {};
+    Object.keys(values).forEach((key) => {
+      if (values[key]) {
+        requestBody[key] = values[key];
+      }
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(requestBody),
+      redirect: "follow",
+    };
+
+    fetch("http://54.79.141.24:8000/api/profile", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        router.push("/proffesionalDetails");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      })
+      .finally(() => {
+        setSubmitting(false);
+        setIsLoading(false);
+      });
+  };
+
+  const handleSkip = () => {
+    router.push("/proffesionalDetails");
+  };
+
 
   return (
     <div className="flex h-screen overflow-hidden -mb-6">
@@ -52,14 +98,25 @@ const CreateAcc02 = () => {
             community: "",
             state: "",
           }}
-          onSubmit={(values, { setSubmitting }) => {
-            setIsLoading(true); // Start loading
-            updateFormData(values);
-            setTimeout(() => { // Simulate API call delay
-              setIsLoading(false); // Stop loading
-              router.push("/proffesionalDetails");
-              setSubmitting(false);
-            }, 2000); // Change this to match the actual API call duration
+          onSubmit={handleSubmit}
+          validate={(values) => {
+            const errors = {};
+            if (!values.name) {
+              errors.name = "Name is required.";
+            }
+            if (!values.age) {
+              errors.age = "Age is required.";
+            }
+            if (!values.gender) {
+              errors.gender = "Gender is required.";
+            }
+            if (!values.community) {
+              errors.community = "Community is required.";
+            }
+            if (!values.state) {
+              errors.state = "State is required.";
+            }
+            return errors;
           }}
         >
           {(formik) => (
@@ -86,6 +143,9 @@ const CreateAcc02 = () => {
                   onBlur={formik.handleBlur}
                   value={formik.values.name}
                 />
+                {formik.errors.name && formik.touched.name && (
+                  <div className="text-red-500 text-xs mt-2">{formik.errors.name}</div>
+                )}
               </div>
               <div className="flex mb-4">
                 <div className="w-1/2 mr-4">
@@ -104,6 +164,9 @@ const CreateAcc02 = () => {
                     onBlur={formik.handleBlur}
                     value={formik.values.age}
                   />
+                  {formik.errors.age && formik.touched.age && (
+                    <div className="text-red-500 text-xs mt-2">{formik.errors.age}</div>
+                  )}
                 </div>
                 <div className="w-1/2 relative">
                   <label
@@ -126,60 +189,83 @@ const CreateAcc02 = () => {
                       <option value="other">Other</option>
                     </select>
                     <FaAngleDown className="absolute right-3 top-3 pointer-events-none" />
+                    {formik.errors.gender && formik.touched.gender && (
+                      <div className="text-red-500 text-xs mt-2">{formik.errors.gender}</div>
+                    )}
                   </div>
                 </div>
               </div>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="community"
-                >
-                  Community
-                </label>
-                <select
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="community"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.community}
-                >
-                  <option value="">Select Community</option>
-                  <option value="gen">General</option>
-                  <option value="obc">OBC</option>
-                  <option value="sc">SC</option>
-                  <option value="st">ST</option>
-                </select>
-              </div>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="state"
-                >
-                  State
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="state"
-                  type="text"
-                  placeholder="Enter your state"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.state}
-                />
-              </div>
-              <div className="absolute bottom-[200px]">
-                <span className="mr-2 pr-[350px]">2/3</span>
-                <button
-                  className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
-                  type="submit"
-                  disabled={formik.isSubmitting || isLoading}
-                >
-                  {isLoading ? (
-                    <FaSpinner className="animate-spin h-5 w-5 mr-3 inline" />
-                  ) : (
-                    "Continue"
+              <div className="flex mb-4">
+                <div className="w-1/2 mr-4 relative">
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="community"
+                  >
+                    Community
+                  </label>
+                  <div className="relative">
+                    <select
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      id="community"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.community}
+                    >
+                      <option value="">Select Community</option>
+                      <option value="gen">General</option>
+                      <option value="obc">OBC</option>
+                      <option value="sc">SC</option>
+                      <option value="st">ST</option>
+                    </select>
+                    <FaAngleDown className="absolute right-3 top-3 pointer-events-none" />
+                    {formik.errors.community && formik.touched.community && (
+                      <div className="text-red-500 text-xs mt-2">{formik.errors.community}</div>
+                    )}
+                  </div>
+                </div>
+                <div className="w-1/2">
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="state"
+                  >
+                    State
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="state"
+                    type="text"
+                    placeholder="Enter your state"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.state}
+                  />
+                  {formik.errors.state && formik.touched.state && (
+                    <div className="text-red-500 text-xs mt-2">{formik.errors.state}</div>
                   )}
-                </button>
+                </div>
+              </div>
+              <div className="flex items-center justify-between absolute bottom-[200px] w-full px-4">
+                <span className="text-gray-600">2/3</span>
+                <div className="flex items-center gap-4">
+                  <button
+                    className="text-gray-600 hover:text-gray-800 focus:outline-none"
+                    type="button"
+                    onClick={handleSkip}
+                  >
+                    Skip
+                  </button>
+                  <button
+                    className="bg-[#3431BB] hover:bg text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
+                    type="submit"
+                    disabled={formik.isSubmitting}
+                  >
+                    {isLoading ? (
+                      <FaSpinner className="animate-spin" />
+                    ) : (
+                      "Continue"
+                    )}
+                  </button>
+                </div>
               </div>
             </form>
           )}

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import Image from "next/image";
-import IndialImg from "../assets/ind2.png";
 import { Formik } from "formik";
-import loginperson from "../assets/image.png";
-import { FaAngleRight } from "react-icons/fa6";
+import Image from "next/image";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { FaSpinner } from "react-icons/fa";
-import { useAuth } from "./AuthContext";
+import { FaAngleRight } from "react-icons/fa6";
+import { useAuth } from "../Context/AuthContext";
+import loginperson from "../assets/image.png";
+import IndialImg from "../assets/ind2.png";
 
 const LoginPage = () => {
   const router = useRouter();

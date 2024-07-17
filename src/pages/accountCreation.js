@@ -3,24 +3,28 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import * as Yup from "yup";
-import { useFormData } from "../Context/FormContext"; // Correct import path
+import { useFormData } from "../Context/FormContext";
 import loginperson from "../assets/image.png";
 import IndialImg from "../assets/ind2.png";
-import { FaSpinner } from "react-icons/fa"; // Import loading spinner
-import { useAuth } from "@/pages/AuthContext"; // Import the Auth context
+import { FaSpinner, FaEye, FaEyeSlash } from "react-icons/fa";
+import { useAuth } from "@/Context/AuthContext";
 
 const CreateAcc01 = () => {
   const router = useRouter();
   const { updateFormData } = useFormData();
-  const { login } = useAuth(); // Get the login function from the context
-  const [apiErrors, setApiErrors] = useState({ username: "", email: "" });
-  const [isLoading, setIsLoading] = useState(false); // State for loading
+  const { login } = useAuth();
+  const [apiErrors, setApiErrors] = useState({ email: "", password: "" });
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required("Username is required"),
     email: Yup.string().email("Invalid email address").required("Email is required"),
     password: Yup.string().required("Password is required"),
   });
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="flex h-screen overflow-hidden -mb-6">
@@ -56,7 +60,6 @@ const CreateAcc01 = () => {
       <div className="w-1/2 flex items-center justify-center">
         <Formik
           initialValues={{
-            username: "",
             email: "",
             password: "",
           }}
@@ -67,7 +70,6 @@ const CreateAcc01 = () => {
             myHeaders.append("Content-Type", "application/json");
 
             const raw = JSON.stringify({
-              username: values.username,
               email: values.email,
               password: values.password,
             });
@@ -79,22 +81,22 @@ const CreateAcc01 = () => {
               redirect: "follow",
             };
 
-            fetch("http://3.25.199.183:8000/api/register/", requestOptions)
+            fetch("http://54.79.141.24:8000/api/register/", requestOptions)
               .then((response) => response.json())
               .then((result) => {
                 if (result.user) {
-                  setApiErrors({ username: "", email: "" });
+                  setApiErrors({ email: "", password: "" });
                   updateFormData(values);
                   login(result.token, result.user); // Update authState
                   router.push("/personalDetails");
                 } else {
                   console.error(result);
                   setApiErrors({
-                    username: result.username ? result.username[0] : "",
                     email: result.email ? result.email[0] : "",
+                    password: result.password ? result.password[0] : "",
                   });
                   setTimeout(() => {
-                    setApiErrors({ username: "", email: "" });
+                    setApiErrors({ email: "", password: "" });
                   }, 3000);
                 }
               })
@@ -113,29 +115,6 @@ const CreateAcc01 = () => {
               onSubmit={formik.handleSubmit}
             >
               <h1 className="text-2xl font-bold mb-4">Create an Account</h1>
-              <div>
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="username"
-                >
-                  User Name
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4"
-                  id="username"
-                  type="text"
-                  placeholder="Your username"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.username}
-                />
-                {formik.touched.username && formik.errors.username ? (
-                  <div className="text-red-500 text-sm">{formik.errors.username}</div>
-                ) : null}
-                {apiErrors.username && (
-                  <div className="text-red-500 text-sm">{apiErrors.username}</div>
-                )}
-              </div>
               <div>
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
@@ -159,7 +138,7 @@ const CreateAcc01 = () => {
                   <div className="text-red-500 text-sm">{apiErrors.email}</div>
                 )}
               </div>
-              <div className="mt-6">
+              <div className="relative mt-6">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="password"
@@ -169,12 +148,15 @@ const CreateAcc01 = () => {
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                   id="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
                 />
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-4" onClick={togglePasswordVisibility}>
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </div>
                 {formik.touched.password && formik.errors.password ? (
                   <div className="text-red-500 text-sm">{formik.errors.password}</div>
                 ) : null}
@@ -182,7 +164,7 @@ const CreateAcc01 = () => {
               <div className="absolute bottom-[200px]">
                 <span className="mr-2 pr-[350px]">1/3</span>
                 <button
-                  className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
+                  className="bg-[#3431BB] hover:bg text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
                   disabled={formik.isSubmitting || isLoading}
                 >
