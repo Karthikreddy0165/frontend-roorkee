@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Schemes from "./Schemes"; // Adjust path as per your project structure
 import JobOpenings from "./JobOpenings"; // Adjust path as per your project structure
 import Scholarships from "./Scholarships"; // Adjust path as per your project structure
-
+import Saved from "./savedForLoginuser";
 import { useTabContext } from "@/Context/TabContext";
 
 function SearchInput({ searchQuery, handleSearch }) {
@@ -99,6 +99,8 @@ export default function Tabs(props) {
       {activeTab === "Schemes" && <Schemes {...props} />}
       {activeTab === "Job Openings" && <JobOpenings {...props} />}
       {activeTab === "Scholarships" && <Scholarships {...props} />}
+      {activeTab === "Saved" && <Saved {...props} />}
+      
     </div>
   );
 }
