@@ -100,28 +100,29 @@ const HeroPageWithoutLogin = () => {
             className="flex justify-between items-center mb-4"
             >
               <h1 style={{ margin: 0 }}>Filter by</h1>
-              {/* <button className="text-[#3431BB]" style={{ margin: 0 }}>
+              <button className="text-[#3431BB]" style={{ margin: 0 }}>
                 Clear all filters
-              </button> */}
+              </button>
             </div>
             <hr />
 
             {/* filter categories */}
             <div className="mt-2">
               {/* Each filter category */}
-              <div className="flex justify-between items-center mb-4" onClick={() => toggleDropdown("dropDownOpen")} id="stateBtn">
-                <span>{stateName != "" ? (<span> State <span className = "w-[20px] h-[20px] bg-dropdown-blue text-onclick-btnblue text-[12px] text-semibold rounded-[50%]">{stateName}</span></span>) : "State"}</span>
-                {dropDownStates.dropDownOpen ? <IoIosArrowUp className="text-[#000]"/> : <IoIosArrowDown className="text-[#000]" /> }
-              </div>
+              <div className="flex justify-between items-center mb-4" onClick={() => toggleDropdown("dropDownOpen")} id="stateBtn"> <span>{stateName != "" ? (<span className="inline-flex items-center"> State <span className="w-5 h-5 bg-dropdown-blue text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{stateName}</span></span>) : "State"}
+            </span>
+            {dropDownStates.dropDownOpen ? <IoIosArrowUp className="text-black"/> : <IoIosArrowDown className="text-black" /> }
+          </div>
               {dropDownStates.dropDownOpen && <DropdownMenu 
-              ref={dropdownRef} 
-              selectedState = {selectedState}
-              setStateName = {setStateName}
-              setSelectedState = {setSelectedState}
-              data = {data}/>}
+                ref={dropdownRef} 
+                selectedState = {selectedState}
+                setStateName = {setStateName}
+                setSelectedState = {setSelectedState}
+                data = {data}
+              />}
               <div className="flex justify-between items-center mb-4" onClick={() => toggleDropdown("departmentOpen")} id="departmentBtn">
-              <span>{departmentName != "" ? (<span> Department <span className = "w-[20px] h-[20px] bg-dropdown-blue text-onclick-btnblue text-[12px] text-semibold rounded-[50%]">{departmentName}</span></span>) : "Department"}</span>
-                {dropDownStates.departmentOpen? <IoIosArrowUp className="text-[#000]" />:<IoIosArrowDown className="text-[#000]" /> }
+              <span>{departmentName != "" ? (<span className="inline-flex items-center"> Department <span className="w-5 h-5 bg-dropdown-blue text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{departmentName}</span></span>) : "Department"}</span>
+              {dropDownStates.departmentOpen? <IoIosArrowUp className="text-[#000]" />:<IoIosArrowDown className="text-[#000]" /> }
               </div>
               {dropDownStates.departmentOpen && (
                   <DepartmentDropdownMenu
@@ -133,8 +134,8 @@ const HeroPageWithoutLogin = () => {
                   />
                 )}
               <div className="flex justify-between items-center mb-4" onClick={() => toggleDropdown("fundersOpen")} id="fundingbyBtn">
-                <span>{funderName? `Funding by ${funderName}` : "Funding by"}</span>
-                {dropDownStates.fundersOpen? <IoIosArrowUp className="text-[#000]"/> : <IoIosArrowDown className="text-[#000]" /> }
+              <span>{funderName != "" ? (<span className="inline-flex items-center"> Funding by <span className="w-5 h-5 bg-dropdown-blue text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{funderName}</span></span>) : "Funding by"}</span>
+              {dropDownStates.fundersOpen? <IoIosArrowUp className="text-[#000]"/> : <IoIosArrowDown className="text-[#000]" /> }
               </div>
               {dropDownStates.fundersOpen && (
                   <FundingByDropdownMenu
@@ -146,8 +147,8 @@ const HeroPageWithoutLogin = () => {
                   />
                 )}
               <div className="flex justify-between items-center mb-4" onClick={() => toggleDropdown("beneficiaryOpen")} id="beneficiaryBtn">
-                <span>{beneficiaryName?`Beneficiaries ${beneficiaryName}` :"Beneficiaries"}</span>
-                {dropDownStates.beneficiaryOpen ? <IoIosArrowUp className="text-[#000]"/> : <IoIosArrowDown className="text-[#000]" /> }
+              <span>{beneficiaryName != "" ? (<span className="inline-flex items-center">Beneficiaries <span className="w-5 h-5 bg-dropdown-blue text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{beneficiaryName}</span></span>) : "Beneficiaries"}</span>
+              {dropDownStates.beneficiaryOpen ? <IoIosArrowUp className="text-[#000]"/> : <IoIosArrowDown className="text-[#000]" /> }
               </div>
               {dropDownStates.beneficiaryOpen && (
                   <BeneficiaryDropdownMenu

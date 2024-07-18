@@ -6,7 +6,7 @@ export default function JopOpenings(props) {
     const fetchState = async () => {
       try {
         props.setData(null);
-        const response = await fetch("http://54.79.141.24:8000/api/schemes");
+        const response = await fetch("http://52.65.93.83:8080/api/schemes");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
