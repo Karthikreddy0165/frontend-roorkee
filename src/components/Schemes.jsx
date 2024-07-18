@@ -10,6 +10,7 @@ export default function Schemes(props) {
         props.setData(null);
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/schemes`);
 
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

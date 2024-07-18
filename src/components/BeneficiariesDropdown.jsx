@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
-  const BeneficiariesDropdownMenu = React.forwardRef(({ selectedBeneficiaries, setSelectedBeneficiaries, setBeneficiaryName, data }, ref) => {
-    const [isShow, setIsShow] = useState(false);
-    const categories = data
-  .flatMap(item => item.beneficiaries ? item.beneficiaries.flatMap(beneficiary => beneficiary.beneficiary_type.split(', ').map(type => type.trim())) : [])
-  .filter(beneficiary => beneficiary !== null && beneficiary !== undefined);
-  const uniqueCategories = [...new Set(categories)];
-  
-    const toggleShow = () => {
-      setIsShow(!isShow);
-    };
-  
-    const handleOptionChange = (event) => {
-      const { checked, value } = event.target;
-      setSelectedBeneficiaries(prevOptions => {
+const BeneficiariesDropdownMenu = React.forwardRef(({ selectedBeneficiaries, setSelectedBeneficiaries, setBeneficiaryName, data }, ref) => {
+  const [isShow, setIsShow] = useState(false);
+  const categories = data
+.flatMap(item => item.beneficiaries ? item.beneficiaries.flatMap(beneficiary => beneficiary.beneficiary_type.split(', ').map(type => type.trim())) : [])
+.filter(beneficiary => beneficiary !== null && beneficiary !== undefined);
+const uniqueCategories = [...new Set(categories)];
+
+  const toggleShow = () => {
+    setIsShow(!isShow);
+  };
+
+  const handleOptionChange = (event) => {
+    const { checked, value } = event.target;
+    setSelectedBeneficiaries(prevOptions => {
         if (checked) {
           return [...prevOptions, value];
         } else {
@@ -39,6 +39,7 @@ import React, { useEffect, useState } from 'react';
         return {
           top: `${top + window.scrollY + 31}px`,
           left: `${left + window.scrollX}px`,
+          width: `300px`,
         };
       }
       return {}; // Return a default position or an empty object if the button is not found
@@ -69,18 +70,24 @@ import React, { useEffect, useState } from 'react';
     }, [selectedBeneficiaries])
   
       return (
-        <div style={dropdownStyle} className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0" ref={ref}>
-          <ul className="flex flex-col font-sans list-none p-0 m-0 gap-0 pb-[18px]">
-            {uniqueCategories.map((item, index) => (
-              <li key={item + index} className="flex items-center justify-between hover:bg-gray-100 h-9 p-[8px] cursor-pointer hover:rounded-[8px]" onClick={() => handleItemClick(item)}>
-                {item}
-                <input type="checkbox" value={item} onChange={handleOptionChange} checked={selectedBeneficiaries.includes(item)} className="ml-10 custom-checkbox pointer-events-none" />
-              </li>
-            ))}
-          </ul>
+        <div style={dropdownStyle} className="text-[#616161] bg-[rgb(255,255,255)] flex flex-col whitespace-wrap z-50 text-[14px] mt-0 ml-[-30px]" ref={ref}>
+        <ul className="flex flex-col font-sans list-none p-0 m-0 gap-0 pb-[18px]">
+        {uniqueCategories.map((item, index) => (
+          item !== "" && (
+          <li key={item + index} className="flex items-center justify-between hover:bg-gray-100 p-[8px] cursor-pointer hover:rounded-[8px]" onClick={() => handleItemClick(item)}>
+          <div>
+          <p className="leading-5 overflow-hidden overflow-ellipsis line-clamp-2 max-h-10">
+            {item}
+          </p>
           </div>
+          <div className='w-[16.5] h-[16.5]'>
+          <input type="checkbox" value={item} onChange={handleOptionChange} checked={selectedBeneficiaries.includes(item)} className="ml-10 custom-checkbox pointer-events-none w-full h-full" />
+          </div>
+        </li>
+      )))}
+      </ul>
+    </div>
       );
-  
     }
   );
   
