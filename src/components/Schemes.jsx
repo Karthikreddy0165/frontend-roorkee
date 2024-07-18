@@ -1,84 +1,42 @@
-import React, { useState, useRef, useEffect } from "react";
-import { MdKeyboardArrowDown } from "react-icons/md";
-import { IoMdAdd } from "react-icons/io";
-import Categories from "../components/Categories";
 
-export default function Schemes(props) {
+import React, { useEffect } from "react";
+import Categories from "./Categories";
+
+export default function Schemes({ searchQuery, setData, ...props }) {
   useEffect(() => {
     const fetchState = async () => {
       try {
-        props.setData(null);
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/schemes`);
+        setData(null);
+        let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}api/schemes`;
+        if (searchQuery) {
+          url += `/search/?q=${searchQuery}`;
+        }
 
+        const response = await fetch(url);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        props.setData(data);
+        setData(data);
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
     };
     fetchState();
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        !props.dropdownRef.current?.contains(event.target) &&
-        !props.departmentDropdownRef.current?.contains(event.target) &&
-        !props.beneficiaryDropdownRef.current?.contains(event.target) &&
-        !props.ageDropdownRef.current?.contains(event.target) &&
-        !props.incomeDropdownRef.current?.contains(event.target) &&
-        !props.funderDropdownRef.current?.contains(event.target) &&
-        !event.target.closest("button[id$='Btn']")
-      ) {
-        props.setDropDownStates({
-          dropDownOpen: false,
-          departmentOpen: false,
-          beneficiaryOpen: false,
-          ageOpen: false,
-          incomeOpen: false,
-          fundersOpen: false,
-        });
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const toggleDropdown = (key) => {
-    props.setDropDownStates((prevState) => {
-      const newState = { ...prevState, [key]: !prevState[key] };
-      if (!prevState[key]) {
-        // Close other dropdowns when opening a new one
-        Object.keys(props.dropDownStates).forEach((dropdownKey) => {
-
-          if (dropdownKey !== key) {
-            newState[dropdownKey] = false;
-          }
-        });
-      }
-      return newState;
-    });
-  };
+  }, [searchQuery, setData]);
 
   return (
-    <>
     <div className="bg-white font-sans">
       <Categories
-        data = {props.data}
-        selectedState = {props.selectedState}
+        data={props.data}
+        selectedState={props.selectedState}
         selectedDepartments={props.selectedDepartments}
         selectedBeneficiaries={props.selectedBeneficiaries}
         selectedAges={props.selectedAges}
         selectedFunders={props.selectedFunders}
       />
     </div>
-    </>
   );
 }
+

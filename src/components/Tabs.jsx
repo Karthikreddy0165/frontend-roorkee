@@ -1,36 +1,12 @@
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import SearchInput from "./SearchInput";
 
 import Schemes from "./Schemes"; // Adjust path as per your project structure
 import JobOpenings from "./JobOpenings"; // Adjust path as per your project structure
 import Scholarships from "./Scholarships"; // Adjust path as per your project structure
 import Saved from "./savedForLoginuser";
 import { useTabContext } from "@/Context/TabContext";
-
-function SearchInput({ searchQuery, handleSearch }) {
-  return (
-    <div className="flex items-center gap-8 h-14 px-3 rounded-lg border border-gray-300 bg-white mb-8 mr-[200px]">
-      <svg
-        className="w-6 h-6 text-gray-400"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path d="M20 20l-4.585-4.585M10 17a7 7 0 100-14 7 7 0 000 14z"></path>
-      </svg>
-      <input
-        type="text"
-        placeholder="Search schemes, job opportunities, or scholarships"
-        className="flex-1 px-2 text-sm bg-transparent focus:outline-none w-64"
-        value={searchQuery}
-        onChange={handleSearch}
-      />
-    </div>
-  );
-}
 
 export default function Tabs(props) {
   const router = useRouter();
@@ -48,8 +24,7 @@ export default function Tabs(props) {
     setActiveTab(tab);
   };
 
-  const handleSearch = (event) => {
-    const query = event.target.value;
+  const handleSearch = (query) => {
     setSearchQuery(query); // Update searchQuery state via context
   };
 
@@ -63,9 +38,7 @@ export default function Tabs(props) {
 
   return (
     <div className="mb-4">
-      <Suspense fallback={<div>Loading search...</div>}>
-        <SearchInput searchQuery={searchQuery} handleSearch={handleSearch} />
-      </Suspense>
+      <SearchInput searchQuery={searchQuery} handleSearch={handleSearch} />
 
       <div className="flex justify-center items-center gap-[15px]">
         <button
@@ -96,11 +69,10 @@ export default function Tabs(props) {
       <hr />
 
       {/* Render the corresponding component based on activeTab */}
-      {activeTab === "Schemes" && <Schemes {...props} />}
+      {activeTab === "Schemes" && <Schemes searchQuery={searchQuery} {...props} />}
       {activeTab === "Job Openings" && <JobOpenings {...props} />}
-      {activeTab === "Scholarships" && <Scholarships {...props} />}
+      {activeTab === "Scholarships" && <Scholarships searchQuery={searchQuery} {...props} />}
       {activeTab === "Saved" && <Saved {...props} />}
-      
     </div>
   );
 }

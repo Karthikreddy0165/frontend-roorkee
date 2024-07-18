@@ -6,7 +6,7 @@ function SearchInput({ searchQuery, handleSearch }) {
   useEffect(() => {
     const handler = setTimeout(() => {
       handleSearch(inputValue);
-    }, 400); //I am adding debouncing 
+    }, 600); //I am adding debouncing 
 
     return () => {
       clearTimeout(handler);

@@ -81,7 +81,7 @@ const CreateAcc01 = () => {
               redirect: "follow",
             };
 
-            fetch("http://54.79.141.24:8000/api/register/", requestOptions)
+            fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/register/`, requestOptions)
               .then((response) => response.json())
               .then((result) => {
                 if (result.user) {

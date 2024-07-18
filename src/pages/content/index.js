@@ -9,13 +9,13 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const departmentsRes = await fetch("http://54.79.141.24:8000/api/departments");
+        const departmentsRes = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/departments`);
         if (!departmentsRes.ok) throw new Error(`Error fetching departments: ${departmentsRes.statusText}`);
         
-        const statesRes = await fetch("http://54.79.141.24:8000/api/states");
+        const statesRes = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/states`);
         if (!statesRes.ok) throw new Error(`Error fetching states: ${statesRes.statusText}`);
         
-        const schemesRes = await fetch("http://54.79.141.24:8000/api/schemes");
+        const schemesRes = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/schemes`);
         if (!schemesRes.ok) throw new Error(`Error fetching schemes: ${schemesRes.statusText}`);
         
         const departmentsData = await departmentsRes.json();
