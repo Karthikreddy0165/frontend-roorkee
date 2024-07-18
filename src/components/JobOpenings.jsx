@@ -6,7 +6,7 @@ export default function JopOpenings(props) {
     const fetchState = async () => {
       try {
         props.setData(null);
-        const response = await fetch("http://54.79.141.24:8000/api/schemes");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/schemes`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

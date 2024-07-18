@@ -1,7 +1,8 @@
+import React, { createContext, useState, useContext } from "react";
 import { Formik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+// import { useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa6";
 import { useAuth } from "../Context/AuthContext";
@@ -24,7 +25,7 @@ const LoginPage = () => {
       myHeaders.append("Content-Type", "application/json");
 
       const raw = JSON.stringify({
-        username: values.username,
+        email: values.email, // Change username to email
         password: values.password,
       });
 
@@ -35,7 +36,7 @@ const LoginPage = () => {
         redirect: "follow",
       };
 
-      const response = await fetch("http://3.25.199.183:8000/api/login/", requestOptions);
+      const response = await fetch("http://52.65.93.83:8080/api/login/", requestOptions);
       const result = await response.json();
 
       if (!response.ok) {
@@ -45,7 +46,7 @@ const LoginPage = () => {
       console.log("Login successful. Token received:", result.access);
 
       if (result.access) {
-        const user = { token: result.access, username: values.username };
+        const user = { token: result.access, email: values.email }; // Change username to email
         localStorage.setItem("token", result.access);
         login(result.access, user); // Save token and user information to the context
         router.push("/loginSucc");
@@ -53,11 +54,11 @@ const LoginPage = () => {
           router.push("/HeroPageLoginsucc");
         }, 2000);
       } else {
-        setErrorMessage("Username or password is invalid");
+        setErrorMessage("Email or password is invalid"); // Change username to email
       }
     } catch (error) {
       console.error("Error during login:", error);
-      setErrorMessage("Username or password is invalid");
+      setErrorMessage("Email or password is invalid"); // Change username to email
     } finally {
       setLoading(false);
     }
@@ -100,7 +101,7 @@ const LoginPage = () => {
       <div className="w-1/2 flex items-center justify-center">
         <Formik
           initialValues={{
-            username: "",
+            email: "", // Change username to email
             password: "",
           }}
           onSubmit={async (values, { setSubmitting }) => {
@@ -121,18 +122,18 @@ const LoginPage = () => {
               <div className="">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="username"
+                  htmlFor="email"
                 >
-                  User name
+                  Email
                 </label>
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="username"
-                  type="text"
-                  placeholder="Enter your username"
+                  id="email"
+                  type="email" // Change type to email
+                  placeholder="Enter your email"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.username}
+                  value={formik.values.email}
                 />
               </div>
               <div className="mt-6">
@@ -224,4 +225,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
