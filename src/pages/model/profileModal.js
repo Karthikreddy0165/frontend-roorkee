@@ -3,7 +3,7 @@ import { MdClose } from "react-icons/md";
 import { useAuth } from "../../Context/AuthContext";
 
 const ProfileModal = ({ onClose }) => {
-  const { authState } = useAuth(); // Get the authenticated user's information from context
+  const { authState } = useAuth();
   const [userName, setUserName] = useState("");
 
   useEffect(() => {

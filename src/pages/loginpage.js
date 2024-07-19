@@ -1,9 +1,8 @@
+import { FaSpinner, FaEye, FaEyeSlash } from "react-icons/fa";
 import React, { createContext, useState, useContext } from "react";
 import { Formik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/router";
-// import { useState } from "react";
-import { FaSpinner } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa6";
 import { useAuth } from "../Context/AuthContext";
 import loginperson from "../assets/image.png";
@@ -13,6 +12,7 @@ const LoginPage = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const { login } = useAuth(); // Get the login function from the context
 
   const handleCreate01Click = () => {
@@ -36,7 +36,7 @@ const LoginPage = () => {
         redirect: "follow",
       };
 
-      const response = await fetch("http://52.65.93.83:8080/api/login/", requestOptions);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/login/`, requestOptions);
       const result = await response.json();
 
       if (!response.ok) {
@@ -136,7 +136,7 @@ const LoginPage = () => {
                   value={formik.values.email}
                 />
               </div>
-              <div className="mt-6">
+              <div className="mt-6 relative">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="password"
@@ -146,26 +146,22 @@ const LoginPage = () => {
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                   id="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"} // Toggle password visibility
                   placeholder="Enter your password"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
                 />
+                <div
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 cursor-pointer mt-4"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </div>
               </div>
               <div className="text-sm flex flex-column mb-8 mt-4">
-                <div className=" flex items-center">
-                  <input
-                    className="mr-2 leading-tight"
-                    type="checkbox"
-                    id="keepLoggedIn"
-                  />
-                  <label className="text-sm" htmlFor="keepLoggedIn">
-                    Keep me logged in
-                  </label>
-                </div>
                 <a
-                  className="text-blue-500 hover:text-blue-700 ml-auto"
+                  className="text-[#3431BB] hover:text-blue-700 ml-auto"
                   href="#"
                 >
                   Forgot password?
