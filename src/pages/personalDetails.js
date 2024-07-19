@@ -1,22 +1,31 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import IndialImg from "../assets/ind2.png";
-import { Formik } from "formik";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import loginperson from "../assets/image.png";
 import { FaAngleDown, FaSpinner } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { useFormData } from "../Context/FormContext";
 import { useAuth } from "../Context/AuthContext";
 
+const validationSchema = Yup.object({
+  name: Yup.string().required("Name is required."),
+  age: Yup.string().required("Age is required."),
+  gender: Yup.string().required("Gender is required."),
+  community: Yup.string().required("Community is required."),
+  state: Yup.string().required("State is required."),
+});
+
 const CreateAcc02 = () => {
   const router = useRouter();
   const { updateFormData } = useFormData();
-  const { token } = useAuth();
+  const { authState } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log("User token:", token);
-  }, [token]);
+    console.log("User token:", authState.token);
+  }, [authState.token]);
 
   const handleSubmit = (values, { setSubmitting }) => {
     setIsLoading(true);
@@ -32,13 +41,12 @@ const CreateAcc02 = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authState.token}`,
       },
       body: JSON.stringify(requestBody),
-      redirect: "follow",
     };
 
-    fetch("http://54.79.141.24:8000/api/profile", requestOptions)
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
@@ -54,9 +62,12 @@ const CreateAcc02 = () => {
   };
 
   const handleSkip = () => {
-    router.push("/proffesionalDetails");
+    if (authState.token) {
+      router.push("/proffesionalDetails");
+    } else {
+      console.error("User is not authenticated");
+    }
   };
-
 
   return (
     <div className="flex h-screen overflow-hidden -mb-6">
@@ -98,32 +109,11 @@ const CreateAcc02 = () => {
             community: "",
             state: "",
           }}
+          validationSchema={validationSchema}
           onSubmit={handleSubmit}
-          validate={(values) => {
-            const errors = {};
-            if (!values.name) {
-              errors.name = "Name is required.";
-            }
-            if (!values.age) {
-              errors.age = "Age is required.";
-            }
-            if (!values.gender) {
-              errors.gender = "Gender is required.";
-            }
-            if (!values.community) {
-              errors.community = "Community is required.";
-            }
-            if (!values.state) {
-              errors.state = "State is required.";
-            }
-            return errors;
-          }}
         >
-          {(formik) => (
-            <form
-              className="w-full h-full ml-20 mr-24 relative mt-60"
-              onSubmit={formik.handleSubmit}
-            >
+          {({ isSubmitting, errors, touched }) => (
+            <Form className="w-full h-full ml-20 mr-24 relative mt-60">
               <h1 className="text-2xl font-bold mb-4">
                 Tell us a little about yourself
               </h1>
@@ -134,18 +124,14 @@ const CreateAcc02 = () => {
                 >
                   Name
                 </label>
-                <input
+                <Field
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="name"
                   type="text"
                   placeholder="Enter your name"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.name}
+                  name="name"
                 />
-                {formik.errors.name && formik.touched.name && (
-                  <div className="text-red-500 text-xs mt-2">{formik.errors.name}</div>
-                )}
+                {/* <ErrorMessage name="name" component="div" className="text-red-500 text-xs mt-2" /> */}
               </div>
               <div className="flex mb-4">
                 <div className="w-1/2 mr-4">
@@ -155,18 +141,14 @@ const CreateAcc02 = () => {
                   >
                     Age
                   </label>
-                  <input
+                  <Field
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="age"
                     type="text"
                     placeholder="Enter your age"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.age}
+                    name="age"
                   />
-                  {formik.errors.age && formik.touched.age && (
-                    <div className="text-red-500 text-xs mt-2">{formik.errors.age}</div>
-                  )}
+                  {/* <ErrorMessage name="age" component="div" className="text-red-500 text-xs mt-2" /> */}
                 </div>
                 <div className="w-1/2 relative">
                   <label
@@ -176,22 +158,16 @@ const CreateAcc02 = () => {
                     Gender
                   </label>
                   <div className="relative">
-                    <select
+                    <Field as="select" id="gender" name="gender"
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      id="gender"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.gender}
                     >
                       <option value="">Select Gender</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
                       <option value="other">Other</option>
-                    </select>
+                    </Field>
                     <FaAngleDown className="absolute right-3 top-3 pointer-events-none" />
-                    {formik.errors.gender && formik.touched.gender && (
-                      <div className="text-red-500 text-xs mt-2">{formik.errors.gender}</div>
-                    )}
+                    {/* <ErrorMessage name="gender" component="div" className="text-red-500 text-xs mt-2" /> */}
                   </div>
                 </div>
               </div>
@@ -204,23 +180,17 @@ const CreateAcc02 = () => {
                     Community
                   </label>
                   <div className="relative">
-                    <select
+                    <Field as="select" id="community" name="community"
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      id="community"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.community}
                     >
                       <option value="">Select Community</option>
                       <option value="gen">General</option>
                       <option value="obc">OBC</option>
                       <option value="sc">SC</option>
                       <option value="st">ST</option>
-                    </select>
+                    </Field>
                     <FaAngleDown className="absolute right-3 top-3 pointer-events-none" />
-                    {formik.errors.community && formik.touched.community && (
-                      <div className="text-red-500 text-xs mt-2">{formik.errors.community}</div>
-                    )}
+                    {/* <ErrorMessage name="community" component="div" className="text-red-500 text-xs mt-2" /> */}
                   </div>
                 </div>
                 <div className="w-1/2">
@@ -230,20 +200,23 @@ const CreateAcc02 = () => {
                   >
                     State
                   </label>
-                  <input
+                  <Field
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="state"
                     type="text"
                     placeholder="Enter your state"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.state}
+                    name="state"
                   />
-                  {formik.errors.state && formik.touched.state && (
-                    <div className="text-red-500 text-xs mt-2">{formik.errors.state}</div>
-                  )}
+                  {/* <ErrorMessage name="state" component="div" className="text-red-500 text-xs mt-2" /> */}
                 </div>
               </div>
+              {Object.keys(errors).length > 0 && (
+                <div className="mb-4 mt-4">
+                  <div className="bg-[#FFE6E6] text-[#DC0000] py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+                    All fields are required.
+                  </div>
+                </div>
+              )}
               <div className="flex items-center justify-between absolute bottom-[200px] w-full px-4">
                 <span className="text-gray-600">2/3</span>
                 <div className="flex items-center gap-4">
@@ -252,12 +225,12 @@ const CreateAcc02 = () => {
                     type="button"
                     onClick={handleSkip}
                   >
-                    Skip
+                    Skip For Now
                   </button>
                   <button
                     className="bg-[#3431BB] hover:bg text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
                     type="submit"
-                    disabled={formik.isSubmitting}
+                    disabled={isSubmitting}
                   >
                     {isLoading ? (
                       <FaSpinner className="animate-spin" />
@@ -267,7 +240,7 @@ const CreateAcc02 = () => {
                   </button>
                 </div>
               </div>
-            </form>
+            </Form>
           )}
         </Formik>
       </div>

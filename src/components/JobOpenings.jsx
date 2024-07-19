@@ -1,78 +1,47 @@
-import React, { useState, useRef, useEffect } from "react";
-import Categories from "../components/Categories";
+import React, { useEffect } from "react";
+import Categories from "./Categories"; // Adjust path as per your project structure
+import { useTabContext } from "@/Context/TabContext";
 
-export default function JopOpenings(props) {
+export default function JobOpenings({ setData, ...props }) {
+  const { searchQuery } = useTabContext(); // Access searchQuery from TabContext
+
   useEffect(() => {
-    const fetchState = async () => {
+    const fetchJobOpenings = async () => {
       try {
-        props.setData(null);
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/schemes`);
+        setData(null);
+        let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}api/schemes`;
+        if (searchQuery) {
+          url += `/search/?q=${searchQuery}`;
+          console.log("Search Query:", searchQuery); // Debugging log
+        }
+
+        console.log("Fetching URL:", url); // Debugging log
+
+        const response = await fetch(url);
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        props.setData(data);
+        setData(data);
       } catch (error) {
-        console.error("Failed to fetch data:", error);
-      }
-    };
-    fetchState();
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        !props.dropdownRef.current?.contains(event.target) &&
-        !props.departmentDropdownRef.current?.contains(event.target) &&
-        !props.beneficiaryDropdownRef.current?.contains(event.target) &&
-        !props.ageDropdownRef.current?.contains(event.target) &&
-        !props.incomeDropdownRef.current?.contains(event.target) &&
-        !props.funderDropdownRef.current?.contains(event.target) &&
-        !event.target.closest("button[id$='Btn']")
-      ) {
-        props.setDropDownStates({
-          dropDownOpen: false,
-          departmentOpen: false,
-          beneficiaryOpen: false,
-          ageOpen: false,
-          incomeOpen: false,
-          fundersOpen: false,
-        });
+        console.error("Failed to fetch job openings data:", error);
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const toggleDropdown = (key) => {
-    props.setDropDownStates((prevState) => {
-      const newState = { ...prevState, [key]: !prevState[key] };
-      if (!prevState[key]) {
-        // Close other dropdowns when opening a new one
-        Object.keys(props.dropDownStates).forEach((dropdownKey) => {
-          if (dropdownKey !== key) {
-            newState[dropdownKey] = false;
-          }
-        });
-      }
-      return newState;
-    });
-  };
+    fetchJobOpenings();
+  }, [searchQuery, setData]);
 
   return (
-    <>
     <div className="bg-white font-sans">
       <Categories
-        data = {props.data}
+        data={props.data}
+        selectedState={props.selectedState}
         selectedDepartments={props.selectedDepartments}
         selectedBeneficiaries={props.selectedBeneficiaries}
         selectedAges={props.selectedAges}
         selectedFunders={props.selectedFunders}
       />
     </div>
-    </>
   );
 }

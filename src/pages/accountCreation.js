@@ -19,11 +19,56 @@ const CreateAcc01 = () => {
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email address").required("Email is required"),
-    password: Yup.string().required("Password is required"),
+    password: Yup.string()
+      .min(8, "Password must be at least 8 characters")
+      .required("Password is required"),
   });
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const getErrorMessage = (formikErrors, apiErrors) => {
+    const formikErrorMessages = Object.values(formikErrors).filter(Boolean);
+    const apiErrorMessages = Object.values(apiErrors).filter(Boolean);
+    return [...formikErrorMessages, ...apiErrorMessages].join(" ");
+  };
+
+  const handleAfterLogin = async (values) => {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      const raw = JSON.stringify({
+        email: values.email,
+        password: values.password,
+      });
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/login/`, requestOptions);
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || `HTTP error! status: ${response.status}`);
+      }
+
+      console.log("Login successful. Token received:", result.access);
+
+      if (result.access) {
+        const user = { token: result.access, email: values.email };
+        localStorage.setItem("token", result.access);
+        login(result.access, user); // Save token and user information to the context
+        router.push("/personalDetails");
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   return (
@@ -81,14 +126,16 @@ const CreateAcc01 = () => {
               redirect: "follow",
             };
 
-            fetch("http://54.79.141.24:8000/api/register/", requestOptions)
+            fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/register/`, requestOptions)
               .then((response) => response.json())
               .then((result) => {
+                console.log("API Response:", result); // Log the entire result object for debugging
                 if (result.user) {
                   setApiErrors({ email: "", password: "" });
                   updateFormData(values);
                   login(result.token, result.user); // Update authState
-                  router.push("/personalDetails");
+                  console.log(`auth token login succ auth token: ${result.token}`); // Log the auth token for debugging
+                  handleAfterLogin(values); // Call handleAfterLogin with the form values
                 } else {
                   console.error(result);
                   setApiErrors({
@@ -97,7 +144,7 @@ const CreateAcc01 = () => {
                   });
                   setTimeout(() => {
                     setApiErrors({ email: "", password: "" });
-                  }, 3000);
+                  }, 15000);
                 }
               })
               .catch((error) => {
@@ -109,74 +156,81 @@ const CreateAcc01 = () => {
               });
           }}
         >
-          {(formik) => (
-            <form
-              className="w-full h-full ml-20 mr-24 relative mt-60"
-              onSubmit={formik.handleSubmit}
-            >
-              <h1 className="text-2xl font-bold mb-4">Create an Account</h1>
-              <div>
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="email"
-                >
-                  Email Id
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.email}
-                />
-                {formik.touched.email && formik.errors.email ? (
-                  <div className="text-red-500 text-sm">{formik.errors.email}</div>
-                ) : null}
-                {apiErrors.email && (
-                  <div className="text-red-500 text-sm">{apiErrors.email}</div>
-                )}
-              </div>
-              <div className="relative mt-6">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="password"
-                >
-                  Password
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.password}
-                />
-                <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-4" onClick={togglePasswordVisibility}>
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+          {(formik) => {
+            const errorMessage = getErrorMessage(formik.errors, apiErrors);
+
+            return (
+              <form
+                className="w-full h-full ml-20 mr-24 relative mt-60"
+                onSubmit={formik.handleSubmit}
+              >
+                <h1 className="text-2xl font-bold mb-4">Create an Account</h1>
+                <div>
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="email"
+                  >
+                    Email Id
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.email}
+                  />
+                  {formik.touched.email && formik.errors.email ? (
+                    <div className="text-red-500 text-sm">{formik.errors.email}</div>
+                  ) : null}
                 </div>
-                {formik.touched.password && formik.errors.password ? (
-                  <div className="text-red-500 text-sm">{formik.errors.password}</div>
-                ) : null}
-              </div>
-              <div className="absolute bottom-[200px]">
-                <span className="mr-2 pr-[350px]">1/3</span>
-                <button
-                  className="bg-[#3431BB] hover:bg text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
-                  type="submit"
-                  disabled={formik.isSubmitting || isLoading}
-                >
-                  {isLoading ? (
-                    <FaSpinner className="animate-spin h-5 w-5 mr-3 inline" />
-                  ) : (
-                    "Continue"
-                  )}
-                </button>
-              </div>
-            </form>
-          )}
+                <div className="relative mt-6">
+                  <label
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="password"
+                  >
+                    Password
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.password}
+                  />
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-4" onClick={togglePasswordVisibility}>
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </div>
+                </div>
+
+                {errorMessage && (
+                  <div className="mb-4 mt-4">
+                    <div className="bg-[#FFE6E6] text-[#DC0000] py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+                      {errorMessage}
+                    </div>
+                  </div>
+                )}
+                
+                <div className="absolute bottom-[200px]">
+                  <span className="mr-2 pr-[350px]">1/3</span>
+                  <button
+                    className="bg-[#3431BB] hover:bg text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
+                    type="submit"
+                    disabled={formik.isSubmitting || isLoading}
+                  >
+                    {isLoading ? (
+                      <FaSpinner className="animate-spin h-5 w-5 mr-3 inline" />
+                    ) : (
+                      "Continue"
+                    )}
+                  </button>
+                </div>
+              </form>
+            );
+          }}
         </Formik>
       </div>
     </div>
