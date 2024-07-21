@@ -49,7 +49,7 @@ const CreateAcc02 = () => {
       body: JSON.stringify(requestBody),
     };
 
-    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/personal/`, requestOptions)
+    fetch(`http://52.65.93.83:8080/api/profile/personal/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);

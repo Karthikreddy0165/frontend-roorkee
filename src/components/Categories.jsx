@@ -110,7 +110,7 @@ export default function Categories(props) {
             redirect: "follow",
           };
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}api/user/saved_schemes/`,
+            `http://52.65.93.83:8080/api/user/saved_schemes/`,
             requestOptions
           );
           if (!response.ok) {
@@ -157,7 +157,7 @@ export default function Categories(props) {
     };
   
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/save_scheme/`, requestOptions);
+      const response = await fetch(`http://52.65.93.83:8080/api/save_scheme/`, requestOptions);
       if (response.ok) {
         const result = await response.json();
         console.log(result);
@@ -194,7 +194,7 @@ export default function Categories(props) {
       console.log("Sending unsave request for scheme_id:", scheme_id);
       console.log("Request payload:", raw);
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}api/unsave_scheme/`,
+        `http://52.65.93.83:8080/api/unsave_scheme/`,
         requestOptions
       );
       const result = await response.json();
