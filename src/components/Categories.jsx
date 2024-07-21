@@ -60,6 +60,30 @@ export default function Categories(props) {
         );
       }
 
+      if (
+        props.selectedSponsors &&
+        props.selectedSponsors.length > 0
+      ) {
+        filtered = filtered.filter((item) => {
+          const allSponsorTypes = item.sponsors.flatMap(
+            (sponsor) =>
+              sponsor.sponsor_type.split(",").map((type) => type.trim())
+          );
+
+          const haveCommonElement = props.selectedSponsors.some(
+            (sponsor) => {
+              return allSponsorTypes.includes(sponsor);
+            }
+          );
+
+          if (haveCommonElement) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+      }
+
       // Set filtered data after applying all filters
       setFilteredData(filtered);
     }
@@ -69,6 +93,7 @@ export default function Categories(props) {
     props.selectedDepartments,
     props.selectedBeneficiaries,
     props.selectedFunders,
+    props.selectedSponsors
   ]);
 
   // Fetch saved schemes so that we can mark saved schemes as bookmarked
@@ -220,14 +245,7 @@ export default function Categories(props) {
   if (props.data.length === 0 || filteredData.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center gap-[8px] mt-[120px]">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="33"
-          height="32"
-          viewBox="0 0 33 32"
-          fill="none"
-        ></svg>
-        <p className="text-button-text text-[14px]">No results found</p>
+        <p className="text-button-text text-[14px] text-button-blue">Sorry no result is found based on your preference.</p>
       </div>
     );
   }
@@ -239,7 +257,7 @@ export default function Categories(props) {
           className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
           key={item.id}
         >
-          <div>
+          <div onClick={() => handleClick(item.id)}>
             <button
               className="text-center text-[12px] px-[8px] py-[6px] rounded-[4px] gap-[10px]"
               style={{ color: "#151280", backgroundColor: "#EEEEFF" }}
@@ -249,7 +267,7 @@ export default function Categories(props) {
             <div className="gap-[12px] pt-[16px] pd-[16px]">
               <p
                 className="font-inter text-[18px] leading-[21.6px] cursor-pointer font-bold mb-[10px] line-clamp-2 w-8/12"
-                onClick={() => handleClick(item.id)}
+              
                 role="button"
                 tabIndex="0"
               >

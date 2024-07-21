@@ -9,7 +9,9 @@ import { useEffect, useRef, useState } from "react";
 import DropdownMenu from "../components/DropdownMenu";
 import DepartmentDropdownMenu from "../components/DepartmentDropDown";
 import BeneficiaryDropdownMenu from "../components/BeneficiariesDropdown";
-import SponsorsDropdownMenu from "@/components/SponshershipDropdown";
+
+import SponsorsDropdownMenu from "@/components/SponsorDropdown";
+
 import FundingByDropdownMenu from "../components/FundingBy";
 
 

@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 const FundingByDropdownMenu = React.forwardRef(({ selectedFunders, setSelectedFunders, setFunderName, data }, ref) => {
-    // const [tempselectedFunders, setTempselectedFunders] = useState([...selectedFunders]);
+  if(data === null) return (
+    <div className='text-onclick-btnblue text-[16px] mt-[-15px] mb-[7px]'>
+      loading...
+    </div>
+  )
+  else {
     const [isShow, setIsShow] = useState(false);
     const categories = data.map(item => item.funding_pattern);
     const uniqueCategories = [...new Set(categories)];
@@ -31,29 +36,6 @@ const FundingByDropdownMenu = React.forwardRef(({ selectedFunders, setSelectedFu
       });
     };
   
-    const calculateInitialPosition = () => {
-      const fundingbyBtn = document.getElementById('fundingbyBtn');
-      if (fundingbyBtn) {
-        const { top, left } = fundingbyBtn.getBoundingClientRect();
-        return {
-          top: `${top + window.scrollY + 31}px`,
-          left: `${left + window.scrollX}px`,
-        };
-      }
-      return {}; // Return a default position or an empty object if the button is not found
-    };
-  
-    const [dropdownStyle, setDropdownStyle] = useState(calculateInitialPosition);
-    useEffect(() => {
-        const updatePosition = () => {
-          const newPosition = calculateInitialPosition(); // Use the same function to calculate the new position
-          setDropdownStyle(newPosition);
-        };
-  
-        window.addEventListener('resize', updatePosition);
-        return () => window.removeEventListener('resize', updatePosition);
-      }, []);
-  
     useEffect(() => {
       console.log(selectedFunders);
     }, [selectedFunders]);
@@ -61,14 +43,12 @@ const FundingByDropdownMenu = React.forwardRef(({ selectedFunders, setSelectedFu
       if(selectedFunders.length == 0){
         setFunderName("")
       }else{
-      const maxLength = 8;
-      const stateName = selectedFunders[0];
       setFunderName(`${selectedFunders.length}`);
       }
     }, [selectedFunders])
   
       return (
-        <div style={dropdownStyle} className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0" ref={ref}>
+        <div className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0" ref={ref}>
           <ul className="flex flex-col font-sans list-none p-0 m-0 gap-0 pb-[18px]">
             {uniqueCategories.map((item, index) => (
               item !== "" && (
@@ -86,7 +66,7 @@ const FundingByDropdownMenu = React.forwardRef(({ selectedFunders, setSelectedFu
           </ul>
           </div>
       );
-  
+      }
     }
   );
   
