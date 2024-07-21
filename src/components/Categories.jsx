@@ -257,7 +257,7 @@ export default function Categories(props) {
           className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
           key={item.id}
         >
-          <div>
+          <div onClick={() => handleClick(item.id)}>
             <button
               className="text-center text-[12px] px-[8px] py-[6px] rounded-[4px] gap-[10px]"
               style={{ color: "#151280", backgroundColor: "#EEEEFF" }}
@@ -267,7 +267,7 @@ export default function Categories(props) {
             <div className="gap-[12px] pt-[16px] pd-[16px]">
               <p
                 className="font-inter text-[18px] leading-[21.6px] cursor-pointer font-bold mb-[10px] line-clamp-2 w-8/12"
-                onClick={() => handleClick(item.id)}
+              
                 role="button"
                 tabIndex="0"
               >

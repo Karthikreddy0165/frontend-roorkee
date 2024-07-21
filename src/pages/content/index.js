@@ -66,10 +66,12 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
 
             {/* Last update date */}
             <div className="w-full sm:max-w-3xl">
-              <div className="inline-block bg-[#EEF] rounded-[12px] mt-2">
-                <p className="py-0.5 px-2 text-black text-sm">
+              <div>
+                {matchedScheme ? <p className="py-0.5 px-2 text-black text-sm inline-block bg-[#EEF] rounded-[12px] mt-2">{`Last updated on ${matchedScheme.created_at.split(" ")[0]}`}</p> : <p className="mt-4 italic text-onclick-btnblue">Loading...</p>}
+                
+                {/* <p className="py-0.5 px-2 text-black text-sm">
                 {matchedScheme ? `Last updated on ${matchedScheme.created_at.split(" ")[0]}` : "Unable to fetch data"}
-                </p>
+                </p> */}
               </div>
             </div>
 
