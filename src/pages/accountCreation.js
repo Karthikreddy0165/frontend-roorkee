@@ -8,6 +8,7 @@ import loginperson from "../assets/image.png";
 import IndialImg from "../assets/ind2.png";
 import { FaSpinner, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAuth } from "@/Context/AuthContext";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 const CreateAcc01 = () => {
   const router = useRouter();
@@ -64,7 +65,7 @@ const CreateAcc01 = () => {
         const user = { token: result.access, email: values.email };
         localStorage.setItem("token", result.access);
         login(result.access, user); // Save token and user information to the context
-        router.push("/personalDetails");
+        router.push("/HeroPageLoginsucc");
       }
     } catch (error) {
       console.error("Login failed:", error);
@@ -164,6 +165,10 @@ const CreateAcc01 = () => {
                 className="w-full h-full ml-20 mr-24 relative mt-60"
                 onSubmit={formik.handleSubmit}
               >
+                <button type="button" className="flex gap-[8px] mb-[24px]" onClick={() => router.back()}>
+                  <FaArrowLeftLong className="mt-1"/>
+                  Back
+                </button>
                 <h1 className="text-2xl font-bold mb-4">Create an Account</h1>
                 <div>
                   <label
@@ -215,7 +220,7 @@ const CreateAcc01 = () => {
                 )}
                 
                 <div className="absolute bottom-[200px]">
-                  <span className="mr-2 pr-[350px]">1/3</span>
+                  {/* <span className="mr-2 pr-[350px]">1/3</span> */}
                   <button
                     className="bg-[#3431BB] hover:bg text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
                     type="submit"

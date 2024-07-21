@@ -68,7 +68,7 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
             <div className="w-full sm:max-w-3xl">
               <div className="inline-block bg-[#EEF] rounded-[12px] mt-2">
                 <p className="py-0.5 px-2 text-black text-sm">
-                {matchedScheme ? `Last updated on ${matchedScheme.created_at.split(" ")[0]}` : "Unable to fetch data"}
+                {matchedScheme ? `Last updated on ${matchedScheme.created_at.split(" ")[0]}` : "Data Loading..."}
                 </p>
               </div>
             </div>

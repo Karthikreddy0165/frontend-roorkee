@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
+import { Field, Form, Formik } from "formik";
 import Image from "next/image";
-import IndialImg from "../assets/ind2.png";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import loginperson from "../assets/image.png";
-import { FaAngleDown, FaSpinner } from "react-icons/fa";
 import { useRouter } from "next/router";
-import { useFormData } from "../Context/FormContext";
+import { useEffect, useState } from "react";
+import { FaAngleDown, FaSpinner } from "react-icons/fa";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import * as Yup from "yup";
 import { useAuth } from "../Context/AuthContext";
+import { useFormData } from "../Context/FormContext";
+import loginperson from "../assets/image.png";
+import IndialImg from "../assets/ind2.png";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Name is required."),
   age: Yup.string().required("Age is required."),
   gender: Yup.string().required("Gender is required."),
-  community: Yup.string().required("Community is required."),
+  category: Yup.string().required("Category is required."),
   state: Yup.string().required("State is required."),
 });
 
@@ -29,16 +30,18 @@ const CreateAcc02 = () => {
 
   const handleSubmit = (values, { setSubmitting }) => {
     setIsLoading(true);
+    console.log("Form values:", values); // Add this line to debug form values
 
-    const requestBody = {};
-    Object.keys(values).forEach((key) => {
-      if (values[key]) {
-        requestBody[key] = values[key];
-      }
-    });
+    const requestBody = {
+      "name": values.name,
+      "gender": values.gender,
+      "age": values.age,
+      "category": values.category,
+      "state_of_residence": values.state
+    };
 
     const requestOptions = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${authState.token}`,
@@ -46,7 +49,7 @@ const CreateAcc02 = () => {
       body: JSON.stringify(requestBody),
     };
 
-    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile`, requestOptions)
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/personal/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
@@ -68,7 +71,7 @@ const CreateAcc02 = () => {
       console.error("User is not authenticated");
     }
   };
-
+  
   return (
     <div className="flex h-screen overflow-hidden -mb-6">
       <div className="w-1/2 bg-[#151280] relative flex items-center justify-center">
@@ -106,7 +109,7 @@ const CreateAcc02 = () => {
             name: "",
             age: "",
             gender: "",
-            community: "",
+            category: "",
             state: "",
           }}
           validationSchema={validationSchema}
@@ -114,6 +117,10 @@ const CreateAcc02 = () => {
         >
           {({ isSubmitting, errors, touched }) => (
             <Form className="w-full h-full ml-20 mr-24 relative mt-60">
+              <button type="button" className="flex gap-[8px] mb-[24px]" onClick={() => router.back()}>
+                <FaArrowLeftLong className="mt-1"/>
+                Back
+              </button>
               <h1 className="text-2xl font-bold mb-4">
                 Tell us a little about yourself
               </h1>
@@ -162,9 +169,9 @@ const CreateAcc02 = () => {
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     >
                       <option value="">Select Gender</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="other">Other</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
                     </Field>
                     <FaAngleDown className="absolute right-3 top-3 pointer-events-none" />
                     {/* <ErrorMessage name="gender" component="div" className="text-red-500 text-xs mt-2" /> */}
@@ -175,22 +182,22 @@ const CreateAcc02 = () => {
                 <div className="w-1/2 mr-4 relative">
                   <label
                     className="block text-gray-700 text-sm font-bold mb-2"
-                    htmlFor="community"
+                    htmlFor="category"
                   >
-                    Community
+                    Category
                   </label>
                   <div className="relative">
-                    <Field as="select" id="community" name="community"
+                    <Field as="select" id="category" name="category"
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     >
-                      <option value="">Select Community</option>
-                      <option value="gen">General</option>
-                      <option value="obc">OBC</option>
-                      <option value="sc">SC</option>
-                      <option value="st">ST</option>
+                      <option value="">Select Category</option>
+                      <option value="General">General</option>
+                      <option value="OBC">OBC</option>
+                      <option value="SC">SC</option>
+                      <option value="ST">ST</option>
                     </Field>
                     <FaAngleDown className="absolute right-3 top-3 pointer-events-none" />
-                    {/* <ErrorMessage name="community" component="div" className="text-red-500 text-xs mt-2" /> */}
+                    {/* <ErrorMessage name="category" component="div" className="text-red-500 text-xs mt-2" /> */}
                   </div>
                 </div>
                 <div className="w-1/2">

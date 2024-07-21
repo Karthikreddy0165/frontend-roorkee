@@ -39,4 +39,3 @@ export default function Schemes({ searchQuery, setData, ...props }) {
     </div>
   );
 }
-
