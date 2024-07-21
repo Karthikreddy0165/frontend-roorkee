@@ -1,21 +1,24 @@
-import React, { useState, useEffect } from "react";
+import { Field, Form, Formik } from "formik";
 import Image from "next/image";
-import IndialImg from "../assets/ind2.png";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from 'yup';
-import loginperson from "../assets/image.png";
-import { FaAngleDown, FaSpinner } from "react-icons/fa";
 import { useRouter } from "next/router";
-import { useFormData } from "../Context/FormContext";
+import { useEffect, useState } from "react";
+import { FaSpinner } from "react-icons/fa";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import * as Yup from "yup";
 import { useAuth } from "../Context/AuthContext";
+import { useFormData } from "../Context/FormContext";
+import loginperson from "../assets/image.png";
+import IndialImg from "../assets/ind2.png";
 
 const validationSchema = Yup.object({
-  qualification: Yup.string().required('Highest education qualification is required'),
-  occupation: Yup.string().required('Occupation is required'),
-  income: Yup.string().required('Annual income is required'),
-  minority: Yup.boolean().required('Minority status is required'),
-  disability: Yup.boolean().required('Disability status is required'),
-  bpl_card_holder: Yup.boolean().required('BPL Card Holder status is required'),
+  qualification: Yup.string().required(
+    "Highest education qualification is required"
+  ),
+  occupation: Yup.string().required("Occupation is required"),
+  income: Yup.string().required("Annual income is required"),
+  minority: Yup.boolean().required("Minority status is required"),
+  disability: Yup.boolean().required("Disability status is required"),
+  bpl_card_holder: Yup.boolean().required("BPL Card Holder status is required"),
 });
 
 const CreateAcc03 = () => {
@@ -23,40 +26,48 @@ const CreateAcc03 = () => {
   const { formData, updateFormData } = useFormData();
   const { authState } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     console.log("User token:", authState.token);
   }, [authState.token]);
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     setIsLoading(true);
-    updateFormData(values);
-    const completeData = { ...formData, ...values };
 
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authState.token}`,
-        },
-        body: JSON.stringify(completeData),
+    console.log("Form values:", values); // Add this line to debug form values
+
+    const requestBody = {
+
+      education: values.qualification,
+      occupation: values.occupation,
+      income: values.income,
+      minority: values.minority,
+      disability: values.disability,
+      bpl_card_holder: values.bpl_card_holder
+    };
+
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authState.token}`,
+      },
+      body: JSON.stringify(requestBody),
+    };
+
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/professional/`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        router.push("/HeroPageLoginsucc");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      })
+      .finally(() => {
+        setSubmitting(false);
+        setIsLoading(false);
       });
-
-      if (response.ok) {
-        router.push("/accCreatedsucc");
-        setTimeout(() => {
-          router.push("/HeroPageLoginsucc");
-        }, 2000);
-      } else {
-        console.error("Error submitting form");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   const handleSkip = () => {
@@ -67,7 +78,6 @@ const CreateAcc03 = () => {
       }, 2000);
     } else {
       console.error("User token not available.");
-      // Handle case where token is not available
     }
   };
 
@@ -105,7 +115,7 @@ const CreateAcc03 = () => {
       <div className="w-1/2 flex items-center justify-center">
         <Formik
           initialValues={{
-            qualification: formData.qualification || "",
+            qualification: formData.education || "",
             occupation: formData.occupation || "",
             income: formData.income || "",
             minority: false,
@@ -117,10 +127,20 @@ const CreateAcc03 = () => {
         >
           {({ isSubmitting, errors, touched }) => (
             <Form className="w-full h-full ml-20 mr-24 relative mt-60">
+              <button
+                type="button"
+                className="flex gap-[8px] mb-[24px]"
+                onClick={() => router.back()}
+              >
+                <FaArrowLeftLong className="mt-1" />
+                Back
+              </button>
               <h1 className="text-2xl font-bold">
                 Tell us a little about yourself
               </h1>
-              <p>Knowing about you will help us find the right schemes for you.</p>
+              <p>
+                Knowing about you will help us find the right schemes for you.
+              </p>
               <div className="mt-12">
                 <div className="flex mb-4">
                   <div className="w-1/2 mr-4">
@@ -137,15 +157,12 @@ const CreateAcc03 = () => {
                       name="qualification"
                     >
                       <option value="">Education qualification</option>
-                      <option value="occupation01">Matriculate</option>
-                      <option value="occupation02">Intermediate</option>
-                      <option value="occupation03">Under Graduate</option>
-                      <option value="occupation04">Post Graduate</option>
-                      <option value="occupation05">P.H.D</option>
+                      <option value="High School">High School</option>
+                      <option value="Bachelor">Bachelor</option>{" "}
+                      <option value="Master">Master</option>
+                      <option value="Doctorate">Doctorate</option>
                     </Field>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                      <FaAngleDown />
-                    </div>
+
                     {/* <ErrorMessage name="qualification" component="div" className="text-red-500 text-sm mt-1" /> */}
                   </div>
                   <div className="w-1/2 relative">
@@ -162,15 +179,10 @@ const CreateAcc03 = () => {
                       name="occupation"
                     >
                       <option value="">Select your occupation</option>
-                      <option value="occupation01">Farmer</option>
-                      <option value="occupation02">HouseWife</option>
-                      <option value="occupation03">Student</option>
-                      {/* <option value="occupation04">occupation04</option>
-                      <option value="occupation05">occupation05</option> */}
+                      <option value="Farmer">Farmer</option>
+                      <option value="HouseWife">HouseWife</option>
+                      <option value="Student">Student</option>
                     </Field>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                      <FaAngleDown />
-                    </div>
                     {/* <ErrorMessage name="occupation" component="div" className="text-red-500 text-sm mt-1" /> */}
                   </div>
                 </div>
@@ -189,15 +201,13 @@ const CreateAcc03 = () => {
                       name="income"
                     >
                       <option value="">Select your income range</option>
-                      <option value="income01">0 - 1 lakh</option>
-                      <option value="income02">1 - 2 lakhs</option>
-                      <option value="income03">2 - 4 lakhs</option>
-                      <option value="income04">4 - 6 lakhs</option>
-                      <option value="income05">6 lakhs and above</option>
+                      <option value="1">0 - 1 lakh</option>
+                      <option value="2">1 - 2 lakhs</option>
+                      <option value="4">2 - 4 lakhs</option>
+                      <option value="6">4 - 6 lakhs</option>
+                      <option value="50">6 lakhs and above</option>
                     </Field>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                      <FaAngleDown />
-                    </div>
+
                     {/* <ErrorMessage name="income" component="div" className="text-red-500 text-sm mt-1" /> */}
                   </div>
                   <div className="w-1/2">
@@ -258,7 +268,7 @@ const CreateAcc03 = () => {
                   </div>
                 </div>
               </div>
-              
+
               {Object.keys(errors).length > 0 && (
                 <div className="mb-4 mt-4">
                   <div className="bg-[#FFE6E6] text-[#DC0000] py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
