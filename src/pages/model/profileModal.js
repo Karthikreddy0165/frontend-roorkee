@@ -31,11 +31,11 @@ const ProfileModal = ({ onClose }) => {
           };
 
           const personalResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/personal/`,
+            `http://52.65.93.83:8080/api/profile/personal/`,
             requestOptions
           );
           const professionalResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/professional/`,
+            `http://52.65.93.83:8080/api/profile/professional/`,
             requestOptions
           );
 
@@ -95,7 +95,7 @@ const handleSave = async () => {
     try {
       // Update personal data
       await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/personal/`,
+        `http://52.65.93.83:8080/api/profile/personal/`,
         {
           ...requestOptions,
           body: JSON.stringify({
@@ -115,7 +115,7 @@ const handleSave = async () => {
 
       // Update professional data
       await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/professional/`,
+        `http://52.65.93.83:8080/api/profile/professional/`,
         {
           ...requestOptions,
           body: JSON.stringify({

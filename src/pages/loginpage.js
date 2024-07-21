@@ -1,8 +1,8 @@
-import { FaSpinner, FaEye, FaEyeSlash } from "react-icons/fa";
-import React, { createContext, useState, useContext } from "react";
 import { Formik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa6";
 import { useAuth } from "../Context/AuthContext";
 import loginperson from "../assets/image.png";
@@ -36,7 +36,7 @@ const LoginPage = () => {
         redirect: "follow",
       };
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/login/`, requestOptions);
+      const response = await fetch(`http://52.65.93.83:8080/api/login/`, requestOptions);
       const result = await response.json();
 
       if (!response.ok) {
