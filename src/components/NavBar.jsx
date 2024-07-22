@@ -53,7 +53,7 @@ const NavBar = () => {
           {authState.token ? (
             <div className="relative">
               <button
-                className="text-white bg-onclick-btnblue px-[24px] py-[7px] rounded-[8px] flex items-center border border-onclick-btnblue text-[14px] font-semibold"
+                className="text-white bg-onclick-btnblue px-[24px] py-[7px] rounded-[8px] flex items-center border border-onclick-btnblue text-[14px] font-semibold gap-2"
                 onClick={toggleDropdown}
               >
                 Profile <IoIosArrowDown />
