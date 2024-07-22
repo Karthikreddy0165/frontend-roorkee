@@ -60,30 +60,16 @@ export default function Categories(props) {
         );
       }
 
-      if (
-        props.selectedSponsors &&
-        props.selectedSponsors.length > 0
-      ) {
-        filtered = filtered.filter((item) => {
-          const allSponsorTypes = item.sponsors.flatMap(
-            (sponsor) =>
-              sponsor.sponsor_type.split(",").map((type) => type.trim())
-          );
 
-          const haveCommonElement = props.selectedSponsors.some(
-            (sponsor) => {
-              return allSponsorTypes.includes(sponsor);
-            }
-          );
-
-          if (haveCommonElement) {
-            return true;
-          } else {
-            return false;
-          }
-        });
-      }
-
+      
+     if(props.selectedSponsors && props.selectedSponsors.length > 0) {
+        filtered = filtered.filter((item) =>{
+          if(item.sponsors[0]){
+            return props.selectedSponsors.includes(item.sponsors[0].sponsor_type)
+        }
+        }
+        );
+     } 
       // Set filtered data after applying all filters
       setFilteredData(filtered);
     }
@@ -110,7 +96,7 @@ export default function Categories(props) {
             redirect: "follow",
           };
           const response = await fetch(
-            `http://52.65.93.83:8080/api/user/saved_schemes/`,
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}api/user/saved_schemes/`,
             requestOptions
           );
           if (!response.ok) {
@@ -157,7 +143,7 @@ export default function Categories(props) {
     };
   
     try {
-      const response = await fetch(`http://52.65.93.83:8080/api/save_scheme/`, requestOptions);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/save_scheme/`, requestOptions);
       if (response.ok) {
         const result = await response.json();
         console.log(result);
@@ -194,7 +180,7 @@ export default function Categories(props) {
       console.log("Sending unsave request for scheme_id:", scheme_id);
       console.log("Request payload:", raw);
       const response = await fetch(
-        `http://52.65.93.83:8080/api/unsave_scheme/`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}api/unsave_scheme/`,
         requestOptions
       );
       const result = await response.json();
@@ -245,7 +231,7 @@ export default function Categories(props) {
   if (props.data.length === 0 || filteredData.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center gap-[8px] mt-[120px]">
-        <p className="text-button-text text-[14px] text-button-blue">Sorry no result is found based on your preference.</p>
+        <p className="text-button-text text-[14px] text-onclick-btnblue">Sorry no result is found based on your preference.</p>
       </div>
     );
   }
