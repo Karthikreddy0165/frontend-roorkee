@@ -6,7 +6,7 @@ export default function Scholarships({ searchQuery, setData, ...props }) {
     const fetchState = async () => {
       try {
         setData(null);
-        let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}api/schemes`;
+        let url = `http://52.65.93.83:8080/api/schemes`;
         if (searchQuery) {
           url += `/search/?q=${searchQuery}`;
         }
