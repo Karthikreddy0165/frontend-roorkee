@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/Context/AuthContext";
 import Categories from "../components/Categories";
+import { useRouter } from "next/router";
 
 export default function Saved() {
   const { authState } = useAuth();
   const [data, setData] = useState(null);
+  const router = useRouter();
+
+  const handleLoginPage = () => {
+    router.push("/loginpage");
+  };
 
   useEffect(() => {
     if (!authState.token) {
@@ -21,12 +27,18 @@ export default function Saved() {
           headers: myHeaders,
           redirect: "follow",
         };
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/user/saved_schemes/`, requestOptions);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/user/saved_schemes/`,
+          requestOptions
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log("Fetched data IDs:", data.map(item => item.id)); // Log the IDs of the fetched data
+        console.log(
+          "Fetched data IDs:",
+          data.map((item) => item.id)
+        ); // Log the IDs of the fetched data
         setData(data);
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -36,13 +48,27 @@ export default function Saved() {
   }, [authState.token]);
 
   if (!authState.token) {
-    return <div>Please log in to see your saved data.</div>;
+    return (
+      <div className="flex justify-center items-center mt-8">
+  Please
+  <span className="mx-1 text-[#3431BB] hover:text-blue-600 cursor-pointer" onClick={handleLoginPage}>
+    log in
+  </span>
+  to see your saved data.
+</div>
+
+
+    );
   }
 
   return (
     <>
       <div className="bg-white font-sans">
-        {data ? <Categories data={data} token={authState.token} /> : <div>Loading...</div>}
+        {data ? (
+          <Categories data={data} token={authState.token} />
+        ) : (
+          <div>Loading...</div>
+        )}
       </div>
     </>
   );

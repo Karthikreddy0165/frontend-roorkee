@@ -1,4 +1,5 @@
 import NavBarWithoutLogin from "@/components/NavBar";
+
 import Image from "next/image";
 import MainPageImage from ".././assets/backgroundimg.png";
 import BackButton from "@/components/BackButton";

@@ -3,7 +3,9 @@ import SavedModal from "@/pages/model/savedModal";
 import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { GoBookmarkFill } from "react-icons/go";
+import ReactPaginate from "react-paginate";
 import ApplyModal from "../pages/content";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 export default function Categories(props) {
   const [filteredData, setFilteredData] = useState([]);
@@ -12,6 +14,9 @@ export default function Categories(props) {
   const [isBookmarked, setBookmarks] = useState({});
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const { authState } = useAuth();
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 10;
+
 
   // handling filtering functionality
   useEffect(() => {
@@ -234,6 +239,18 @@ export default function Categories(props) {
     }
   };
 
+
+    // Handling pagination
+    const handlePageChange = ({ selected }) => {
+      setCurrentPage(selected);
+    };
+  
+    // Determining start and end pages
+    const offset = currentPage * itemsPerPage;
+    const currentPageData = filteredData.slice(offset, offset + itemsPerPage);
+    const pageCount = Math.ceil(filteredData.length / itemsPerPage);
+
+
   if (!props.data) {
     return (
       <div className="text-onclick-btnblue mt-[120px] italic flex justify-center items-center text-[18px]">
@@ -252,7 +269,7 @@ export default function Categories(props) {
 
   return (
     <div>
-      {filteredData.map((item) => (
+      {currentPageData.map((item) => (
         <div
           className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
           key={item.id}
@@ -320,6 +337,29 @@ export default function Categories(props) {
           </div>
         </div>
       ))}
+
+
+<ReactPaginate
+  previousLabel={
+    <span className=" py-1 px-3 "><FaAngleLeft /></span>
+  }
+  nextLabel={
+    <span className="py-1 px-3 "><FaAngleRight /></span>
+  }
+  breakLabel={"..."}
+  breakClassName={"break-me"}
+  pageCount={pageCount}
+  marginPagesDisplayed={2}
+  pageRangeDisplayed={5}
+  onPageChange={handlePageChange}
+  containerClassName={"flex justify-center items-center space-x-[20px]"}
+  activeClassName={"flex justify-center items-center w-8  rounded-full bg-[#3431BB] text-white shadow-md pr-[2px] pl-[2px] pt-[4px] pb-[4px]"}
+  pageClassName={"flex items-center"}
+  pageLinkClassName={""}
+/>
+
+
+
       {isModalOpen && selectedScheme && (
         <ApplyModal
           isOpen={isModalOpen}

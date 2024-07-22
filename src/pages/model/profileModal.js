@@ -16,7 +16,7 @@ const ProfileModal = ({ onClose }) => {
     education: "",
     disability: "",
     occupation: "",
-    income: "",  // Updated here
+    income: "",
   });
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const ProfileModal = ({ onClose }) => {
           );
 
           const personalData = await personalResponse.json();
-          console.log("personal",personalData);
+          console.log("personal", personalData);
           const professionalData = await professionalResponse.json();
           console.log(professionalData);
 
@@ -50,16 +50,16 @@ const ProfileModal = ({ onClose }) => {
             age: personalData.age || "",
             gender: personalData.gender || "",
             community: personalData.category || "",
-            minority: personalData.minority === true ? "Yes" : "No" ,
+            minority: personalData.minority === true ? "Yes" : "No",
             state: personalData.state_of_residence || "",
             bpl_card_holder:
               personalData.bpl_card_holder === true ? "Yes" : "No",
             education: professionalData.education || "",
             disability: personalData.disability === true ? "Yes" : "No",
             occupation: professionalData.occupation || "",
-            income: professionalData.income || "",  // Updated here
+            income: professionalData.income || "", // Updated here
           });
-          console.log("Minority:",personalData)
+          console.log("Minority:", personalData);
         } catch (error) {
           console.error("Error fetching profile data:", error);
         }
@@ -79,9 +79,11 @@ const ProfileModal = ({ onClose }) => {
   useEffect(() => {
     const fetchStateOptions = async () => {
       try {
-        const response = await fetch('http://52.65.93.83:8080/api/choices/state/');
+        const response = await fetch(
+          "http://52.65.93.83:8080/api/choices/state/"
+        );
         const data = await response.json();
-        const formattedData = data.map(item => item[0]);
+        const formattedData = data.map((item) => item[0]);
         setStateOptions(formattedData);
       } catch (error) {
         console.error("Error fetching state options:", error);
@@ -98,57 +100,55 @@ const ProfileModal = ({ onClose }) => {
       [name]: value,
     }));
   };
-const handleSave = async () => {
-  if (authState.token) {
-    const requestOptions = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${authState.token}`,
-      },
-    };
+  const handleSave = async () => {
+    if (authState.token) {
+      const requestOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authState.token}`,
+        },
+      };
 
-    try {
-      // Update personal data
-      await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/personal/`,
-        {
-          ...requestOptions,
-          body: JSON.stringify({
-            name: profileData.name,
-            gender: profileData.gender,
-            age: profileData.age,
-            category: profileData.community,
-            state_of_residence: profileData.state,
-            minority: profileData.minority === "Yes",
-            disability: profileData.disability === "Yes",
-            bpl_card_holder: profileData.bpl_card_holder === "Yes"
-          }),
-        }
-        
-      );
-      console.log("Test data: ", profileData)
+      try {
+        // Update personal data
+        await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/personal/`,
+          {
+            ...requestOptions,
+            body: JSON.stringify({
+              name: profileData.name,
+              gender: profileData.gender,
+              age: profileData.age,
+              category: profileData.community,
+              state_of_residence: profileData.state,
+              minority: profileData.minority === "Yes",
+              disability: profileData.disability === "Yes",
+              bpl_card_holder: profileData.bpl_card_holder === "Yes",
+            }),
+          }
+        );
+        console.log("Test data: ", profileData.name);
 
-      // Update professional data
-      await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/professional/`,
-        {
-          ...requestOptions,
-          body: JSON.stringify({
-            education: profileData.education,
-            occupation: profileData.occupation,
-            income: profileData.income
-          }),
-        }
-      );
+        // Update professional data
+        await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/professional/`,
+          {
+            ...requestOptions,
+            body: JSON.stringify({
+              education: profileData.education,
+              occupation: profileData.occupation,
+              income: profileData.income,
+            }),
+          }
+        );
 
-      onClose(); // Close the modal after saving
-    } catch (error) {
-      console.error("Error saving profile data:", error);
+        onClose();
+      } catch (error) {
+        console.error("Error saving profile data:", error);
+      }
     }
-  }
-};
-
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -288,23 +288,23 @@ const handleSave = async () => {
           </div>
 
           <div className="flex gap-4 w-full">
-          <div className="flex-1">
-  <label className="block mb-2 text-[12px] font-semibold text-black">
-    Education
-  </label>
-  <select
-    name="education"
-    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
-    value={profileData.education}
-    onChange={handleChange}
-  >
-    <option value="">Select education</option>
-    <option value="High School">High School</option>
-    <option value="Bachelor">Bachelor</option>
-    <option value="Master">Master</option>
-    <option value="Doctorate">Doctorate</option>
-  </select>
-</div>
+            <div className="flex-1">
+              <label className="block mb-2 text-[12px] font-semibold text-black">
+                Education
+              </label>
+              <select
+                name="education"
+                className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                value={profileData.education}
+                onChange={handleChange}
+              >
+                <option value="">Select education</option>
+                <option value="High School">High School</option>
+                <option value="Bachelor">Bachelor</option>
+                <option value="Master">Master</option>
+                <option value="Doctorate">Doctorate</option>
+              </select>
+            </div>
 
             <div className="flex-1">
               <label className="block mb-2 text-[12px] font-semibold text-black">
@@ -324,52 +324,58 @@ const handleSave = async () => {
           </div>
 
           <div className="flex gap-4 w-full">
-          <div className="flex-1">
-  <label className="block mb-2 text-[12px] font-semibold text-black">
-    Occupation / Field
-  </label>
-  <select
-    name="occupation"
-    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
-    value={profileData.occupation}
-    onChange={handleChange}
-  >
-    <option value="">Select occupation</option>
-    <option value="Farmer">Farmer</option>
-    <option value="HouseWife">HouseWife</option>
-    <option value="GovJob">Gov. Job</option>
-    <option value="Health">Health</option>
-    <option value="Education">Education</option>
-    <option value="Engineering">Engineering</option>
-    <option value="Technology">Technology</option>
-    <option value="Finance">Finance</option>
-    <option value="Arts & Design">Arts & Design</option>
-    <option value="Construction">Construction</option>
-    <option value="Legal">Legal</option>
-    <option value="Marketing">Marketing</option>
-    <option value="Sales">Sales</option>
-    <option value="Manufacturing">Manufacturing</option>
-    <option value="Hospitality">Hospitality</option>
-    <option value="Transportation">Transportation</option>
-    <option value="Social Services">Social Services</option>
-    <option value="Science & Research">Science & Research</option>
-    <option value="Administration">Administration</option>
-    <option value="Agriculture">Agriculture</option>
-    <option value="Retail">Retail</option>
-    <option value="Maintenance & Repair">Maintenance & Repair</option>
-    <option value="Public Safety">Public Safety</option>
-    <option value="Government">Government</option>
-    <option value="Real Estate">Real Estate</option>
-    <option value="Media & Communication">Media & Communication</option>
-    <option value="Skilled Trades">Skilled Trades</option>
-    <option value="Consulting">Consulting</option>
-    <option value="Sports & Recreation">Sports & Recreation</option>
-    <option value="Non-Profit">Non-Profit</option>
-    <option value="Human Resources">Human Resources</option>
-    <option value="Energy & Utilities">Energy & Utilities</option>
-    <option value="Environment & Natural Resources">Environment & Natural Resources</option>
-  </select>
-</div>
+            <div className="flex-1">
+              <label className="block mb-2 text-[12px] font-semibold text-black">
+                Occupation / Field
+              </label>
+              <select
+                name="occupation"
+                className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                value={profileData.occupation}
+                onChange={handleChange}
+              >
+                <option value="">Select occupation</option>
+                <option value="Farmer">Farmer</option>
+                <option value="HouseWife">HouseWife</option>
+                <option value="GovJob">Gov. Job</option>
+                <option value="Health">Health</option>
+                <option value="Education">Education</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Technology">Technology</option>
+                <option value="Finance">Finance</option>
+                <option value="Arts & Design">Arts & Design</option>
+                <option value="Construction">Construction</option>
+                <option value="Legal">Legal</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Sales">Sales</option>
+                <option value="Manufacturing">Manufacturing</option>
+                <option value="Hospitality">Hospitality</option>
+                <option value="Transportation">Transportation</option>
+                <option value="Social Services">Social Services</option>
+                <option value="Science & Research">Science & Research</option>
+                <option value="Administration">Administration</option>
+                <option value="Agriculture">Agriculture</option>
+                <option value="Retail">Retail</option>
+                <option value="Maintenance & Repair">
+                  Maintenance & Repair
+                </option>
+                <option value="Public Safety">Public Safety</option>
+                <option value="Government">Government</option>
+                <option value="Real Estate">Real Estate</option>
+                <option value="Media & Communication">
+                  Media & Communication
+                </option>
+                <option value="Skilled Trades">Skilled Trades</option>
+                <option value="Consulting">Consulting</option>
+                <option value="Sports & Recreation">Sports & Recreation</option>
+                <option value="Non-Profit">Non-Profit</option>
+                <option value="Human Resources">Human Resources</option>
+                <option value="Energy & Utilities">Energy & Utilities</option>
+                <option value="Environment & Natural Resources">
+                  Environment & Natural Resources
+                </option>
+              </select>
+            </div>
 
             <div className="flex-1">
               <label className="block mb-2 text-[12px] font-semibold text-black">
@@ -377,10 +383,10 @@ const handleSave = async () => {
               </label>
               <input
                 type="text"
-                name="income" 
+                name="income"
                 className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
                 placeholder="Enter your income"
-                value={profileData.income} 
+                value={profileData.income}
                 onChange={handleChange}
               />
             </div>
@@ -402,10 +408,7 @@ const handleSave = async () => {
             Save
           </button>
         </div>
-        
       </div>
-
-      
     </div>
   );
 };
