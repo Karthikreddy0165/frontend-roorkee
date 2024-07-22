@@ -4,6 +4,7 @@ import { useAuth } from "../../Context/AuthContext";
 
 const ProfileModal = ({ onClose }) => {
   const { authState } = useAuth();
+  const [stateOptions, setStateOptions] = useState([]);
   const [profileData, setProfileData] = useState({
     name: "",
     age: "",
@@ -40,7 +41,7 @@ const ProfileModal = ({ onClose }) => {
           );
 
           const personalData = await personalResponse.json();
-          console.log(personalData);
+          console.log("personal",personalData);
           const professionalData = await professionalResponse.json();
           console.log(professionalData);
 
@@ -73,6 +74,21 @@ const ProfileModal = ({ onClose }) => {
     return () => {
       document.body.classList.remove("overflow-hidden");
     };
+  }, []);
+
+  useEffect(() => {
+    const fetchStateOptions = async () => {
+      try {
+        const response = await fetch('http://52.65.93.83:8080/api/choices/state/');
+        const data = await response.json();
+        const formattedData = data.map(item => item[0]);
+        setStateOptions(formattedData);
+      } catch (error) {
+        console.error("Error fetching state options:", error);
+      }
+    };
+
+    fetchStateOptions();
   }, []);
 
   const handleChange = (e) => {
@@ -238,14 +254,21 @@ const handleSave = async () => {
               <label className="block mb-2 text-[12px] font-semibold text-black">
                 State
               </label>
-              <input
+              <select
                 type="text"
                 name="state"
                 className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
                 placeholder="Enter your state"
                 value={profileData.state}
                 onChange={handleChange}
-              />
+              >
+                <option value="">Select state</option>
+                {stateOptions.map((state, index) => (
+                  <option key={index} value={state}>
+                    {state}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="flex-1">
               <label className="block mb-2 text-[12px] font-semibold text-black">
@@ -265,19 +288,24 @@ const handleSave = async () => {
           </div>
 
           <div className="flex gap-4 w-full">
-            <div className="flex-1">
-              <label className="block mb-2 text-[12px] font-semibold text-black">
-                Education
-              </label>
-              <input
-                type="text"
-                name="education"
-                className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
-                placeholder="Enter your education"
-                value={profileData.education}
-                onChange={handleChange}
-              />
-            </div>
+          <div className="flex-1">
+  <label className="block mb-2 text-[12px] font-semibold text-black">
+    Education
+  </label>
+  <select
+    name="education"
+    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+    value={profileData.education}
+    onChange={handleChange}
+  >
+    <option value="">Select education</option>
+    <option value="High School">High School</option>
+    <option value="Bachelor">Bachelor</option>
+    <option value="Master">Master</option>
+    <option value="Doctorate">Doctorate</option>
+  </select>
+</div>
+
             <div className="flex-1">
               <label className="block mb-2 text-[12px] font-semibold text-black">
                 Disability
@@ -296,22 +324,53 @@ const handleSave = async () => {
           </div>
 
           <div className="flex gap-4 w-full">
-            <div className="flex-1">
-              <label className="block mb-2 text-[12px] font-semibold text-black">
-                Occupation
-              </label>
-              <select
-                name="occupation"
-                className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
-                value={profileData.occupation}
-                onChange={handleChange}
-              >
-                <option value="">Select occupation</option>
-                <option value="Farmer">Farmer</option>
-                <option value="HouseWife">HouseWife</option>
-                <option value="Student">Student</option>
-              </select>
-            </div>
+          <div className="flex-1">
+  <label className="block mb-2 text-[12px] font-semibold text-black">
+    Occupation / Field
+  </label>
+  <select
+    name="occupation"
+    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+    value={profileData.occupation}
+    onChange={handleChange}
+  >
+    <option value="">Select occupation</option>
+    <option value="Farmer">Farmer</option>
+    <option value="HouseWife">HouseWife</option>
+    <option value="GovJob">Gov. Job</option>
+    <option value="Health">Health</option>
+    <option value="Education">Education</option>
+    <option value="Engineering">Engineering</option>
+    <option value="Technology">Technology</option>
+    <option value="Finance">Finance</option>
+    <option value="Arts & Design">Arts & Design</option>
+    <option value="Construction">Construction</option>
+    <option value="Legal">Legal</option>
+    <option value="Marketing">Marketing</option>
+    <option value="Sales">Sales</option>
+    <option value="Manufacturing">Manufacturing</option>
+    <option value="Hospitality">Hospitality</option>
+    <option value="Transportation">Transportation</option>
+    <option value="Social Services">Social Services</option>
+    <option value="Science & Research">Science & Research</option>
+    <option value="Administration">Administration</option>
+    <option value="Agriculture">Agriculture</option>
+    <option value="Retail">Retail</option>
+    <option value="Maintenance & Repair">Maintenance & Repair</option>
+    <option value="Public Safety">Public Safety</option>
+    <option value="Government">Government</option>
+    <option value="Real Estate">Real Estate</option>
+    <option value="Media & Communication">Media & Communication</option>
+    <option value="Skilled Trades">Skilled Trades</option>
+    <option value="Consulting">Consulting</option>
+    <option value="Sports & Recreation">Sports & Recreation</option>
+    <option value="Non-Profit">Non-Profit</option>
+    <option value="Human Resources">Human Resources</option>
+    <option value="Energy & Utilities">Energy & Utilities</option>
+    <option value="Environment & Natural Resources">Environment & Natural Resources</option>
+  </select>
+</div>
+
             <div className="flex-1">
               <label className="block mb-2 text-[12px] font-semibold text-black">
                 Annual Income (in lakhs)
@@ -327,7 +386,7 @@ const handleSave = async () => {
             </div>
           </div>
         </div>
-
+        <hr className="w-full mt-8 " />
         {/* Third Div */}
         <div className="flex justify-end mt-4 gap-4 w-full">
           <button
@@ -338,12 +397,15 @@ const handleSave = async () => {
           </button>
           <button
             onClick={handleSave}
-            className="px-4 py-2 rounded-lg border border-transparent bg-blue-500 text-white"
+            className=" pt-[10px] pr-[44px] pb-[10px] pl-[44px] rounded-lg border border-transparent bg-[#3431BB] text-white"
           >
             Save
           </button>
         </div>
+        
       </div>
+
+      
     </div>
   );
 };
