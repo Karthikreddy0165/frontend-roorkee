@@ -60,30 +60,16 @@ export default function Categories(props) {
         );
       }
 
-      if (
-        props.selectedSponsors &&
-        props.selectedSponsors.length > 0
-      ) {
-        filtered = filtered.filter((item) => {
-          const allSponsorTypes = item.sponsors.flatMap(
-            (sponsor) =>
-              sponsor.sponsor_type.split(",").map((type) => type.trim())
-          );
 
-          const haveCommonElement = props.selectedSponsors.some(
-            (sponsor) => {
-              return allSponsorTypes.includes(sponsor);
-            }
-          );
-
-          if (haveCommonElement) {
-            return true;
-          } else {
-            return false;
-          }
-        });
-      }
-
+      
+     if(props.selectedSponsors && props.selectedSponsors.length > 0) {
+        filtered = filtered.filter((item) =>{
+          if(item.sponsors[0]){
+            return props.selectedSponsors.includes(item.sponsors[0].sponsor_type)
+        }
+        }
+        );
+     } 
       // Set filtered data after applying all filters
       setFilteredData(filtered);
     }
@@ -245,7 +231,7 @@ export default function Categories(props) {
   if (props.data.length === 0 || filteredData.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center gap-[8px] mt-[120px]">
-        <p className="text-button-text text-[14px] text-button-blue">Sorry no result is found based on your preference.</p>
+        <p className="text-button-text text-[14px] text-onclick-btnblue">Sorry no result is found based on your preference.</p>
       </div>
     );
   }

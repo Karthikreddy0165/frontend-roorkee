@@ -1,6 +1,6 @@
-import { useTabContext } from "@/Context/TabContext";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import Categories from "./Categories"; // Adjust path as per your project structure
+import { useTabContext } from "@/Context/TabContext";
 
 export default function JobOpenings({ setData, ...props }) {
   const { searchQuery } = useTabContext(); // Access searchQuery from TabContext
@@ -41,6 +41,7 @@ export default function JobOpenings({ setData, ...props }) {
         selectedBeneficiaries={props.selectedBeneficiaries}
         selectedAges={props.selectedAges}
         selectedFunders={props.selectedFunders}
+        selectedSponsors={props.selectedSponsors}
       />
     </div>
   );

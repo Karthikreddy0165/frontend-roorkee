@@ -1,5 +1,4 @@
-
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import Categories from "./Categories";
 
 export default function Scholarships({ searchQuery, setData, ...props }) {
@@ -35,8 +34,8 @@ export default function Scholarships({ searchQuery, setData, ...props }) {
         selectedBeneficiaries={props.selectedBeneficiaries}
         selectedAges={props.selectedAges}
         selectedFunders={props.selectedFunders}
+        selectedSponsors={props.selectedSponsors}
       />
     </div>
   );
 }
-
