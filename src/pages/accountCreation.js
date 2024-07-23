@@ -65,7 +65,7 @@ const CreateAcc01 = () => {
         const user = { token: result.access, email: values.email };
         localStorage.setItem("token", result.access);
         login(result.access, user); // Save token and user information to the context
-        router.push("/HeroPageLoginsucc");
+        router.push("/HeroPage");
       }
     } catch (error) {
       console.error("Login failed:", error);
