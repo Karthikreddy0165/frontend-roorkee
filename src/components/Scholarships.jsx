@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import Categories from "./Categories";
 
@@ -7,7 +6,7 @@ export default function Scholarships({ searchQuery, setData, ...props }) {
     const fetchState = async () => {
       try {
         setData(null);
-        let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}api/schemes`;
+        let url = `http://52.65.93.83:8080/api/schemes`;
         if (searchQuery) {
           url += `/search/?q=${searchQuery}`;
         }
@@ -35,8 +34,8 @@ export default function Scholarships({ searchQuery, setData, ...props }) {
         selectedBeneficiaries={props.selectedBeneficiaries}
         selectedAges={props.selectedAges}
         selectedFunders={props.selectedFunders}
+        selectedSponsors={props.selectedSponsors}
       />
     </div>
   );
 }
-

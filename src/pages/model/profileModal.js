@@ -32,11 +32,11 @@ const ProfileModal = ({ onClose }) => {
           };
 
           const personalResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/personal/`,
+            `http://52.65.93.83:8080/api/profile/personal/`,
             requestOptions
           );
           const professionalResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/professional/`,
+            `http://52.65.93.83:8080/api/profile/professional/`,
             requestOptions
           );
 
@@ -110,38 +110,40 @@ const ProfileModal = ({ onClose }) => {
         },
       };
 
-      try {
-        // Update personal data
-        await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/personal/`,
-          {
-            ...requestOptions,
-            body: JSON.stringify({
-              name: profileData.name,
-              gender: profileData.gender,
-              age: profileData.age,
-              category: profileData.community,
-              state_of_residence: profileData.state,
-              minority: profileData.minority === "Yes",
-              disability: profileData.disability === "Yes",
-              bpl_card_holder: profileData.bpl_card_holder === "Yes",
-            }),
-          }
-        );
-        console.log("Test data: ", profileData.name);
 
-        // Update professional data
-        await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/professional/`,
-          {
-            ...requestOptions,
-            body: JSON.stringify({
-              education: profileData.education,
-              occupation: profileData.occupation,
-              income: profileData.income,
-            }),
-          }
-        );
+    try {
+      // Update personal data
+      await fetch(
+        `http://52.65.93.83:8080/api/profile/personal/`,
+        {
+          ...requestOptions,
+          body: JSON.stringify({
+            name: profileData.name,
+            gender: profileData.gender,
+            age: profileData.age,
+            category: profileData.community,
+            state_of_residence: profileData.state,
+            minority: profileData.minority === "Yes",
+            disability: profileData.disability === "Yes",
+            bpl_card_holder: profileData.bpl_card_holder === "Yes"
+          }),
+        }
+        
+      );
+      console.log("Test data: ", profileData)
+
+      // Update professional data
+      await fetch(
+        `http://52.65.93.83:8080/api/profile/professional/`,
+        {
+          ...requestOptions,
+          body: JSON.stringify({
+            education: profileData.education,
+            occupation: profileData.occupation,
+            income: profileData.income
+          }),
+        }
+      );
 
         onClose();
       } catch (error) {

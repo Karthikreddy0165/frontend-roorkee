@@ -64,6 +64,7 @@ const uniqueCategories = [...new Set(categories)];
     useEffect(() => {
       console.log(selectedSponsors);
     }, [selectedSponsors]);
+    
     useEffect(()=>{
       if(selectedSponsors.length == 0){
         setSponsorName("")
