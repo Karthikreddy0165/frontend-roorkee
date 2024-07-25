@@ -1,14 +1,15 @@
-import { useAuth } from "@/Context/AuthContext";
 import { Formik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
-import { FaArrowLeftLong } from "react-icons/fa6";
 import * as Yup from "yup";
 import { useFormData } from "../Context/FormContext";
 import loginperson from "../assets/image.png";
 import IndialImg from "../assets/ind2.png";
+import { FaSpinner, FaEye, FaEyeSlash } from "react-icons/fa";
+import { useAuth } from "@/Context/AuthContext";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import { CiBookmark } from "react-icons/ci";
 
 const CreateAcc01 = () => {
   const router = useRouter();
@@ -52,7 +53,7 @@ const CreateAcc01 = () => {
         redirect: "follow",
       };
 
-      const response = await fetch(`http://52.65.93.83:8080/api/login/`, requestOptions);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/login/`, requestOptions);
       const result = await response.json();
 
       if (!response.ok) {
@@ -65,7 +66,13 @@ const CreateAcc01 = () => {
         const user = { token: result.access, email: values.email };
         localStorage.setItem("token", result.access);
         login(result.access, user); // Save token and user information to the context
-        router.push("/HeroPage");
+        router.push("/accCreatedsucc");
+        setTimeout(() => {
+          router.push("/homepage");
+          setTimeout(() => {
+            router.push("/HeroPage");
+          }, 0.1); // 0.1 second delay
+        }, 2000);
       }
     } catch (error) {
       console.error("Login failed:", error);
@@ -74,36 +81,90 @@ const CreateAcc01 = () => {
 
   return (
     <div className="flex h-screen overflow-hidden -mb-6">
-      <div className="w-1/2 bg-[#151280] relative flex items-center justify-center">
-        <div className="absolute top-0 text-white mt-20 ml-8 mr-8">
+      <div className="w-1/2 bg-[#FEF6F0] relative flex items-center justify-center">
+        <div className="absolute top-0 text-[#000] mt-20 ml-8 mr-8">
           <h1 className="text-purple-400 font-inter italic font-bold text-3xl mb-4 w-[500px]">
             “For the Indians by the Indians”
           </h1>
-          <p className="text-white font-inter text-[22px] text-base font-medium w-[500px]">
+          <p className="text-[#000] font-inter text-[22px] text-base font-medium w-[500px] opacity-0.4">
             Find all the details about government schemes, scholarships, and job
             openings for all states in one place.
           </p>
+
+          {/* bg div images */}
+          <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 opacity-5 bg-[#DF8317] ml-[530px] mt-[-150px] z-0"></div>
+
+          <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 rounded-[55px] bg-[rgba(223,131,23,0.2)] ml-[230px] mt-[300px] z-0"></div>
+
+          <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 opacity-5 bg-[#DF8317] rounded-[55px] ml-[-340px] mt-[500px] z-0"></div>
+
+          {/* <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 rounded-[55px] bg-[#DF8317]  ml-[-340px] mt-[500px] z-0"></div> */}
+
+
+
+
+          <div class="absolute w-[266px] h-auto p-[10.8px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] top-[305px] ml-[35px] ">
+            <p class="self-stretch text-[#000] mb-[5px] font-inter text-[9.452px] font-semibold leading-normal">
+              Opening for bank staff
+            </p>
+            <p class="self-stretch text-[#616161] font-inter text-[6.751px]  font-normal leading-normal underline">
+              Welfare Department
+            </p>
+          </div>
         </div>
-        <div className="absolute bottom-0 right-0">
+
+        <div className="absolute w-[326px] p-[10.802px] items-center gap-[8.102px] rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] top-[450px] mr-[295px] ">
+          <div className="flex ">
+            <p className=" text-[10.584px] mb-[10px] font-semibold mr-12">
+              Adi Dravidar and Tribal Welfare Department
+            </p>
+            <CiBookmark/>
+          </div>
+          <p className="self-stretch text-[#616161] font-inter text-[8.274px] font-semibold leading-normal opacity-60 mb-[9.93px] line-clamp-2">
+            <span className="font-bold">Description:</span> Free education up to
+            12th Std. to all i.e. tuition fee will not be collected and the
+            amount will be reimbursed by the government
+          </p>
+          <p className="self-stretch text-[#616161] font-inter text-[8.274px] font-normal leading-normal opacity-60 mb-[10px] line-clamp-2 underline">
+            Welfare Department
+          </p>
+
+          <div className="flex mt-[-7px]">
+            <div className="flex items-center justify-center pr-2 pl-2 py-[5px] ml-[-15px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium scale-[.6]">
+              TamilNadu
+            </div>
+
+            <div className="flex items-center justify-center pr-2 pl-2 py-[5px] ml-[-20px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium scale-[.6]">
+              Student
+            </div>
+            <div className="flex items-center justify-center pr-2 pl-2 py-[5px] ml-[-15px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium scale-[.6]">
+              SC/ ST
+            </div>
+          </div>
+        </div>
+
+        <div class="absolute w-[266px] p-[7.919px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] bottom-[175px] mr-[270px] scale-[.8]">
+          <p class="self-stretch text-[#000] font-inter text-[8.929px] font-semibold leading-normal mb-[5.939px]">
+            Scholarships for female student
+          </p>
+          <p className="self-stretch text-[#616161] font-inter text-[6.649px] font-semibold leading-normal opacity-60 line-clamp-2">
+            <span className="font-bold">Description:</span> Free education upto
+            12th Std. to all i.e. tution fee will not be collected and the
+            amount will be reimbursed by government
+          </p>
+        </div>
+
+        <div className="absolute bottom-0 right-4 ">
           <Image
             className="z-10 image-opacity transform -scale-x-100"
             src={loginperson}
             alt="Login Person Image"
-            width={400}
-            height={200}
-          />
-        </div>
-        <div className="absolute bottom-8">
-          <Image
-            className="z-0 image-opacity opacity-20"
-            src={IndialImg}
-            alt="India Image"
-            width={600}
-            height={200}
+            // width={360}
+            height={477}
           />
         </div>
       </div>
-      <div className="w-1/2 flex items-center justify-center">
+      <div className="relative w-1/2 flex items-center justify-center z-80 bg-white">
         <Formik
           initialValues={{
             email: "",
@@ -127,7 +188,7 @@ const CreateAcc01 = () => {
               redirect: "follow",
             };
 
-            fetch(`http://52.65.93.83:8080/api/register/`, requestOptions)
+            fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/register/`, requestOptions)
               .then((response) => response.json())
               .then((result) => {
                 console.log("API Response:", result); // Log the entire result object for debugging
@@ -158,7 +219,12 @@ const CreateAcc01 = () => {
           }}
         >
           {(formik) => {
-            const errorMessage = getErrorMessage(formik.errors, apiErrors);
+            let errorMessage = getErrorMessage(formik.errors, apiErrors);
+
+            // Check for specific error messages and modify them
+            if (errorMessage.includes("This password is too common.") && errorMessage.includes("This password is entirely numeric.")) {
+              errorMessage = "This password is too common. This password is entirely numeric.";
+            }
 
             return (
               <form
@@ -169,7 +235,7 @@ const CreateAcc01 = () => {
                   <FaArrowLeftLong className="mt-1"/>
                   Back
                 </button>
-                <h1 className="text-2xl font-bold mb-4">Create an Account</h1>
+                <h1 className="text-2xl font-bold mb-[32px]">Create an Account</h1>
                 <div>
                   <label
                     className="block text-gray-700 text-sm font-bold mb-2"
@@ -178,7 +244,7 @@ const CreateAcc01 = () => {
                     Email Id
                   </label>
                   <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="shadow appearance-none border rounded rounded-[8px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="email"
                     type="email"
                     placeholder="Enter your email"
@@ -186,9 +252,6 @@ const CreateAcc01 = () => {
                     onBlur={formik.handleBlur}
                     value={formik.values.email}
                   />
-                  {formik.touched.email && formik.errors.email ? (
-                    <div className="text-red-500 text-sm">{formik.errors.email}</div>
-                  ) : null}
                 </div>
                 <div className="relative mt-6">
                   <label
@@ -198,7 +261,7 @@ const CreateAcc01 = () => {
                     Password
                   </label>
                   <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    className="shadow appearance-none border rounded rounded-[8px] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
@@ -218,16 +281,18 @@ const CreateAcc01 = () => {
                     </div>
                   </div>
                 )}
-                
-                <div className="absolute bottom-[200px]">
-                  {/* <span className="mr-2 pr-[350px]">1/3</span> */}
+
+                <div>
                   <button
-                    className="bg-[#3431BB] hover:bg text-white font-bold py-2 px-8 rounded focus:outline-none focus:shadow-outline"
+                    className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-3 px-4 rounded  rounded-[8px] focus:outline-none focus:shadow-outline w-full mt-[35px]"
                     type="submit"
-                    disabled={formik.isSubmitting || isLoading}
+                    disabled={formik.isSubmitting}
                   >
                     {isLoading ? (
-                      <FaSpinner className="animate-spin h-5 w-5 mr-3 inline" />
+                      <div className="flex items-center justify-center">
+                        <FaSpinner className="animate-spin mr-2" />
+                        Loading...
+                      </div>
                     ) : (
                       "Continue"
                     )}

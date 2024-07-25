@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from "react";
 import { useAuth } from "@/Context/AuthContext";
-import { useEffect, useState } from "react";
 import Categories from "../components/Categories";
 import { useRouter } from "next/router";
 
@@ -27,8 +27,10 @@ export default function Saved() {
           headers: myHeaders,
           redirect: "follow",
         };
-
-        const response = await fetch(`http://52.65.93.83:8080/api/user/saved_schemes/`, requestOptions);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/user/saved_schemes/`,
+          requestOptions
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

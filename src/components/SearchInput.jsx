@@ -14,7 +14,7 @@ function SearchInput({ searchQuery, handleSearch }) {
   }, [inputValue, handleSearch]);
 
   return (
-    <div className="flex items-center gap-8 h-14 px-3 rounded-lg border border-gray-300 bg-white mb-8 mr-[200px]">
+    <div className="flex items-center gap-8 h-14 px-3 rounded-lg border border-gray-300 bg-white mb-[24px] mr-[200px]">
       <svg
         className="w-6 h-6 text-gray-400"
         fill="none"
