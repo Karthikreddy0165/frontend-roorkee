@@ -14,9 +14,9 @@ function SearchInput({ searchQuery, handleSearch }) {
   }, [inputValue, handleSearch]);
 
   return (
-    <div className="flex items-center gap-8 h-14 px-3 rounded-lg border border-gray-300 bg-white mb-8 mr-[200px]">
+    <div className="flex items-center gap-1 h-14 px-3 rounded-lg border border-gray-300 bg-white mb-8 mr-[200px] text-[#616161]">
       <svg
-        className="w-6 h-6 text-gray-400"
+        className="w-5 h-5"
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -29,7 +29,7 @@ function SearchInput({ searchQuery, handleSearch }) {
       <input
         type="text"
         placeholder="Search schemes, job opportunities, or scholarships"
-        className="flex-1 px-2 text-sm bg-transparent focus:outline-none w-64"
+        className="flex-1 px-2 text-sm bg-transparent focus:outline-none w-64 placeholder-[#616161]"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
       />
