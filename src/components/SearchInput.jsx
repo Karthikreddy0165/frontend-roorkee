@@ -15,7 +15,10 @@ function SearchInput({ searchQuery, handleSearch }) {
 
   return (
 
-    <div className="flex items-center gap-1 h-14 px-3 rounded-lg border border-gray-300 bg-white mb-8 mr-[200px] text-[#616161]">
+
+
+    <div className="flex items-center gap-8 h-14 px-3 rounded-lg border border-gray-300 bg-white mb-[24px] mr-[200px]">
+
 
       <svg
         className="w-5 h-5"
