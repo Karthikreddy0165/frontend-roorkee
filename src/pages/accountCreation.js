@@ -71,7 +71,7 @@ const CreateAcc01 = () => {
           router.push("/homepage");
           setTimeout(() => {
             router.push("/HeroPage");
-          }, 0.1); // 0.1 second delay
+          }, 5); // 0.1 second delay
         }, 2000);
       }
     } catch (error) {

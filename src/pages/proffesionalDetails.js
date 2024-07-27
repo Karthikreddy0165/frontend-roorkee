@@ -55,7 +55,7 @@ const CreateAcc03 = () => {
       body: JSON.stringify(requestBody),
     };
 
-    fetch(`http://52.65.93.83:8080/api/profile/professional/`, requestOptions)
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/professional/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);

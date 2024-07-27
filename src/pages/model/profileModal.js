@@ -83,7 +83,8 @@ const ProfileModal = ({ onClose }) => {
     const fetchStateOptions = async () => {
       try {
         const response = await fetch(
-          "http://52.65.93.83:8080/api/choices/state/"
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/choices/state/`
+          // ${process.env.NEXT_PUBLIC_API_BASE_URL}
         );
         const data = await response.json();
         const formattedData = data.map((item) => item[0]);
