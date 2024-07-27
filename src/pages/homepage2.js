@@ -27,7 +27,7 @@ const HomePage = () => {
         style={{ maxWidth: "80%", margin: "0 auto" }}
       >
         {/* Main Container */}
-        <div className="bg-yellow-500 p-[50px_0]" style={{
+        <div className=" p-[50px_0]" style={{
             display:"grid",
             placeItems:"center"
         }}>
@@ -66,7 +66,7 @@ const HomePage = () => {
             {/* Right Div */}
             <div className="w-[482px] h-[300px] bg-gray-200">
               {/* Right content here */}
-              hi this is monu
+              {/* hi this is monu */}
             </div>
           </div>
 
@@ -129,26 +129,30 @@ const HomePage = () => {
 
           {/* Third row */}
           <div style={{
+            marginTop:"3vw",
             width:"70w",
             display:"flex",
             justifyContent:"center",
             flexDirection:"column"
           }}>
-            <h1 className="bg-green-100 font-semibold w-[26.7vmin] text-[3.94vmin]">Discover right </h1>
-            <div className="bg-red-300 mt-[2vmin]" style={{
-                width:"70vw"
+            <h1 className=" font-semibold relative left-[27.45vw] w-[15.09vw] text-[2.2vw]">Discover right </h1>
+            <div className=" mt-[3vmax] flex " style={{
+                width:"70vw",
+                justifyContent:"space-between"
+
             }}>
-                <div>
-                    <p></p>
-                    <PiNotepadBold/>
+                <div className="w-[22vw] h-[17.46vw] rounded-[8px] bg-[#EEF] p-[3.48vw]">
+                    <p className="">SCHEMES</p>
+                    <PiNotepadBold className="relative h-[6.80vw] w-[5.76vw] left-[9.28vw] top-[3.5vw]"/>
                 </div>
-                <div>
-                    <p></p>
-                    <PiNotepadBold/>
+                <div className="w-[22vw] h-[17.46vw] rounded-[8px] bg-[#EEF] p-[3.48vw]">
+                    <p>JOBS</p>
+                    <PiNotepadBold className="relative h-[6.80vw] w-[5.76vw] left-[9.28vw] top-[3.5vw]"/>
                 </div>
-                <div>
-                    <p></p>
-                    <PiNotepadBold/>
+                <div className="w-[22vw] h-[17.46vw] rounded-[8px] bg-[#EEF] p-[3.48vw]">
+                    <p>SCHOLARSHIPS</p>
+                    <PiNotepadBold className="relative h-[6.80vw] w-[5.76vw] left-[9.28vw] top-[3.5vw] 
+                    "/>
                 </div>
                 
             </div>
