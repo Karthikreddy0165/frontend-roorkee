@@ -14,9 +14,10 @@ import BeneficiaryDropdownMenu from "../components/BeneficiariesDropdown";
 import SponsorsDropdownMenu from "@/components/SponsorDropdown";
 
 import FundingByDropdownMenu from "../components/FundingBy";
+import { useRouter } from "next/router";
 
 
-const HeroPageWithoutLogin = () => {
+const HeroPage = () => {
   const [data, setData] = useState(null);
   const [stateName, setStateName] = useState("");
   const [departmentName, setDepartmentName] = useState("");
@@ -31,6 +32,7 @@ const HeroPageWithoutLogin = () => {
   const [selectedIncomes, setSelectedIncomes] = useState([]);
   const [selectedFunders, setSelectedFunders] = useState([]);
   const [selectedSponsors, setSelectedSponsors] = useState([]);
+  const [bannerImage, setBannerImage] = useState("");
 
   const dropdownRef = useRef();
   const departmentDropdownRef = useRef();
@@ -50,20 +52,36 @@ const HeroPageWithoutLogin = () => {
     sponsorsOpen: false,
   });
 
+  const router = useRouter();
+
+  // useEffect(() => {
+  //   return () => {
+  //     router.push('/homepage');
+  //   };
+  // }, []);
+
   useEffect(() => {
+    
+    fetch("http://52.65.93.83:8080/api/banner/")
+      .then((response) => response.json())
+      .then((data) => {
+        setBannerImage(data.imageUrl);
+      })
+      .catch((error) => console.error("Error fetching banner image:", error));
+
     setStateName('');
     setDepartmentName('');
     setBeneficiaryName('');
     setFunderName('');
     setSponsorName('');
-
     setSelectedDepartments([]);
     setSelectedBeneficiaries([]);
     setSelectedAges([]);
     setSelectedIncomes([]);
     setSelectedFunders([]);
     setSelectedSponsors([]);
-  },[data])
+  }, [data]);
+
 
   const toggleDropdown = (key) => {
       setDropDownStates((prevState) => {
@@ -93,6 +111,7 @@ const HeroPageWithoutLogin = () => {
     setFunderName('');
   }
 
+  
   return (
     <>
       <NavBarWithoutLogin/>
@@ -110,6 +129,18 @@ const HeroPageWithoutLogin = () => {
             objectPosition="center bottom"
             className="rounded-[15px]"
           />
+          {/* {bannerImage ? (
+            <Image
+              src={bannerImage}
+              alt="Loading Image..."
+              layout="fill"
+              objectFit="cover"
+              objectPosition="center bottom"
+              className="rounded-[15px]"
+            />
+          ) : (
+            <p>Loading banner Image...</p>
+          )} */}
         </div>
       </div>
 
@@ -241,4 +272,4 @@ const HeroPageWithoutLogin = () => {
   );
 };
 
-export default HeroPageWithoutLogin;
+export default HeroPage;

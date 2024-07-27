@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import SearchInput from "./SearchInput";
-
 import Schemes from "./Schemes"; // Adjust path as per your project structure
 import JobOpenings from "./JobOpenings"; // Adjust path as per your project structure
 import Scholarships from "./Scholarships"; // Adjust path as per your project structure
@@ -11,17 +10,20 @@ import { useTabContext } from "@/Context/TabContext";
 export default function Tabs(props) {
   const router = useRouter();
   const { tab } = router.query;
-  const [activeTab, setActiveTab] = useState(tab || "Schemes");
-  const { searchQuery, setSearchQuery } = useTabContext(); // Accessing searchQuery and setSearchQuery from context
+  const { activeTab, setTab, searchQuery, setSearchQuery } = useTabContext(); // Accessing context
 
   useEffect(() => {
     if (tab) {
-      setActiveTab(tab);
+      setTab(tab);
     }
-  }, [tab]);
+  }, [tab, setTab]);
 
   const handleTabClick = (tab) => {
-    setActiveTab(tab);
+    setTab(tab);
+    router.push({
+      pathname: router.pathname,
+      query: { tab },
+    });
   };
 
   const handleSearch = (query) => {

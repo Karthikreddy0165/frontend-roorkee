@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useAuth } from "../../Context/AuthContext";
 
@@ -18,10 +18,14 @@ const ProfileModal = ({ onClose }) => {
     occupation: "",
     income: "",
   });
+  const [loading, setLoading] = useState(true);
+
+  const modalRef = useRef(null);
 
   useEffect(() => {
     const fetchProfileData = async () => {
       if (authState.token) {
+        setLoading(true);
         try {
           const requestOptions = {
             method: "GET",
@@ -32,18 +36,16 @@ const ProfileModal = ({ onClose }) => {
           };
 
           const personalResponse = await fetch(
-            `http://52.65.93.83:8080/api/profile/personal/`,
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/personal/`,
             requestOptions
           );
           const professionalResponse = await fetch(
-            `http://52.65.93.83:8080/api/profile/professional/`,
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/professional/`,
             requestOptions
           );
 
           const personalData = await personalResponse.json();
-          console.log("personal", personalData);
           const professionalData = await professionalResponse.json();
-          console.log(professionalData);
 
           setProfileData({
             name: personalData.name || "",
@@ -57,11 +59,12 @@ const ProfileModal = ({ onClose }) => {
             education: professionalData.education || "",
             disability: personalData.disability === true ? "Yes" : "No",
             occupation: professionalData.occupation || "",
-            income: professionalData.income || "", // Updated here
+            income: professionalData.income || "",
           });
-          console.log("Minority:", personalData);
         } catch (error) {
           console.error("Error fetching profile data:", error);
+        } finally {
+          setLoading(false);
         }
       }
     };
@@ -80,7 +83,8 @@ const ProfileModal = ({ onClose }) => {
     const fetchStateOptions = async () => {
       try {
         const response = await fetch(
-          "http://52.65.93.83:8080/api/choices/state/"
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/choices/state/`
+          // ${process.env.NEXT_PUBLIC_API_BASE_URL}
         );
         const data = await response.json();
         const formattedData = data.map((item) => item[0]);
@@ -93,6 +97,19 @@ const ProfileModal = ({ onClose }) => {
     fetchStateOptions();
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProfileData((prevData) => ({
@@ -100,6 +117,7 @@ const ProfileModal = ({ onClose }) => {
       [name]: value,
     }));
   };
+
   const handleSave = async () => {
     if (authState.token) {
       const requestOptions = {
@@ -110,40 +128,37 @@ const ProfileModal = ({ onClose }) => {
         },
       };
 
+      try {
+        // Update personal data
+        await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/personal/`,
+          {
+            ...requestOptions,
+            body: JSON.stringify({
+              name: profileData.name,
+              gender: profileData.gender,
+              age: profileData.age,
+              category: profileData.community,
+              state_of_residence: profileData.state,
+              minority: profileData.minority === "Yes",
+              disability: profileData.disability === "Yes",
+              bpl_card_holder: profileData.bpl_card_holder === "Yes",
+            }),
+          }
+        );
 
-    try {
-      // Update personal data
-      await fetch(
-        `http://52.65.93.83:8080/api/profile/personal/`,
-        {
-          ...requestOptions,
-          body: JSON.stringify({
-            name: profileData.name,
-            gender: profileData.gender,
-            age: profileData.age,
-            category: profileData.community,
-            state_of_residence: profileData.state,
-            minority: profileData.minority === "Yes",
-            disability: profileData.disability === "Yes",
-            bpl_card_holder: profileData.bpl_card_holder === "Yes"
-          }),
-        }
-        
-      );
-      console.log("Test data: ", profileData)
-
-      // Update professional data
-      await fetch(
-        `http://52.65.93.83:8080/api/profile/professional/`,
-        {
-          ...requestOptions,
-          body: JSON.stringify({
-            education: profileData.education,
-            occupation: profileData.occupation,
-            income: profileData.income
-          }),
-        }
-      );
+        // Update professional data
+        await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/professional/`,
+          {
+            ...requestOptions,
+            body: JSON.stringify({
+              education: profileData.education,
+              occupation: profileData.occupation,
+              income: profileData.income,
+            }),
+          }
+        );
 
         onClose();
       } catch (error) {
@@ -154,21 +169,30 @@ const ProfileModal = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white rounded-lg w-[560px] h-[750px] p-6 flex flex-col items-start flex-shrink-0 relative">
-        {/* First Div */}
-        <div className="flex justify-between items-center mb-2 w-full">
-          <h2 className="text-[28px] font-semibold text-[#0A0A0A]">Profile</h2>
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 w-10 h-10 flex items-center justify-center"
-          >
-            <MdClose className="w-[25px] h-[25px]" />
-          </button>
-        </div>
+      <div
+        ref={modalRef}
+        className="bg-white rounded-lg w-[560px] h-[750px] p-6 flex flex-col items-start flex-shrink-0 relative"
+      >
+        {loading ? (
+          <div className="flex items-center justify-center w-full h-full">
+            <div className="w-8 h-8 border-4 border-t-transparent border-blue-500 border-solid rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <>
+            {/* First Div */}
+            <div className="flex justify-between items-center mb-2 w-full">
+              <h2 className="text-2xl font-semibold text-[#0A0A0A]">Profile</h2>
+              <button
+                onClick={onClose}
+                className="text-gray-500 hover:text-gray-700 w-10 h-10 flex items-center justify-center"
+              >
+                <MdClose className="w-6 h-6" />
+              </button>
+            </div>
 
-        <hr className="w-full" />
+            <hr className="w-full" />
 
-        {/* Second Div */}
+            {/* Second Div */}
         <div className="space-y-4 mt-4 w-full">
           <div>
             <label className="block mb-2 text-[12px] font-semibold text-black">
@@ -254,19 +278,17 @@ const ProfileModal = ({ onClose }) => {
           <div className="flex gap-4 w-full">
             <div className="flex-1">
               <label className="block mb-2 text-[12px] font-semibold text-black">
-                State
+                State of Residence
               </label>
               <select
-                type="text"
                 name="state"
                 className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
-                placeholder="Enter your state"
                 value={profileData.state}
                 onChange={handleChange}
               >
                 <option value="">Select state</option>
-                {stateOptions.map((state, index) => (
-                  <option key={index} value={state}>
+                {stateOptions.map((state) => (
+                  <option key={state} value={state}>
                     {state}
                   </option>
                 ))}
@@ -274,7 +296,7 @@ const ProfileModal = ({ onClose }) => {
             </div>
             <div className="flex-1">
               <label className="block mb-2 text-[12px] font-semibold text-black">
-                B.P.L card holder
+                BPL Card Holder
               </label>
               <select
                 name="bpl_card_holder"
@@ -282,7 +304,7 @@ const ProfileModal = ({ onClose }) => {
                 value={profileData.bpl_card_holder}
                 onChange={handleChange}
               >
-                <option value="">Select B.P.L card holder status</option>
+                <option value="">Select</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
               </select>
@@ -294,20 +316,15 @@ const ProfileModal = ({ onClose }) => {
               <label className="block mb-2 text-[12px] font-semibold text-black">
                 Education
               </label>
-              <select
+              <input
+                type="text"
                 name="education"
                 className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                placeholder="Enter your education"
                 value={profileData.education}
                 onChange={handleChange}
-              >
-                <option value="">Select education</option>
-                <option value="High School">High School</option>
-                <option value="Bachelor">Bachelor</option>
-                <option value="Master">Master</option>
-                <option value="Doctorate">Doctorate</option>
-              </select>
+              />
             </div>
-
             <div className="flex-1">
               <label className="block mb-2 text-[12px] font-semibold text-black">
                 Disability
@@ -328,7 +345,7 @@ const ProfileModal = ({ onClose }) => {
           <div className="flex gap-4 w-full">
             <div className="flex-1">
               <label className="block mb-2 text-[12px] font-semibold text-black">
-                Occupation / Field
+                Occupation
               </label>
               <select
                 name="occupation"
@@ -339,7 +356,7 @@ const ProfileModal = ({ onClose }) => {
                 <option value="">Select occupation</option>
                 <option value="Farmer">Farmer</option>
                 <option value="HouseWife">HouseWife</option>
-                <option value="GovJob">Gov. Job</option>
+                <option value="Student">Student</option>
                 <option value="Health">Health</option>
                 <option value="Education">Education</option>
                 <option value="Engineering">Engineering</option>
@@ -358,30 +375,23 @@ const ProfileModal = ({ onClose }) => {
                 <option value="Administration">Administration</option>
                 <option value="Agriculture">Agriculture</option>
                 <option value="Retail">Retail</option>
-                <option value="Maintenance & Repair">
-                  Maintenance & Repair
-                </option>
+                <option value="Maintenance & Repair">Maintenance & Repair</option>
                 <option value="Public Safety">Public Safety</option>
                 <option value="Government">Government</option>
                 <option value="Real Estate">Real Estate</option>
-                <option value="Media & Communication">
-                  Media & Communication
-                </option>
+                <option value="Media & Communication">Media & Communication</option>
                 <option value="Skilled Trades">Skilled Trades</option>
                 <option value="Consulting">Consulting</option>
                 <option value="Sports & Recreation">Sports & Recreation</option>
                 <option value="Non-Profit">Non-Profit</option>
                 <option value="Human Resources">Human Resources</option>
                 <option value="Energy & Utilities">Energy & Utilities</option>
-                <option value="Environment & Natural Resources">
-                  Environment & Natural Resources
-                </option>
+                <option value="Environment & Natural Resources">Environment & Natural Resources</option>
               </select>
             </div>
-
             <div className="flex-1">
               <label className="block mb-2 text-[12px] font-semibold text-black">
-                Annual Income (in lakhs)
+                Income
               </label>
               <input
                 type="text"
@@ -394,7 +404,9 @@ const ProfileModal = ({ onClose }) => {
             </div>
           </div>
         </div>
-        <hr className="w-full mt-8 " />
+
+        <hr className="w-full mt-8" />
+
         {/* Third Div */}
         <div className="flex justify-end mt-4 gap-4 w-full">
           <button
@@ -405,11 +417,13 @@ const ProfileModal = ({ onClose }) => {
           </button>
           <button
             onClick={handleSave}
-            className=" pt-[10px] pr-[44px] pb-[10px] pl-[44px] rounded-lg border border-transparent bg-[#3431BB] text-white"
+            className="px-4 py-2 rounded-lg border border-transparent bg-[#3431BB] text-white hover:bg-blue-700"
           >
             Save
           </button>
-        </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

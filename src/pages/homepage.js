@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { FaRegFileAlt } from "react-icons/fa";
 import { HiOutlineBriefcase } from "react-icons/hi";
 import { PiCurrencyInr } from "react-icons/pi";
-
+import NavBar from "@/components/NavBar";
 const HomePage = () => {
   const router = useRouter();
 
@@ -22,6 +22,7 @@ const HomePage = () => {
 
   return (
     <>
+    <NavBar/>
       <div
         className="flex flex-col items-center justify-center min-h-screen bg-white text-black "
         style={{ maxWidth: "80%", margin: "0 auto" }}

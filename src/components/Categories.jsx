@@ -6,6 +6,9 @@ import { GoBookmarkFill } from "react-icons/go";
 import ReactPaginate from "react-paginate";
 import ApplyModal from "../pages/content";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import Toast from "./SavedToast.jsx";
+import UnSaveToast from "./UnsaveToast";
+
 
 export default function Categories(props) {
   const [filteredData, setFilteredData] = useState([]);
@@ -16,7 +19,31 @@ export default function Categories(props) {
   const { authState } = useAuth();
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 10;
+  const [toastMessage, setToastMessage] = useState("");
+  const [isToastVisible, setIsToastVisible] = useState(false);
+  const [isUnSaveToastVisible, setIsUnSaveToastVisible] = useState(false);
+  
 
+// Close the toast after a certain time
+useEffect(() => {
+  if (isToastVisible) {
+    const timer = setTimeout(() => {
+      setIsToastVisible(false);
+    }, 3000); // Adjust time as needed
+
+    return () => clearTimeout(timer);
+  }
+}, [isToastVisible]);
+
+// close the unsavetoast after a certain time
+useEffect(()=>{
+  if(isUnSaveToastVisible){
+    const timer = setTimeout(() => {
+      setIsUnSaveToastVisible(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }
+}), [isUnSaveToastVisible]
 
   // handling filtering functionality
   useEffect(() => {
@@ -65,16 +92,30 @@ export default function Categories(props) {
         );
       }
 
+      if (
+        props.selectedSponsors &&
+        props.selectedSponsors.length > 0
+      ) {
+        filtered = filtered.filter((item) => {
+          const allSponsorTypes = item.sponsors.flatMap(
+            (sponsor) =>
+              sponsor.sponsor_type.split(",").map((type) => type.trim())
+          );
 
-      
-     if(props.selectedSponsors && props.selectedSponsors.length > 0) {
-        filtered = filtered.filter((item) =>{
-          if(item.sponsors[0]){
-            return props.selectedSponsors.includes(item.sponsors[0].sponsor_type)
-        }
-        }
-        );
-     } 
+          const haveCommonElement = props.selectedSponsors.some(
+            (sponsor) => {
+              return allSponsorTypes.includes(sponsor);
+            }
+          );
+
+          if (haveCommonElement) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+      }
+
       // Set filtered data after applying all filters
       setFilteredData(filtered);
     }
@@ -101,7 +142,7 @@ export default function Categories(props) {
             redirect: "follow",
           };
           const response = await fetch(
-            `http://52.65.93.83:8080/api/user/saved_schemes/`,
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}api/user/saved_schemes/`,
             requestOptions
           );
           if (!response.ok) {
@@ -148,7 +189,7 @@ export default function Categories(props) {
     };
   
     try {
-      const response = await fetch(`http://52.65.93.83:8080/api/save_scheme/`, requestOptions);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/save_scheme/`, requestOptions);
       if (response.ok) {
         const result = await response.json();
         console.log(result);
@@ -185,13 +226,14 @@ export default function Categories(props) {
       console.log("Sending unsave request for scheme_id:", scheme_id);
       console.log("Request payload:", raw);
       const response = await fetch(
-        `http://52.65.93.83:8080/api/unsave_scheme/`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}api/unsave_scheme/`,
         requestOptions
       );
       const result = await response.json();
       // console.log("Unsave response:", result); // Log the response
       if (response.ok) {
         console.log(result);
+        setIsUnSaveToastVisible(true); // Show the toast
         return true;
       } else {
         console.error("Failed to unsave scheme");
@@ -212,13 +254,16 @@ export default function Categories(props) {
         success = await unsaveScheme(itemId);
       } else {
         success = await saveScheme(itemId);
+        setIsToastVisible(true); // Show the toast
       }
 
       if (success) {
+        // setIsToastVisible(true); // Show the toast
         setBookmarks((prevState) => ({
           ...prevState,
           [itemId]: !prevState[itemId], // Toggle the bookmark status for itemId
         }));
+        
       }
     } else {
       setIsSavedModalOpen(true); // Show saved modal if user is not logged in
@@ -248,18 +293,22 @@ export default function Categories(props) {
   if (props.data.length === 0 || filteredData.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center gap-[8px] mt-[120px]">
-        <p className="text-button-text text-[14px] text-onclick-btnblue">Sorry no result is found based on your preference.</p>
+        <p className="text-button-text text-[14px] text-button-blue">Sorry no result is found based on your preference.</p>
       </div>
     );
   }
 
   return (
+    <>
+    {/* We have found {378} schemes based on your profile */}
     <div>
       {currentPageData.map((item) => (
+        
         <div
           className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
           key={item.id}
         >
+          
           <div onClick={() => handleClick(item.id)}>
             <button
               className="text-center text-[12px] px-[8px] py-[6px] rounded-[4px] gap-[10px]"
@@ -344,7 +393,13 @@ export default function Categories(props) {
   pageLinkClassName={""}
 />
 
+{isToastVisible && (
+        <Toast message={toastMessage} onClose={() => setIsToastVisible(false)} />
+      )}
 
+    {isUnSaveToastVisible && (
+        <UnSaveToast message={toastMessage} onClose={() => setIsUnSaveToastVisible(false)} />
+    )}
 
       {isModalOpen && selectedScheme && (
         <ApplyModal
@@ -360,5 +415,6 @@ export default function Categories(props) {
         />
       )}
     </div>
+    </>
   );
 }
