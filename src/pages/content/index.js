@@ -136,7 +136,7 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
                     href={matchedScheme.scheme_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="py-3 px-12 bg-blue-800 text-white font-semibold rounded-[10px] transition hover:bg-red-500"
+                    className="py-3 px-12 bg-blue-600 text-white font-semibold rounded-[10px] transition hover:bg-onclick-btnblue"
                   >
                     Apply
                   </a>
