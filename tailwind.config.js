@@ -42,6 +42,16 @@ module.exports = {
         slideUp: 'slideUp 0.5s ease-out',
         slideDown: 'slideDown 0.5s ease-out',
       },
+      borderRadius: {
+        'none': '0',
+       'sm': '0.125rem',
+       DEFAULT: '0.25rem',
+       'DEFAULT': '4rem',
+       'md': '3.75rem',
+       'lg': '10rem',
+       'full': '9999px',
+       'large': '12px',
+      },
       
     },
   },
