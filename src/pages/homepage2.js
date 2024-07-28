@@ -27,10 +27,13 @@ const HomePage = () => {
         style={{ maxWidth: "80%", margin: "0 auto" }}
       >
         {/* Main Container */}
-        <div className=" p-[50px_0]" style={{
-            display:"grid",
-            placeItems:"center"
-        }}>
+        <div
+          className=" p-[50px_0]"
+          style={{
+            display: "grid",
+            placeItems: "center",
+          }}
+        >
           {/* First Row */}
           <div className="flex justify-center gap-8">
             {/* Left Div */}
@@ -93,8 +96,7 @@ const HomePage = () => {
                     <HiOutlineClipboardDocumentList className="h-[31.5px] w-[31.5px]" />
                   </div>
                   <div className="text-[#424242] w-[8rem] font-inter text-base font-normal leading-normal">
-                    Tell us a little
-                     about yourself.
+                    Tell us a little about yourself.
                   </div>
                 </div>
               </div>
@@ -128,34 +130,72 @@ const HomePage = () => {
           </div>
 
           {/* Third row */}
-          <div style={{
-            marginTop:"3vw",
-            width:"70w",
-            display:"flex",
-            justifyContent:"center",
-            flexDirection:"column"
-          }}>
-            <h1 className=" font-semibold relative left-[27.45vw] w-[15.09vw] text-[2.2vw]">Discover right </h1>
-            <div className=" mt-[3vmax] flex " style={{
-                width:"70vw",
-                justifyContent:"space-between"
-
-            }}>
-                <div className="w-[22vw] h-[17.46vw] rounded-[8px] bg-[#EEF] p-[3.48vw]">
-                    <p className="">SCHEMES</p>
-                    <PiNotepadBold className="relative h-[6.80vw] w-[5.76vw] left-[9.28vw] top-[3.5vw]"/>
-                </div>
-                <div className="w-[22vw] h-[17.46vw] rounded-[8px] bg-[#EEF] p-[3.48vw]">
-                    <p>JOBS</p>
-                    <PiNotepadBold className="relative h-[6.80vw] w-[5.76vw] left-[9.28vw] top-[3.5vw]"/>
-                </div>
-                <div className="w-[22vw] h-[17.46vw] rounded-[8px] bg-[#EEF] p-[3.48vw]">
-                    <p>SCHOLARSHIPS</p>
-                    <PiNotepadBold className="relative h-[6.80vw] w-[5.76vw] left-[9.28vw] top-[3.5vw] 
-                    "/>
-                </div>
-                
+          <div
+            style={{
+              marginTop: "3vw",
+              width: "70w",
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            <h1 className=" font-semibold relative left-[27.45vw] w-[15.09vw] text-[2.2vw]">
+              Discover right{" "}
+            </h1>
+            <div
+              className=" mt-[3vmax] flex "
+              style={{
+                width: "70vw",
+                justifyContent: "space-between",
+              }}
+            >
+              <div className="w-[22vw] h-[17.46vw] rounded-[8px] bg-[#EEF] p-[3.48vw]">
+                <p className="">SCHEMES</p>
+                <PiNotepadBold className="relative h-[6.80vw] w-[5.76vw] left-[9.28vw] top-[3.5vw]" />
+              </div>
+              <div className="w-[22vw] h-[17.46vw] rounded-[8px] bg-[#EEF] p-[3.48vw]">
+                <p>JOBS</p>
+                <PiNotepadBold className="relative h-[6.80vw] w-[5.76vw] left-[9.28vw] top-[3.5vw]" />
+              </div>
+              <div className="w-[22vw] h-[17.46vw] rounded-[8px] bg-[#EEF] p-[3.48vw]">
+                <p>SCHOLARSHIPS</p>
+                <PiNotepadBold
+                  className="relative h-[6.80vw] w-[5.76vw] left-[9.28vw] top-[3.5vw] 
+                    "
+                />
+              </div>
             </div>
+          </div>
+
+          {/* fourth row */}
+          <div className="flex flex-col items-center w-full p-8 bg-gradient-to-b from-white to-[#FDFBF6] mt-8">
+            <div className="self-stretch flex justify-center mt-4">
+              <h1 className="text-center text-black font-inter text-[32px] font-semibold leading-[150%]">
+                Frequently Asked Questions
+              </h1>
+            </div>
+
+            <div class="flex flex-col items-start self-stretch">
+              <div className="flex p-4 justify-between items-center self-stretch">
+                <p>What is “product name”?</p>
+                <span>+</span>
+              </div>
+              <hr />
+              <div className="flex p-4 justify-between items-center self-stretch">
+                <p>What is “product name”?</p>
+                <span>+</span>
+              </div>
+              <div className="flex p-4 justify-between items-center self-stretch">
+                <p>What is “product name”?</p>
+                <span>+</span>
+              </div>
+              <div className="flex p-4 justify-between items-center self-stretch">
+                <p>What is “product name”?</p>
+                <span>+</span>
+              </div>
+            </div>
+
+            
           </div>
         </div>
       </div>

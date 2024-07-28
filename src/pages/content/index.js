@@ -10,7 +10,7 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
     const fetchData = async () => {
       try {
         const departmentsRes = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/departments/`
+          `http://65.0.103.91:80/api/departments/`
         );
         if (!departmentsRes.ok)
           throw new Error(
@@ -18,17 +18,17 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
           );
 
         const statesRes = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/states/`
+          `http://65.0.103.91:80/api/states/`
         );
         if (!statesRes.ok)
           throw new Error(`Error fetching states: ${statesRes.statusText}`);
 
         const schemesRes = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/schemes/`
+          `http://65.0.103.91:80/api/schemes/`
         );
         if (!schemesRes.ok)
           throw new Error(`Error fetching schemes: ${schemesRes.statusText}`);
-        // let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}api/schemes`
+        // let url = `http://65.0.103.91:80/api/schemes`
         const departmentsData = await departmentsRes.json();
         const statesData = await statesRes.json();
         const schemesData = await schemesRes.json();

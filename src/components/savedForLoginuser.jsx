@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
 import { useAuth } from "@/Context/AuthContext";
-import Categories from "../components/Categories";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import Categories from "../components/Categories";
 
 export default function Saved() {
   const { authState } = useAuth();
@@ -28,7 +28,7 @@ export default function Saved() {
           redirect: "follow",
         };
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/user/saved_schemes/`,
+          `http://65.0.103.91:80/api/user/saved_schemes/`,
           requestOptions
         );
         if (!response.ok) {

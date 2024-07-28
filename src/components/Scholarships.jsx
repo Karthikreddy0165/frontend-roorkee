@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Categories from "./Categories";
 
 export default function Scholarships({ searchQuery, setData, ...props }) {
@@ -7,7 +7,7 @@ export default function Scholarships({ searchQuery, setData, ...props }) {
       try {
         setData(null);
         // let url = `http://52.65.93.83:8080/api/schemes`;
-        let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}api/schemes`
+        let url = `http://65.0.103.91:80/api/schemes`
         if (searchQuery) {
           url += `/search/?q=${searchQuery}`;
         }
