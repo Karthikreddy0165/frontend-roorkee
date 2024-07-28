@@ -11,7 +11,7 @@ import UnSaveToast from "./UnsaveToast";
 
 
 export default function Categories(props) {
-  const [filteredData, setFilteredData] = useState([]);
+  
   const [selectedScheme, setSelectedScheme] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBookmarked, setBookmarks] = useState({});
@@ -45,88 +45,6 @@ useEffect(()=>{
   }
 }), [isUnSaveToastVisible]
 
-  // handling filtering functionality
-  useEffect(() => {
-    if (props.data) {
-      let filtered = props.data;
-
-      if (props.selectedState && props.selectedState.length > 0) {
-        filtered = filtered.filter((item) =>
-          props.selectedState.includes(item.department.state)
-        );
-      }
-
-      if (props.selectedDepartments && props.selectedDepartments.length > 0) {
-        filtered = filtered.filter((item) =>
-          props.selectedDepartments.includes(item.department.department_name)
-        );
-      }
-
-      if (
-        props.selectedBeneficiaries &&
-        props.selectedBeneficiaries.length > 0
-      ) {
-        filtered = filtered.filter((item) => {
-          const allBeneficiaryTypes = item.beneficiaries.flatMap(
-            (beneficiary) =>
-              beneficiary.beneficiary_type.split(",").map((type) => type.trim())
-          );
-
-          const haveCommonElement = props.selectedBeneficiaries.some(
-            (beneficiary) => {
-              return allBeneficiaryTypes.includes(beneficiary);
-            }
-          );
-
-          if (haveCommonElement) {
-            return true;
-          } else {
-            return false;
-          }
-        });
-      }
-
-      if (props.selectedFunders && props.selectedFunders.length > 0) {
-        filtered = filtered.filter((item) =>
-          props.selectedFunders.includes(item.funding_pattern)
-        );
-      }
-
-      if (
-        props.selectedSponsors &&
-        props.selectedSponsors.length > 0
-      ) {
-        filtered = filtered.filter((item) => {
-          const allSponsorTypes = item.sponsors.flatMap(
-            (sponsor) =>
-              sponsor.sponsor_type.split(",").map((type) => type.trim())
-          );
-
-          const haveCommonElement = props.selectedSponsors.some(
-            (sponsor) => {
-              return allSponsorTypes.includes(sponsor);
-            }
-          );
-
-          if (haveCommonElement) {
-            return true;
-          } else {
-            return false;
-          }
-        });
-      }
-
-      // Set filtered data after applying all filters
-      setFilteredData(filtered);
-    }
-  }, [
-    props.data,
-    props.selectedState,
-    props.selectedDepartments,
-    props.selectedBeneficiaries,
-    props.selectedFunders,
-    props.selectedSponsors
-  ]);
 
   // Fetch saved schemes so that we can mark saved schemes as bookmarked
   useEffect(() => {
@@ -278,8 +196,8 @@ useEffect(()=>{
   
     // Determining start and end pages
     const offset = currentPage * itemsPerPage;
-    const currentPageData = filteredData.slice(offset, offset + itemsPerPage);
-    const pageCount = Math.ceil(filteredData.length / itemsPerPage);
+    const currentPageData = props.filteredData.slice(offset, offset + itemsPerPage);
+    const pageCount = Math.ceil(props.filteredData.length / itemsPerPage);
 
 
   if (!props.data) {
@@ -290,13 +208,32 @@ useEffect(()=>{
     );
   }
 
-  if (props.data.length === 0 || filteredData.length === 0) {
+  if (props.data.length === 0 || props.filteredData.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center gap-[8px] mt-[120px]">
         <p className="text-button-text text-[14px] text-button-blue">Sorry no result is found based on your preference.</p>
       </div>
     );
   }
+
+  const handleStateTag = (event) => {
+    event.stopPropagation();
+    var array = props.selectedState;
+    if(array.includes(event.target.innerText)) return;
+    array.push(event.target.innerText);
+    props.setSelectedState(array);
+    props.setTest((prev) => prev + 1);
+  }
+
+  const handleBeneficiaryTag = (event) => {
+    event.stopPropagation();
+    var arr = props.selectedBeneficiaries;
+    if(arr.includes(event.target.innerText)) return;
+    arr.push(event.target.innerText);
+    props.setSelectedBeneficiaries(arr);
+    props.setTest1((prev) => prev + 1);
+  }
+
 
   return (
     <>
@@ -338,12 +275,12 @@ useEffect(()=>{
                 {item.department.department_name}
               </p>
               <div className="flex gap-5">
-                <button className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium py-2">
+                <button className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium py-2" onClick = {(event) => handleStateTag(event)}>
                   {item.department.state}
                 </button>
                 {item.beneficiaries.length > 0 &&
                   item.beneficiaries[0].beneficiary_type !== "N/A" && (
-                    <button className="flex items-center justify-center pr-2 pl-2 py-[5px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium">
+                    <button className="flex items-center justify-center pr-2 pl-2 py-[5px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium" onClick = {(event) => handleBeneficiaryTag(event)}>
                       {item.beneficiaries[0].beneficiary_type}
                     </button>
                   )}

@@ -18,6 +18,11 @@ import { useRouter } from "next/router";
 
 
 const HeroPage = () => {
+  const [filteredData, setFilteredData] = useState([]);
+  const [test, setTest] = useState(0);
+  const [test1, setTest1] = useState(0);
+  const [dropdownData, setDropdownData] = useState([]);
+
   const [data, setData] = useState(null);
   const [stateName, setStateName] = useState("");
   const [departmentName, setDepartmentName] = useState("");
@@ -52,17 +57,106 @@ const HeroPage = () => {
     sponsorsOpen: false,
   });
 
-  const router = useRouter();
+  useEffect(() => {
+    let filtered = data;
 
-  // useEffect(() => {
-  //   return () => {
-  //     router.push('/homepage');
-  //   };
-  // }, []);
+    if (selectedState && selectedState.length > 0) {
+      filtered = filtered.filter((item) =>
+        selectedState.includes(item.department.state)
+      );
+    }
+
+    setDropdownData(filtered);
+  }, [selectedState, test, data])
+
+  // handling filtering functionality
+  useEffect(() => {
+    if (data) {
+      let filtered = data;
+
+      if (selectedState && selectedState.length > 0) {
+        filtered = filtered.filter((item) =>
+          selectedState.includes(item.department.state)
+        );
+      }
+
+      if (selectedDepartments && selectedDepartments.length > 0) {
+        filtered = filtered.filter((item) =>
+          selectedDepartments.includes(item.department.department_name)
+        );
+      }
+
+      if (
+        selectedBeneficiaries &&
+        selectedBeneficiaries.length > 0
+      ) {
+        filtered = filtered.filter((item) => {
+          const allBeneficiaryTypes = item.beneficiaries.flatMap(
+            (beneficiary) =>
+              beneficiary.beneficiary_type.split(",").map((type) => type.trim())
+          );
+
+          const haveCommonElement = selectedBeneficiaries.some(
+            (beneficiary) => {
+              return allBeneficiaryTypes.includes(beneficiary);
+            }
+          );
+
+          if (haveCommonElement) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+      }
+
+      if (selectedFunders && selectedFunders.length > 0) {
+        filtered = filtered.filter((item) =>
+          selectedFunders.includes(item.funding_pattern)
+        );
+      }
+
+      if (
+        selectedSponsors &&
+        selectedSponsors.length > 0
+      ) {
+        filtered = filtered.filter((item) => {
+          const allSponsorTypes = item.sponsors.flatMap(
+            (sponsor) =>
+              sponsor.sponsor_type.split(",").map((type) => type.trim())
+          );
+
+          const haveCommonElement = selectedSponsors.some(
+            (sponsor) => {
+              return allSponsorTypes.includes(sponsor);
+            }
+          );
+
+          if (haveCommonElement) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+      }
+
+      // Set filtered data after applying all filters
+      setFilteredData(filtered);
+    }
+  }, [
+    data,
+    selectedState,
+    selectedDepartments,
+    selectedBeneficiaries,
+    selectedFunders,
+    selectedSponsors,
+    test,
+    test1
+  ]);
 
   useEffect(() => {
     
-    fetch("http://52.65.93.83:8080/api/banner/")
+    fetch("http://65.0.103.91:80/api/banner/")
       .then((response) => response.json())
       .then((data) => {
         setBannerImage(data.imageUrl);
@@ -160,7 +254,7 @@ const HeroPage = () => {
             {/* filter categories */}
             <div className="mt-2">
               {/* Each filter category */}
-              <div className="flex justify-between items-center mb-4 hover:bg-dropdown-blue hover:rounded-md hover:text-onclick-btnblue" onClick={() => toggleDropdown("dropDownOpen")} id="stateBtn"> <span>{stateName != "" ? (<span className="inline-flex items-center"> State <span className="w-5 h-5 bg-dropdown-blue text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{stateName}</span></span>) : "State"}
+              <div className="flex justify-between items-center mb-4 hover:bg-dropdown-blue hover:rounded-md hover:text-onclick-btnblue" onClick={() => toggleDropdown("dropDownOpen")} id="stateBtn"> <span>{selectedState.length > 0 ? (<span className="inline-flex items-center"> State <span className="w-5 h-5 bg-dropdown-blue text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{selectedState.length}</span></span>) : "State"}
             </span>
             {dropDownStates.dropDownOpen ? <IoIosArrowUp className="text-black"/> : <IoIosArrowDown className="text-black" /> }
           </div>
@@ -181,7 +275,7 @@ const HeroPage = () => {
                     selectedDepartments={selectedDepartments}
                     setSelectedDepartments={setSelectedDepartments}
                     setDepartmentName={setDepartmentName}
-                    data = {data}
+                    data = {dropdownData}
                   />
                 )}
               <div className="flex justify-between items-center mb-4 hover:bg-dropdown-blue hover:rounded-md hover:text-onclick-btnblue" onClick={() => toggleDropdown("fundersOpen")} id="fundingbyBtn">
@@ -194,11 +288,11 @@ const HeroPage = () => {
                     selectedFunders={selectedFunders}
                     setSelectedFunders={setSelectedFunders}
                     setFunderName={setFunderName}
-                    data = {data}
+                    data = {dropdownData}
                   />
                 )}
               <div className="flex justify-between items-center mb-4 hover:bg-dropdown-blue hover:rounded-md hover:text-onclick-btnblue" onClick={() => toggleDropdown("beneficiaryOpen")} id="beneficiaryBtn">
-              <span>{beneficiaryName != "" ? (<span className="inline-flex items-center">Beneficiaries <span className="w-5 h-5 bg-dropdown-blue text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{beneficiaryName}</span></span>) : "Beneficiaries"}</span>
+              <span>{selectedBeneficiaries.length > 0 ? (<span className="inline-flex items-center">Beneficiaries <span className="w-5 h-5 bg-dropdown-blue text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{selectedBeneficiaries.length}</span></span>) : "Beneficiaries"}</span>
               {dropDownStates.beneficiaryOpen ? <IoIosArrowUp className="text-[#000]"/> : <IoIosArrowDown className="text-[#000]" /> }
               </div>
               {dropDownStates.beneficiaryOpen && (
@@ -207,7 +301,7 @@ const HeroPage = () => {
                     selectedBeneficiaries={selectedBeneficiaries}
                     setSelectedBeneficiaries={setSelectedBeneficiaries}
                     setBeneficiaryName={setBeneficiaryName}
-                    data = {data}
+                    data = {dropdownData}
                   />
                 )}
                <div className="flex justify-between items-center mb-4 hover:bg-dropdown-blue hover:rounded-md hover:text-onclick-btnblue" onClick={() => toggleDropdown("sponsorsOpen")} id="sponsorBtn">
@@ -220,7 +314,7 @@ const HeroPage = () => {
                 selectedSponsors = {selectedSponsors}
                 setSponsorName = {setSponsorName}
                 setSelectedSponsors = {setSelectedSponsors}
-                data = {data}
+                data = {dropdownData}
               />
             )}
             </div>
@@ -234,18 +328,26 @@ const HeroPage = () => {
               setData = {setData}
               stateName = {stateName}
               setStateName = {setStateName}
+              setSelectedState = {setSelectedState}
               departmentName = {departmentName}
               setDepartmentName = {setDepartmentName}
+
               beneficiaryName = {beneficiaryName}
               setBeneficiaryName = {setBeneficiaryName}
               funderName = {funderName}
               setFunderName = {setFunderName}
+
+              filteredData = {filteredData}
+              setTest = {setTest}
+              setTest1 = {setTest1}
+
               sponsorName = {sponsorName}
               setSponsorName = {setSponsorName}
               selectedDepartments = {selectedDepartments}
               setSelectedDepartments = {setSelectedDepartments}
               selectedBeneficiaries = {selectedBeneficiaries}
               setSelectedBeneficiaries = {setSelectedBeneficiaries}
+
               selectedState = {selectedState}
               selectedAges = {selectedAges}
               setSelectedAges = {setSelectedAges}
