@@ -1,14 +1,12 @@
-import { FaSpinner, FaEye, FaEyeSlash } from "react-icons/fa";
-import React, { createContext, useState, useContext } from "react";
 import { Formik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { FaAngleRight } from "react-icons/fa6";
+import { useState } from "react";
+import { CiBookmark } from "react-icons/ci";
+import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
+import { FaAngleRight, FaArrowLeftLong } from "react-icons/fa6";
 import { useAuth } from "../Context/AuthContext";
 import loginperson from "../assets/image.png";
-import IndialImg from "../assets/ind2.png";
-import { FaArrowLeftLong } from "react-icons/fa6";
-import { CiBookmark } from "react-icons/ci";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -39,7 +37,7 @@ const LoginPage = () => {
       };
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}api/login/`,
+        `http://65.0.103.91:80/api/login/`,
         requestOptions
       );
       const result = await response.json();

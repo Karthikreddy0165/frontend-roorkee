@@ -1,15 +1,14 @@
+import { useAuth } from "@/Context/AuthContext";
 import { Formik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { CiBookmark } from "react-icons/ci";
+import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
+import { FaArrowLeftLong } from "react-icons/fa6";
 import * as Yup from "yup";
 import { useFormData } from "../Context/FormContext";
 import loginperson from "../assets/image.png";
-import IndialImg from "../assets/ind2.png";
-import { FaSpinner, FaEye, FaEyeSlash } from "react-icons/fa";
-import { useAuth } from "@/Context/AuthContext";
-import { FaArrowLeftLong } from "react-icons/fa6";
-import { CiBookmark } from "react-icons/ci";
 
 const CreateAcc01 = () => {
   const router = useRouter();
@@ -53,7 +52,7 @@ const CreateAcc01 = () => {
         redirect: "follow",
       };
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/login/`, requestOptions);
+      const response = await fetch(`http://65.0.103.91:80/api/login/`, requestOptions);
       const result = await response.json();
 
       if (!response.ok) {
@@ -188,7 +187,7 @@ const CreateAcc01 = () => {
               redirect: "follow",
             };
 
-            fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/register/`, requestOptions)
+            fetch(`http://65.0.103.91:80/api/register/`, requestOptions)
               .then((response) => response.json())
               .then((result) => {
                 console.log("API Response:", result); // Log the entire result object for debugging

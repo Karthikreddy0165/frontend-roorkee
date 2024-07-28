@@ -36,11 +36,11 @@ const ProfileModal = ({ onClose }) => {
           };
 
           const personalResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/personal/`,
+            `http://65.0.103.91:80/api/profile/personal/`,
             requestOptions
           );
           const professionalResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/professional/`,
+            `http://65.0.103.91:80/api/profile/professional/`,
             requestOptions
           );
 
@@ -83,8 +83,8 @@ const ProfileModal = ({ onClose }) => {
     const fetchStateOptions = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/choices/state/`
-          // ${process.env.NEXT_PUBLIC_API_BASE_URL}
+          `http://65.0.103.91:80/api/choices/state/`
+          // http://65.0.103.91:80/
         );
         const data = await response.json();
         const formattedData = data.map((item) => item[0]);
@@ -131,7 +131,7 @@ const ProfileModal = ({ onClose }) => {
       try {
         // Update personal data
         await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/personal/`,
+          `http://65.0.103.91:80/api/profile/personal/`,
           {
             ...requestOptions,
             body: JSON.stringify({
@@ -149,7 +149,7 @@ const ProfileModal = ({ onClose }) => {
 
         // Update professional data
         await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}api/profile/professional/`,
+          `http://65.0.103.91:80/api/profile/professional/`,
           {
             ...requestOptions,
             body: JSON.stringify({

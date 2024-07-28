@@ -2,10 +2,10 @@ import { useAuth } from "@/Context/AuthContext";
 import SavedModal from "@/pages/model/savedModal";
 import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { GoBookmarkFill } from "react-icons/go";
 import ReactPaginate from "react-paginate";
 import ApplyModal from "../pages/content";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import Toast from "./SavedToast.jsx";
 import UnSaveToast from "./UnsaveToast";
 
@@ -142,7 +142,7 @@ useEffect(()=>{
             redirect: "follow",
           };
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}api/user/saved_schemes/`,
+            `http://65.0.103.91:80/api/user/saved_schemes/`,
             requestOptions
           );
           if (!response.ok) {
@@ -189,7 +189,7 @@ useEffect(()=>{
     };
   
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}api/save_scheme/`, requestOptions);
+      const response = await fetch(`http://65.0.103.91:80/api/save_scheme/`, requestOptions);
       if (response.ok) {
         const result = await response.json();
         console.log(result);
@@ -226,7 +226,7 @@ useEffect(()=>{
       console.log("Sending unsave request for scheme_id:", scheme_id);
       console.log("Request payload:", raw);
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}api/unsave_scheme/`,
+        `http://65.0.103.91:80/api/unsave_scheme/`,
         requestOptions
       );
       const result = await response.json();
