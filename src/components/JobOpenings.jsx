@@ -36,13 +36,22 @@ export default function JobOpenings({ setData, ...props }) {
   return (
     <div className="bg-white font-sans">
       <Categories
-        data={props.data}
-        selectedState={props.selectedState}
-        selectedDepartments={props.selectedDepartments}
-        selectedBeneficiaries={props.selectedBeneficiaries}
-        selectedAges={props.selectedAges}
-        selectedFunders={props.selectedFunders}
-        selectedSponsors={props.selectedSponsors}
+         data={props.data}
+         selectedState={props.selectedState}
+         setSelectedState = {props.setSelectedState}
+         setStateName = {props.setStateName}
+         selectedDepartments={props.selectedDepartments}
+ 
+         selectedBeneficiaries={props.selectedBeneficiaries}
+         setSelectedBeneficiaries = {props.setSelectedBeneficiaries}
+         setBeneficiaryName = {props.setBeneficiaryName}
+ 
+         selectedAges={props.selectedAges}
+         selectedFunders={props.selectedFunders}
+         selectedSponsors={props.selectedSponsors}
+         filteredData = {props.filteredData}
+         setTest = {props.setTest}
+         setTest1 = {props.setTest1}
       />
     </div>
   );
