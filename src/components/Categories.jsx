@@ -348,6 +348,8 @@ useEffect(()=>{
                     </button>
                   )}
               </div>
+              
+              {item.valid_upto &&(
               <p
                 className="font-inter text-[12px] text-apply-date leading-[24px] mt-4"
                 role="button"
@@ -358,6 +360,7 @@ useEffect(()=>{
                   {item.valid_upto.split("T")[0]}
                 </span>
               </p>
+              )}
             </div>
           </div>
           <div

@@ -83,17 +83,17 @@ const HomePage = () => {
             <div className="w-[482px] h-[300px]">
               {/* Right content here */}
               <Image
-                className="relative h-[344px] w-[258px] rounded-tl-lg -right-[230px] pb-8"
+                className="relative h-[344px] w-[258px] rounded-tl-[10rem] -right-[230px] pb-8"
                 src={image01}
                 alt="Image loading..."
               />
               <Image
-                className="relative h-[80.7px] w-[80px] rounded-tl-lg rounded-tr-lg rounded-bl-lg -right-[140px] bottom-[300px]"
+                className="relative h-[80.7px] w-[80px] rounded-tl-[10rem] rounded-tr-[10rem] rounded-bl-[10rem] -right-[140px] bottom-[300px]"
                 src={image02}
                 alt="Image loading..."
               />
               <Image
-                className="relative h-[150px] w-[132px] rounded-tl-md -right-[120px] bottom-[230px]"
+                className="relative h-[150px] w-[132px] rounded-tl-[4rem] -right-[120px] bottom-[230px]"
                 src={image03}
                 alt="Image loading..."
               />

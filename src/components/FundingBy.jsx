@@ -46,20 +46,21 @@ const FundingByDropdownMenu = React.forwardRef(({ selectedFunders, setSelectedFu
       setFunderName(`${selectedFunders.length}`);
       }
     }, [selectedFunders])
+
   
       return (
-        <div className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0" ref={ref}>
-          <ul className="flex flex-col font-sans list-none p-0 m-0 gap-0 pb-[18px]">
+        <div className="text-[#616161] bg-[rgb(255,255,255)] w-[265px] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0" ref={ref}>
+          <ul id="scroll-container" className="flex flex-col font-sans list-none p-0 m-0 gap-0 pb-[18px] max-h-[200px] overflow-y-auto  justify-content-between ">
             {uniqueCategories.map((item, index) => (
               item !== "" && (
-               <li key={item + index} className="flex items-center justify-between hover:bg-gray-100 p-[8px] cursor-pointer hover:rounded-[8px]" onClick={() => handleItemClick(item)}>
+               <li key={item + index} className="flex w-[255.5px] items-center justify-between hover:bg-gray-100 p-[8px] cursor-pointer hover:rounded-[8px]" onClick={() => handleItemClick(item)}>
                <div>
                 <p className="leading-5 overflow-hidden overflow-ellipsis line-clamp-2 max-h-10">
                   {item}
                 </p>
                </div>
                <div className='w-[16.5] h-[16.5]'>
-               <input type="checkbox" value={item} onChange={handleOptionChange} checked={selectedFunders.includes(item)} className="ml-10 custom-checkbox pointer-events-none w-full h-full" />
+               <input type="checkbox" value={item} onChange={handleOptionChange} checked={selectedFunders.includes(item)} className=" custom-checkbox pointer-events-none w-full h-full" />
                </div>
              </li>
 )))}
@@ -71,3 +72,22 @@ const FundingByDropdownMenu = React.forwardRef(({ selectedFunders, setSelectedFu
   );
   
   export default FundingByDropdownMenu;
+
+
+  // return (
+  //   <div className=" department  text-[#616161]  w-[265px] max-w-[600px] flex flex-col relative whitespace-wrap z-50 text-[14px] -mt-2 " ref={ref} >
+  //     <ul id="scroll-container" className="flex flex-col font-sans list-none p-0 m-0 gap-0 pb-[18px] max-h-[200px] overflow-y-auto  justify-content-between ">
+  //       {uniqueCategories.map((item, index) => (
+  //         <li key={item + index} className="  flex w-[185.5px] items-center justify-between hover:bg-gray-100 p-[8px] cursor-pointer hover:rounded-[8px]" onClick={() => handleItemClick(item)}>
+  //           <div className="leading-5 overflow-hidden overflow-x-auto overflow-ellipsis line-clamp-2 max-h-10 whitespace-nowrap w-[100%] ">
+  //             {item}
+  //           </div>
+  //           <div className='w-[16.5px] h-[16.5px] mr-[-70px]'>
+  //             <input type="checkbox" value={item} onChange={handleOptionChange} checked={selectedDepartments.includes(item)} className=" custom-checkbox pointer-events-none w-full h-full" />
+  //           </div>
+  //         </li>
+  //       ))}
+  //     </ul>
+      
+  //   </div>
+  // );
