@@ -1,12 +1,13 @@
 import { Formik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { FaAngleRight, FaArrowLeftLong } from "react-icons/fa6";
 import { useAuth } from "../Context/AuthContext";
 import loginperson from "../assets/image.png";
+
 
 const LoginPage = () => {
   const router = useRouter();
@@ -15,9 +16,18 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
 
+
+
   const handleCreate01Click = () => {
     router.push("/accountCreation");
   };
+
+  useEffect (() =>{
+    const token = localStorage.getItem("token");
+    if (token){
+      router.push("/homepage");
+    }
+  },[])
 
   const handleAfterLogin = async (values) => {
     try {
@@ -56,10 +66,7 @@ const LoginPage = () => {
         login(result.access, user); // Save token and user information to the context
         router.push("/loginSucc");
         setTimeout(() => {
-          router.push("/homepage");
-          setTimeout(() => {
-            router.push("/HeroPage");
-          }, 5);
+          router.push("/HeroPage");
         }, 2000);
       } else {
         setErrorMessage("Email or password is invalid");
@@ -73,6 +80,7 @@ const LoginPage = () => {
   };
 
   return (
+    
     <div className="flex h-screen overflow-hidden -mb-6">
       <div className="w-1/2 bg-[#FEF6F0] relative flex items-center justify-center">
         <div className="absolute top-0 text-[#000] mt-20 ml-8 mr-8">

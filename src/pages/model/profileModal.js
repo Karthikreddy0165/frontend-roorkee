@@ -5,6 +5,7 @@ import { useAuth } from "../../Context/AuthContext";
 const ProfileModal = ({ onClose }) => {
   const { authState } = useAuth();
   const [stateOptions, setStateOptions] = useState([]);
+  const [educationOptions, setEducationOptions] = useState([]);
   const [profileData, setProfileData] = useState({
     name: "",
     age: "",
@@ -72,6 +73,8 @@ const ProfileModal = ({ onClose }) => {
     fetchProfileData();
   }, [authState.token]);
 
+ 
+
   useEffect(() => {
     document.body.classList.add("overflow-hidden");
     return () => {
@@ -82,10 +85,7 @@ const ProfileModal = ({ onClose }) => {
   useEffect(() => {
     const fetchStateOptions = async () => {
       try {
-        const response = await fetch(
-          `http://65.0.103.91:80/api/choices/state/`
-          // http://65.0.103.91:80/
-        );
+        const response = await fetch(`http://65.0.103.91:80/api/choices/state/`);
         const data = await response.json();
         const formattedData = data.map((item) => item[0]);
         setStateOptions(formattedData);
@@ -94,7 +94,19 @@ const ProfileModal = ({ onClose }) => {
       }
     };
 
+    const fetchEducationOptions = async () => {
+      try {
+        const response = await fetch(`http://65.0.103.91:80/api/choices/education/`);
+        const data = await response.json();
+        const formattedData = data.map((item) => item[0]);
+        setEducationOptions(formattedData);
+      } catch (error) {
+        console.error("Error fetching education options:", error);
+      }
+    };
+
     fetchStateOptions();
+    fetchEducationOptions();
   }, []);
 
   useEffect(() => {
@@ -316,14 +328,27 @@ const ProfileModal = ({ onClose }) => {
               <label className="block mb-2 text-[12px] font-semibold text-black">
                 Education
               </label>
-              <input
+              {/* <input
                 type="text"
                 name="education"
                 className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
                 placeholder="Enter your education"
                 value={profileData.education}
                 onChange={handleChange}
-              />
+              /> */}
+              <select
+                    name="education"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    value={profileData.education}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select education</option>
+                    {educationOptions.map((education) => (
+                      <option key={education} value={education}>
+                        {education}
+                      </option>
+                    ))}
+                  </select>
             </div>
             <div className="flex-1">
               <label className="block mb-2 text-[12px] font-semibold text-black">

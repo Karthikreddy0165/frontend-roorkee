@@ -66,11 +66,8 @@ const CreateAcc01 = () => {
         localStorage.setItem("token", result.access);
         login(result.access, user); // Save token and user information to the context
         router.push("/accCreatedsucc");
-        setTimeout(() => {
-          router.push("/homepage");
           setTimeout(() => {
             router.push("/HeroPage");
-          }, 5); // 0.1 second delay
         }, 2000);
       }
     } catch (error) {

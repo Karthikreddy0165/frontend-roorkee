@@ -15,7 +15,7 @@ const DepartmentDropdownMenu = forwardRef((props, ref) => {
   return (
     <div className="absolute ml-[70px] mt-[-30px] bg-[rgb(251,251,251)] rounded-[12px] max-w-[600px] flex flex-col z-50" ref={ref}>
       <div className="max-h-[200px] overflow-y-auto">
-        <ul className="flex flex-col font-sans list-none px-[23px] text-[14px]">
+        <ul className="flex flex-col font-sans list-none p-0 m-0 gap-0 pb-[18px] max-h-[200px] overflow-y-auto  justify-content-between">
           {states.map(item => (
             <li key={item} className="flex items-center my-[14px]">
               <input type="checkbox" className="relative top-[1.5px] mr-[7px]" />
