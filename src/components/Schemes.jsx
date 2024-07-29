@@ -31,11 +31,20 @@ export default function Schemes({ searchQuery, setData, ...props }) {
       <Categories
         data={props.data}
         selectedState={props.selectedState}
+        setSelectedState = {props.setSelectedState}
+        setStateName = {props.setStateName}
         selectedDepartments={props.selectedDepartments}
+
         selectedBeneficiaries={props.selectedBeneficiaries}
+        setSelectedBeneficiaries = {props.setSelectedBeneficiaries}
+        setBeneficiaryName = {props.setBeneficiaryName}
+
         selectedAges={props.selectedAges}
         selectedFunders={props.selectedFunders}
         selectedSponsors={props.selectedSponsors}
+        filteredData = {props.filteredData}
+        setTest = {props.setTest}
+        setTest1 = {props.setTest1}
       />
     </div>
   );
