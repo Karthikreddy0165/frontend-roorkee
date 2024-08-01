@@ -267,9 +267,8 @@ useEffect(()=>{
               <p className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[26px] line-clamp-2 text-decoration-line: underline ">
                 {item.department.department_name}
               </p>
-              <div className="flex gap-5">
-                <button className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium py-2" onClick = {(event) => handleStateTag(item.department.state)}>
-
+              <div className="flex gap-5 mb-[16px]">
+                <button className="flex items-center justify-center pr-[12px] pl-[12px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium py-2 hover:border-onclick-btnblue hover:text-onclick-btnblue" onClick = {(event) => handleStateTag(event)}>
                   {item.department.state}
                 </button>
                 {item.beneficiaries.length > 0 &&
