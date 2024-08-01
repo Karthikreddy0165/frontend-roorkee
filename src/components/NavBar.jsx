@@ -13,6 +13,9 @@ const NavBar = () => {
   const handleGotoLoginpage = () => {
     router.push("/loginpage");
   };
+  const handleClickLogo = () => {
+    router.push("/homepage")
+  }
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -35,8 +38,10 @@ const NavBar = () => {
 
   return (
     <div className="shadow-[0_1px_20px_0px_rgba(0,0,0,0.05)]">
-      <div style={{ maxWidth: "80%", margin: "0 auto" }} className="flex justify-between items-center py-4 z-10 relative ">
-        <div className="">
+      <div style={{ maxWidth: "80%", margin: "0 auto" }} className="flex justify-between items-center py-4 z-10 relative hover:cursor-pointer shadow-[0_1px_20px_0px_rgba(0,0,0,0.05)]">
+        <div className=""
+        onClick={handleClickLogo}
+        >
           Logo
         </div>
 

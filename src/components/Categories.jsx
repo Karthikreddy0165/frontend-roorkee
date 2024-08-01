@@ -4,26 +4,26 @@ import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { GoBookmarkFill } from "react-icons/go";
-import ReactPaginate from "react-paginate";
 import ApplyModal from "../pages/content";
 import Toast from "./SavedToast.jsx";
 import UnSaveToast from "./UnsaveToast";
-
-
-export default function Categories(props) {
-  
+import PageContext from "@/Context/PageContext";
+import { useContext } from "react";
+import FilterContext from "@/Context/FilterContext";
+import { useTabContext } from "@/Context/TabContext";
+export default function Categories({ffff, dataFromApi}) {
+  const { activeTab, setActiveTab} = useTabContext(); // Accessing context
   const [selectedScheme, setSelectedScheme] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBookmarked, setBookmarks] = useState({});
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const { authState } = useAuth();
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 10;
   const [toastMessage, setToastMessage] = useState("");
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [isUnSaveToastVisible, setIsUnSaveToastVisible] = useState(false);
+  const { currentPage, setCurrentPage } = useContext(PageContext);
+  const {states,setStates,beneficiaries, setBeneficiaries, statesFromApi, setStatesFromApi } = useContext(FilterContext);
   
-
 // Close the toast after a certain time
 useEffect(() => {
   if (isToastVisible) {
@@ -82,7 +82,7 @@ useEffect(()=>{
   }, [authState.token]);
 
   const handleClick = (scheme_id) => {
-    const scheme = props.data.find((item) => item.id === scheme_id);
+    const scheme = dataFromApi.results.find((item) => item.id === scheme_id);
     if (scheme) {
       setSelectedScheme(scheme); // Set the selected scheme
       setIsModalOpen(true); // Open the modal
@@ -110,7 +110,7 @@ useEffect(()=>{
       const response = await fetch(`http://65.0.103.91:80/api/save_scheme/`, requestOptions);
       if (response.ok) {
         const result = await response.json();
-        console.log(result);
+        // console.log(result);
         return true;
       } else {
         console.error("Failed to save scheme");
@@ -150,7 +150,7 @@ useEffect(()=>{
       const result = await response.json();
       // console.log("Unsave response:", result); // Log the response
       if (response.ok) {
-        console.log(result);
+        // console.log(result);
         setIsUnSaveToastVisible(true); // Show the toast
         return true;
       } else {
@@ -188,58 +188,51 @@ useEffect(()=>{
     }
   };
 
+  const handlePageChangeForward = () => {
+    setCurrentPage((prev) => prev + 1);
+  };
 
-    // Handling pagination
-    const handlePageChange = ({ selected }) => {
-      setCurrentPage(selected);
-    };
-  
-    // Determining start and end pages
-    const offset = currentPage * itemsPerPage;
-    const currentPageData = props.filteredData.slice(offset, offset + itemsPerPage);
-    const pageCount = Math.ceil(props.filteredData.length / itemsPerPage);
+  const handlePageChangeBackward = () => {
+    setCurrentPage((prev) => (prev > 1 ? prev - 1 : 1));
+  };
 
-
-  if (!props.data) {
+  if (Object.keys(dataFromApi).length == 0) {
     return (
       <div className="text-onclick-btnblue mt-[120px] italic flex justify-center items-center text-[18px]">
         Loading...
       </div>
     );
   }
+  // if (dataFromApi.results.length == 0) {
+  //   return (
+  //     <div className="flex flex-col items-center justify-center gap-[8px] mt-[120px]">
+  //       <p className="text-button-text text-[14px] text-button-blue">Sorry no result is found based on your preference.</p>
+  //     </div>
+  //   );
+  // }
 
-  if (props.data.length === 0 || props.filteredData.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center gap-[8px] mt-[120px]">
-        <p className="text-button-text text-[14px] text-button-blue">Sorry no result is found based on your preference.</p>
-      </div>
-    );
+  const handleStateTag = (item) => {
+  //   const singleState = statesFromApi.filter((stateData)=>stateData.state_name == item);
+
+  //   if(states.length != 0 && !states[0][0].includes(singleState[0][id])){
+  //     console.log("not present")
+  //   }
   }
 
-  const handleStateTag = (event) => {
-    event.stopPropagation();
-    var array = props.selectedState;
-    if(array.includes(event.target.innerText)) return;
-    array.push(event.target.innerText);
-    props.setSelectedState(array);
-    props.setTest((prev) => prev + 1);
-  }
-
-  const handleBeneficiaryTag = (event) => {
-    event.stopPropagation();
-    var arr = props.selectedBeneficiaries;
-    if(arr.includes(event.target.innerText)) return;
-    arr.push(event.target.innerText);
-    props.setSelectedBeneficiaries(arr);
-    props.setTest1((prev) => prev + 1);
-  }
-
+  // const handleBeneficiaryTag = (event) => {
+  //   event.stopPropagation();
+  //   var arr = props.selectedBeneficiaries;
+  //   if(arr.includes(event.target.innerText)) return;
+  //   arr.push(event.target.innerText);
+  //   props.setSelectedBeneficiaries(arr);
+  //   props.setTest1((prev) => prev + 1);
+  // }
 
   return (
     <>
     {/* We have found {378} schemes based on your profile */}
     <div>
-      {currentPageData.map((item) => (
+      {(activeTab != "Saved" ? dataFromApi.results : dataFromApi).map((item) => (
         
         <div
           className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
@@ -274,8 +267,9 @@ useEffect(()=>{
               <p className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[26px] line-clamp-2 text-decoration-line: underline ">
                 {item.department.department_name}
               </p>
-              <div className="flex gap-5 mb-[16px]">
-                <button className="flex items-center justify-center pr-[12px] pl-[12px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium py-2 hover:border-onclick-btnblue hover:text-onclick-btnblue" onClick = {(event) => handleStateTag(event)}>
+              <div className="flex gap-5">
+                <button className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium py-2" onClick = {(event) => handleStateTag(item.department.state)}>
+
                   {item.department.state}
                 </button>
                 {item.beneficiaries.length > 0 &&
@@ -314,7 +308,7 @@ useEffect(()=>{
       ))}
 
 
-<ReactPaginate
+{/* <ReactPaginate
   previousLabel={
     <span className=" py-1 px-3 "><FaAngleLeft /></span>
   }
@@ -331,8 +325,21 @@ useEffect(()=>{
   activeClassName={"flex justify-center items-center w-8  rounded-full bg-[#3431BB] text-white shadow-md pr-[2px] pl-[2px] pt-[4px] pb-[4px]"}
   pageClassName={"flex items-center"}
   pageLinkClassName={""}
-/>
-
+/> */}
+{/* for pagination */}
+<div className="mt-[20px] flex justify-center items-center">
+          <button
+            onClick={handlePageChangeBackward}
+            disabled={currentPage === 1} // Disable when on the first page
+            className="mr-2"
+          >
+            <FaAngleLeft />
+          </button>
+          <span>{currentPage}</span>
+          <button onClick={handlePageChangeForward} className="ml-2">
+            <FaAngleRight />
+          </button>
+        </div>
 {isToastVisible && (
         <Toast message={toastMessage} onClose={() => setIsToastVisible(false)} />
       )}

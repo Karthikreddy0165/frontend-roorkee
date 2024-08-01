@@ -36,32 +36,27 @@ const ProfileModal = ({ onClose }) => {
             },
           };
 
-          const personalResponse = await fetch(
-            `http://65.0.103.91:80/api/profile/personal/`,
+          const profileResponse = await fetch(
+            `http://65.0.103.91:80/api/user/profile/`,
             requestOptions
           );
-          const professionalResponse = await fetch(
-            `http://65.0.103.91:80/api/profile/professional/`,
-            requestOptions
-          );
+          const pData = await profileResponse.json();
+          // console.log(pData);
 
-          const personalData = await personalResponse.json();
-          const professionalData = await professionalResponse.json();
-
-          setProfileData({
-            name: personalData.name || "",
-            age: personalData.age || "",
-            gender: personalData.gender || "",
-            community: personalData.category || "",
-            minority: personalData.minority === true ? "Yes" : "No",
-            state: personalData.state_of_residence || "",
+          setProfileData((prev)=>{return{
+            name: pData.name || "",
+            age: pData.age || "",
+            gender: pData.gender || "",
+            community: pData.category || "",
+            minority: pData.minority === true ? "Yes" : "No",
+            state: pData.state_of_residence || "",
             bpl_card_holder:
-              personalData.bpl_card_holder === true ? "Yes" : "No",
-            education: professionalData.education || "",
-            disability: personalData.disability === true ? "Yes" : "No",
-            occupation: professionalData.occupation || "",
-            income: professionalData.income || "",
-          });
+              pData.bpl_card_holder === true ? "Yes" : "No",
+            education: pData.education || "",
+            disability: pData.disability === true ? "Yes" : "No",
+            occupation: pData.occupation || "",
+            income: pData.income || "",
+          }});
         } catch (error) {
           console.error("Error fetching profile data:", error);
         } finally {
@@ -69,11 +64,10 @@ const ProfileModal = ({ onClose }) => {
         }
       }
     };
-
+  
     fetchProfileData();
   }, [authState.token]);
 
- 
 
   useEffect(() => {
     document.body.classList.add("overflow-hidden");
@@ -124,13 +118,15 @@ const ProfileModal = ({ onClose }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProfileData((prevData) => ({
+
+    setProfileData((prevData) =>{return ({
       ...prevData,
       [name]: value,
-    }));
+    })});
   };
 
   const handleSave = async () => {
+    // console.log(profileData);
     if (authState.token) {
       const requestOptions = {
         method: "PUT",
@@ -141,9 +137,8 @@ const ProfileModal = ({ onClose }) => {
       };
 
       try {
-        // Update personal data
         await fetch(
-          `http://65.0.103.91:80/api/profile/personal/`,
+          `http://65.0.103.91:80/api/user/profile/`,
           {
             ...requestOptions,
             body: JSON.stringify({
@@ -155,16 +150,6 @@ const ProfileModal = ({ onClose }) => {
               minority: profileData.minority === "Yes",
               disability: profileData.disability === "Yes",
               bpl_card_holder: profileData.bpl_card_holder === "Yes",
-            }),
-          }
-        );
-
-        // Update professional data
-        await fetch(
-          `http://65.0.103.91:80/api/profile/professional/`,
-          {
-            ...requestOptions,
-            body: JSON.stringify({
               education: profileData.education,
               occupation: profileData.occupation,
               income: profileData.income,

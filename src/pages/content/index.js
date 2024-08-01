@@ -55,9 +55,9 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
     : null;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-center items-center pointer-events-none pr-8 pl-8">
-      <div className="absolute right-0">
-        <div className="bg-white w-full max-w-2xl p-8 mt-8 rounded-lg relative border border-gray-200 shadow-lg shadow-black-400 pointer-events-auto">
+    <div className="fixed inset-0 z-50  flex justify-center items-center pointer-events-none pr-8 pl-8">
+      <div className="absolute right-0 w-[40%]">
+        <div className="bg-white w-full max-w-[2xl] p-8 mt-8 rounded-lg relative border border-gray-200 shadow-lg shadow-black-400 pointer-events-auto">
           {/* Close button */}
           <button
             className="absolute top-6 right-2 p-2 text-lg transition duration-300 ease-in-out hover:text-red-500"

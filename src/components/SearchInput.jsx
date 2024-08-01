@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from "react";
-
-function SearchInput({ searchQuery, handleSearch }) {
-  const [inputValue, setInputValue] = useState(searchQuery);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      handleSearch(inputValue);
-    }, 600); //I am adding debouncing 
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [inputValue, handleSearch]);
+import React, { useState, useEffect, useContext, } from "react";
+import { useTabContext } from "@/Context/TabContext";
+// import useDebounce from "./Debounce";
+function SearchInput() {
+  const {searchQuery, setSearchQuery} = useTabContext();
+  // useEffect(() => {
+    // const handler = setTimeout(() => {
+    //   handleSearch(searchQuery);
+    //   useDebounce(searchQuery,600)
+    // }, 600); //I am adding debouncing 
+    
+    // return () => {
+      //   clearTimeout(handler);
+      // };
+    // useDebounce(searchQuery,600)
+  // }, [searchQuery]);
 
   return (
 
 
 
-    <div className="flex items-center gap-8 h-14 px-3 rounded-lg border border-gray-300 bg-white mb-[24px] mr-[200px]">
+    <div className="flex items-center gap-8 h-14 px-3 rounded-lg border border-gray-300 bg-white mb-[24px] mr-2">
 
 
       <svg
@@ -35,8 +37,8 @@ function SearchInput({ searchQuery, handleSearch }) {
         type="text"
         placeholder="Search schemes, job opportunities, or scholarships"
         className="flex-1 px-2 text-sm bg-transparent focus:outline-none w-64 placeholder-[#616161]"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
       />
     </div>
   );

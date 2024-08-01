@@ -5,7 +5,8 @@ import Categories from "../components/Categories";
 
 export default function Saved() {
   const { authState } = useAuth();
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({results:[]});
+  const [dataOfApi, setDataOfApi] = useState({})
   const router = useRouter();
 
   const handleLoginPage = () => {
@@ -33,13 +34,15 @@ export default function Saved() {
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
+          
         }
         const data = await response.json();
-        console.log(
-          "Fetched data IDs:",
-          data.map((item) => item.id)
-        ); // Log the IDs of the fetched data
-        setData(data);
+        // console.log(
+        //   "Fetched data IDs:",
+        //   data.map((item) => item.id)
+        // ); // Log the IDs of the fetched data
+        setDataOfApi(data)
+        // console.log(data,"dataFetched")
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
@@ -65,7 +68,7 @@ export default function Saved() {
     <>
       <div className="bg-white font-sans">
         {data ? (
-          <Categories data={data} token={authState.token} />
+          <Categories ffff={"saved"} dataFromApi={dataOfApi} />
         ) : (
           <div>Loading...</div>
         )}
