@@ -240,12 +240,12 @@ useEffect(()=>{
         >
           
           <div onClick={() => handleClick(item.id)}>
-            <button
+            {/* <button
               className="text-center text-[12px] px-[8px] py-[6px] rounded-[4px] gap-[10px]"
               style={{ color: "#151280", backgroundColor: "#EEEEFF" }}
             >
               New update
-            </button>
+            </button> */}
             <div className="gap-[12px] pt-[16px] pd-[16px]">
               <p
                 className="font-inter text-[18px] leading-[21.6px] cursor-pointer font-bold mb-[10px] line-clamp-2 w-8/12"
@@ -264,16 +264,17 @@ useEffect(()=>{
                 <span className="font-semibold">Description: </span>
                 {item.description}
               </p>
-              <p className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[10px] line-clamp-2 text-decoration-line: underline">
+              <p className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[26px] line-clamp-2 text-decoration-line: underline ">
                 {item.department.department_name}
               </p>
               <div className="flex gap-5">
                 <button className="flex items-center justify-center pr-2 pl-2 border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium py-2" onClick = {(event) => handleStateTag(item.department.state)}>
+
                   {item.department.state}
                 </button>
                 {item.beneficiaries.length > 0 &&
                   item.beneficiaries[0].beneficiary_type !== "N/A" && (
-                    <button className="flex items-center justify-center pr-2 pl-2 py-[5px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium" onClick = {(event) => handleBeneficiaryTag(event)}>
+                    <button className="flex items-center justify-center pr-[12px] pl-[12px] py-[5px] border  border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium pl-8px hover:border-onclick-btnblue hover:text-onclick-btnblue" onClick = {(event) => handleBeneficiaryTag(event)}>
                       {item.beneficiaries[0].beneficiary_type}
                     </button>
                   )}
