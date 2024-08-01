@@ -9,6 +9,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import * as Yup from "yup";
 import { useFormData } from "../Context/FormContext";
 import loginperson from "../assets/image.png";
+import { useEffect } from "react";
 
 const CreateAcc01 = () => {
   const router = useRouter();
@@ -24,6 +25,13 @@ const CreateAcc01 = () => {
       .min(8, "Password must be at least 8 characters")
       .required("Password is required"),
   });
+
+  useEffect (() =>{
+    const token = localStorage.getItem("token");
+    if (token){
+      router.push("/homepage");
+    }
+  },[])
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

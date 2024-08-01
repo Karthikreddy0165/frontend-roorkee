@@ -26,10 +26,12 @@ const HomePage = () => {
   };
 
   const handleJobsClick = () => {
+    setActiveTab('Job Openings')
     router.push("/HeroPage?tab=Job Openings");
   };
 
   const handleScholarshipsClick = () => {
+    setActiveTab('Scholarships')
     router.push("/HeroPage?tab=Scholarships");
   };
 
