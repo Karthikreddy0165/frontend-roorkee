@@ -336,7 +336,16 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
 
           <div style={{ flex: "1 0 75%", maxWidth: "75%" }}>
             <div>
-              <Tabs/>
+              <Tabs 
+                // selectedState = {selectedState}
+                // setSelectedState = {setSelectedState}
+                // selectedDepartments = {selectedDepartments}
+                // setSelectedDepartments = {setSelectedDepartments}
+                // selectedBeneficiaries = {selectedBeneficiaries}
+                // setSelectedBeneficiaries = {setSelectedBeneficiaries}
+                // selectedSponsors = {selectedSponsors}
+                // setSelectedSponsors = {setSelectedSponsors}
+              />
             </div>
           </div>
         </div>
