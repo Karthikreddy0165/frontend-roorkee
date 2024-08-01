@@ -3,9 +3,13 @@ import { TabProvider } from "@/Context/TabContext";
 import "@/styles/globals.css";
 import { PrimeReactProvider } from 'primereact/api';
 import { AuthProvider } from "@/Context/AuthContext";
+import { PageProvider } from "@/Context/PageContext";
+import {FilterProvider} from "@/Context/FilterContext";
 
 export default function App({ Component, pageProps }) {
   return (
+    <FilterProvider>
+    <PageProvider>
     <TabProvider>
     <AuthProvider>
       <FormProvider>
@@ -15,5 +19,7 @@ export default function App({ Component, pageProps }) {
       </FormProvider>
     </AuthProvider>
     </TabProvider>
+    </PageProvider>
+    </FilterProvider>
   );
 }

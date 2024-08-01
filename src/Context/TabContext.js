@@ -1,19 +1,25 @@
 // TabContext.js
 
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const TabContext = createContext();
 
 export const TabProvider = ({ children }) => {
   const [activeTab, setActiveTab] = useState('Schemes'); // Default active tab
   const [searchQuery, setSearchQuery] = useState('');
-
-  const setTab = (tab) => {
-    setActiveTab(tab);
-  };
+  useEffect(()=>{
+    const currentURL = new URLSearchParams(window.location.search);
+    const tab = currentURL.get("tab");
+    if(tab){
+      setActiveTab(tab);
+    }
+  },[activeTab])
+  // const setTab = (tab) => {
+  //   setActiveTab(tab);
+  // };
 
   return (
-    <TabContext.Provider value={{ activeTab, setTab, searchQuery, setSearchQuery }}>
+    <TabContext.Provider value={{ activeTab, setActiveTab, searchQuery, setSearchQuery }}>
       {children}
     </TabContext.Provider>
   );

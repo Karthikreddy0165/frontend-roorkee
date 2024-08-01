@@ -1,57 +1,47 @@
+import { useEffect, useState } from "react";
+import Categories from "./Categories";
+import PageContext from '@/Context/PageContext';
+import { useContext } from "react";
 import { useTabContext } from "@/Context/TabContext";
-import { useEffect } from "react";
-import Categories from "./Categories"; // Adjust path as per your project structure
-
-export default function JobOpenings({ setData, ...props }) {
-  const { searchQuery } = useTabContext(); // Access searchQuery from TabContext
-
+export default function JobOpenings() {
+  const {searchQuery} = useTabContext();
+  const { currentPage} = useContext(PageContext);
+  const [dataOfApi, setDataOfApi] = useState({})
   useEffect(() => {
-    const fetchJobOpenings = async () => {
+    const fetchState = async () => {
       try {
-        setData(null);
-        // let url = `http://65.0.103.91:80/api/schemes`;
-        let url = `http://65.0.103.91:80/api/schemes`
+        setDataOfApi({});
+        let url = `http://65.0.103.91:80/api/schemes/job`
         if (searchQuery) {
           url += `/search/?q=${searchQuery}`;
-          console.log("Search Query:", searchQuery); // Debugging log
         }
+        url += `/?limit=10&page=${currentPage}`;
 
-        console.log("Fetching URL:", url); // Debugging log
-
-        const response = await fetch(url);
-
-        if (!response.ok) {
+        const cachedData = localStorage.getItem(url);
+        if (cachedData) {
+          setDataOfApi(JSON.parse(cachedData));
+        }
+        else{
+          const response = await fetch(url);
+          if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setData(data);
+          }
+          const data = await response.json();
+          setDataOfApi(data);
+          localStorage.setItem(url, JSON.stringify(data));
+  }
       } catch (error) {
-        console.error("Failed to fetch job openings data:", error);
+        console.error("Failed to fetch data:", error);
       }
     };
-
-    fetchJobOpenings();
-  }, [searchQuery, setData]);
+    fetchState();
+  }, [searchQuery, currentPage]);
 
   return (
     <div className="bg-white font-sans">
       <Categories
-         data={props.data}
-         selectedState={props.selectedState}
-         setSelectedState = {props.setSelectedState}
-         setStateName = {props.setStateName}
-         selectedDepartments={props.selectedDepartments}
- 
-         selectedBeneficiaries={props.selectedBeneficiaries}
-         setSelectedBeneficiaries = {props.setSelectedBeneficiaries}
-         setBeneficiaryName = {props.setBeneficiaryName}
- 
-         selectedAges={props.selectedAges}
-         selectedFunders={props.selectedFunders}
-         selectedSponsors={props.selectedSponsors}
-         filteredData = {props.filteredData}
-         setTest = {props.setTest}
-         setTest1 = {props.setTest1}
+        ffff={"jobopening"}
+        dataFromApi={dataOfApi}
       />
     </div>
   );

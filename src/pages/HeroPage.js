@@ -1,5 +1,5 @@
 import NavBarWithoutLogin from "@/components/NavBar";
-
+import { useContext } from "react";
 import Image from "next/image";
 import MainPageImage from ".././assets/backgroundimg.png";
 import BackButton from "@/components/BackButton";
@@ -14,10 +14,10 @@ import BeneficiaryDropdownMenu from "../components/BeneficiariesDropdown";
 import SponsorsDropdownMenu from "@/components/SponsorDropdown";
 
 import FundingByDropdownMenu from "../components/FundingBy";
-import { useRouter } from "next/router";
-
+import FilterContext from '@/Context/FilterContext';
 
 const HeroPage = () => {
+  const { setStates, setDepartments, setBeneficiaries, setFundingBy, setSponseredBy} = useContext(FilterContext);
   const [filteredData, setFilteredData] = useState([]);
   const [test, setTest] = useState(0);
   const [test1, setTest1] = useState(0);
@@ -56,17 +56,20 @@ const HeroPage = () => {
     fundersOpen: false,
     sponsorsOpen: false,
   });
-
+const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fbanners%2FScheme_details_page_banner_TvdKXuh.png&w=3840&q=75"
   useEffect(() => {
-    let filtered = data;
+    if(data){
+      let filtered = data.results;
 
-    if (selectedState && selectedState.length > 0) {
-      filtered = filtered.filter((item) =>
-        selectedState.includes(item.department.state)
-      );
+      if (selectedState && selectedState.length > 0) {
+        filtered = filtered.filter((item) =>
+          selectedState.includes(item.department.state)
+        );
+      }
+
+      setDropdownData(filtered);
     }
-
-    setDropdownData(filtered);
+    
   }, [selectedState, test, data])
 
   // handling filtering functionality
@@ -75,7 +78,7 @@ const HeroPage = () => {
       let filtered = data;
 
       if (selectedState && selectedState.length > 0) {
-        filtered = filtered.filter((item) =>
+        filtered = filtered.results.filter((item) =>
           selectedState.includes(item.department.state)
         );
       }
@@ -154,15 +157,22 @@ const HeroPage = () => {
     test1
   ]);
 
+
   useEffect(() => {
-    
-    fetch("http://65.0.103.91:80/api/banner/")
+    fetch("http://65.0.103.91:80/api/banners/")
       .then((response) => response.json())
       .then((data) => {
-        setBannerImage(data.imageUrl);
+        // Find the active banner
+        const activeBanner = data.find((banner) => banner.is_active);
+        // Set the image URL of the active banner
+        if (activeBanner) {
+          setBannerImage(activeBanner.image);
+        }
       })
       .catch((error) => console.error("Error fetching banner image:", error));
+  }, []);
 
+  useEffect(() => {
     setStateName('');
     setDepartmentName('');
     setBeneficiaryName('');
@@ -193,18 +203,13 @@ const HeroPage = () => {
   };
 
   const clearAllFilters = () => {
-    setSelectedState([]);
-    setSelectedDepartments([]);
-    setSelectedFunders([]);
-    setSelectedBeneficiaries([]);
-    setSelectedSponsors([]);
-    setStateName('');
-    setBeneficiaryName('');
-    setDepartmentName('');
-    setSponsorName('');
-    setFunderName('');
+    setStates([]);
+    setDepartments([]);
+    setBeneficiaries([]);
+    setFundingBy([]);
+    setSponseredBy([]);
   }
-
+  
   
   return (
     <>
@@ -214,27 +219,32 @@ const HeroPage = () => {
         className="relative w-80vw mx-auto mb-8 flex justify-center items-center "
         style={{ maxWidth: "80%", margin: "0 auto" }}
       >
-        <div className="h-60 w-full relative brightness-50 mb-4">
-          <Image
+        <div className="h-60 w-full relative brightness-70 mb-4">
+          {/* <Image
             src={MainPageImage}
             alt="Loading Image..."
             layout="fill"
             objectFit="cover"
             objectPosition="center bottom"
             className="rounded-[15px]"
-          />
-          {/* {bannerImage ? (
+          /> */}
+          {bannerImage ? (
             <Image
-              src={bannerImage}
-              alt="Loading Image..."
-              layout="fill"
-              objectFit="cover"
-              objectPosition="center bottom"
-              className="rounded-[15px]"
+            src={bannerImage}
+            alt="Loading Image..."
+            layout="fill"
+            objectFit="contain"
+            className="rounded-[15px]"
             />
           ) : (
-            <p>Loading banner Image...</p>
-          )} */}
+            <Image
+            src={backUpBannerImage}
+            alt="Loading Image..."
+            layout="fill"
+            objectFit="contain"
+            className="rounded-[15px]"
+            />
+          )}
         </div>
       </div>
 
@@ -244,7 +254,7 @@ const HeroPage = () => {
           className="mr-2">
             <div className="flex justify-between items-center mb-4">
               <h1 style={{ margin: 0 }}>Filter by</h1>
-              <button className="text-[#3431BB] hover:bg-dropdown-blue hover:rounded-lg" style={{ margin: 0 }} onClick={clearAllFilters}>
+              <button className="text-[#3431BB] p-2 hover:bg-dropdown-blue hover:rounded-lg" style={{ margin: 0 }} onClick={clearAllFilters}>
                 Clear all filters
               </button>
             </div>
@@ -254,9 +264,12 @@ const HeroPage = () => {
             {/* filter categories */}
             <div className="mt-2">
               {/* Each filter category */}
-              <div className="flex justify-between items-center mb-4 hover:bg-dropdown-blue hover:rounded-md hover:text-onclick-btnblue" onClick={() => toggleDropdown("dropDownOpen")} id="stateBtn"> <span>{selectedState.length > 0 ? (<span className="inline-flex items-center"> State <span className="w-5 h-5 bg-dropdown-blue text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{selectedState.length}</span></span>) : "State"}
+              <div className="flex justify-between items-center mb-4 hover:bg-dropdown-blue hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2" onClick={() => toggleDropdown("dropDownOpen")} id="stateBtn"> <span>{selectedState.length > 0 ? (<span className="inline-flex items-center"> State <span className="w-5 h-5 bg-dropdown-blue text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{selectedState.length}</span></span>) : "State"}
+              
             </span>
+            
             {dropDownStates.dropDownOpen ? <IoIosArrowUp className="text-black"/> : <IoIosArrowDown className="text-black" /> }
+            
           </div>
               {dropDownStates.dropDownOpen && <DropdownMenu 
                 ref={dropdownRef} 
@@ -265,7 +278,7 @@ const HeroPage = () => {
                 setSelectedState = {setSelectedState}
                 data = {data}
               />}
-              <div className="flex justify-between items-center mb-4 hover:bg-dropdown-blue hover:rounded-md hover:text-onclick-btnblue" onClick={() => toggleDropdown("departmentOpen")} id="departmentBtn">
+              <div className="flex justify-between items-center mb-4 hover:bg-dropdown-blue hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2" onClick={() => toggleDropdown("departmentOpen")} id="departmentBtn">
               <span>{departmentName != "" ? (<span className="inline-flex items-center"> Department <span className="w-5 h-5 bg-dropdown-blue text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{departmentName}</span></span>) : "Department"}</span>
               {dropDownStates.departmentOpen? <IoIosArrowUp className="text-[#000]" />:<IoIosArrowDown className="text-[#000]" /> }
               </div>
@@ -278,7 +291,7 @@ const HeroPage = () => {
                     data = {dropdownData}
                   />
                 )}
-              <div className="flex justify-between items-center mb-4 hover:bg-dropdown-blue hover:rounded-md hover:text-onclick-btnblue" onClick={() => toggleDropdown("fundersOpen")} id="fundingbyBtn">
+              {/* <div className="flex justify-between items-center mb-4 hover:bg-dropdown-blue hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2" onClick={() => toggleDropdown("fundersOpen")} id="fundingbyBtn">
               <span>{funderName != "" ? (<span className="inline-flex items-center"> Funding by <span className="w-5 h-5 bg-dropdown-blue text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{funderName}</span></span>) : "Funding by"}</span>
               {dropDownStates.fundersOpen? <IoIosArrowUp className="text-[#000]"/> : <IoIosArrowDown className="text-[#000]" /> }
               </div>
@@ -290,8 +303,8 @@ const HeroPage = () => {
                     setFunderName={setFunderName}
                     data = {dropdownData}
                   />
-                )}
-              <div className="flex justify-between items-center mb-4 hover:bg-dropdown-blue hover:rounded-md hover:text-onclick-btnblue" onClick={() => toggleDropdown("beneficiaryOpen")} id="beneficiaryBtn">
+                )} */}
+              <div className="flex justify-between items-center mb-4 hover:bg-dropdown-blue hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2" onClick={() => toggleDropdown("beneficiaryOpen")} id="beneficiaryBtn">
               <span>{selectedBeneficiaries.length > 0 ? (<span className="inline-flex items-center">Beneficiaries <span className="w-5 h-5 bg-dropdown-blue text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{selectedBeneficiaries.length}</span></span>) : "Beneficiaries"}</span>
               {dropDownStates.beneficiaryOpen ? <IoIosArrowUp className="text-[#000]"/> : <IoIosArrowDown className="text-[#000]" /> }
               </div>
@@ -304,7 +317,7 @@ const HeroPage = () => {
                     data = {dropdownData}
                   />
                 )}
-               <div className="flex justify-between items-center mb-4 hover:bg-dropdown-blue hover:rounded-md hover:text-onclick-btnblue" onClick={() => toggleDropdown("sponsorsOpen")} id="sponsorBtn">
+               <div className="flex justify-between items-center mb-4 hover:bg-dropdown-blue hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2" onClick={() => toggleDropdown("sponsorsOpen")} id="sponsorBtn">
                 <span>{sponsorName != "" ? (<span className="inline-flex items-center">Sponsored by<span className="w-5 h-5 bg-dropdown-blue text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{sponsorName}</span></span>) : "Sponsored by"}
             </span>
             {dropDownStates.sponsorsOpen ? <IoIosArrowUp className="text-black"/> : <IoIosArrowDown className="text-black" /> }
@@ -323,49 +336,7 @@ const HeroPage = () => {
 
           <div style={{ flex: "1 0 75%", maxWidth: "75%" }}>
             <div>
-              <Tabs 
-              data = {data}
-              setData = {setData}
-              stateName = {stateName}
-              setStateName = {setStateName}
-              setSelectedState = {setSelectedState}
-              departmentName = {departmentName}
-              setDepartmentName = {setDepartmentName}
-
-              beneficiaryName = {beneficiaryName}
-              setBeneficiaryName = {setBeneficiaryName}
-              funderName = {funderName}
-              setFunderName = {setFunderName}
-
-              filteredData = {filteredData}
-              setTest = {setTest}
-              setTest1 = {setTest1}
-
-              sponsorName = {sponsorName}
-              setSponsorName = {setSponsorName}
-              selectedDepartments = {selectedDepartments}
-              setSelectedDepartments = {setSelectedDepartments}
-              selectedBeneficiaries = {selectedBeneficiaries}
-              setSelectedBeneficiaries = {setSelectedBeneficiaries}
-
-              selectedState = {selectedState}
-              selectedAges = {selectedAges}
-              setSelectedAges = {setSelectedAges}
-              selectedIncomes = {selectedIncomes}
-              setSelectedIncomes = {setSelectedIncomes}
-              selectedFunders = {selectedFunders}
-              setSelectedFunders = {setSelectedFunders}
-              selectedSponsors = {selectedSponsors}
-              dropDownStates = {dropDownStates}
-              setDropDownStates = {setDropDownStates}
-              dropdownRef = {dropdownRef}
-              departmentDropdownRef = {departmentDropdownRef}
-              beneficiaryDropdownRef = {beneficiaryDropdownRef}
-              ageDropdownRef = {ageDropdownRef}
-              incomeDropdownRef = {incomeDropdownRef}
-              funderDropdownRef = {funderDropdownRef}
-              sponsorDropdownRef = {sponsorDropdownRef}
-              />
+              <Tabs/>
             </div>
           </div>
         </div>

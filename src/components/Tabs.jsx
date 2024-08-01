@@ -7,28 +7,25 @@ import Scholarships from "./Scholarships"; // Adjust path as per your project st
 import Saved from "./savedForLoginuser";
 import { useTabContext } from "@/Context/TabContext";
 
-export default function Tabs(props) {
+export default function Tabs() {
   const router = useRouter();
   const { tab } = router.query;
-  const { activeTab, setTab, searchQuery, setSearchQuery } = useTabContext(); // Accessing context
+  const { activeTab, setActiveTab} = useTabContext(); // Accessing context
 
-  useEffect(() => {
-    if (tab) {
-      setTab(tab);
-    }
-  }, [tab, setTab]);
+  // useEffect(() => {
+  //   if (tab) {
+  //     setTab(tab);
+  //   }
+  // }, [tab, setTab]);
 
   const handleTabClick = (tab) => {
-    setTab(tab);
+    setActiveTab(tab);
     router.push({
       pathname: router.pathname,
       query: { tab },
     });
   };
 
-  const handleSearch = (query) => {
-    setSearchQuery(query); // Update searchQuery state via context
-  };
 
   const getButtonClass = (tabName) => {
     return `flex-grow text-center font-sm p-[12px] rounded-t-[8px] text-semibold text-[14px] cursor-pointer font-sans ${
@@ -40,7 +37,7 @@ export default function Tabs(props) {
 
   return (
     <div className="mb-4">
-      <SearchInput searchQuery={searchQuery} handleSearch={handleSearch} />
+      <SearchInput/>
 
       <div className="flex justify-center items-center gap-[15px]">
         <button
@@ -71,10 +68,10 @@ export default function Tabs(props) {
       <hr />
 
       {/* Render the corresponding component based on activeTab */}
-      {activeTab === "Schemes" && <Schemes searchQuery={searchQuery} {...props} />}
-      {activeTab === "Job Openings" && <JobOpenings {...props} />}
-      {activeTab === "Scholarships" && <Scholarships searchQuery={searchQuery} {...props} />}
-      {activeTab === "Saved" && <Saved {...props} />}
+      {activeTab === "Schemes" && <Schemes/>}
+      {activeTab === "Job Openings" && <JobOpenings/>}
+      {activeTab === "Scholarships" && <Scholarships />}
+      {activeTab === "Saved" && <Saved />}
     </div>
   );
 }

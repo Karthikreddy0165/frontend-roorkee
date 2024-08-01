@@ -1,51 +1,67 @@
-import { useEffect } from "react";
+import { useEffect, useState, useContext } from "react";
 import Categories from "./Categories";
+import PageContext from "@/Context/PageContext";
+import FilterContext from "@/Context/FilterContext";
+import { useTabContext } from "@/Context/TabContext";
 
-export default function Schemes({ searchQuery, setData, ...props }) {
+export default function Schemes() {
+  const { searchQuery } = useTabContext();
+  const {
+    states,
+    departments,
+    beneficiaries,
+    sponseredBy,
+  } = useContext(FilterContext);
+  const { currentPage } = useContext(PageContext);
+  const [dataOfApi, setDataOfApi] = useState({});
+
   useEffect(() => {
     const fetchState = async () => {
       try {
-        setData(null);
-        // let url = `http://52.65.93.83:8080/api/schemes`;
-        let url = `http://65.0.103.91:80/api/schemes`
-        if (searchQuery) {
-          url += `/search/?q=${searchQuery}`;
-        }
+        setDataOfApi({});
+        let url = `http://65.0.103.91:80/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
+        // const cachedData = localStorage.getItem(url);
+        
+        // if (cachedData) {
+        //   setDataOfApi(JSON.parse(cachedData));
+        // } else { 
+        const myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
 
-        const response = await fetch(url);
+          const raw = JSON.stringify({
+            state_ids: states.length != 0 ?  states[0] : [],
+            department_ids: departments.length != 0 ? departments[0] : [],
+            sponsor_ids: sponseredBy.length != 0 ? sponseredBy[0] : [],
+            beneficiary_keywords: beneficiaries,
+            search_query: searchQuery,
+          });
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setData(data);
+          const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow",
+          };
+
+          const response = await fetch(url, requestOptions);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          let data = await response.json();
+          setDataOfApi(data);
+          localStorage.setItem(url, JSON.stringify(data));
+        // }
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
     };
+
     fetchState();
-  }, [searchQuery, setData]);
+  }, [searchQuery, currentPage, sponseredBy, states, departments, beneficiaries]);
 
   return (
     <div className="bg-white font-sans">
-      <Categories
-        data={props.data}
-        selectedState={props.selectedState}
-        setSelectedState = {props.setSelectedState}
-        setStateName = {props.setStateName}
-        selectedDepartments={props.selectedDepartments}
-
-        selectedBeneficiaries={props.selectedBeneficiaries}
-        setSelectedBeneficiaries = {props.setSelectedBeneficiaries}
-        setBeneficiaryName = {props.setBeneficiaryName}
-
-        selectedAges={props.selectedAges}
-        selectedFunders={props.selectedFunders}
-        selectedSponsors={props.selectedSponsors}
-        filteredData = {props.filteredData}
-        setTest = {props.setTest}
-        setTest1 = {props.setTest1}
-      />
+      <Categories ffff={"schemes"} dataFromApi={dataOfApi} />
     </div>
   );
 }
