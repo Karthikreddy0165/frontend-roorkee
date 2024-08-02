@@ -211,22 +211,18 @@ useEffect(()=>{
   //   );
   // }
 
-  const handleStateTag = (item) => {
-  //   const singleState = statesFromApi.filter((stateData)=>stateData.state_name == item);
-
-  //   if(states.length != 0 && !states[0][0].includes(singleState[0][id])){
-  //     console.log("not present")
-  //   }
+  const handleStateTag = (event) => {
+    event.stopPropagation();
   }
 
-  // const handleBeneficiaryTag = (event) => {
-  //   event.stopPropagation();
-  //   var arr = props.selectedBeneficiaries;
-  //   if(arr.includes(event.target.innerText)) return;
-  //   arr.push(event.target.innerText);
-  //   props.setSelectedBeneficiaries(arr);
-  //   props.setTest1((prev) => prev + 1);
-  // }
+  const handleBeneficiaryTag = (event) => {
+    event.stopPropagation();
+    // var arr = props.selectedBeneficiaries;
+    // if(arr.includes(event.target.innerText)) return;
+    // arr.push(event.target.innerText);
+    // props.setSelectedBeneficiaries(arr);
+    // props.setTest1((prev) => prev + 1);
+  }
 
   return (
     <>
