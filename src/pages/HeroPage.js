@@ -248,7 +248,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
       <div className="max-w-[80%] mx-auto">
         <div className="flex -ml-4">
           <div className="flex-1 max-w-[25%] p-4 mr-2">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center -mt-16 ">
               <h1 className="m-0 font-semibold">Filter by</h1>
               <button
                 className="text-[#3431BB] font-semibold p-2 hover:bg-[#EEEEFF] hover:rounded-lg m-0"

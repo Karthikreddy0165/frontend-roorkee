@@ -1,13 +1,12 @@
 import { Formik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { FaAngleRight, FaArrowLeftLong } from "react-icons/fa6";
 import { useAuth } from "../Context/AuthContext";
 import loginperson from "../assets/image.png";
-import LoginSucc from "./loginSucc";
 
 
 const LoginPage = () => {
@@ -16,8 +15,9 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
-  const showSucc = useRef(false);
-  
+
+
+
   const handleCreate01Click = () => {
     router.push("/accountCreation");
   };
@@ -63,12 +63,11 @@ const LoginPage = () => {
       if (result.access) {
         const user = { token: result.access, email: values.email };
         localStorage.setItem("token", result.access);
-        login(result.access, user);
-        showSucc.current = true;
+        login(result.access, user); // Save token and user information to the context
+        router.push("/loginSucc");
         setTimeout(() => {
           router.push("/HeroPage");
-          showSucc.current = false;
-        }, 1500);
+        }, 2000);
       } else {
         setErrorMessage("Email or password is invalid");
       }
@@ -79,15 +78,10 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
-  if(showSucc.current){
-    return(
-      <LoginSucc/>
-    )
-  }
-  else{
+
   return (
     
-   <div className="flex h-screen overflow-hidden -mb-6">
+    <div className="flex h-screen overflow-hidden -mb-6">
       <div className="w-1/2 bg-[#FEF6F0] relative flex items-center justify-center">
         <div className="absolute top-0 text-[#000] mt-20 ml-8 mr-8">
           <h1 className="text-purple-400 font-inter italic font-bold text-3xl mb-4 w-[500px]">
@@ -97,7 +91,6 @@ const LoginPage = () => {
             Find all the details about government schemes, scholarships, and job
             openings for all states in one place.
           </p>
-          
 
           {/* bg div images */}
           <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 opacity-5 bg-[#DF8317] ml-[530px] mt-[-150px] z-0"></div>
@@ -227,7 +220,7 @@ const LoginPage = () => {
                   Password
                 </label>
                 <input
-                  className="shadow appearance-none border rounded rounded-[8px] w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded rounded-[8px] w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline mb-8"
                   id="password"
                   type={showPassword ? "text" : "password"} // Toggle password visibility
                   placeholder="Enter your password"
@@ -236,20 +229,20 @@ const LoginPage = () => {
                   value={formik.values.password}
                 />
                 <div
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 cursor-pointer mt-6"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 cursor-pointer mb-1 "
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </div>
               </div>
-              <div className="text-sm flex flex-column mb-[20px] mt-4">
+              {/* <div className="text-sm flex flex-column mb-[20px]">
                 <a
                   className="text-[#3431BB] hover:text-blue-700 ml-auto"
                   href="#"
                 >
                   Forgot password?
                 </a>
-              </div>
+              </div> */}
 
               {errorMessage && (
                 <div className="mb-4 -mt-4">
@@ -299,8 +292,8 @@ const LoginPage = () => {
           )}
         </Formik>
       </div>
-      </div>
-  );}
+    </div>
+  );
 };
 
 export default LoginPage;

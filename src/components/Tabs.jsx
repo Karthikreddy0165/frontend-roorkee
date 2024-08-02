@@ -37,7 +37,7 @@ export default function Tabs(props) {
   };
 
   return (
-    <div className="mb-4 mt-4">
+    <div className=" -mt-12 ">
       <SearchInput/>
 
       <SelectedFilters />

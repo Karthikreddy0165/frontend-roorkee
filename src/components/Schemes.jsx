@@ -14,7 +14,9 @@ export default function Schemes() {
   } = useContext(FilterContext);
   const { currentPage } = useContext(PageContext);
   const [dataOfApi, setDataOfApi] = useState({});
+  const [totalPages, setTotalPages] = useState(0);
 
+  console.log(states[1],"states")
   useEffect(() => {
     const fetchState = async () => {
       try {
@@ -34,6 +36,8 @@ export default function Schemes() {
             sponsor_ids: sponseredBy.length != 0 ? sponseredBy[0] : [],
             beneficiary_keywords: beneficiaries,
             search_query: searchQuery,
+            // tag: "scholarship",
+
           });
 
           const requestOptions = {
@@ -49,6 +53,7 @@ export default function Schemes() {
           }
           let data = await response.json();
           setDataOfApi(data);
+          setTotalPages(Math.ceil(data.count/10));
           localStorage.setItem(url, JSON.stringify(data));
         // }
       } catch (error) {
@@ -61,7 +66,8 @@ export default function Schemes() {
 
   return (
     <div className="bg-white font-sans">
-      <Categories ffff={"schemes"} dataFromApi={dataOfApi} />
+      <Categories ffff={"schemes"} dataFromApi={dataOfApi} totalPages={totalPages}/>
+
     </div>
   );
 }

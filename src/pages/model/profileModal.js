@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useAuth } from "../../Context/AuthContext";
+// import '.custom-slide
 
 const ProfileModal = ({ onClose }) => {
   const { authState } = useAuth();
@@ -125,6 +126,7 @@ const ProfileModal = ({ onClose }) => {
     })});
   };
 
+  
   const handleSave = async () => {
     // console.log(profileData);
     if (authState.token) {
@@ -163,7 +165,13 @@ const ProfileModal = ({ onClose }) => {
       }
     }
   };
-
+  const handleSliderChange = (e) => {
+    const { value } = e.target;
+    setProfileData((prevData) => ({
+      ...prevData,
+      income: value,
+    }));
+  };
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div
@@ -313,14 +321,6 @@ const ProfileModal = ({ onClose }) => {
               <label className="block mb-2 text-[12px] font-semibold text-black">
                 Education
               </label>
-              {/* <input
-                type="text"
-                name="education"
-                className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
-                placeholder="Enter your education"
-                value={profileData.education}
-                onChange={handleChange}
-              /> */}
               <select
                     name="education"
                     className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
@@ -365,7 +365,7 @@ const ProfileModal = ({ onClose }) => {
               >
                 <option value="">Select occupation</option>
                 <option value="Farmer">Farmer</option>
-                <option value="HouseWife">HouseWife</option>
+                <option value="HouseWife">Housewife</option>
                 <option value="Student">Student</option>
                 <option value="Health">Health</option>
                 <option value="Education">Education</option>
@@ -400,18 +400,29 @@ const ProfileModal = ({ onClose }) => {
               </select>
             </div>
             <div className="flex-1">
-              <label className="block mb-2 text-[12px] font-semibold text-black">
-                Income
-              </label>
-              <input
-                type="text"
-                name="income"
-                className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
-                placeholder="Enter your income"
-                value={profileData.income}
-                onChange={handleChange}
-              />
-            </div>
+      <label className="block mb-2 text-[12px] font-semibold text-black">
+        Annual Income (in lakhs)
+      </label>
+      <input
+        type="text"
+        name="income"
+        className="w-full h-[44px] border border-gray-300 p-2 rounded-lg bg-gray-100 text-[12px] font-semibold text-black"
+        placeholder="Enter your income"
+        value={profileData.income}
+        onChange={handleChange}
+      />
+      <input
+  type="range"
+  name="incomeRange"
+  min="0"
+  max="10"
+  step="1"
+  value={profileData.income}
+  onChange={handleSliderChange}
+  className="w-full mt-2 custom-slide"
+/>
+
+    </div>
           </div>
         </div>
 
