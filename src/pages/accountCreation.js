@@ -2,7 +2,7 @@ import { useAuth } from "@/Context/AuthContext";
 import { Formik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -10,6 +10,7 @@ import * as Yup from "yup";
 import { useFormData } from "../Context/FormContext";
 import loginperson from "../assets/image.png";
 import { useEffect } from "react";
+import AccCreatSucc from "./accCreatedsucc";
 
 const CreateAcc01 = () => {
   const router = useRouter();
@@ -18,6 +19,7 @@ const CreateAcc01 = () => {
   const [apiErrors, setApiErrors] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const showSucc = useRef(false);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email address").required("Email is required"),
@@ -73,16 +75,24 @@ const CreateAcc01 = () => {
         const user = { token: result.access, email: values.email };
         localStorage.setItem("token", result.access);
         login(result.access, user); // Save token and user information to the context
-        router.push("/accCreatedsucc");
-          setTimeout(() => {
-            router.push("/HeroPage");
-        }, 2000);
+        // router.push("/accCreatedsucc");
+        showSucc.current = true;
+        setTimeout(() => {
+          showSucc.current = false;
+          router.push("/HeroPage");
+        }, 1500);
       }
     } catch (error) {
       console.error("Login failed:", error);
     }
   };
-
+  if(showSucc.current){
+    return(
+      <AccCreatSucc/>
+    )
+  }
+  else{
+    // {
   return (
     <div className="flex h-screen overflow-hidden -mb-6">
       <div className="w-1/2 bg-[#FEF6F0] relative flex items-center justify-center">
@@ -309,6 +319,7 @@ const CreateAcc01 = () => {
       </div>
     </div>
   );
+}
 };
 
 export default CreateAcc01;

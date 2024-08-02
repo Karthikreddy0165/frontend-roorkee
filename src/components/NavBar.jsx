@@ -37,15 +37,15 @@ const NavBar = () => {
   };
 
   return (
-    <div className="shadow-[0_1px_20px_0px_rgba(0,0,0,0.05)]">
-      <div style={{ maxWidth: "80%", margin: "0 auto" }} className="flex justify-between items-center py-4 z-10 relative hover:cursor-pointer shadow-[0_1px_20px_0px_rgba(0,0,0,0.05)]">
-        <div className=""
+    <div className="">
+      <div style={{ maxWidth: "100%", margin: "0 auto" }} className="flex justify-between items-center py-4 z-10 relative hover:cursor-pointer shadow-[0_1px_20px_0px_rgba(0,0,0,0.05)]">
+        <div className="ml-36"
         onClick={handleClickLogo}
         >
           Logo
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex gap-4 mr-36">
 
           {authState.token ? (
             <div className="relative">

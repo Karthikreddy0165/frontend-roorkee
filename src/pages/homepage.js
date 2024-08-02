@@ -12,9 +12,11 @@ import Image from "next/image";
 
 import NavBar from "@/components/NavBar";
 import { useTabContext } from "@/Context/TabContext";
+import { useEffect, useState } from "react";
 const HomePage = () => {
   const router = useRouter();
   const { activeTab, setActiveTab } = useTabContext();
+
 
   const handleClickGetStarted =() =>{
     router.push("/HeroPage")
@@ -34,6 +36,7 @@ const HomePage = () => {
     setActiveTab('Scholarships')
     router.push("/HeroPage?tab=Scholarships");
   };
+
 
   return (
     <>
