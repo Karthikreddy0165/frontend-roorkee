@@ -296,7 +296,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                 onClick={(e) => toggleBookmark(e, item.id)}
               >
                 {isBookmarked[item.id] ? (
-                  <GoBookmarkFill className="w-[27.5px] h-[27.5px]" />
+                  <GoBookmarkFill className="w-[27.5px] h-[27.5px] text-[#3431BB]" />
                 ) : (
                   <CiBookmark className="w-[27.5px] h-[27.5px]" />
                 )}

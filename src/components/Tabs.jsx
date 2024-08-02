@@ -36,7 +36,7 @@ export default function Tabs() {
   };
 
   return (
-    <div className="mb-4">
+    <div className=" -mt-12 ">
       <SearchInput/>
 
       <div className="flex justify-center items-center gap-[15px]">
