@@ -3,6 +3,7 @@ import Categories from "./Categories";
 import PageContext from "@/Context/PageContext";
 import FilterContext from "@/Context/FilterContext";
 import { useTabContext } from "@/Context/TabContext";
+import SchemeCount from "./SchemeCount";
 
 export default function Schemes() {
   const { searchQuery } = useTabContext();
@@ -16,7 +17,6 @@ export default function Schemes() {
   const [dataOfApi, setDataOfApi] = useState({});
   const [totalPages, setTotalPages] = useState(0);
 
-  console.log(states[1],"states")
   useEffect(() => {
     const fetchState = async () => {
       try {
@@ -66,6 +66,7 @@ export default function Schemes() {
 
   return (
     <div className="bg-white font-sans">
+      <SchemeCount dataFromApi={dataOfApi} />
       <Categories ffff={"schemes"} dataFromApi={dataOfApi} totalPages={totalPages}/>
 
     </div>

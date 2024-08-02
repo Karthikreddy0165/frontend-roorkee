@@ -268,7 +268,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                 id="stateBtn"
               >
                 <span>
-                  {states.length > 0 ? (
+                  {states[1] && states[1].length > 0 ? (
                     <span className="inline-flex items-center">
                       State
                       <span className="w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">
@@ -301,7 +301,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                 id="departmentBtn"
               >
                 <span>
-                  {departments.length > 0 ? (
+                  {departments[1] && departments[1].length > 0 ? (
                     <span className="inline-flex items-center">
                       Department
                       <span className="w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">
@@ -327,26 +327,13 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                   data={dropdownData}
                 />
               )}
-              {/* <div className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2" onClick={() => toggleDropdown("fundersOpen")} id="fundingbyBtn">
-                <span>{funderName != "" ? (<span className="inline-flex items-center"> Funding by <span className="w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{funderName}</span></span>) : "Funding by"}</span>
-                {dropDownStates.fundersOpen? <IoIosArrowUp className="text-[#000]"/> : <IoIosArrowDown className="text-[#000]" /> }
-                </div>
-                {dropDownStates.fundersOpen && (
-                    <FundingByDropdownMenu
-                      ref={funderDropdownRef}
-                      selectedFunders={selectedFunders}
-                      setSelectedFunders={setSelectedFunders}
-                      setFunderName={setFunderName}
-                      data={dropdownData}
-                    />
-                  )} */}
               <div
                 className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
                 onClick={() => toggleDropdown("beneficiaryOpen")}
                 id="beneficiaryBtn"
               >
                 <span>
-                  {beneficiaries.length > 0 ? (
+                  {beneficiaries && beneficiaries.length > 0 ? (
                     <span className="inline-flex items-center">
                       Beneficiaries
                       <span className="w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">
@@ -378,7 +365,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                 id="sponsorBtn"
               >
                 <span>
-                  {sponseredBy.length > 0 ? (
+                  {sponseredBy[1] && sponseredBy[1].length > 0 ? (
                     <span className="inline-flex items-center">
                       Sponsored by
                       <span className="w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">
