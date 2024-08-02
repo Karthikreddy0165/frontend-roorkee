@@ -219,6 +219,18 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   //   );
   // }
 
+  const handleStateTag = (event) => {
+    event.stopPropagation();
+  }
+
+  const handleBeneficiaryTag = (event) => {
+    event.stopPropagation();
+    // var arr = props.selectedBeneficiaries;
+    // if(arr.includes(event.target.innerText)) return;
+    // arr.push(event.target.innerText);
+    // props.setSelectedBeneficiaries(arr);
+    // props.setTest1((prev) => prev + 1);
+  }
   return (
     <>
       {/* We have found {378} schemes based on your profile */}
