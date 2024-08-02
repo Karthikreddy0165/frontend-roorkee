@@ -11,8 +11,11 @@ import PageContext from "@/Context/PageContext";
 import { useContext } from "react";
 import FilterContext from "@/Context/FilterContext";
 import { useTabContext } from "@/Context/TabContext";
-export default function Categories({ffff, dataFromApi}) {
-  const { activeTab, setActiveTab} = useTabContext(); // Accessing context
+
+import { Paginator } from "primereact/paginator";
+
+export default function Categories({ ffff, dataFromApi, totalPages }) {
+  const { activeTab, setActiveTab } = useTabContext(); // Accessing context
   const [selectedScheme, setSelectedScheme] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBookmarked, setBookmarks] = useState({});
@@ -22,29 +25,39 @@ export default function Categories({ffff, dataFromApi}) {
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [isUnSaveToastVisible, setIsUnSaveToastVisible] = useState(false);
   const { currentPage, setCurrentPage } = useContext(PageContext);
-  const {states,setStates,beneficiaries, setBeneficiaries, statesFromApi, setStatesFromApi } = useContext(FilterContext);
-  
-// Close the toast after a certain time
-useEffect(() => {
-  if (isToastVisible) {
-    const timer = setTimeout(() => {
-      setIsToastVisible(false);
-    }, 3000); // Adjust time as needed
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(10);
+  const [sidePannelSelected, setSidePannelSelected] = useState(null);
+  const {
+    states,
+    setStates,
+    beneficiaries,
+    setBeneficiaries,
+    statesFromApi,
+    setStatesFromApi,
+  } = useContext(FilterContext);
 
-    return () => clearTimeout(timer);
-  }
-}, [isToastVisible]);
+  // Close the toast after a certain time
+  useEffect(() => {
+    if (isToastVisible) {
+      const timer = setTimeout(() => {
+        setIsToastVisible(false);
+      }, 3000); // Adjust time as needed
 
-// close the unsavetoast after a certain time
-useEffect(()=>{
-  if(isUnSaveToastVisible){
-    const timer = setTimeout(() => {
-      setIsUnSaveToastVisible(false);
-    }, 3000);
-    return () => clearTimeout(timer);
-  }
-}), [isUnSaveToastVisible]
+      return () => clearTimeout(timer);
+    }
+  }, [isToastVisible]);
 
+  // close the unsavetoast after a certain time
+  useEffect(() => {
+    if (isUnSaveToastVisible) {
+      const timer = setTimeout(() => {
+        setIsUnSaveToastVisible(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }),
+    [isUnSaveToastVisible];
 
   // Fetch saved schemes so that we can mark saved schemes as bookmarked
   useEffect(() => {
@@ -86,6 +99,7 @@ useEffect(()=>{
     if (scheme) {
       setSelectedScheme(scheme); // Set the selected scheme
       setIsModalOpen(true); // Open the modal
+      setSidePannelSelected(scheme_id);
     }
   };
 
@@ -94,20 +108,23 @@ useEffect(()=>{
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${authState.token}`);
     myHeaders.append("Content-Type", "application/json");
-  
+
     const raw = JSON.stringify({
       scheme_id: scheme_id,
     });
-  
+
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
       body: raw,
       redirect: "follow",
     };
-  
+
     try {
-      const response = await fetch(`http://65.0.103.91:80/api/save_scheme/`, requestOptions);
+      const response = await fetch(
+        `http://65.0.103.91:80/api/save_scheme/`,
+        requestOptions
+      );
       if (response.ok) {
         const result = await response.json();
         // console.log(result);
@@ -121,7 +138,6 @@ useEffect(()=>{
       return false;
     }
   };
-  
 
   // Unsave scheme
   const unsaveScheme = async (scheme_id) => {
@@ -179,21 +195,12 @@ useEffect(()=>{
         // setIsToastVisible(true); // Show the toast
         setBookmarks((prevState) => ({
           ...prevState,
-          [itemId]: !prevState[itemId], // Toggle the bookmark status for itemId
+          [itemId]: !prevState[itemId],
         }));
-        
       }
     } else {
-      setIsSavedModalOpen(true); // Show saved modal if user is not logged in
+      setIsSavedModalOpen(true);
     }
-  };
-
-  const handlePageChangeForward = () => {
-    setCurrentPage((prev) => prev + 1);
-  };
-
-  const handlePageChangeBackward = () => {
-    setCurrentPage((prev) => (prev > 1 ? prev - 1 : 1));
   };
 
   if (Object.keys(dataFromApi).length == 0) {
@@ -203,7 +210,8 @@ useEffect(()=>{
       </div>
     );
   }
-  // if (dataFromApi.results.length == 0) {
+
+  // if (Object.keys(dataFromApi).length == 0 && (states.length == 0 || beneficiaries.length == 0)) {
   //   return (
   //     <div className="flex flex-col items-center justify-center gap-[8px] mt-[120px]">
   //       <p className="text-button-text text-[14px] text-button-blue">Sorry no result is found based on your preference.</p>
@@ -211,41 +219,27 @@ useEffect(()=>{
   //   );
   // }
 
-  const handleStateTag = (item) => {
-  //   const singleState = statesFromApi.filter((stateData)=>stateData.state_name == item);
-
-  //   if(states.length != 0 && !states[0][0].includes(singleState[0][id])){
-  //     console.log("not present")
-  //   }
-  }
-
-  // const handleBeneficiaryTag = (event) => {
-  //   event.stopPropagation();
-  //   var arr = props.selectedBeneficiaries;
-  //   if(arr.includes(event.target.innerText)) return;
-  //   arr.push(event.target.innerText);
-  //   props.setSelectedBeneficiaries(arr);
-  //   props.setTest1((prev) => prev + 1);
-  // }
-
   return (
     <>
-    {/* We have found {378} schemes based on your profile */}
-    <div>
-      {(activeTab != "Saved" ? dataFromApi.results : dataFromApi).map((item) => (
-        
-        <div
-          className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
-          key={item.id}
-        >
-          
-          <div onClick={() => handleClick(item.id)}>
-            {/* <button
+      {/* We have found {378} schemes based on your profile */}
+      <div>
+        {(activeTab != "Saved" ? dataFromApi.results : dataFromApi).map(
+          (item) => (
+            <div
+              className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px] "
+              key={item.id}
+            style={{
+              backgroundColor : item.id == sidePannelSelected ? "#DDD6FE" : "",
+            }}
+            >
+              <div onClick={() => handleClick(item.id)} >
+                {/* <button
               className="text-center text-[12px] px-[8px] py-[6px] rounded-[4px] gap-[10px]"
               style={{ color: "#151280", backgroundColor: "#EEEEFF" }}
             >
               New update
             </button> */}
+
             <div className="gap-[12px] pt-[16px] pd-[16px]">
               <p
                 className="font-inter text-[18px] leading-[21.6px] cursor-pointer font-bold mb-[10px] line-clamp-2 w-8/12"
@@ -271,96 +265,99 @@ useEffect(()=>{
                 <button className="flex items-center justify-center pr-[12px] pl-[12px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium py-2 hover:border-onclick-btnblue hover:text-onclick-btnblue" onClick = {(event) => handleStateTag(event)}>
                   {item.department.state}
                 </button>
-                {item.beneficiaries.length > 0 &&
-                  item.beneficiaries[0].beneficiary_type !== "N/A" && (
-                    <button className="flex items-center justify-center pr-[12px] pl-[12px] py-[5px] border  border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium pl-8px hover:border-onclick-btnblue hover:text-onclick-btnblue" onClick = {(event) => handleBeneficiaryTag(event)}>
-                      {item.beneficiaries[0].beneficiary_type}
-                    </button>
+                
+                    {item.beneficiaries.length > 0 &&
+                      item.beneficiaries[0].beneficiary_type !== "N/A" && (
+                        <button
+                          className="flex items-center justify-center pr-[12px] pl-[12px] py-[5px] border  border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium pl-8px hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                          onClick={(event) => handleBeneficiaryTag(event)}
+                        >
+                          {item.beneficiaries[0].beneficiary_type}
+                        </button>
+                      )}
+                  </div>
+
+                  {item.valid_upto && (
+                    <p
+                      className="font-inter text-[12px] text-apply-date leading-[24px] mt-4"
+                      role="button"
+                      tabIndex="0"
+                    >
+                      Last date to apply:{" "}
+                      <span className="font-bold">
+                        {item.valid_upto.split("T")[0]}
+                      </span>
+                    </p>
                   )}
+                </div>
               </div>
-              
-              {item.valid_upto &&(
-              <p
-                className="font-inter text-[12px] text-apply-date leading-[24px] mt-4"
-                role="button"
-                tabIndex="0"
+              <div
+                className="cursor-pointer px-2 py-2 right-[8.25px]"
+                onClick={(e) => toggleBookmark(e, item.id)}
               >
-                Last date to apply:{" "}
-                <span className="font-bold">
-                  {item.valid_upto.split("T")[0]}
-                </span>
-              </p>
-              )}
+                {isBookmarked[item.id] ? (
+                  <GoBookmarkFill className="w-[27.5px] h-[27.5px]" />
+                ) : (
+                  <CiBookmark className="w-[27.5px] h-[27.5px]" />
+                )}
+              </div>
             </div>
-          </div>
-          <div
-            className="cursor-pointer px-2 py-2 right-[8.25px]"
-            onClick={(e) => toggleBookmark(e, item.id)}
-          >
-            {isBookmarked[item.id] ? (
-              <GoBookmarkFill className="w-[27.5px] h-[27.5px]" />
-            ) : (
-              <CiBookmark className="w-[27.5px] h-[27.5px]" />
-            )}
-          </div>
-        </div>
-      ))}
+          )
+        )}
 
+        {/* for pagination */}
+        {totalPages !== 0 && (
+          <Paginator
+            first={first}
+            rows={rows}
+            totalRecords={totalPages * rows}
+            onPageChange={(e) => {
+              setFirst(e.first);
+              setCurrentPage(e.page + 1);
+            }}
+            template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+            className="custom-paginator gap-8
+      [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
+      [&_.p-paginator-page.p-highlight]:text-white 
+      [&_.p-paginator-page]:transition-colors 
+      [&_.p-paginator-page]:duration-200
+      [&_.p-paginator-page]:mx-1 
+      [&_.p-paginator-page]:px-3 
+      [&_.p-paginator-page]:py-1 
+      [&_.p-paginator-page]:rounded-full mt-20 mb-20"
+          />
+        )}
+        {isToastVisible && (
+          <Toast
+            message={toastMessage}
+            onClose={() => setIsToastVisible(false)}
+          />
+        )}
 
-{/* <ReactPaginate
-  previousLabel={
-    <span className=" py-1 px-3 "><FaAngleLeft /></span>
-  }
-  nextLabel={
-    <span className="py-1 px-3 "><FaAngleRight /></span>
-  }
-  breakLabel={"..."}
-  breakClassName={"break-me"}
-  pageCount={pageCount}
-  marginPagesDisplayed={2}
-  pageRangeDisplayed={5}
-  onPageChange={handlePageChange}
-  containerClassName={"flex justify-center items-center space-x-[20px]"}
-  activeClassName={"flex justify-center items-center w-8  rounded-full bg-[#3431BB] text-white shadow-md pr-[2px] pl-[2px] pt-[4px] pb-[4px]"}
-  pageClassName={"flex items-center"}
-  pageLinkClassName={""}
-/> */}
-{/* for pagination */}
-<div className="mt-[20px] flex justify-center items-center">
-          <button
-            onClick={handlePageChangeBackward}
-            disabled={currentPage === 1} // Disable when on the first page
-            className="mr-2"
-          >
-            <FaAngleLeft />
-          </button>
-          <span>{currentPage}</span>
-          <button onClick={handlePageChangeForward} className="ml-2">
-            <FaAngleRight />
-          </button>
-        </div>
-{isToastVisible && (
-        <Toast message={toastMessage} onClose={() => setIsToastVisible(false)} />
-      )}
+        {isUnSaveToastVisible && (
+          <UnSaveToast
+            message={toastMessage}
+            onClose={() => setIsUnSaveToastVisible(false)}
+          />
+        )}
 
-    {isUnSaveToastVisible && (
-        <UnSaveToast message={toastMessage} onClose={() => setIsUnSaveToastVisible(false)} />
-    )}
-
-      {isModalOpen && selectedScheme && (
-        <ApplyModal
-          isOpen={isModalOpen}
-          onRequestClose={() => setIsModalOpen(false)}
-          scheme={selectedScheme}
-        />
-      )}
-      {isSavedModalOpen && (
-        <SavedModal
-          isOpen={isSavedModalOpen}
-          onRequestClose={() => setIsSavedModalOpen(false)}
-        />
-      )}
-    </div>
+        {isModalOpen && selectedScheme && (
+          <ApplyModal
+            isOpen={isModalOpen}
+            onRequestClose={() => {
+              setIsModalOpen(false)
+              setSidePannelSelected(null)
+            }}
+            scheme={selectedScheme}
+          />
+        )}
+        {isSavedModalOpen && (
+          <SavedModal
+            isOpen={isSavedModalOpen}
+            onRequestClose={() => setIsSavedModalOpen(false)}
+          />
+        )}
+      </div>
     </>
   );
 }
