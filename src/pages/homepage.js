@@ -12,9 +12,11 @@ import Image from "next/image";
 
 import NavBar from "@/components/NavBar";
 import { useTabContext } from "@/Context/TabContext";
+import { useEffect, useState } from "react";
 const HomePage = () => {
   const router = useRouter();
   const { activeTab, setActiveTab } = useTabContext();
+
 
   const handleClickGetStarted =() =>{
     router.push("/HeroPage")
@@ -34,6 +36,7 @@ const HomePage = () => {
     setActiveTab('Scholarships')
     router.push("/HeroPage?tab=Scholarships");
   };
+
 
   return (
     <>
@@ -234,6 +237,11 @@ const HomePage = () => {
           {/* fifth row */}
           <div className="flex flex-col items-center w-full p-8 bg-gradient-to-b from-white to-[#FDFBF6] mt-8">
             Made by
+            <div className=" mt-7 flex justify-between w-full mb-0">
+              <div className="w-20 h-20 rounded-full bg-[#EEF] flex items-center justify-center text-onclick-btnblue hover:bg-onclick-btnblue hover:text-white">NST</div>
+              <div className="w-20 h-20 rounded-full bg-[#EEF] flex items-center justify-center text-onclick-btnblue hover:bg-onclick-btnblue hover:text-white">SSF</div>
+              <div className="w-20 h-20 rounded-full bg-[#EEF] flex items-center justify-center text-onclick-btnblue hover:bg-onclick-btnblue hover:text-white">IITR</div>
+            </div>
           </div>
         </div>
       </div>

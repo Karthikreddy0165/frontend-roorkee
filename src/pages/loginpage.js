@@ -1,12 +1,13 @@
 import { Formik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { FaAngleRight, FaArrowLeftLong } from "react-icons/fa6";
 import { useAuth } from "../Context/AuthContext";
 import loginperson from "../assets/image.png";
+import LoginSucc from "./loginSucc";
 
 
 const LoginPage = () => {
@@ -15,9 +16,8 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
-
-
-
+  const showSucc = useRef(false);
+  
   const handleCreate01Click = () => {
     router.push("/accountCreation");
   };
@@ -63,11 +63,12 @@ const LoginPage = () => {
       if (result.access) {
         const user = { token: result.access, email: values.email };
         localStorage.setItem("token", result.access);
-        login(result.access, user); // Save token and user information to the context
-        router.push("/loginSucc");
+        login(result.access, user);
+        showSucc.current = true;
         setTimeout(() => {
           router.push("/HeroPage");
-        }, 2000);
+          showSucc.current = false;
+        }, 1500);
       } else {
         setErrorMessage("Email or password is invalid");
       }
@@ -78,10 +79,15 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
-
+  if(showSucc.current){
+    return(
+      <LoginSucc/>
+    )
+  }
+  else{
   return (
     
-    <div className="flex h-screen overflow-hidden -mb-6">
+   <div className="flex h-screen overflow-hidden -mb-6">
       <div className="w-1/2 bg-[#FEF6F0] relative flex items-center justify-center">
         <div className="absolute top-0 text-[#000] mt-20 ml-8 mr-8">
           <h1 className="text-purple-400 font-inter italic font-bold text-3xl mb-4 w-[500px]">
@@ -91,6 +97,7 @@ const LoginPage = () => {
             Find all the details about government schemes, scholarships, and job
             openings for all states in one place.
           </p>
+          
 
           {/* bg div images */}
           <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 opacity-5 bg-[#DF8317] ml-[530px] mt-[-150px] z-0"></div>
@@ -292,8 +299,8 @@ const LoginPage = () => {
           )}
         </Formik>
       </div>
-    </div>
-  );
+      </div>
+  );}
 };
 
 export default LoginPage;
