@@ -17,6 +17,7 @@ module.exports = {
         'apply-date': '#D90000',
         'hover-gray': '#F5F5F5',
         'button-text': '#616161',
+        'bg-slider-blue': '#0000FF',
       },
       
       spacing: {
@@ -52,6 +53,7 @@ module.exports = {
        'lg': '0.5rem',
        'full': '9999px',
        'large': '5rem',
+       'custom': '0.75rem',
       },
       
     },

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useAuth } from "../../Context/AuthContext";
+// import '.custom-slide
 
 const ProfileModal = ({ onClose }) => {
   const { authState } = useAuth();
@@ -364,7 +365,7 @@ const ProfileModal = ({ onClose }) => {
               >
                 <option value="">Select occupation</option>
                 <option value="Farmer">Farmer</option>
-                <option value="HouseWife">HouseWife</option>
+                <option value="HouseWife">Housewife</option>
                 <option value="Student">Student</option>
                 <option value="Health">Health</option>
                 <option value="Education">Education</option>
@@ -411,15 +412,16 @@ const ProfileModal = ({ onClose }) => {
         onChange={handleChange}
       />
       <input
-        type="range"
-        name="incomeRange"
-        min="0"
-        max="10"
-        step="1"
-        value={profileData.income}
-        onChange={handleSliderChange}
-        className="w-full mt-2"
-      />
+  type="range"
+  name="incomeRange"
+  min="0"
+  max="10"
+  step="1"
+  value={profileData.income}
+  onChange={handleSliderChange}
+  className="w-full mt-2 custom-slide"
+/>
+
     </div>
           </div>
         </div>

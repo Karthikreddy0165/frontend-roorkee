@@ -24,3 +24,17 @@
     left: -2.5px;
     display: block;
   }
+
+  /* custom.css */
+
+.custom-slide {
+  @apply appearance-none w-full h-2 bg-gray-200 rounded-lg outline-none;
+}
+
+.custom-slide::-webkit-slider-thumb {
+  @apply appearance-none w-4 h-4 bg-[#3431BB] rounded-full cursor-pointer;
+}
+
+.custom-slide::-moz-range-thumb {
+  @apply appearance-none w-4 h-4 bg-[#3431BB] rounded-full cursor-pointer;
+}
