@@ -37,12 +37,10 @@ export default function Tabs(props) {
   };
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 mt-4">
       <SearchInput/>
 
       <SelectedFilters />
-
-      {/* <SelectedFilters selectedState = {props.selectedState} selectedBeneficiaries = {props.selectedBeneficiaries} selectedDepartments = {props.selectedDepartments} selectedSponsors = {props.selectedSponsors} setSelectedState = {props.setSelectedState} setSelectedDepartments = {props.setSelectedDepartments} setSelectedBeneficiaries = {props.setSelectedBeneficiaries} /> */}
 
       <div className="flex justify-center items-center gap-[15px]">
         <button
