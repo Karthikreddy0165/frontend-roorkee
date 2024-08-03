@@ -71,12 +71,12 @@ const HomePage = () => {
               <div className="flex w-[472px] h-[59px] items-start gap-[40px]">
                 <div className="flex flex-col justify-center items-start gap-[8px] flex-1 border-r-[1px] border-[#EDEDED]">
                   <div className="text-center text-[#000] font-inter text-[14px] font-semibold">
-                    Thousand's schemes
+                    Thousands schemes
                   </div>
                 </div>
                 <div className="flex flex-col justify-center items-start gap-[8px] flex-1 border-r-[1px] border-[#EDEDED]">
                   <div className="text-center text-[#000] font-inter text-[14px] font-semibold">
-                    Hundred's job posting
+                    Hundreds job posting
                   </div>
                 </div>
                 <div className="flex flex-col justify-center items-start gap-[8px] flex-1">
