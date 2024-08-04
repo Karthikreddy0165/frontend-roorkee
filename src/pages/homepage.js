@@ -12,6 +12,10 @@ import Image from "next/image";
 
 import NavBar from "@/components/NavBar";
 import { useTabContext } from "@/Context/TabContext";
+import FAQSection from "src/Context/FAQSection.js"; // Import FAQSection
+
+
+
 const HomePage = () => {
   const router = useRouter();
   const { activeTab, setActiveTab } = useTabContext();
@@ -197,7 +201,7 @@ const HomePage = () => {
           </div>
 
           {/* fourth row */}
-          <div className="flex flex-col items-center w-full p-8 bg-gradient-to-b from-white to-[#FDFBF6] mt-8">
+          {/* <div className="flex flex-col items-center w-full p-8 bg-gradient-to-b from-white to-[#FDFBF6] mt-8">
             <div className="self-stretch flex justify-center mt-4">
               <h1 className="text-center text-black font-inter text-[32px] font-semibold leading-[150%]">
                 Frequently Asked Questions
@@ -229,8 +233,10 @@ const HomePage = () => {
               </div>
               <hr />
             </div>
-          </div>
-
+          </div> */}
+          {/* FAQ Section */}
+          <FAQSection />
+         
           {/* fifth row */}
           <div className="flex flex-col items-center w-full p-8 bg-gradient-to-b from-white to-[#FDFBF6] mt-8">
             Made by
