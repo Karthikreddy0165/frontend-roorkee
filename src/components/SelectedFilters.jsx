@@ -15,7 +15,6 @@ function SelectedFilters() {
     setNewDepartment(departments[1] ? departments[1] : []);
   },[sponseredBy, states, departments])
 
-
   return (
     newSponser.length > 0 || newState.length > 0 || newDepartment.length > 0 || beneficiaries.length > 0 ? 
     <>

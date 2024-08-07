@@ -1,4 +1,4 @@
-
+import ScholarshipCount from "./ScholarshipCount";
 import { useEffect, useState, useContext } from "react";
 import Categories from "./Categories";
 import PageContext from "@/Context/PageContext";
@@ -76,6 +76,7 @@ export default function Scholarships() {
 
   return (
     <div className="bg-white font-sans">
+      <ScholarshipCount dataFromApi = {dataOfApi} />
       <Categories ffff={"scholarship"} dataFromApi={dataOfApi} totalPages={totalPages}/>
 
     </div>

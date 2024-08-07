@@ -17,7 +17,7 @@ import FundingByDropdownMenu from "../components/FundingBy";
 import FilterContext from '@/Context/FilterContext';
 
 const HeroPage = () => {
-  const { setStates, setDepartments, setBeneficiaries, setFundingBy, setSponseredBy, sponseredBy} = useContext(FilterContext);
+  const { states, setStates, departments, setDepartments, beneficiaries, setBeneficiaries, setFundingBy, sponseredBy, setSponseredBy} = useContext(FilterContext);
   const [filteredData, setFilteredData] = useState([]);
   const [test, setTest] = useState(0);
   const [test1, setTest1] = useState(0);
@@ -182,7 +182,6 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
     setSelectedSponsors([]);
   }, [data]);
 
-
   const toggleDropdown = (key) => {
       setDropDownStates((prevState) => {
       const newState = { ...prevState, [key]: !prevState[key] };
@@ -293,11 +292,11 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                 id="stateBtn"
               >
                 <span>
-                  {selectedState.length > 0 ? (
+                  {states[1] && states[1].length > 0 ? (
                     <span className="inline-flex items-center">
                       State
                       <span className="w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">
-                        {selectedState.length}
+                        {states[1].length}
                       </span>
                     </span>
                   ) : (
@@ -322,11 +321,11 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                 id="departmentBtn"
               >
                 <span>
-                  {departmentName != "" ? (
+                  {departments[1] && departments[1].length > 0 ? (
                     <span className="inline-flex items-center">
                       Department
                       <span className="w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">
-                        {departmentName}
+                        {departments[1].length}
                       </span>
                     </span>
                   ) : (
@@ -357,11 +356,11 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                 id="beneficiaryBtn"
               >
                 <span>
-                  {selectedBeneficiaries.length > 0 ? (
+                  {beneficiaries && beneficiaries.length > 0 ? (
                     <span className="inline-flex items-center">
                       Beneficiaries
                       <span className="w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">
-                        {selectedBeneficiaries.length}
+                        {beneficiaries.length}
                       </span>
                     </span>
                   ) : (
@@ -384,7 +383,6 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                   data={dropdownData}
                 />
               )}
-             
             </div>
           </div>
           {/* </div> */}
@@ -402,3 +400,5 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
 };
 
 export default HeroPage;
+
+

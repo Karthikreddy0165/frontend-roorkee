@@ -3,6 +3,7 @@ import Categories from "./Categories";
 import PageContext from "@/Context/PageContext";
 import FilterContext from "@/Context/FilterContext";
 import { useTabContext } from "@/Context/TabContext";
+import SchemeCount from "./SchemeCount";
 
 export default function Schemes() {
   const { searchQuery } = useTabContext();
@@ -73,7 +74,7 @@ export default function Schemes() {
 
   return (
     <div className="bg-white font-sans">
-      
+      <SchemeCount dataFromApi={dataOfApi} />
       <Categories ffff={"schemes"} dataFromApi={dataOfApi} totalPages={totalPages}/>
 
     </div>

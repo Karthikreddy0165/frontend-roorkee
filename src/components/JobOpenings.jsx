@@ -1,5 +1,4 @@
-
-
+import JobCount from "./JobCount";
 import { useEffect, useState, useContext } from "react";
 import Categories from "./Categories";
 import PageContext from "@/Context/PageContext";
@@ -78,6 +77,7 @@ export default function JobOpenings() {
 
   return (
     <div className="bg-white font-sans">
+      <JobCount dataFromApi={dataOfApi}/>
       <Categories ffff={"jobopening"} dataFromApi={dataOfApi} totalPages={totalPages}/>
 
     </div>
