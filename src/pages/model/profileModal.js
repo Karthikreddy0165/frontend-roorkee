@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useAuth } from "../../Context/AuthContext";
-// import '.custom-slide
+import { MdVerified } from "react-icons/md";
+import { VscUnverified } from "react-icons/vsc";
 
 const ProfileModal = ({ onClose }) => {
   const { authState } = useAuth();
@@ -22,10 +23,38 @@ const ProfileModal = ({ onClose }) => {
     employment: "",
   });
   const [loading, setLoading] = useState(true);
-  const [email, setEmail] = useState(null)
-
+  const [emailData, setEmailData] = useState(null);
+  const [sentEmailText, setSentEmailText] = useState(false);
+  // const [sentEmailToast, setSentEmailToast] = useState(false);
   const modalRef = useRef(null);
-  console.log(authState, "in profile modal")
+  
+
+  const notify = () => toast('🦄 Wow so easy!')
+
+  const resendEmail = async()=>{
+    setSentEmailText(true);
+
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authState.token}`,
+        },
+        redirect:"follow"
+      }
+      const response = await fetch("http://65.0.103.91:80/api/resend-verification-email/", requestOptions)
+      const data = await response.json()
+      if (response.ok){
+        setSentEmailText(false)
+        notify()
+
+      }
+
+      console.log(data)
+
+    }
+
+
   useEffect(() => {
     const fetchProfileData = async () => {
       if (authState.token) {
@@ -45,22 +74,19 @@ const ProfileModal = ({ onClose }) => {
           );
           const pData = await profileResponse.json();
 
-
-          setProfileData((prev) => {
-            return {
-              name: pData.name || "",
-              age: pData.age || "",
-              gender: pData.gender || "",
-              community: pData.category || "",
-              minority: pData.minority === true ? "Yes" : "No",
-              state: pData.state_of_residence || "",
-              bpl_card_holder: pData.bpl_card_holder || "",
-              education: pData.education || "",
-              disability: pData.disability === true ? "Yes" : "No",
-              occupation: pData.occupation || "",
-              income: pData.income || "",
-              employment :pData.employment || "",
-            };
+          setProfileData({
+            name: pData.name || "",
+            age: pData.age || "",
+            gender: pData.gender || "",
+            community: pData.category || "",
+            minority: pData.minority === true ? "Yes" : "No",
+            state: pData.state_of_residence || "",
+            bpl_card_holder: pData.bpl_card_holder || "",
+            education: pData.education || "",
+            disability: pData.disability === true ? "Yes" : "No",
+            occupation: pData.occupation || "",
+            income: pData.income || "",
+            employment: pData.employment || "",
           });
         } catch (error) {
           console.error("Error fetching profile data:", error);
@@ -124,15 +150,42 @@ const ProfileModal = ({ onClose }) => {
     };
   }, [onClose]);
 
+  useEffect(() => {
+    const fetchEmailData = async () => {
+      if (authState.token) {
+        const requestOptions = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authState.token}`,
+          },
+          redirect: "follow",
+        };
+
+        try {
+          const response = await fetch(
+            "http://65.0.103.91:80/api/user/me/",
+            requestOptions
+          );
+          const data = await response.json();
+          console.log(data, "in sfgfgfgdfgfd")
+          setEmailData(data);
+        } catch (error) {
+          console.error("Error fetching email data:", error);
+        }
+      }
+    };
+
+    fetchEmailData();
+  }, [authState.token]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setProfileData((prevData) => {
-      return {
-        ...prevData,
-        [name]: value,
-      };
-    });
+    setProfileData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSave = async () => {
@@ -160,7 +213,7 @@ const ProfileModal = ({ onClose }) => {
             education: profileData.education,
             occupation: profileData.occupation,
             income: profileData.income,
-            employment :profileData.income,
+            employment: profileData.employment,
           }),
         });
 
@@ -170,6 +223,7 @@ const ProfileModal = ({ onClose }) => {
       }
     }
   };
+
   const handleSliderChange = (e) => {
     const { value } = e.target;
     setProfileData((prevData) => ({
@@ -178,9 +232,10 @@ const ProfileModal = ({ onClose }) => {
     }));
   };
 
-  console.log("authstate in profile", authState)
+  console.log("authstate in profile", authState);
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      
       <div
         ref={modalRef}
         className="bg-white rounded-lg w-[560px] h-[750px] p-6 flex flex-col items-start flex-shrink-0 relative"
@@ -205,52 +260,78 @@ const ProfileModal = ({ onClose }) => {
             <hr className="w-full" />
 
             {/* Second Div */}
-        <div className="space-y-4 mt-4 w-full">
-          <div>
-            <label className="block mb-2 text-[12px] font-semibold text-black">
-              Full Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
-              placeholder="Enter your name"
-              value={profileData.name}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="flex gap-4 w-full">
-            <div className="flex-1">
-              <label className="block mb-2 text-[12px] font-semibold text-black">
-                Age
-              </label>
-              <input
-                type="number"
-                name="age"
-                className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
-                placeholder="Enter your age"
-                value={profileData.age}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="flex-1">
-              <label className="block mb-2 text-[12px] font-semibold text-black">
-                Gender
-              </label>
-              <select
-                name="gender"
-                className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
-                value={profileData.gender}
-                onChange={handleChange}
-              >
-                <option value="">Select gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-          </div>
+            <div
+              id="scroll-container"
+              className="space-y-4 mt-4 w-full overflow-y-auto"
+            >
+              <div>
+                <label className="block mb-2 text-[12px] font-semibold text-black">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                  placeholder="Enter your name"
+                  value={profileData.name}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="relative">
+                <label className="block mb-2 text-[12px] font-semibold text-black">
+                  Email
+                </label>
+                <div className="relative flex items-center space-x-2 w-full">
+                  <div className="relative flex-grow">
+                    <input
+                      type="text"
+                      className="w-full h-[44px] border border-gray-300 p-2 pl-10 rounded-lg bg-gray-100 text-[12px] font-semibold text-black cursor-none"
+                      value={emailData?.email || ""}
+                      onChange={handleChange}
+                      readOnly
+                    />
+                    {emailData?.is_email_verified ? (
+                      <MdVerified className="absolute top-3 left-3 text-green-500" />
+                    ) : (
+                      <VscUnverified className="absolute top-3 left-3 text-red-500" />
+                    )}
+                  </div>
+                  <button className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431BB] text-white hover:bg-blue-700 text-sm" onClick={resendEmail}>
+                    {sentEmailText ? "sending..." : "resend email"}
+                  </button>
+                </div>
+              </div>
+              <div className="flex gap-4 w-full ">
+                <div className="flex-1">
+                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                    Age
+                  </label>
+                  <input
+                    type="number"
+                    name="age"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    placeholder="Enter your age"
+                    value={profileData.age}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="flex-1">
+                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                    Gender
+                  </label>
+                  <select
+                    name="gender"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    value={profileData.gender}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
 
               <div className="flex gap-4 w-full">
                 <div className="flex-1">
@@ -420,10 +501,10 @@ const ProfileModal = ({ onClose }) => {
                     </option>
                   </select>
                 </div>
-                
+
                 <div className="flex-1">
                   <label className="block mb-2 text-[12px] font-semibold text-black">
-                  Employment
+                    Employment
                   </label>
                   <select
                     name="community"
@@ -439,28 +520,28 @@ const ProfileModal = ({ onClose }) => {
                 </div>
               </div>
               <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
-                    Annual Income (in lakhs)
-                  </label>
-                  <input
-                    type="text"
-                    name="income"
-                    className="w-full h-[44px] border border-gray-300 p-2 rounded-lg bg-gray-100 text-[12px] font-semibold text-black"
-                    placeholder="Enter your income"
-                    value={profileData.income}
-                    onChange={handleChange}
-                  />
-                  <input
-                    type="range"
-                    name="incomeRange"
-                    min="0"
-                    max="20"
-                    step="1"
-                    value={profileData.income}
-                    onChange={handleSliderChange}
-                    className="w-full mt-2 custom-slide"
-                  />
-                </div>
+                <label className="block mb-2 text-[12px] font-semibold text-black">
+                  Annual Income (in lakhs)
+                </label>
+                <input
+                  type="text"
+                  name="income"
+                  className="w-full h-[44px] border border-gray-300 p-2 rounded-lg bg-gray-100 text-[12px] font-semibold text-black"
+                  placeholder="Enter your income"
+                  value={profileData.income}
+                  onChange={handleChange}
+                />
+                <input
+                  type="range"
+                  name="incomeRange"
+                  min="0"
+                  max="20"
+                  step="1"
+                  value={profileData.income}
+                  onChange={handleSliderChange}
+                  className="w-full mt-2 custom-slide"
+                />
+              </div>
             </div>
 
             <hr className="w-full mt-4 mb-2" />
@@ -479,8 +560,6 @@ const ProfileModal = ({ onClose }) => {
                 Save
               </button>
             </div>
-
-
           </>
         )}
       </div>
