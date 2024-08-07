@@ -17,7 +17,6 @@ export default function JobOpenings() {
   const [dataOfApi, setDataOfApi] = useState({});
   const [totalPages, setTotalPages] = useState(0);
 
-  console.log(states[1],"states")
   useEffect(() => {
     const fetchState = async () => {
       try {
