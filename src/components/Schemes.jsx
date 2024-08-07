@@ -33,7 +33,7 @@ export default function Schemes() {
             beneficiary_keywords: beneficiaries,
             search_query: searchQuery,
             // tag: "scholarship",
-
+            // ordering: "-title",
           });
 
           const requestOptions = {
@@ -60,6 +60,7 @@ export default function Schemes() {
     fetchState();
   }, [searchQuery, currentPage, sponseredBy, states, departments, beneficiaries]);
 
+
 // console.log(dataOfApi,'shemesdata' );
   if (dataOfApi.count==0 && (states.length != 0 || departments.length != 0)) {
     return (
@@ -68,6 +69,7 @@ export default function Schemes() {
       </div>
     );
   }
+
 
   return (
     <div className="bg-white font-sans">

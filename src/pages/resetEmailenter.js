@@ -55,7 +55,8 @@ const EnterResPass = () => {
                     </div>
 
                     <div className="text-center mt-4 max-w-lg w-auto">
-                        <h1>Please enter a valid email to reset your password</h1>
+                        <h1>Please enter your registered email address to
+                        receive the password reset link.</h1>
                     </div>
 
                     <div className="mt-8 w-full flex flex-col gap-4">

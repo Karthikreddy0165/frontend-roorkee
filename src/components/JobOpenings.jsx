@@ -39,6 +39,7 @@ export default function JobOpenings() {
             beneficiary_keywords: beneficiaries,
             search_query: searchQuery,
             tag: "job",
+            // ordering: "-title",
 
           });
 

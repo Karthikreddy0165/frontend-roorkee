@@ -17,7 +17,7 @@ import FundingByDropdownMenu from "../components/FundingBy";
 import FilterContext from '@/Context/FilterContext';
 
 const HeroPage = () => {
-  const { setStates, setDepartments, setBeneficiaries, setFundingBy, setSponseredBy} = useContext(FilterContext);
+  const { setStates, setDepartments, setBeneficiaries, setFundingBy, setSponseredBy, sponseredBy} = useContext(FilterContext);
   const [filteredData, setFilteredData] = useState([]);
   const [test, setTest] = useState(0);
   const [test1, setTest1] = useState(0);
@@ -28,7 +28,7 @@ const HeroPage = () => {
   const [departmentName, setDepartmentName] = useState("");
   const [beneficiaryName, setBeneficiaryName] = useState("");
   const [funderName, setFunderName] = useState("");
-  const [sponsorName, setSponsorName] = useState("");
+  const [levelName, setLevelName] = useState("");
 
   const [selectedState, setSelectedState] = useState([]);
   const [selectedDepartments, setSelectedDepartments] = useState([]);
@@ -42,10 +42,7 @@ const HeroPage = () => {
   const dropdownRef = useRef();
   const departmentDropdownRef = useRef();
   const beneficiaryDropdownRef = useRef();
-  const ageDropdownRef = useRef();
-  const incomeDropdownRef = useRef();
-  const funderDropdownRef = useRef();
-  const sponsorDropdownRef = useRef();
+
 
   const [dropDownStates, setDropDownStates] = useState({
     dropDownOpen: false,
@@ -54,8 +51,10 @@ const HeroPage = () => {
     ageOpen: false,
     incomeOpen: false,
     fundersOpen: false,
-    sponsorsOpen: false,
+    LevelOpen: false,
   });
+
+  console.log(sponseredBy.length,"sponseredBy.length")
 const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fbanners%2FScheme_details_page_banner_TvdKXuh.png&w=3840&q=75"
   useEffect(() => {
     if(data){
@@ -177,12 +176,9 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
     setDepartmentName('');
     setBeneficiaryName('');
     setFunderName('');
-    setSponsorName('');
+    setLevelName('');
     setSelectedDepartments([]);
     setSelectedBeneficiaries([]);
-    setSelectedAges([]);
-    setSelectedIncomes([]);
-    setSelectedFunders([]);
     setSelectedSponsors([]);
   }, [data]);
 
@@ -249,7 +245,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
         <div className="flex -ml-4">
           <div className="flex-1 max-w-[25%] p-4 mr-2">
             <div className="flex justify-between items-center -mt-16 ">
-              <h1 className="m-0 font-semibold">Filter by</h1>
+              <h1 className="m-0 font-semibold">Filters</h1>
               <button
                 className="text-[#3431BB] font-semibold p-2 hover:bg-[#EEEEFF] hover:rounded-lg m-0"
                 onClick={clearAllFilters}
@@ -261,9 +257,37 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
             <hr />
   
             {/* filter categories */}
+            
             <div className="mt-2 -ml-1">
               {/* Each filter category */}
               <div
+                className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
+                onClick={() => toggleDropdown("LevelOpen")}
+                id="LevelBtn"
+              >
+                <span>
+                  {levelName != "" ? (
+                    <span className="inline-flex items-center">
+                      Sponsored By
+                      <span className="w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">
+                        {levelName}
+                      </span>
+                    </span>
+                  ) : (
+                    "Sponsored By"
+                  )}
+                </span>
+                {dropDownStates.LevelOpen ? (
+                  <IoIosArrowUp className="text-black" />
+                ) : (
+                  <IoIosArrowDown className="text-black" />
+                )}
+              </div>
+              {dropDownStates.LevelOpen && (
+                <SponsorsDropdownMenu/>
+              )}
+
+              {/* <div
                 className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
                 onClick={() => toggleDropdown("dropDownOpen")}
                 id="stateBtn"
@@ -288,14 +312,10 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                 )}
               </div>
               {dropDownStates.dropDownOpen && (
-                <DropdownMenu
-                  ref={dropdownRef}
-                  selectedState={selectedState}
-                  setStateName={setStateName}
-                  setSelectedState={setSelectedState}
-                  data={data}
-                />
-              )}
+                <DropdownMenu />
+              )} */}
+
+              {sponseredBy.length !=0 &&(
               <div
                 className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
                 onClick={() => toggleDropdown("departmentOpen")}
@@ -319,6 +339,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                   <IoIosArrowDown className="text-[#000]" />
                 )}
               </div>
+              )}
               {dropDownStates.departmentOpen && (
                 <DepartmentDropdownMenu
                   ref={departmentDropdownRef}
@@ -328,19 +349,8 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                   data={dropdownData}
                 />
               )}
-              {/* <div className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2" onClick={() => toggleDropdown("fundersOpen")} id="fundingbyBtn">
-                <span>{funderName != "" ? (<span className="inline-flex items-center"> Funding by <span className="w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{funderName}</span></span>) : "Funding by"}</span>
-                {dropDownStates.fundersOpen? <IoIosArrowUp className="text-[#000]"/> : <IoIosArrowDown className="text-[#000]" /> }
-                </div>
-                {dropDownStates.fundersOpen && (
-                    <FundingByDropdownMenu
-                      ref={funderDropdownRef}
-                      selectedFunders={selectedFunders}
-                      setSelectedFunders={setSelectedFunders}
-                      setFunderName={setFunderName}
-                      data={dropdownData}
-                    />
-                  )} */}
+          
+          {sponseredBy.length !=0 &&(
               <div
                 className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
                 onClick={() => toggleDropdown("beneficiaryOpen")}
@@ -364,6 +374,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                   <IoIosArrowDown className="text-[#000]" />
                 )}
               </div>
+          )}
               {dropDownStates.beneficiaryOpen && (
                 <BeneficiaryDropdownMenu
                   ref={beneficiaryDropdownRef}
@@ -373,38 +384,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                   data={dropdownData}
                 />
               )}
-              <div
-                className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
-                onClick={() => toggleDropdown("sponsorsOpen")}
-                id="sponsorBtn"
-              >
-                <span>
-                  {sponsorName != "" ? (
-                    <span className="inline-flex items-center">
-                      Sponsored by
-                      <span className="w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">
-                        {sponsorName}
-                      </span>
-                    </span>
-                  ) : (
-                    "Sponsored by"
-                  )}
-                </span>
-                {dropDownStates.sponsorsOpen ? (
-                  <IoIosArrowUp className="text-black" />
-                ) : (
-                  <IoIosArrowDown className="text-black" />
-                )}
-              </div>
-              {dropDownStates.sponsorsOpen && (
-                <SponsorsDropdownMenu
-                  ref={sponsorDropdownRef}
-                  selectedSponsors={selectedSponsors}
-                  setSponsorName={setSponsorName}
-                  setSelectedSponsors={setSelectedSponsors}
-                  data={dropdownData}
-                />
-              )}
+             
             </div>
           </div>
           {/* </div> */}

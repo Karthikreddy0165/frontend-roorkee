@@ -13,6 +13,7 @@ const NavBar = () => {
   const handleGotoLoginpage = () => {
     router.push("/loginpage");
   };
+  
   const handleClickLogo = () => {
     router.push("/homepage")
   }
@@ -65,7 +66,7 @@ const NavBar = () => {
                     </li> */}
                     <li>
                       <button
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left hover:rounded-lg"
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left hover:rounded-t-lg "
                         onClick={() => handleOptionClick("MyProfile")}
                       >
                         My Profile
@@ -74,7 +75,7 @@ const NavBar = () => {
                     <hr />
                     <li>
                       <button
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200 hover:rounded-lg w-full text-left"
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200 hover:rounded-b-lg w-full text-left "
                         onClick={() => handleOptionClick("Logout")}
                       >
                         Log Out
