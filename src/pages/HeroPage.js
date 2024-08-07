@@ -15,6 +15,7 @@ import SponsorsDropdownMenu from "@/components/SponsorDropdown";
 
 import FundingByDropdownMenu from "../components/FundingBy";
 import FilterContext from '@/Context/FilterContext';
+import VerifiedStatus from "@/components/isVerfiedComponent";
 
 const HeroPage = () => {
   const { states, setStates, departments, setDepartments, beneficiaries, setBeneficiaries, setFundingBy, sponseredBy, setSponseredBy} = useContext(FilterContext);
@@ -213,6 +214,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
   return (
     <>
       <NavBarWithoutLogin />
+      <VerifiedStatus/>
       {/* <BackButton /> */}
       <div className="relative w-[80vw] mx-auto mb-8 flex justify-center items-center max-w-[80%]">
         <div className="h-60 w-full relative brightness-70 mb-4">

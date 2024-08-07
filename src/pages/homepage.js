@@ -13,6 +13,7 @@ import Image from "next/image";
 import NavBar from "@/components/NavBar";
 import { useTabContext } from "@/Context/TabContext";
 import { useEffect, useState } from "react";
+import VerifiedStatus from "@/components/isVerfiedComponent";
 const HomePage = () => {
   const router = useRouter();
   const { activeTab, setActiveTab } = useTabContext();
@@ -41,6 +42,8 @@ const HomePage = () => {
   return (
     <>
       <NavBar />
+      <VerifiedStatus/>
+      
       <div
         className="flex flex-col items-center justify-center min-h-screen bg-white text-black"
         style={{ maxWidth: "80%", margin: "0 auto" }}

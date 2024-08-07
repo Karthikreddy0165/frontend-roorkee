@@ -21,9 +21,10 @@ const ProfileModal = ({ onClose }) => {
     income: "",
   });
   const [loading, setLoading] = useState(true);
+  const [email, setEmail] = useState(null)
 
   const modalRef = useRef(null);
-
+  console.log(authState, "in profile modal")
   useEffect(() => {
     const fetchProfileData = async () => {
       if (authState.token) {
@@ -42,7 +43,7 @@ const ProfileModal = ({ onClose }) => {
             requestOptions
           );
           const pData = await profileResponse.json();
-          // console.log(pData);
+
 
           setProfileData((prev)=>{return{
             name: pData.name || "",
@@ -128,7 +129,6 @@ const ProfileModal = ({ onClose }) => {
 
   
   const handleSave = async () => {
-    // console.log(profileData);
     if (authState.token) {
       const requestOptions = {
         method: "PUT",
@@ -172,6 +172,8 @@ const ProfileModal = ({ onClose }) => {
       income: value,
     }));
   };
+
+  console.log("authstate in profile", authState)
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div
@@ -212,7 +214,19 @@ const ProfileModal = ({ onClose }) => {
               onChange={handleChange}
             />
           </div>
-
+          {/*  */}
+          <label className="block mb-2 text-[12px] font-semibold text-black">
+              Email
+            </label>
+            <input
+              type="text"
+              name="name"
+              className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+              // placeholder="Enter your name"
+              value={email}
+              // onChange={handleChange}
+            />
+          {/*  */}
           <div className="flex gap-4 w-full">
             <div className="flex-1">
               <label className="block mb-2 text-[12px] font-semibold text-black">
