@@ -221,7 +221,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
   const handleStateTag = (event) => {
     event.stopPropagation();
-    console.log()
   }
 
   const handleBeneficiaryTag = (event) => {
