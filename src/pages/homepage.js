@@ -18,6 +18,9 @@ const HomePage = () => {
   const { activeTab, setActiveTab } = useTabContext();
 
 
+
+  
+
   const handleClickGetStarted =() =>{
     router.push("/HeroPage")
   }
@@ -65,18 +68,18 @@ const HomePage = () => {
                 jobs, and scholarships based on eligibility.
               </p>
               <button className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#3431BB] text-white mb-[12px] mt-[12px] hover:bg-blue-700"
-              onClick={handleSchemesClick}>
+              onClick={handleClickGetStarted}>
                 Get Started
               </button>
               <div className="flex w-[472px] h-[59px] items-start gap-[40px]">
                 <div className="flex flex-col justify-center items-start gap-[8px] flex-1 border-r-[1px] border-[#EDEDED]">
                   <div className="text-center text-[#000] font-inter text-[14px] font-semibold">
-                    Thousand's schemes
+                    Thousands schemes
                   </div>
                 </div>
                 <div className="flex flex-col justify-center items-start gap-[8px] flex-1 border-r-[1px] border-[#EDEDED]">
                   <div className="text-center text-[#000] font-inter text-[14px] font-semibold">
-                    Hundred's job posting
+                    Hundreds job posting
                   </div>
                 </div>
                 <div className="flex flex-col justify-center items-start gap-[8px] flex-1">

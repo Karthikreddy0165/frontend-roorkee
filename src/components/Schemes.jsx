@@ -17,16 +17,13 @@ export default function Schemes() {
   const [dataOfApi, setDataOfApi] = useState({});
   const [totalPages, setTotalPages] = useState(0);
 
+  // console.log(states[1],"states")
   useEffect(() => {
     const fetchState = async () => {
       try {
         setDataOfApi({});
         let url = `http://65.0.103.91:80/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
-        // const cachedData = localStorage.getItem(url);
-        
-        // if (cachedData) {
-        //   setDataOfApi(JSON.parse(cachedData));
-        // } else { 
+
         const myHeaders = new Headers();
           myHeaders.append("Content-Type", "application/json");
 
@@ -37,7 +34,7 @@ export default function Schemes() {
             beneficiary_keywords: beneficiaries,
             search_query: searchQuery,
             // tag: "scholarship",
-
+            // ordering: "-title",
           });
 
           const requestOptions = {
@@ -63,6 +60,17 @@ export default function Schemes() {
 
     fetchState();
   }, [searchQuery, currentPage, sponseredBy, states, departments, beneficiaries]);
+
+
+// console.log(dataOfApi,'shemesdata' );
+  if (dataOfApi.count==0 && (states.length != 0 || departments.length != 0)) {
+    return (
+      <div className="flex justify-center items-center mt-8">
+        No data found on your preference.
+      </div>
+    );
+  }
+
 
   return (
     <div className="bg-white font-sans">

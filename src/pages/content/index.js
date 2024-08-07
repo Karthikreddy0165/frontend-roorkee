@@ -152,7 +152,7 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
                   )}
                   {matchedScheme && matchedScheme.description &&<hr />}
 
-                  {matchedCriteria && (
+                  {matchedCriteria.description && (
                     <div className="flex items-start pb-2 pt-2">
                       <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
                         Criteria
@@ -160,7 +160,7 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
                       <p className="ml-2 flex-1">{matchedCriteria.description}</p>
                     </div>
                   )}
-                  {matchedCriteria && <hr />}
+                  {matchedCriteria.description && <hr />}
 
                   {matchedScheme &&
                     matchedScheme.beneficiaries[0] &&

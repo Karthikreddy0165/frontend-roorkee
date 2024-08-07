@@ -231,21 +231,25 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     // props.setSelectedBeneficiaries(arr);
     // props.setTest1((prev) => prev + 1);
   }
+console.log(dataFromApi.results,"resultes")
+
+  // const totalSchemes = (activeTab != "Saved" ? dataFromApi.results: dataFromApi)
+
   return (
     <>
-      {/* We have found {378} schemes based on your profile */}
-      <div>
-        {(activeTab != "Saved" ? dataFromApi.results : dataFromApi).map(
-          (item) => (
-            <div
-              className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px] "
-              key={item.id}
-            style={{
-              backgroundColor : item.id == sidePannelSelected ? "#DDD6FE" : "",
-            }}
-            >
-              <div onClick={() => handleClick(item.id)} >
-                {/* <button
+  {/* We have found {378} schemes based on your profile */}
+  <div>
+    {(activeTab != "Saved" ? dataFromApi.results : dataFromApi).map((item) => (
+      item.title && (
+        <div
+          className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
+          key={item.id}
+          style={{
+            backgroundColor: item.id == sidePannelSelected ? "#DDD6FE" : "",
+          }}
+        >
+          <div onClick={() => handleClick(item.id)}>
+            {/* <button
               className="text-center text-[12px] px-[8px] py-[6px] rounded-[4px] gap-[10px]"
               style={{ color: "#151280", backgroundColor: "#EEEEFF" }}
             >
@@ -255,7 +259,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
             <div className="gap-[12px] pt-[16px] pd-[16px]">
               <p
                 className="font-inter text-[18px] leading-[21.6px] cursor-pointer font-bold mb-[10px] line-clamp-2 w-8/12"
-              
                 role="button"
                 tabIndex="0"
               >
@@ -274,102 +277,104 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                 {item.department.department_name}
               </p>
               <div className="flex gap-5 mb-[16px]">
-                <button className="flex items-center justify-center pr-[12px] pl-[12px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium py-2 hover:border-onclick-btnblue hover:text-onclick-btnblue" onClick = {(event) => handleStateTag(event)}>
+                <button className="flex items-center justify-center pr-[12px] pl-[12px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium py-2 hover:border-onclick-btnblue hover:text-onclick-btnblue" onClick={(event) => handleStateTag(event)}>
                   {item.department.state}
                 </button>
-                
-                    {item.beneficiaries.length > 0 &&
-                      item.beneficiaries[0].beneficiary_type !== "N/A" && (
-                        <button
-                          className="flex items-center justify-center pr-[12px] pl-[12px] py-[5px] border  border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium pl-8px hover:border-onclick-btnblue hover:text-onclick-btnblue"
-                          onClick={(event) => handleBeneficiaryTag(event)}
-                        >
-                          {item.beneficiaries[0].beneficiary_type}
-                        </button>
-                      )}
-                  </div>
 
-                  {item.valid_upto && (
-                    <p
-                      className="font-inter text-[12px] text-apply-date leading-[24px] mt-4"
-                      role="button"
-                      tabIndex="0"
+                {item.beneficiaries.length > 0 &&
+                  item.beneficiaries[0].beneficiary_type !== "N/A" && (
+                    <button
+                      className="flex items-center justify-center pr-[12px] pl-[12px] py-[5px] border  border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium pl-8px hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                      onClick={(event) => handleBeneficiaryTag(event)}
                     >
-                      Last date to apply:{" "}
-                      <span className="font-bold">
-                        {item.valid_upto.split("T")[0]}
-                      </span>
-                    </p>
+                      {item.beneficiaries[0].beneficiary_type}
+                    </button>
                   )}
-                </div>
               </div>
-              <div
-                className="cursor-pointer px-2 py-2 right-[8.25px]"
-                onClick={(e) => toggleBookmark(e, item.id)}
-              >
-                {isBookmarked[item.id] ? (
-                  <GoBookmarkFill className="w-[27.5px] h-[27.5px] text-[#3431BB]" />
-                ) : (
-                  <CiBookmark className="w-[27.5px] h-[27.5px]" />
-                )}
-              </div>
+
+              {item.valid_upto && (
+                <p
+                  className="font-inter text-[12px] text-apply-date leading-[24px] mt-4"
+                  role="button"
+                  tabIndex="0"
+                >
+                  Last date to apply:{" "}
+                  <span className="font-bold">
+                    {item.valid_upto.split("T")[0]}
+                  </span>
+                </p>
+              )}
             </div>
-          )
-        )}
+          </div>
 
-        {/* for pagination */}
-        {totalPages !== 0 && (
-          <Paginator
-            first={first}
-            rows={rows}
-            totalRecords={totalPages * rows}
-            onPageChange={(e) => {
-              setFirst(e.first);
-              setCurrentPage(e.page + 1);
-            }}
-            template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
-            className="custom-paginator gap-8
-      [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
-      [&_.p-paginator-page.p-highlight]:text-white 
-      [&_.p-paginator-page]:transition-colors 
-      [&_.p-paginator-page]:duration-200
-      [&_.p-paginator-page]:mx-1 
-      [&_.p-paginator-page]:px-3 
-      [&_.p-paginator-page]:py-1 
-      [&_.p-paginator-page]:rounded-full mt-20 mb-20"
-          />
-        )}
-        {isToastVisible && (
-          <Toast
-            message={toastMessage}
-            onClose={() => setIsToastVisible(false)}
-          />
-        )}
+          <div
+            className="cursor-pointer px-2 py-2 right-[8.25px]"
+            onClick={(e) => toggleBookmark(e, item.id)}
+          >
+            {isBookmarked[item.id] ? (
+              <GoBookmarkFill className="w-[27.5px] h-[27.5px] text-[#3431BB]" />
+            ) : (
+              <CiBookmark className="w-[27.5px] h-[27.5px]" />
+            )}
+          </div>
+        </div>
+      )
+    ))}
 
-        {isUnSaveToastVisible && (
-          <UnSaveToast
-            message={toastMessage}
-            onClose={() => setIsUnSaveToastVisible(false)}
-          />
-        )}
+    {/* for pagination */}
+    {totalPages !== 0 && (
+      <Paginator
+        first={first}
+        rows={rows}
+        totalRecords={totalPages * rows}
+        onPageChange={(e) => {
+          setFirst(e.first);
+          setCurrentPage(e.page + 1);
+        }}
+        template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+        className="custom-paginator gap-8
+          [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
+          [&_.p-paginator-page.p-highlight]:text-white 
+          [&_.p-paginator-page]:transition-colors 
+          [&_.p-paginator-page]:duration-200
+          [&_.p-paginator-page]:mx-1 
+          [&_.p-paginator-page]:px-3 
+          [&_.p-paginator-page]:py-1 
+          [&_.p-paginator-page]:rounded-full mt-20 mb-20"
+      />
+    )}
+    {isToastVisible && (
+      <Toast
+        message={toastMessage}
+        onClose={() => setIsToastVisible(false)}
+      />
+    )}
 
-        {isModalOpen && selectedScheme && (
-          <ApplyModal
-            isOpen={isModalOpen}
-            onRequestClose={() => {
-              setIsModalOpen(false)
-              setSidePannelSelected(null)
-            }}
-            scheme={selectedScheme}
-          />
-        )}
-        {isSavedModalOpen && (
-          <SavedModal
-            isOpen={isSavedModalOpen}
-            onRequestClose={() => setIsSavedModalOpen(false)}
-          />
-        )}
-      </div>
-    </>
+    {isUnSaveToastVisible && (
+      <UnSaveToast
+        message={toastMessage}
+        onClose={() => setIsUnSaveToastVisible(false)}
+      />
+    )}
+
+    {isModalOpen && selectedScheme && (
+      <ApplyModal
+        isOpen={isModalOpen}
+        onRequestClose={() => {
+          setIsModalOpen(false)
+          setSidePannelSelected(null)
+        }}
+        scheme={selectedScheme}
+      />
+    )}
+    {isSavedModalOpen && (
+      <SavedModal
+        isOpen={isSavedModalOpen}
+        onRequestClose={() => setIsSavedModalOpen(false)}
+      />
+    )}
+  </div>
+</>
+
   );
 }
