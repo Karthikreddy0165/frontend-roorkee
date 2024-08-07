@@ -124,10 +124,13 @@ export const AuthProvider = ({ children }) => {
 
     return () => clearInterval(intervalId); // Clean up the interval on component unmount
   }, []);
+  
 
+  const [resetPasswordToken, setResetPasswordToken] = useState("");
+  const [UID,setUID] = useState("");
   // Provide authState, login, logout, and makeRequest functions to the context
   return (
-    <AuthContext.Provider value={{ authState, login, logout, makeRequest }}>
+    <AuthContext.Provider value={{ authState, login, logout, makeRequest, resetPasswordToken, setResetPasswordToken, UID,setUID}}>
       {children}
     </AuthContext.Provider>
   );

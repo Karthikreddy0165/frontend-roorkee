@@ -14,6 +14,7 @@ export default function Schemes() {
     sponseredBy,
   } = useContext(FilterContext);
   const { currentPage } = useContext(PageContext);
+
   const [dataOfApi, setDataOfApi] = useState({});
   const [totalPages, setTotalPages] = useState(0);
 
