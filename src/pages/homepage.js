@@ -75,12 +75,12 @@ const HomePage = () => {
               <div className="flex w-[472px] h-[59px] items-start gap-[40px]">
                 <div className="flex flex-col justify-center items-start gap-[8px] flex-1 border-r-[1px] border-[#EDEDED]">
                   <div className="text-center text-[#000] font-inter text-[14px] font-semibold">
-                    Thousands schemes
+                    Thousands of schemes
                   </div>
                 </div>
                 <div className="flex flex-col justify-center items-start gap-[8px] flex-1 border-r-[1px] border-[#EDEDED]">
                   <div className="text-center text-[#000] font-inter text-[14px] font-semibold">
-                    Hundreds job posting
+                    Hundred+ job posting
                   </div>
                 </div>
                 <div className="flex flex-col justify-center items-start gap-[8px] flex-1">
@@ -134,7 +134,7 @@ const HomePage = () => {
                     <HiOutlineClipboardDocumentList className="h-[31.5px] w-[31.5px]" />
                   </div>
                   <div className="text-[#424242] w-[8rem] font-inter text-base font-normal leading-normal">
-                    Tell us a little about yourself.
+                  Tell Us About Yourself
                   </div>
                 </div>
               </div>
@@ -176,10 +176,12 @@ const HomePage = () => {
               justifyContent: "center",
               flexDirection: "column",
             }}
-          >
-            <h1 className=" font-semibold relative left-[27.45vw] w-[15.09vw] text-[2.2vw]">
-              Discover right{" "}
+          ><div className="flex justify-center">
+            <h1 className="font-semibold relative text-[2.2vw]">
+            Discover Opportunities Below{" "}
             </h1>
+          </div>
+            
             <div
               className=" mt-[3vmax] flex text-[#3431BB] "
               style={{
@@ -202,41 +204,6 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-
-          {/* fourth row */}
-          {/* <div className="flex flex-col items-center w-full p-8 bg-gradient-to-b from-white to-[#FDFBF6] mt-8">
-            <div className="self-stretch flex justify-center mt-4">
-              <h1 className="text-center text-black font-inter text-[32px] font-semibold leading-[150%]">
-                Frequently Asked Questions
-              </h1>
-            </div>
-
-            <div className=" items-start self-stretch">
-              <div className="flex p-4 justify-between items-center self-stretch">
-                <p>What is product name?</p>
-                <span>+</span>
-              </div>
-              <hr />
-
-              <div className="flex p-4 justify-between items-center self-stretch">
-                <p>How will this help me?</p>
-                <span>+</span>
-              </div>
-              <hr />
-
-              <div className="flex p-4 justify-between items-center self-stretch">
-                <p>Can I get all information regarding Govt and State? </p>
-                <span>+</span>
-              </div>
-              <hr />
-
-              <div className="flex p-4 justify-between items-center self-stretch">
-                <p>How can I apply to all schemes, jobs and scholarships?</p>
-                <span>+</span>
-              </div>
-              <hr />
-            </div>
-          </div> */}
           {/* FAQ Section */}
           <FAQSection />
          
