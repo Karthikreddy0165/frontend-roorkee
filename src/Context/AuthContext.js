@@ -1,41 +1,33 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 
-// Create context for authentication
 const AuthContext = createContext();
 
-// Custom hook to use authentication context
 export const useAuth = () => useContext(AuthContext);
 
-// Authentication provider component
 export const AuthProvider = ({ children }) => {
-  // Initial authentication state
   const [authState, setAuthState] = useState({
     token: null,
     refreshToken: null,
     user: null,
   });
 
-  // Function to handle user login
   const login = (token, refreshToken, user) => {
     setAuthState({ token, refreshToken, user });
-    localStorage.setItem("token", token); // Store login token in localStorage
-    localStorage.setItem("refreshToken", refreshToken); // Store refresh token in localStorage
+    localStorage.setItem("token", token); 
+    localStorage.setItem("refreshToken", refreshToken); 
   };
 
-  // Function to handle user logout
   const logout = () => {
     setAuthState({ token: null, refreshToken: null, user: null });
-    localStorage.removeItem("token"); // Remove login token from localStorage
-    localStorage.removeItem("refreshToken"); // Remove refresh token from localStorage
+    localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
   };
 
-  // Function to refresh login token using refresh token
   const refreshToken = async () => {
     const storedRefreshToken = localStorage.getItem("refreshToken");
     if (!storedRefreshToken) return;
 
     try {
-      // Call your API to refresh the token
       const response = await fetch("/api/refresh-token", {
         method: "POST",
         headers: {
@@ -123,10 +115,12 @@ export const AuthProvider = ({ children }) => {
       checkTokenValidity();
     }
 
+    const noOfDays = 5;
+    
     // Set up interval to refresh token every 5 minutes
     const intervalId = setInterval(() => {
       refreshToken();
-    }, 300000); // 300000 ms = 5 minutes
+    }, noOfDays**24*60*60*1000);
 
     return () => clearInterval(intervalId); // Clean up the interval on component unmount
   }, []);

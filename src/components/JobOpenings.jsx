@@ -1,5 +1,4 @@
-
-
+import JobCount from "./JobCount";
 import { useEffect, useState, useContext } from "react";
 import Categories from "./Categories";
 import PageContext from "@/Context/PageContext";
@@ -18,7 +17,7 @@ export default function JobOpenings() {
   const [dataOfApi, setDataOfApi] = useState({});
   const [totalPages, setTotalPages] = useState(0);
 
-  console.log(states[1],"states")
+  // console.log(states,"states")
   useEffect(() => {
     const fetchState = async () => {
       try {
@@ -39,6 +38,7 @@ export default function JobOpenings() {
             beneficiary_keywords: beneficiaries,
             search_query: searchQuery,
             tag: "job",
+            // ordering: "-title",
 
           });
 
@@ -66,8 +66,18 @@ export default function JobOpenings() {
     fetchState();
   }, [searchQuery, currentPage, sponseredBy, states, departments, beneficiaries]);
 
+  // console.log(dataOfApi,'shemesdata');
+  if (dataOfApi.count==0 && (states.length != 0 || departments.length != 0)) {
+    return (
+      <div className="flex justify-center items-center mt-8">
+        No data found on your preference.
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white font-sans">
+      <JobCount dataFromApi={dataOfApi}/>
       <Categories ffff={"jobopening"} dataFromApi={dataOfApi} totalPages={totalPages}/>
 
     </div>

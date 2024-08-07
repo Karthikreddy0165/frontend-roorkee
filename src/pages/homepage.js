@@ -12,11 +12,15 @@ import Image from "next/image";
 
 import NavBar from "@/components/NavBar";
 import { useTabContext } from "@/Context/TabContext";
+import FAQSection from "src/Context/FAQSection.js"; // Import FAQSection
 import { useEffect, useState } from "react";
 const HomePage = () => {
   const router = useRouter();
   const { activeTab, setActiveTab } = useTabContext();
 
+
+
+  
 
   const handleClickGetStarted =() =>{
     router.push("/HeroPage")
@@ -65,7 +69,7 @@ const HomePage = () => {
                 jobs, and scholarships based on eligibility.
               </p>
               <button className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#3431BB] text-white mb-[12px] mt-[12px] hover:bg-blue-700"
-              onClick={handleSchemesClick}>
+              onClick={handleClickGetStarted}>
                 Get Started
               </button>
               <div className="flex w-[472px] h-[59px] items-start gap-[40px]">
@@ -200,44 +204,9 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-
-          {/* fourth row */}
-          <div className="flex flex-col items-center w-full p-8 bg-gradient-to-b from-white to-[#FDFBF6] mt-8">
-            <div className="self-stretch flex justify-center mt-4">
-              <h1 className="text-center text-black font-inter text-[32px] font-semibold leading-[150%]">
-                Frequently Asked Questions
-              </h1>
-            </div>
-
-            <div className=" items-start self-stretch">
-              <div className="flex p-4 justify-between items-center self-stretch">
-                {/* <p>What is product name?</p> */}
-                <p>What is the product's name?</p>
-                
-                <span>+</span>
-              </div>
-              <hr />
-
-              <div className="flex p-4 justify-between items-center self-stretch">
-                <p>How will this help me?</p>
-                <span>+</span>
-              </div>
-              <hr />
-
-              <div className="flex p-4 justify-between items-center self-stretch">
-                <p>Can I get all information regarding Govt and State? </p>
-                <span>+</span>
-              </div>
-              <hr />
-
-              <div className="flex p-4 justify-between items-center self-stretch">
-                <p>How can I apply to all schemes, jobs and scholarships?</p>
-                <span>+</span>
-              </div>
-              <hr />
-            </div>
-          </div>
-
+          {/* FAQ Section */}
+          <FAQSection />
+         
           {/* fifth row */}
           <div className="flex flex-col items-center w-full p-8 bg-gradient-to-b from-white to-[#FDFBF6] mt-8">
             Made by

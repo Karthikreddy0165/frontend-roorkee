@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import FilterContext from '@/Context/FilterContext';
-const DropdownMenu = () => {
+const StateDropdownMenu = () => {
   const [allStates, setAllStates] = useState([]);
   const { states, setStates,
           statesFromApi
@@ -37,16 +37,16 @@ const DropdownMenu = () => {
     };
   
       return (
-        <div className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0">
+        <div className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap text-[14px] mt-0 ml-4">
           <ul id="scroll-container" className="flex flex-col font-sans list-none pr-2 m-0 gap-0  h-[240px] overflow-y-auto  justify-content-between">
             {uniqueCategories.map((item, index) => (
               <li key={item + index} className="flex items-center justify-between hover:bg-gray-100 p-[8px] cursor-pointer hover:rounded-[8px]" onClick={() => handleItemClick(item)}>
               <div>
-              <p className="leading-5 overflow-hidden overflow-ellipsis line-clamp-2 max-h-10">
+              <p className="leading-5 overflow-hidden overflow-ellipsis line-clamp-2 max-w-[115px] max-h-10 ">
                 {item[1]}
               </p>
               </div>
-              <div className='w-[16.5] h-[16.5]'>
+              <div className='w-[16.5] h-[16.5] '>
               <input type="checkbox" value={item} checked={states.length != 0 ? states[0].includes(item[0]):false} className="ml-10 custom-checkbox pointer-events-none w-full h-full" />
               </div>
             </li>
@@ -57,4 +57,4 @@ const DropdownMenu = () => {
   }
 };
 
-export default DropdownMenu;
+export default StateDropdownMenu;
