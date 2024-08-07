@@ -19,8 +19,13 @@ const LoginPage = () => {
 
 
   const handleCreate01Click = () => {
-    router.push("/accountCreation");
+    router.push("/accountCreation",);
   };
+
+  const handleClickForgetPass = () => {
+    router.push('/resetEmailenter');
+}
+
 
   useEffect (() =>{
     const token = localStorage.getItem("token");
@@ -235,14 +240,15 @@ const LoginPage = () => {
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </div>
               </div>
-              {/* <div className="text-sm flex flex-column mb-[20px]">
+
+              <div className="text-sm flex flex-column mb-[20px]">
                 <a
-                  className="text-[#3431BB] hover:text-blue-700 ml-auto"
-                  href="#"
+                  className="text-[#3431BB] hover:text-blue-700 ml-auto hover:cursor-pointer"
+                  onClick={handleClickForgetPass}
                 >
                   Forgot password?
                 </a>
-              </div> */}
+              </div>
 
               {errorMessage && (
                 <div className="mb-4 -mt-4">
