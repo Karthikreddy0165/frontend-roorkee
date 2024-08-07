@@ -1,22 +1,19 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import SearchInput from "./SearchInput";
-import Schemes from "./Schemes"; // Adjust path as per your project structure
-import JobOpenings from "./JobOpenings"; // Adjust path as per your project structure
-import Scholarships from "./Scholarships"; // Adjust path as per your project structure
+import Schemes from "./Schemes"; 
+import JobOpenings from "./JobOpenings";
+import Scholarships from "./Scholarships"; 
 import Saved from "./savedForLoginuser";
 import { useTabContext } from "@/Context/TabContext";
+import SelectedFilters from "./SelectedFilters";
+import { FcAlphabeticalSortingZa } from "react-icons/fc";
+import { FcAlphabeticalSortingAz } from "react-icons/fc";
 
-export default function Tabs() {
+
+export default function Tabs(props) {
   const router = useRouter();
-  const { tab } = router.query;
-  const { activeTab, setActiveTab} = useTabContext(); // Accessing context
-
-  // useEffect(() => {
-  //   if (tab) {
-  //     setTab(tab);
-  //   }
-  // }, [tab, setTab]);
+  const { activeTab, setActiveTab } = useTabContext();
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -25,7 +22,6 @@ export default function Tabs() {
       query: { tab },
     });
   };
-
 
   const getButtonClass = (tabName) => {
     return `flex-grow text-center font-sm p-[12px] rounded-t-[8px] text-semibold text-[14px] cursor-pointer font-sans ${
@@ -36,8 +32,15 @@ export default function Tabs() {
   };
 
   return (
-    <div className="mb-4">
-      <SearchInput/>
+    <div className=" -mt-12 ">
+      <SearchInput />
+
+      {/* <div className=" flex items-center gap-8 h-14 px-3 ">
+        <FcAlphabeticalSortingZa className="relative left-[800px]"/>
+        <FcAlphabeticalSortingAz className="relative left-[700px]"/>
+      </div> */}
+
+      <SelectedFilters />
 
       <div className="flex justify-center items-center gap-[15px]">
         <button
@@ -68,8 +71,8 @@ export default function Tabs() {
       <hr />
 
       {/* Render the corresponding component based on activeTab */}
-      {activeTab === "Schemes" && <Schemes/>}
-      {activeTab === "Job Openings" && <JobOpenings/>}
+      {activeTab === "Schemes" && <Schemes />}
+      {activeTab === "Job Openings" && <JobOpenings />}
       {activeTab === "Scholarships" && <Scholarships />}
       {activeTab === "Saved" && <Saved />}
     </div>

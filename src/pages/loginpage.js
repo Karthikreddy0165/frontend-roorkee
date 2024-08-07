@@ -19,8 +19,13 @@ const LoginPage = () => {
 
 
   const handleCreate01Click = () => {
-    router.push("/accountCreation");
+    router.push("/accountCreation",);
   };
+
+  const handleClickForgetPass = () => {
+    router.push('/resetEmailenter');
+}
+
 
   useEffect (() =>{
     const token = localStorage.getItem("token");
@@ -220,7 +225,7 @@ const LoginPage = () => {
                   Password
                 </label>
                 <input
-                  className="shadow appearance-none border rounded rounded-[8px] w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded rounded-[8px] w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline mb-8"
                   id="password"
                   type={showPassword ? "text" : "password"} // Toggle password visibility
                   placeholder="Enter your password"
@@ -229,16 +234,17 @@ const LoginPage = () => {
                   value={formik.values.password}
                 />
                 <div
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 cursor-pointer mt-6"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 cursor-pointer mb-1 "
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </div>
               </div>
-              <div className="text-sm flex flex-column mb-[20px] mt-4">
+
+              <div className="text-sm flex flex-column mb-[20px]">
                 <a
-                  className="text-[#3431BB] hover:text-blue-700 ml-auto"
-                  href="#"
+                  className="text-[#3431BB] hover:text-blue-700 ml-auto hover:cursor-pointer"
+                  onClick={handleClickForgetPass}
                 >
                   Forgot password?
                 </a>

@@ -13,6 +13,7 @@ const NavBar = () => {
   const handleGotoLoginpage = () => {
     router.push("/loginpage");
   };
+  
   const handleClickLogo = () => {
     router.push("/homepage")
   }
@@ -37,15 +38,15 @@ const NavBar = () => {
   };
 
   return (
-    <div className="shadow-[0_1px_20px_0px_rgba(0,0,0,0.05)]">
-      <div style={{ maxWidth: "80%", margin: "0 auto" }} className="flex justify-between items-center py-4 z-10 relative hover:cursor-pointer shadow-[0_1px_20px_0px_rgba(0,0,0,0.05)]">
-        <div className=""
+    <div className="">
+      <div style={{ maxWidth: "100%", margin: "0 auto" }} className="flex justify-between items-center py-4 z-10 relative hover:cursor-pointer shadow-[0_1px_20px_0px_rgba(0,0,0,0.05)]">
+        <div className="ml-36"
         onClick={handleClickLogo}
         >
           Logo
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex gap-4 mr-36">
 
           {authState.token ? (
             <div className="relative">
@@ -65,7 +66,7 @@ const NavBar = () => {
                     </li> */}
                     <li>
                       <button
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left hover:rounded-lg"
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left hover:rounded-t-lg "
                         onClick={() => handleOptionClick("MyProfile")}
                       >
                         My Profile
@@ -74,7 +75,7 @@ const NavBar = () => {
                     <hr />
                     <li>
                       <button
-                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200 hover:rounded-lg w-full text-left"
+                        className="block px-4 py-2 text-gray-800 hover:bg-gray-200 hover:rounded-b-lg w-full text-left "
                         onClick={() => handleOptionClick("Logout")}
                       >
                         Log Out

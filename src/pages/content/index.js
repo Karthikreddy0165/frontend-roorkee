@@ -1,39 +1,45 @@
 import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 
-const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
+const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) => {
   const [departments, setDepartments] = useState([]);
   const [states, setStates] = useState([]);
   const [schemes, setSchemes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [criteria, setCriteria] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [departmentsRes, statesRes, schemesRes] = await Promise.all([
+        const [departmentsRes, statesRes, schemesRes, criteriaRes] = await Promise.all([
           fetch(`http://65.0.103.91:80/api/departments/`),
           fetch(`http://65.0.103.91:80/api/states/`),
           fetch(`http://65.0.103.91:80/api/schemes/`),
+          fetch(`http://65.0.103.91:80/api/criteria/`),
         ]);
 
         if (!departmentsRes.ok)
-          throw new Error(
-            `Error fetching departments: ${departmentsRes.statusText}`
-          );
+          throw new Error(`Error fetching departments: ${departmentsRes.statusText}`);
         if (!statesRes.ok)
           throw new Error(`Error fetching states: ${statesRes.statusText}`);
         if (!schemesRes.ok)
           throw new Error(`Error fetching schemes: ${schemesRes.statusText}`);
+        if (!criteriaRes.ok)
+          throw new Error(`Error fetching criteria: ${criteriaRes.statusText}`);
 
-        const [departmentsData, statesData, schemesData] = await Promise.all([
+        const [departmentsData, statesData, schemesData, criteriaData] = await Promise.all([
           departmentsRes.json(),
           statesRes.json(),
           schemesRes.json(),
-        ]);
+          criteriaRes.json(),
+          ]);
+        //   console.log(schemesRes,'schemeiaasldglas')
+        // console.log(criteriaRes,'criteriaasldglas')
 
         setDepartments(departmentsData);
         setStates(statesData);
         setSchemes(schemesData);
+        setCriteria(criteriaData);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -44,6 +50,9 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
     fetchData();
   }, []);
 
+  // console.log(schemes,'schemeesdgtsx')
+  // console.log(schemes,'critereiaesdgtsx')
+  
   if (!isOpen) return null;
 
   const matchedScheme = schemes.find((s) => s.id === scheme.id);
@@ -53,9 +62,15 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
   const matchedState = matchedScheme
     ? states.find((s) => s.state_name === matchedScheme.department.state)
     : null;
+  // console.log(scheme.id,'schemeid')
+  // console.log(criteria.id,"criteraid")
+  const matchedCriteria = matchedScheme
+    ? criteria.find((c) => c.id === scheme.id)
+    : null;
+
 
   return (
-    <div className="fixed inset-0 z-50  flex justify-center items-center pointer-events-none pr-8 pl-8">
+    <div className="fixed inset-0 z-50 flex justify-center items-center pointer-events-none pr-8 pl-8">
       <div className="absolute right-0 w-[40%]">
         <div className="bg-white w-full max-w-[2xl] p-8 mt-8 rounded-lg relative border border-gray-200 shadow-lg shadow-black-400 pointer-events-auto">
           {/* Close button */}
@@ -87,9 +102,7 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
                     matchedScheme.created_at.split(" ")[0] !== "N/A" && (
                       <div>
                         <p className="py-0.5 px-2 text-black text-sm inline-block bg-[#EEF] rounded-[12px] mt-2">
-                          {`Last updated on ${
-                            matchedScheme.created_at.split(" ")[0]
-                          }`}
+                          {`Last updated on ${matchedScheme.created_at.split(" ")[0]}`}
                         </p>
                       </div>
                     )}
@@ -128,6 +141,26 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
                     </div>
                   )}
                   {matchedScheme && <hr />}
+
+                  {matchedScheme && matchedScheme.description &&(
+                    <div className="flex items-start pb-2 pt-2">
+                      <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
+                        Description
+                      </h1>
+                      <p className="ml-2 flex-1">{matchedScheme.description}</p>
+                    </div>
+                  )}
+                  {matchedScheme && matchedScheme.description &&<hr />}
+
+                  {matchedCriteria.description && (
+                    <div className="flex items-start pb-2 pt-2">
+                      <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
+                        Criteria
+                      </h1>
+                      <p className="ml-2 flex-1">{matchedCriteria.description}</p>
+                    </div>
+                  )}
+                  {matchedCriteria.description && <hr />}
 
                   {matchedScheme &&
                     matchedScheme.beneficiaries[0] &&
@@ -171,13 +204,13 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme }) => {
 
                 {/* Apply button */}
                 <div>
-                  <div className="absolute z-50 bottom-8 right-8 w-100 mb-[70px]">
+                  <div className=" z-50 bottom-8 right-8 w-100 mb-[70px]">
                     {matchedScheme && matchedScheme.scheme_link ? (
                       <a
                         href={matchedScheme.scheme_link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="py-3 px-12 bg-blue-600 text-white font-semibold rounded-[10px] transition hover:bg-onclick-btnblue"
+                        className="relative py-3 px-12 bg-blue-600 text-white font-semibold rounded-[10px] transition hover:bg-onclick-btnblue ml-[300px]"
                       >
                         Apply
                       </a>
