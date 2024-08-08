@@ -1,26 +1,25 @@
 import { useAuth } from "@/Context/AuthContext";
-import { useRouter } from "next/router";
-import { useEffect, useState, useContext } from "react";
-import Categories from "../components/Categories";
-import PageContext from "@/Context/PageContext";
 import FilterContext from "@/Context/FilterContext";
+import PageContext from "@/Context/PageContext";
 import { useTabContext } from "@/Context/TabContext";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
+import Categories from "../components/Categories";
 
 export default function Saved() {
   const { searchQuery } = useTabContext();
   const { states, departments, beneficiaries, sponseredBy } = useContext(FilterContext);
-  const { currentPage } = useContext(PageContext);
+  const { currentPage, removeSaved } = useContext(PageContext);
   const { authState } = useAuth();
   const [dataOfApi, setDataOfApi] = useState({});
   const router = useRouter();
   const [totalPages, setTotalPages] = useState(0);
+ 
 
-  const handleLoginPage = () => {
-    router.push("/loginpage");
+  const handlelogin = () => {
+    router.push("/login");
   };
 
-  let idOfStates = states[0];
-  let idOfDepartments = departments[0];
 
 
   // console.log(beneficiaries, "bsjlhgiousdbgiusd")
@@ -74,13 +73,13 @@ export default function Saved() {
     };
 
     fetchState();
-  }, [authState.token, searchQuery, currentPage, sponseredBy, states, departments, beneficiaries]);
+  }, [authState.token, searchQuery, currentPage, sponseredBy, states, departments, beneficiaries, removeSaved]);
 
   if (!authState.token) {
     return (
       <div className="flex justify-center items-center mt-8">
         Please
-        <span className="mx-1 text-[#3431BB] hover:text-blue-600 cursor-pointer" onClick={handleLoginPage}>
+        <span className="mx-1 text-[#3431BB] hover:text-blue-600 cursor-pointer" onClick={handlelogin}>
           log in
         </span>
         to see your saved data.
@@ -91,7 +90,14 @@ export default function Saved() {
   if (dataOfApi.count==0 && (sponseredBy.length != 0)) {
     return (
       <div className="flex justify-center items-center mt-8">
-        No data found on your preference.
+        No saved schemes found based on your preference.
+      </div>
+    );
+  }
+  if (authState.token && dataOfApi.count==0 && (sponseredBy.length == 0)) {
+    return (
+      <div className="flex justify-center items-center mt-8">
+        No Saved Schemes
       </div>
     );
   }

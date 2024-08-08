@@ -1,14 +1,13 @@
-import React from 'react';
-import { FaAngleRight } from "react-icons/fa6";
 import { useRouter } from 'next/router';
+import { FaAngleRight } from "react-icons/fa6";
 
 const SavedModal = ({ isOpen, onRequestClose }) => {
     const router = useRouter();
-    const handleRoutetoLoginPage=()=>{
-        router.push("/loginpage")
+    const handleRoutetologin=()=>{
+        router.push("/login")
     }
     const handleRoutetoCreateacco1=()=>{
-        router.push("/accountCreation")
+        router.push("/signup")
     }
 
     if (!isOpen) return null;
@@ -33,7 +32,7 @@ const SavedModal = ({ isOpen, onRequestClose }) => {
                 <div>
                     <h1 className="text-lg mb-2">To save, please login to your account.</h1>
                     <button className="bg-[#3431BB] text-white px-4 py-2 rounded-lg mb-4 w-full flex justify-center items-center"
-                    onClick={handleRoutetoLoginPage}>
+                    onClick={handleRoutetologin}>
                         Login
                     </button>
                     <p className="text-sm text-center">Don't have an account? 
