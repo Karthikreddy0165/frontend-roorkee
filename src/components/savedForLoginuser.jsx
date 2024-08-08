@@ -19,9 +19,6 @@ export default function Saved() {
     router.push("/loginpage");
   };
 
-  let idOfStates = states[0];
-  let idOfDepartments = departments[0];
-
 
   // console.log(beneficiaries, "bsjlhgiousdbgiusd")
 
@@ -64,10 +61,10 @@ export default function Saved() {
         }
 
         let data = await response.json();
-        console.log(data, "saveddata")
+        // console.log(data, "saveddata")
         setDataOfApi(data);
         setTotalPages(Math.ceil(data.count / 10));
-        console.log("Data fetched and state updated:", data);
+        // console.log("Data fetched and state updated:", data);
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }

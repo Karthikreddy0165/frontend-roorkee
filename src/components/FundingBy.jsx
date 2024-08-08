@@ -37,7 +37,7 @@ const FundingByDropdownMenu = React.forwardRef(({ selectedFunders, setSelectedFu
     };
   
     useEffect(() => {
-      console.log(selectedFunders);
+      // console.log(selectedFunders);
     }, [selectedFunders]);
     useEffect(()=>{
       if(selectedFunders.length == 0){

@@ -25,7 +25,7 @@ const VerifiedStatus = () => {
 
         const response = await fetch('http://65.0.103.91:80/api/user/me/', requestOptions);
         const data = await response.json();
-        console.log("API Response: ", data);
+        // console.log("API Response: ", data);
 
         if (data && !data.is_email_verified) {
           console.log("Email not verified");

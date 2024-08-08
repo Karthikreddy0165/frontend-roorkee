@@ -1,23 +1,17 @@
 import NavBarWithoutLogin from "@/components/NavBar";
-import { useContext } from "react";
-import Image from "next/image";
-import MainPageImage from ".././assets/backgroundimg.png";
-import BackButton from "@/components/BackButton";
-import { IoIosArrowDown } from "react-icons/io";
-import { IoIosArrowUp } from "react-icons/io";
 import Tabs from "@/components/Tabs";
-import { useEffect, useRef, useState } from "react";
-import DropdownMenu from "../components/DropdownMenu";
-import DepartmentDropdownMenu from "../components/DepartmentDropDown";
+import Image from "next/image";
+import { useContext, useEffect, useRef, useState } from "react";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import BeneficiaryDropdownMenu from "../components/BeneficiariesDropdown";
+import DepartmentDropdownMenu from "../components/DepartmentDropDown";
 
 import SponsorsDropdownMenu from "@/components/SponsorDropdown";
 
-import FundingByDropdownMenu from "../components/FundingBy";
 import FilterContext from '@/Context/FilterContext';
 import VerifiedStatus from "@/components/isVerfiedComponent";
 
-const HeroPage = () => {
+const schemesAll = () => {
   const { states, setStates, departments, setDepartments, beneficiaries, setBeneficiaries, setFundingBy, sponseredBy, setSponseredBy} = useContext(FilterContext);
   const [filteredData, setFilteredData] = useState([]);
   const [test, setTest] = useState(0);
@@ -55,7 +49,7 @@ const HeroPage = () => {
     LevelOpen: false,
   });
 
-  console.log(sponseredBy.length,"sponseredBy.length")
+  // console.log(sponseredBy.length,"sponseredBy.length")
 const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fbanners%2FScheme_details_page_banner_TvdKXuh.png&w=3840&q=75"
   useEffect(() => {
     if(data){
@@ -214,14 +208,6 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
       {/* <BackButton /> */}
       <div className="relative w-[80vw] mx-auto mb-8 flex justify-center items-center max-w-[80%]">
         <div className="h-60 w-full relative brightness-70 mb-4">
-          {/* <Image
-            src={MainPageImage}
-            alt="Loading Image..."
-            layout="fill"
-            objectFit="cover"
-            objectPosition="center bottom"
-            className="rounded-[15px]"
-          /> */}
           {bannerImage ? (
             <Image
               src={bannerImage}
@@ -401,6 +387,6 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
   
 };
 
-export default HeroPage;
+export default schemesAll;
 
 

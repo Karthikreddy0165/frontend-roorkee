@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { IoIosArrowDown } from "react-icons/io";
-import { useRouter } from "next/router";
 import { useAuth } from "@/Context/AuthContext";
 import ProfileModal from "@/pages/model/profileModal";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { IoIosArrowDown } from "react-icons/io";
 
 const NavBar = () => {
   const router = useRouter();
@@ -15,7 +15,7 @@ const NavBar = () => {
   };
   
   const handleClickLogo = () => {
-    router.push("/homepage")
+    router.push("/app")
   }
 
   const toggleDropdown = () => {
