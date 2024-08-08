@@ -110,7 +110,7 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
 
                 {/* Main data section */}
                 <div className="mt-8 space-y-4 w-full sm:max-w-3xl p-4">
-                  {matchedDepartment && (
+                  {matchedDepartment.department_name && (
                     <div className="flex items-start pb-2">
                       <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
                         Department
@@ -120,9 +120,10 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
                       </p>
                     </div>
                   )}
-                  {matchedDepartment && <hr />}
-
-                  {matchedState && (
+                
+                  {matchedDepartment.department_name && <hr />}
+                
+                  {matchedState.state_name && (
                     <div className="flex items-start pb-2 pt-2">
                       <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
                         State
@@ -130,9 +131,9 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
                       <p className="ml-2 flex-1">{matchedState.state_name}</p>
                     </div>
                   )}
-                  {matchedState && <hr />}
+                  {matchedState.state_name && <hr />}
 
-                  {matchedScheme && (
+                  {matchedScheme.title && (
                     <div className="flex items-start pb-2 pt-2">
                       <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
                         Title
@@ -140,7 +141,7 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
                       <p className="ml-2 flex-1">{matchedScheme.title}</p>
                     </div>
                   )}
-                  {matchedScheme && <hr />}
+                  {matchedScheme.title && <hr />}
 
                   {matchedScheme && matchedScheme.description &&(
                     <div className="flex items-start pb-2 pt-2">
