@@ -49,12 +49,8 @@ const ProfileModal = ({ onClose }) => {
         notify()
 
       }
-
-      console.log(data)
-
     }
-
-
+    
   useEffect(() => {
     const fetchProfileData = async () => {
       if (authState.token) {
@@ -168,7 +164,7 @@ const ProfileModal = ({ onClose }) => {
             requestOptions
           );
           const data = await response.json();
-          console.log(data, "in sfgfgfgdfgfd")
+          // console.log(data, "in sfgfgfgdfgfd")
           setEmailData(data);
         } catch (error) {
           console.error("Error fetching email data:", error);
@@ -232,7 +228,7 @@ const ProfileModal = ({ onClose }) => {
     }));
   };
 
-  console.log("authstate in profile", authState);
+  // console.log("authstate in profile", authState);
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       

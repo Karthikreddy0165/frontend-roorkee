@@ -208,14 +208,6 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
       {/* <BackButton /> */}
       <div className="relative w-[80vw] mx-auto mb-8 flex justify-center items-center max-w-[80%]">
         <div className="h-60 w-full relative brightness-70 mb-4">
-          {/* <Image
-            src={MainPageImage}
-            alt="Loading Image..."
-            layout="fill"
-            objectFit="cover"
-            objectPosition="center bottom"
-            className="rounded-[15px]"
-          /> */}
           {bannerImage ? (
             <Image
               src={bannerImage}
