@@ -70,7 +70,7 @@ export default function JobOpenings() {
   if (dataOfApi.count==0 && (states.length != 0 || departments.length != 0)) {
     return (
       <div className="flex justify-center items-center mt-8">
-        No data found on your preference.
+        No Job Openings found based on your preference
       </div>
     );
   }

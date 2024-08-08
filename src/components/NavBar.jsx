@@ -10,8 +10,8 @@ const NavBar = () => {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const { authState, logout } = useAuth();
 
-  const handleGotoLoginpage = () => {
-    router.push("/loginpage");
+  const handleGotologin = () => {
+    router.push("/login");
   };
   
   const handleClickLogo = () => {
@@ -28,7 +28,7 @@ const NavBar = () => {
     } else if (option === "Logout") {
       logout(); // Log out the user
       localStorage.removeItem("token"); // Remove the token from localStorage
-      router.push("/loginpage"); // Redirect to login page
+      router.push("/login"); // Redirect to login page
     }
     toggleDropdown();
   };
@@ -89,7 +89,7 @@ const NavBar = () => {
             <div className="">
               <button
                 className="text-white bg-onclick-btnblue px-[24px] py-[7px] rounded-[8px] flex items-center border border-onclick-btnblue text-[14px] font-semibold"
-                onClick={handleGotoLoginpage}
+                onClick={handleGotologin}
               >
                 Login
               </button>

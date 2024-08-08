@@ -11,7 +11,7 @@ import PageContext from "@/Context/PageContext";
 import { useContext } from "react";
 import FilterContext from "@/Context/FilterContext";
 import { useTabContext } from "@/Context/TabContext";
-
+import Router from "next/router";
 import { Paginator } from "primereact/paginator";
 import Saved from "./savedForLoginuser";
 
@@ -25,18 +25,19 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   const [toastMessage, setToastMessage] = useState("");
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [isUnSaveToastVisible, setIsUnSaveToastVisible] = useState(false);
-  const { currentPage, setCurrentPage } = useContext(PageContext);
+  const { currentPage, setCurrentPage, setRemoveSaved } = useContext(PageContext);
   const [first, setFirst] = useState(0);
   const [rows, setRows] = useState(10);
   const [sidePannelSelected, setSidePannelSelected] = useState(null);
-  const {
-    states,
-    setStates,
-    beneficiaries,
-    setBeneficiaries,
-    statesFromApi,
-    setStatesFromApi,
-  } = useContext(FilterContext);
+  // const [removeSaved, setRemoveSaved] = useState(true);
+  // const {
+  //   states,
+  //   setStates,
+  //   beneficiaries,
+  //   setBeneficiaries,
+  //   statesFromApi,
+  //   setStatesFromApi,
+  // } = useContext(FilterContext);
 
   // Close the toast after a certain time
   useEffect(() => {
@@ -171,6 +172,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       if (response.ok) {
         // console.log(result);
         setIsUnSaveToastVisible(true); // Show the toast
+        setRemoveSaved((prev)=>!prev);
         return true;
       } else {
         console.error("Failed to unsave scheme");

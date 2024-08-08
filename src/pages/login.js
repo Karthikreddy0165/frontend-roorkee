@@ -9,7 +9,7 @@ import { useAuth } from "../Context/AuthContext";
 import loginperson from "../assets/image.png";
 
 
-const LoginPage = () => {
+const login = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,11 +19,11 @@ const LoginPage = () => {
 
 
   const handleCreate01Click = () => {
-    router.push("/accountCreation",);
+    router.push("/signup",);
   };
 
   const handleClickForgetPass = () => {
-    router.push('/resetEmailenter');
+    router.push('/reset');
 }
 
 
@@ -302,4 +302,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default login;

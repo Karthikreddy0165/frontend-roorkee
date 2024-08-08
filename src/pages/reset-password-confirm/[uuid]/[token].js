@@ -46,8 +46,8 @@ const ResPass = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      // Redirect to schemes on successful password reset
-      router.push("/loginpage");
+      // Redirect to HeroPage on successful password reset
+      router.push("/login");
     } catch (error) {
       console.error("Failed to fetch data:", error);
     } finally {

@@ -8,9 +8,10 @@ const PageContext = createContext();
 function PageProvider({ children }){
   const [currentPage, setCurrentPage] = useState(1);
   const [showSuccess ,setShowSuccess] = useState(false);
+  const [removeSaved, setRemoveSaved] = useState(true);
 
   return (
-    <PageContext.Provider value={{ currentPage, setCurrentPage, showSuccess, setShowSuccess }}>
+    <PageContext.Provider value={{ currentPage, setCurrentPage, showSuccess, setShowSuccess, removeSaved, setRemoveSaved }}>
       {children}
     </PageContext.Provider>
   );
