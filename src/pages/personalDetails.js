@@ -140,6 +140,8 @@ const CreateAcc02 = () => {
                 />
                 {/* <ErrorMessage name="name" component="div" className="text-red-500 text-xs mt-2" /> */}
               </div>
+              {/*  */}
+              {/*  */}
               <div className="flex mb-4">
                 <div className="w-1/2 mr-4">
                   <label
