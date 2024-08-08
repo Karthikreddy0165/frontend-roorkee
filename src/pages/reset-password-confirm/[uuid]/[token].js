@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import * as Yup from "yup";
 
 const ResPass = () => {
   const [loading, setLoading] = useState(false);
@@ -46,7 +46,7 @@ const ResPass = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      // Redirect to HeroPage on successful password reset
+      // Redirect to schemes on successful password reset
       router.push("/loginpage");
     } catch (error) {
       console.error("Failed to fetch data:", error);

@@ -1,9 +1,9 @@
-import JobCount from "./JobCount";
-import { useEffect, useState, useContext } from "react";
-import Categories from "./Categories";
-import PageContext from "@/Context/PageContext";
 import FilterContext from "@/Context/FilterContext";
+import PageContext from "@/Context/PageContext";
 import { useTabContext } from "@/Context/TabContext";
+import { useContext, useEffect, useState } from "react";
+import Categories from "./Categories";
+import JobCount from "./JobCount";
 
 export default function JobOpenings() {
   const { searchQuery } = useTabContext();

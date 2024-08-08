@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
+import { FaBriefcase, FaGraduationCap } from "react-icons/fa6";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { PiNotepadBold } from "react-icons/pi";
-import { FaBriefcase } from "react-icons/fa6";
-import { FaGraduationCap } from "react-icons/fa6";
 
 import image01 from "../assets/Image01.png";
 import image02 from "../assets/Image02.png";
@@ -10,12 +9,11 @@ import image03 from "../assets/Image03.png";
 
 import Image from "next/image";
 
-import NavBar from "@/components/NavBar";
 import { useTabContext } from "@/Context/TabContext";
-import FAQSection from "src/Context/FAQSection.js"; // Import FAQSection
-import { useEffect, useState } from "react";
+import NavBar from "@/components/NavBar";
 import VerifiedStatus from "@/components/isVerfiedComponent";
-const HomePage = () => {
+import FAQSection from "src/Context/FAQSection.js"; // Import FAQSection
+const App = () => {
   const router = useRouter();
   const { activeTab, setActiveTab } = useTabContext();
 
@@ -24,22 +22,22 @@ const HomePage = () => {
   
 
   const handleClickGetStarted =() =>{
-    router.push("/HeroPage")
+    router.push("/schemes")
   }
 
   const handleSchemesClick = () => {
     setActiveTab('Schemes')
-    router.push("/HeroPage?tab=Schemes");
+    router.push("/schemes?tab=Schemes");
   };
 
   const handleJobsClick = () => {
     setActiveTab('Job Openings')
-    router.push("/HeroPage?tab=Job Openings");
+    router.push("/schemes?tab=Job Openings");
   };
 
   const handleScholarshipsClick = () => {
     setActiveTab('Scholarships')
-    router.push("/HeroPage?tab=Scholarships");
+    router.push("/schemes?tab=Scholarships");
   };
 
 
@@ -228,4 +226,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default App;

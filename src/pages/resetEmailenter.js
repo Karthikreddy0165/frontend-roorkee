@@ -7,13 +7,13 @@ const EnterResPass = () => {
 
     const handleSubmit = async () => {
         setLoading(true);
+        setErrorMessage(null); // Clear any previous errors
+
         try {
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
-            const raw = JSON.stringify({
-                email: email,
-            });
+            const raw = JSON.stringify({ email: email });
 
             const requestOptions = {
                 method: "POST",
@@ -29,20 +29,24 @@ const EnterResPass = () => {
             const result = await response.json();
 
             if (!response.ok) {
-                throw new Error(
-                    result.message || `HTTP error! status: ${response.status}`
-                );
+                if (response.status === 400) {
+                    throw new Error("User with this email does not exist. Enter a valid email");
+                }
+                if (result.email && result.email.includes("User with this email does not exist.")) {
+                    throw new Error("User with this email does not exist.");
+                } else {
+                    throw new Error(result.message || `HTTP error! status: ${response.status}`);
+                }
             }
 
-            console.log("Password reset email sent successfully:", result);
+            // console.log("Password reset email sent successfully:", result);
 
             // Handle success (e.g., show a success message or redirect)
-            setErrorMessage(`Password reset email sent successfully,
-                Please check your email to verify.`
-            );
+            setErrorMessage("Password reset email sent successfully. Please check your email to verify.");
         } catch (error) {
             console.error("Error during password reset:", error);
-            setErrorMessage("Failed to send password reset email. Please try again.");
+            // Display the specific error message
+            setErrorMessage(error.message);
         } finally {
             setLoading(false);
         }
@@ -57,8 +61,7 @@ const EnterResPass = () => {
                     </div>
 
                     <div className="text-center mt-4 max-w-lg w-auto">
-                        <h1>Please enter your registered email address to
-                        receive the password reset link.</h1>
+                        <h1>Please enter your registered email address to receive the password reset link.</h1>
                     </div>
 
                     <div className="mt-8 w-full flex flex-col gap-4">

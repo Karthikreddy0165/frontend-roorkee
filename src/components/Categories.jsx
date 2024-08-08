@@ -13,6 +13,7 @@ import FilterContext from "@/Context/FilterContext";
 import { useTabContext } from "@/Context/TabContext";
 
 import { Paginator } from "primereact/paginator";
+import Saved from "./savedForLoginuser";
 
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const { activeTab, setActiveTab } = useTabContext(); // Accessing context
@@ -95,13 +96,15 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   }, [authState.token]);
 
   const handleClick = (scheme_id) => {
+    // const scheme = (activeTab != "Saved" ? dataFromApi.results: dataFromApi)
     const scheme = dataFromApi.results.find((item) => item.id === scheme_id);
     if (scheme) {
       setSelectedScheme(scheme); // Set the selected scheme
       setIsModalOpen(true); // Open the modal
       setSidePannelSelected(scheme_id);
     }
-  };
+  }
+
 
   // To save scheme
   const saveScheme = async (scheme_id) => {
@@ -157,8 +160,8 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     };
 
     try {
-      console.log("Sending unsave request for scheme_id:", scheme_id);
-      console.log("Request payload:", raw);
+      // console.log("Sending unsave request for scheme_id:", scheme_id);
+      // console.log("Request payload:", raw);
       const response = await fetch(
         `http://65.0.103.91:80/api/unsave_scheme/`,
         requestOptions
@@ -225,13 +228,9 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
   const handleBeneficiaryTag = (event) => {
     event.stopPropagation();
-    // var arr = props.selectedBeneficiaries;
-    // if(arr.includes(event.target.innerText)) return;
-    // arr.push(event.target.innerText);
-    // props.setSelectedBeneficiaries(arr);
-    // props.setTest1((prev) => prev + 1);
   }
-console.log(dataFromApi.results,"resultes")
+// console.log(dataFromApi,"resultes")
+// console.log(totalPages,"totalpage")
 
   // const totalSchemes = (activeTab != "Saved" ? dataFromApi.results: dataFromApi)
 
@@ -239,7 +238,7 @@ console.log(dataFromApi.results,"resultes")
     <>
   {/* We have found {378} schemes based on your profile */}
   <div>
-    {(activeTab != "Saved" ? dataFromApi.results : dataFromApi).map((item) => (
+    {(dataFromApi.results).map((item) => (
       item.title && (
         <div
           className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
@@ -291,7 +290,7 @@ console.log(dataFromApi.results,"resultes")
                     </button>
                   )}
               </div>
-
+{/* 
               {item.valid_upto && (
                 <p
                   className="font-inter text-[12px] text-apply-date leading-[24px] mt-4"
@@ -303,7 +302,7 @@ console.log(dataFromApi.results,"resultes")
                     {item.valid_upto.split("T")[0]}
                   </span>
                 </p>
-              )}
+              )} */}
             </div>
           </div>
 

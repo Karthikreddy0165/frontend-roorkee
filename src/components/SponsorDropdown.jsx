@@ -100,10 +100,6 @@ const SponsorDropdownMenu = () => {
       </ul>
     </div>
   );
-  // }
 };
 
 export default SponsorDropdownMenu;
-
-// [2, 'Central']
-// [1, 'State']

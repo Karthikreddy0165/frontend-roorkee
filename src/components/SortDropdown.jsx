@@ -10,7 +10,7 @@ const DropdownShort = forwardRef((props, ref) => {
           <li key={item} className="flex items-center my-[14px]">
             <button
               className="text-left w-full py-2 px-4 rounded hover:bg-gray-100 focus:outline-none"
-              onClick={() => console.log(`Sorting by ${item}`)} // Replace with actual sorting logic
+              onClick={() => console.log(`Sorting by ${item}`)}
             >
               {item}
             </button>
