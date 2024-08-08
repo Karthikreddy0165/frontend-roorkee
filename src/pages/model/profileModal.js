@@ -25,11 +25,7 @@ const ProfileModal = ({ onClose }) => {
   const [loading, setLoading] = useState(true);
   const [emailData, setEmailData] = useState(null);
   const [sentEmailText, setSentEmailText] = useState(false);
-  // const [sentEmailToast, setSentEmailToast] = useState(false);
   const modalRef = useRef(null);
-  
-
-  const notify = () => toast('🦄 Wow so easy!')
 
   const resendEmail = async()=>{
     setSentEmailText(true);
@@ -46,7 +42,6 @@ const ProfileModal = ({ onClose }) => {
       const data = await response.json()
       if (response.ok){
         setSentEmailText(false)
-        notify()
 
       }
 
