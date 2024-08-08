@@ -21,7 +21,6 @@ const CreateAcc01 = () => {
   const [showPassword, setShowPassword] = useState(false);
   const showSucc = useRef(false);
   const [token, setToken] = useState(null);
-
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email address").required("Email is required"),
     password: Yup.string()
