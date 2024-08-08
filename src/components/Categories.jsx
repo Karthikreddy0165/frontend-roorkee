@@ -160,8 +160,8 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     };
 
     try {
-      console.log("Sending unsave request for scheme_id:", scheme_id);
-      console.log("Request payload:", raw);
+      // console.log("Sending unsave request for scheme_id:", scheme_id);
+      // console.log("Request payload:", raw);
       const response = await fetch(
         `http://65.0.103.91:80/api/unsave_scheme/`,
         requestOptions
@@ -229,8 +229,8 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   const handleBeneficiaryTag = (event) => {
     event.stopPropagation();
   }
-console.log(dataFromApi,"resultes")
-console.log(totalPages,"totalpage")
+// console.log(dataFromApi,"resultes")
+// console.log(totalPages,"totalpage")
 
   // const totalSchemes = (activeTab != "Saved" ? dataFromApi.results: dataFromApi)
 

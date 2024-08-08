@@ -2,14 +2,13 @@ import { useAuth } from "@/Context/AuthContext";
 import { Formik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import * as Yup from "yup";
 import { useFormData } from "../Context/FormContext";
 import loginperson from "../assets/image.png";
-import { useEffect } from "react";
 import AccCreatSucc from "./accCreatedsucc";
 
 const CreateAcc01 = () => {
@@ -31,7 +30,7 @@ const CreateAcc01 = () => {
   useEffect (() =>{
     const token = localStorage.getItem("token");
     if (token){
-      router.push("/homepage");
+      router.push("/app");
     }
   },[])
 
@@ -69,7 +68,7 @@ const CreateAcc01 = () => {
         throw new Error(result.message || `HTTP error! status: ${response.status}`);
       }
 
-      console.log("Login successful. Token received:", result.access);
+      // console.log("Login successful. Token received:", result.access);
 
       if (result.access) {
         const user = { token: result.access, email: values.email };
@@ -79,7 +78,7 @@ const CreateAcc01 = () => {
         showSucc.current = true;
         setTimeout(() => {
           showSucc.current = false;
-          router.push("/HeroPage");
+          router.push("/schemes");
         }, 1500);
       }
     } catch (error) {
@@ -205,12 +204,12 @@ const CreateAcc01 = () => {
             fetch(`http://65.0.103.91:80/api/register/`, requestOptions)
               .then((response) => response.json())
               .then((result) => {
-                console.log("API Response:", result); // Log the entire result object for debugging
+                
                 if (result.user) {
                   setApiErrors({ email: "", password: "" });
                   updateFormData(values);
                   login(result.token, result.user); // Update authState
-                  console.log(`auth token login succ auth token: ${result.token}`); // Log the auth token for debugging
+                  
                   handleAfterLogin(values); // Call handleAfterLogin with the form values
                 } else {
                   console.error(result);

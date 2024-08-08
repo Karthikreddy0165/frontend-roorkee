@@ -1,7 +1,7 @@
-import { CiBookmark } from "react-icons/ci";
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
 import { useTabContext } from "@/Context/TabContext";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { CiBookmark } from "react-icons/ci";
 
 const SaveToast = ({ message, onClose }) => {
   const {activeTab, setActiveTab} = useTabContext();
@@ -10,7 +10,7 @@ const SaveToast = ({ message, onClose }) => {
   const [isClosing, setIsClosing] = useState(false);
 
   const handleViewSavedClick = () => {
-    router.push('/HeroPage?tab=Saved');
+    router.push('/schemes?tab=Saved');
     setActiveTab("Saved");
     handleClose();
   };

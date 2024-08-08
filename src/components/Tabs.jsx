@@ -1,16 +1,14 @@
-import React, { useEffect,useContext } from "react";
 import { useRouter } from "next/router";
+import { useContext } from "react";
 
-import SearchInput from "./SearchInput";
-import Schemes from "./Schemes"; 
-import JobOpenings from "./JobOpenings";
-import Scholarships from "./Scholarships"; 
-import Saved from "./savedForLoginuser";
-import { useTabContext } from "@/Context/TabContext";
-import SelectedFilters from "./SelectedFilters";
-import { FcAlphabeticalSortingZa } from "react-icons/fc";
-import { FcAlphabeticalSortingAz } from "react-icons/fc";
 import PageContext from "@/Context/PageContext";
+import { useTabContext } from "@/Context/TabContext";
+import JobOpenings from "./JobOpenings";
+import Schemes from "./Schemes";
+import Scholarships from "./Scholarships";
+import SearchInput from "./SearchInput";
+import SelectedFilters from "./SelectedFilters";
+import Saved from "./savedForLoginuser";
 
 
 export default function Tabs(props) {
