@@ -25,11 +25,7 @@ const ProfileModal = ({ onClose }) => {
   const [loading, setLoading] = useState(true);
   const [emailData, setEmailData] = useState(null);
   const [sentEmailText, setSentEmailText] = useState(false);
-  // const [sentEmailToast, setSentEmailToast] = useState(false);
   const modalRef = useRef(null);
-  
-
-  const notify = () => toast('🦄 Wow so easy!')
 
   const resendEmail = async()=>{
     setSentEmailText(true);
@@ -46,8 +42,6 @@ const ProfileModal = ({ onClose }) => {
       const data = await response.json()
       if (response.ok){
         setSentEmailText(false)
-        notify()
-
       }
     }
     
@@ -258,7 +252,7 @@ const ProfileModal = ({ onClose }) => {
             {/* Second Div */}
             <div
               id="scroll-container"
-              className="space-y-4 mt-4 w-full overflow-y-auto"
+              className="space-y-4 mt-4 w-full overflow-y-auto pr-4"
             >
               <div>
                 <label className="block mb-2 text-[12px] font-semibold text-black">
@@ -287,14 +281,14 @@ const ProfileModal = ({ onClose }) => {
                       readOnly
                     />
                     {emailData?.is_email_verified ? (
-                      <MdVerified className="absolute top-3 left-3 text-green-500" />
+                      <MdVerified className="absolute top-3.5 left-3 text-green-500" />
                     ) : (
-                      <VscUnverified className="absolute top-3 left-3 text-red-500" />
+                      <VscUnverified className="absolute top-3.5 left-3 text-red-500" />
                     )}
                   </div>
-                  <button className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431BB] text-white hover:bg-blue-700 text-sm" onClick={resendEmail}>
-                    {sentEmailText ? "sending..." : "resend email"}
-                  </button>
+                  {!emailData?.is_email_verified && <button className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431BB] text-white hover:bg-blue-700 text-sm" onClick={resendEmail}>
+                    {sentEmailText ? "Sending..." : "Resend Email"}
+                  </button>}
                 </div>
               </div>
               <div className="flex gap-4 w-full ">

@@ -42,12 +42,12 @@ const App = () => {
 
 
   return (
-    <>
+    <div className="w-full">
       <NavBar />
       <VerifiedStatus/>
       
       <div
-        className="flex flex-col items-center justify-center min-h-screen bg-white text-black"
+        className="flex flex-col items-center justify-center min-h-screen  bg-white text-black"
         style={{ maxWidth: "80%", margin: "0 auto" }}
       >
         {/* Main Container */}
@@ -206,7 +206,10 @@ const App = () => {
             </div>
           </div>
           {/* FAQ Section */}
+          <div className="w-[1125px]">
           <FAQSection />
+          </div>
+          
          
           {/* fifth row */}
           <div className="flex flex-col items-center w-full p-8 bg-gradient-to-b from-white to-[#FDFBF6] mt-8">
@@ -219,7 +222,7 @@ const App = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
