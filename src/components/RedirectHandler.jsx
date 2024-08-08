@@ -1,20 +1,21 @@
-// components/RedirectHandler.js
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useAuth } from "../Context/AuthContext";
+export default function RedirectHandler(){
+    const {setResetPasswordToken, setUID} = useAuth();
+    const router = useRouter();
+    useEffect(() => {
+      if (typeof window !== 'undefined') {
+          const currentURL = window.location.href;
+          const urlArray = currentURL.split('/').filter((i) => i !== '');
+          const token = urlArray[urlArray.length - 1];
+          const uid = urlArray[urlArray.length - 2];
 
-const RedirectHandler = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    const { asPath } = router;
-    const resetPasswordPath = '/reset-password-confirm';
-// console.log(asPath, "aspath")
-    if (asPath.includes('/api/reset-password-confirm/')) {
-      router.replace(resetPasswordPath);
-    }
+          if (currentURL.includes(`reset-password-confirm/${uid}/${token}`)) {
+              setResetPasswordToken(token);
+              setUID(uid);
+              router.push(`/reset-password-confirm`);
+          }
+      }
   }, [router]);
-
-  return null;
-};
-
-export default RedirectHandler;
+}
