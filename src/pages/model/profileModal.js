@@ -287,7 +287,7 @@ const ProfileModal = ({ onClose }) => {
                     )}
                   </div>
                   {!emailData?.is_email_verified && <button className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431BB] text-white hover:bg-blue-700 text-sm" onClick={resendEmail}>
-                    {sentEmailText ? "sending..." : "resend email"}
+                    {sentEmailText ? "Sending..." : "Resend Email"}
                   </button>}
                 </div>
               </div>
