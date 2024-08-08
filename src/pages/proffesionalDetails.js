@@ -28,13 +28,13 @@ const CreateAcc03 = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log("User token:", authState.token);
+    // console.log("User token:", authState.token);
   }, [authState.token]);
 
   const handleSubmit = (values, { setSubmitting }) => {
     setIsLoading(true);
 
-    console.log("Form values:", values); // Add this line to debug form values
+    // console.log("Form values:", values); // Add this line to debug form values
 
     const requestBody = {
 
@@ -58,8 +58,8 @@ const CreateAcc03 = () => {
     fetch(`http://65.0.103.91:80/api/profile/professional/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
-        router.push("/HeroPageLoginsucc");
+        // console.log(result);
+        router.push("/schemesLoginsucc");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -74,7 +74,7 @@ const CreateAcc03 = () => {
     if (authState.token) {
       router.push("/accCreatedsucc");
       setTimeout(() => {
-        router.push("/HeroPageLoginsucc");
+        router.push("/schemesLoginsucc");
       }, 2000);
     } else {
       console.error("User token not available.");

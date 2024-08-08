@@ -18,7 +18,7 @@ export default function Schemes() {
   const [dataOfApi, setDataOfApi] = useState({});
   const [totalPages, setTotalPages] = useState(0);
 
-  console.log("sponsorby",sponseredBy)
+  // console.log("sponsorby",sponseredBy)
 
   useEffect(() => {
     const fetchState = async () => {
@@ -38,7 +38,7 @@ export default function Schemes() {
             search_query: searchQuery,
           });
           
-          console.log("uski len",states.length)
+          // console.log("uski length",states.length)
           const requestOptions = {
             method: "POST",
             headers: myHeaders,

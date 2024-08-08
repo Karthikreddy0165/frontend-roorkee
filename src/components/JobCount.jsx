@@ -3,7 +3,7 @@ import FilterContext from "@/Context/FilterContext";
 
 function JobCount(dataFromApi){
 
-  const {states, setStates, departments, setDepartments, beneficiaries, setBeneficiaries, sponseredBy, setSponseredBy} = useContext(FilterContext);
+  const {states,departments, beneficiaries, sponseredBy} = useContext(FilterContext);
 
 
     if(dataFromApi == {}){

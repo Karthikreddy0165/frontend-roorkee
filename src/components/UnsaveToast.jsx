@@ -1,6 +1,6 @@
-import { CiBookmark } from "react-icons/ci";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { CiBookmark } from "react-icons/ci";
 
 const UnSaveToast = ({ message, onClose }) => {
   const router = useRouter();
@@ -8,7 +8,7 @@ const UnSaveToast = ({ message, onClose }) => {
   const [isClosing, setIsClosing] = useState(false);
 
   const handleViewSavedClick = () => {
-    router.push('/HeroPage?tab=Saved');
+    router.push('/schemes?tab=Saved');
     handleClose();
   };
 

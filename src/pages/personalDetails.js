@@ -25,12 +25,12 @@ const CreateAcc02 = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log("User token:", authState.token);
+    // console.log("User token:", authState.token);
   }, [authState.token]);
 
   const handleSubmit = (values, { setSubmitting }) => {
     setIsLoading(true);
-    console.log("Form values:", values); // Add this line to debug form values
+    // console.log("Form values:", values); // Add this line to debug form values
 
     const requestBody = {
       "name": values.name,
@@ -52,7 +52,7 @@ const CreateAcc02 = () => {
     fetch(`http://65.0.103.91:80/api/profile/personal/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         router.push("/proffesionalDetails");
       })
       .catch((error) => {

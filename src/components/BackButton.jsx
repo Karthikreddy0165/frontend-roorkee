@@ -1,11 +1,11 @@
-import { FaArrowLeftLong } from "react-icons/fa6";
 import { useRouter } from "next/router";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 const BackButton = () => {
   const router = useRouter();
 
   const handleGoBack = () => {
-    router.push('/homepage');
+    router.push('/app');
   };
 
   return (

@@ -30,7 +30,7 @@ const login = () => {
   useEffect (() =>{
     const token = localStorage.getItem("token");
     if (token){
-      router.push("/homepage");
+      router.push("/app");
     }
   },[])
 
@@ -63,7 +63,7 @@ const login = () => {
         );
       }
 
-      console.log("Login successful. Token received:", result.access);
+      // console.log("Login successful. Token received:", result.access);
 
       if (result.access) {
         const user = { token: result.access, email: values.email };
@@ -71,7 +71,7 @@ const login = () => {
         login(result.access, user); // Save token and user information to the context
         router.push("/loginSucc");
         setTimeout(() => {
-          router.push("/HeroPage");
+          router.push("/schemes");
         }, 2000);
       } else {
         setErrorMessage("Email or password is invalid");
