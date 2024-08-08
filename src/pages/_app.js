@@ -5,8 +5,10 @@ import { PrimeReactProvider } from 'primereact/api';
 import { AuthProvider } from "@/Context/AuthContext";
 import { PageProvider } from "@/Context/PageContext";
 import {FilterProvider} from "@/Context/FilterContext";
+import RedirectHandler from "@/components/RedirectHandler";
 
 export default function App({ Component, pageProps }) {
+
   return (
     <FilterProvider>
     <PageProvider>
@@ -14,7 +16,10 @@ export default function App({ Component, pageProps }) {
     <AuthProvider>
       <FormProvider>
         <PrimeReactProvider>
-          <Component {...pageProps} />
+          <>
+            {/* <RedirectHandler/> */}
+            <Component {...pageProps} />
+          </>
         </PrimeReactProvider>
       </FormProvider>
     </AuthProvider>

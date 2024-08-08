@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useContext } from "react";
 import { useRouter } from "next/router";
+
 import SearchInput from "./SearchInput";
 import Schemes from "./Schemes"; 
 import JobOpenings from "./JobOpenings";
@@ -9,14 +10,18 @@ import { useTabContext } from "@/Context/TabContext";
 import SelectedFilters from "./SelectedFilters";
 import { FcAlphabeticalSortingZa } from "react-icons/fc";
 import { FcAlphabeticalSortingAz } from "react-icons/fc";
+import PageContext from "@/Context/PageContext";
 
 
 export default function Tabs(props) {
   const router = useRouter();
   const { activeTab, setActiveTab } = useTabContext();
+  const { currentPage, setCurrentPage } = useContext(PageContext);
 
   const handleTabClick = (tab) => {
+    
     setActiveTab(tab);
+    setCurrentPage(1);
     router.push({
       pathname: router.pathname,
       query: { tab },

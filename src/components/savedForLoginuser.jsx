@@ -47,7 +47,7 @@ export default function Saved() {
         // /api/user/saved_schemes/?state_ids=1,2&department_ids=1,2&q=agriculture"
         // http://65.0.103.91:80/api/schemes/multi-state-departments/?limit=10&page=${currentPage}
         const response = await fetch(
-          `http://65.0.103.91:80/api/user/saved_schemes`,
+          `http://65.0.103.91:80/api/user/saved_schemes/`,
           // `http://65.0.103.91:80/api/user/saved_schemes`,
           
           requestOptions

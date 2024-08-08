@@ -37,7 +37,9 @@ const EnterResPass = () => {
             console.log("Password reset email sent successfully:", result);
 
             // Handle success (e.g., show a success message or redirect)
-            setErrorMessage("Password reset email sent successfully.");
+            setErrorMessage(`Password reset email sent successfully,
+                Please check your email to verify.`
+            );
         } catch (error) {
             console.error("Error during password reset:", error);
             setErrorMessage("Failed to send password reset email. Please try again.");
