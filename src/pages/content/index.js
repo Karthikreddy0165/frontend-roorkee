@@ -7,12 +7,9 @@ const ApplyModal = ({
   scheme,
   setSidePannelSelected,
 }) => {
-  const [departments, setDepartments] = useState([]);
-  const [states, setStates] = useState([]);
-  const [schemes, setSchemes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [criteria, setCriteria] = useState([]);
-  // console.log(scheme,"hallaaaa machao")
+  console.log(scheme, "hallaaaa machao");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,15 +35,11 @@ const ApplyModal = ({
 
   // console.log(criteria, "citeria")
 
+  // const matchedCriteria = criteria;
+
   const matchedCriteria = scheme
     ? criteria.find((c) => c.id === scheme.id)
     : null;
-  // console.log(matchedCriteria.description.length, "matchesdlhfgisduhngs");
-
-  // const jsonData = matchedCriteria.description.replace(/'/g, '"');
-  // const parsedData = JSON.parse(jsonData);
-  // console.log(parsedData[0].community.join(", "), "parseddata")
-  // console.log(parsedData[0].income_limit.urban, "parsedurbanincome")
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center pointer-events-none pr-8 pl-8">
@@ -134,23 +127,35 @@ const ApplyModal = ({
                   )}
                   {scheme.description && <hr />}
 
-                  {matchedCriteria.description && matchedCriteria.description.length !=0 &&(
-                    <div className="flex items-start pb-2 pt-2">
-                      <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
-                        Criteria
-                      </h1>
-                      <ul className="ml-2 flex-1 list-disc pl-5">
-                        {(() => {
-                          try {
-                            const jsonData = matchedCriteria.description
-                              .replace(/'/g, '"')
-                              .replace(/None/g, "null");
-                            const parsedData = JSON.parse(jsonData);
-                            console.log("ye dekhooo: ", parsedData);
+                  {matchedCriteria.description &&
+                    matchedCriteria.description.length !== 0 &&
+                    (() => {
+                      try {
+                        const jsonData = matchedCriteria.description
+                          .replace(/'/g, '"')
+                          .replace(/None/g, "null");
+                        const parsedData = JSON.parse(jsonData);
 
-                            return (
-                              <>
-                                {/* Check if community exists and is not None or null */}
+                        // Check if parsedData has any valid criteria
+                        const hasCriteria =
+                          (parsedData[0].community &&
+                            parsedData[0].community.length > 0) ||
+                          parsedData[0].income_limit ||
+                          parsedData[0].age_limit ||
+                          parsedData[0].bpl_card_holder !== null ||
+                          parsedData[0].education !== null;
+
+                        if (!hasCriteria) {
+                          return null;
+                        }
+
+                        return (
+                          <>
+                            <div className="flex items-start pb-2 pt-2">
+                              <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
+                                Criteria
+                              </h1>
+                              <ul className="ml-2 flex-1 list-disc pl-5">
                                 {parsedData[0].community &&
                                   parsedData[0].community.length > 0 && (
                                     <li>
@@ -158,8 +163,6 @@ const ApplyModal = ({
                                       {parsedData[0].community.join(", ")}
                                     </li>
                                   )}
-
-                                {/* Check if income_limit exists and is not None or null */}
                                 {parsedData[0].income_limit && (
                                   <>
                                     {parsedData[0].income_limit.general && (
@@ -182,8 +185,6 @@ const ApplyModal = ({
                                     )}
                                   </>
                                 )}
-
-                                {/* Check if age_limit exists and is not None or null */}
                                 {parsedData[0].age_limit && (
                                   <>
                                     {parsedData[0].age_limit.lower_age !==
@@ -203,8 +204,6 @@ const ApplyModal = ({
                                     )}
                                   </>
                                 )}
-
-                                {/* Additional checks for other criteria can go here */}
                                 {parsedData[0].bpl_card_holder !== null && (
                                   <li>
                                     BPL Card Holder:{" "}
@@ -213,37 +212,36 @@ const ApplyModal = ({
                                       : "No"}
                                   </li>
                                 )}
-
                                 {parsedData[0].education !== null && (
                                   <>
-                                    {parsedData[0].education !== null && (
+                                    {parsedData[0].education.min_standard && (
                                       <li>
                                         Lower Education:{" "}
                                         {parsedData[0].education.min_standard}
                                       </li>
                                     )}
-                                    {parsedData[0].education.education !==
+                                    {parsedData[0].education.max_standard !==
                                       null && (
                                       <li>
                                         Upper Education:{" "}
                                         {parsedData[0].education.max_standard ||
-                                          "No upper age limit"}
+                                          "No upper education limit"}
                                       </li>
                                     )}
                                   </>
                                 )}
-                              </>
-                            );
-                          } catch (error) {
-                            console.error("Invalid JSON:", error);
-                            return null;
-                          }
-                        })()}
-                      </ul>
-                    </div>
-                  )}
+                              </ul>
+                            </div>
+                            <hr />
+                          </>
+                        );
+                      } catch (error) {
+                        console.error("Invalid JSON:", error);
+                        return null;
+                      }
+                    })()}
 
-                  {matchedCriteria.description && <hr />}
+                  {/* {matchedCriteria.description && <hr />} */}
 
                   {scheme.beneficiaries &&
                     scheme.beneficiaries.length != 0 &&
