@@ -300,12 +300,12 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                 </button>
 
                 {item.beneficiaries.length > 0 &&
-                  item.beneficiaries[0].beneficiary_type !== "N/A" && (
+                  item.beneficiaries[0].beneficiary_type !== "N/A" && item.beneficiaries[0].beneficiary_type.length !== 0 && (
                     <button
                       className="flex items-center justify-center pr-[12px] pl-[12px] py-[5px] border  border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium pl-8px hover:border-onclick-btnblue hover:text-onclick-btnblue"
                       onClick={(event) => handleBeneficiaryTag(event)}
                     >
-                      {item.beneficiaries[0].beneficiary_type}
+                      {item.beneficiaries[0].beneficiary_type.length > 76 ? `${item.beneficiaries[0].beneficiary_type.substring(0, 76)}...` : item.beneficiaries[0].beneficiary_type}
                     </button>
                   )}
               </div>
