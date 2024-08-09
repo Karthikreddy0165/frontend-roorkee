@@ -72,8 +72,9 @@ const SponsorDropdownMenu = () => {
             onClick={() => handleItemClick(item)}
           >
             <div>
-              <p className="leading-5 overflow-hidden overflow-ellipsis line-clamp-2 max-h-10 text-black">
+            <p className="flex leading-5 overflow-hidden overflow-ellipsis line-clamp-2 max-h-10 text-black">
                 {item[1]}
+                {item[1] == "State" && states.length !== 0 ? <span className = "w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{states[1].length}</span> : <></>}
               </p>
             </div>
             {item[0] != 1 && (
