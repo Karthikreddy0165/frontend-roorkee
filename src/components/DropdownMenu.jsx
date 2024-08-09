@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import FilterContext from '@/Context/FilterContext';
+import PageContext from "@/Context/PageContext";
 const StateDropdownMenu = () => {
+  const {  setCurrentPage } = useContext(PageContext);
   const [allStates, setAllStates] = useState([]);
   const { states, setStates,
           statesFromApi
@@ -17,6 +19,7 @@ const StateDropdownMenu = () => {
     const uniqueCategories = [...allStates.map(item=>[item.id,item.state_name])].sort((a, b) => a[1].localeCompare(b[1]));
 
     const handleItemClick = (value) => {
+      setCurrentPage(1);
       if(states.length != 0 && states[0].includes(value[0])){
         setStates((prev)=>{
           const filteredIds = prev[0].filter((id)=>id != value[0]);

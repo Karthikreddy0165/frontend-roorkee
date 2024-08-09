@@ -12,7 +12,7 @@ function SelectedFilters() {
   useEffect(()=>{
     setNewSponser(sponseredBy[1] ? sponseredBy[1] : []);
     setNewState(states[1] ? states[1] : []);
-    setNewDepartment(departments[1] ? departments[1] : []);
+    setNewDepartment(Object.keys(departments) ? Object.keys(departments) : []);
   },[sponseredBy, states, departments])
 
   return (

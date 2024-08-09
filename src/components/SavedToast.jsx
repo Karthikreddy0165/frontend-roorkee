@@ -3,8 +3,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 
-
-
 const SaveToast = ({ message, onClose }) => {
   const {activeTab, setActiveTab} = useTabContext();
   const router = useRouter();

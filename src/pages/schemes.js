@@ -38,7 +38,6 @@ const schemesAll = () => {
   const departmentDropdownRef = useRef();
   const beneficiaryDropdownRef = useRef();
 
-
   const [dropDownStates, setDropDownStates] = useState({
     dropDownOpen: false,
     departmentOpen: false,
@@ -194,10 +193,21 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
 
   const clearAllFilters = () => {
     setStates([]);
-    setDepartments([]);
+    setDepartments({});
     setBeneficiaries([]);
     setFundingBy([]);
     setSponseredBy([]);
+    setDropDownStates(
+      {
+        dropDownOpen: false,
+        departmentOpen: false,
+        beneficiaryOpen: false,
+        ageOpen: false,
+        incomeOpen: false,
+        fundersOpen: false,
+        LevelOpen: false,
+      }
+    )
   }
   
   

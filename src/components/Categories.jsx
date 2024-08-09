@@ -251,7 +251,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   }
 // console.log(dataFromApi.results,"resultes")
 
-  // const totalSchemes = (activeTab != "Saved" ? dataFromApi.results: dataFromApi)
+// const totalSchemes = (activeTab != "Saved" ? dataFromApi.results: dataFromApi)
 
   return (
     <>
@@ -294,34 +294,24 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
               <p className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[26px] line-clamp-2 text-decoration-line: underline ">
                 {item.department.department_name}
               </p>
+
+              
               <div className="flex gap-5 mb-[16px]">
                 <button className="flex items-center justify-center pr-[12px] pl-[12px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium py-2 hover:border-onclick-btnblue hover:text-onclick-btnblue" onClick={(event) => handleStateTag(event)}>
                   {item.department.state}
                 </button>
-
+                
                 {item.beneficiaries.length > 0 &&
-                  item.beneficiaries[0].beneficiary_type !== "N/A" && item.beneficiaries[0].beneficiary_type.length !== 0 && (
+                  item.beneficiaries[0].beneficiary_type !== "N/A" && item.beneficiaries[0].beneficiary_type !== "" &&(
                     <button
-                      className="flex items-center justify-center pr-[12px] pl-[12px] py-[5px] border  border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium pl-8px hover:border-onclick-btnblue hover:text-onclick-btnblue"
-                      onClick={(event) => handleBeneficiaryTag(event)}
+                    className="relative flex items-center justify-center pr-[12px] pl-[12px] py-[5px] border  border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium pl-8px hover:border-onclick-btnblue hover:text-onclick-btnblue "
+                    onClick={(event) => handleBeneficiaryTag(event)}
                     >
-                      {item.beneficiaries[0].beneficiary_type.length > 76 ? `${item.beneficiaries[0].beneficiary_type.substring(0, 76)}...` : item.beneficiaries[0].beneficiary_type}
+                      {/* overflow-hidden text-ellipsis whitespace-nowrap max-w-[400px] */}
+                      {item.beneficiaries[0].beneficiary_type}
                     </button>
                   )}
               </div>
-
-              {item.valid_upto && (
-                <p
-                  className="font-inter text-[12px] text-apply-date leading-[24px] mt-4"
-                  role="button"
-                  tabIndex="0"
-                >
-                  Last date to apply:{" "}
-                  <span className="font-bold">
-                    {item.valid_upto.split("T")[0]}
-                  </span>
-                </p>
-              )}
             </div>
           </div>
 
@@ -342,15 +332,15 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     {/* for pagination */}
     {totalPages !== 0 && (
       <Paginator
-        first={first}
-        rows={rows}
-        totalRecords={totalPages * rows}
-        onPageChange={(e) => {
-          setFirst(e.first);
+      first={(currentPage-1)*10}
+      rows={rows}
+      totalRecords={totalPages * rows}
+      onPageChange={(e) => {
+          // setFirst(e.first);
           setCurrentPage(e.page + 1);
         }}
         template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
-        className="custom-paginator gap-8
+        className="custom-paginator gap-8 hover:cursor-pointer
           [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
           [&_.p-paginator-page.p-highlight]:text-white 
           [&_.p-paginator-page]:transition-colors 
