@@ -241,13 +241,14 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     event.stopPropagation();
     var beneficiary = event.target.innerText
     if(!beneficiary.includes("OBC") && !beneficiary.includes("SC")) return;
+    if(beneficiaries.includes("SC")) return;
+    if(beneficiaries.includes("OBC")) return;
     if(beneficiary.includes("SC")) {
       setBeneficiaries(prev => [...prev, "SC"]);
     }
     else if(beneficiary.includes("OBC")) {
       setBeneficiaries(prev => [...prev, "OBC"]);
     }
-    console.log(beneficiaries);
   }
 // console.log(dataFromApi.results,"resultes")
 
