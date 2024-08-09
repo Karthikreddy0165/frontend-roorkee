@@ -11,9 +11,7 @@ import PageContext from "@/Context/PageContext";
 import { useContext } from "react";
 import FilterContext from "@/Context/FilterContext";
 import { useTabContext } from "@/Context/TabContext";
-import Router from "next/router";
 import { Paginator } from "primereact/paginator";
-import Saved from "./savedForLoginuser";
 
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const { activeTab, setActiveTab } = useTabContext(); // Accessing context
@@ -25,19 +23,18 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   const [toastMessage, setToastMessage] = useState("");
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [isUnSaveToastVisible, setIsUnSaveToastVisible] = useState(false);
-  const { currentPage, setCurrentPage, setRemoveSaved } = useContext(PageContext);
+  const { currentPage, setCurrentPage } = useContext(PageContext);
   const [first, setFirst] = useState(0);
   const [rows, setRows] = useState(10);
   const [sidePannelSelected, setSidePannelSelected] = useState(null);
-  // const [removeSaved, setRemoveSaved] = useState(true);
-  // const {
-  //   states,
-  //   setStates,
-  //   beneficiaries,
-  //   setBeneficiaries,
-  //   statesFromApi,
-  //   setStatesFromApi,
-  // } = useContext(FilterContext);
+  const {
+    states,
+    setStates,
+    beneficiaries,
+    setBeneficiaries,
+    statesFromApi,
+    setStatesFromApi,
+  } = useContext(FilterContext);
 
   // Close the toast after a certain time
   useEffect(() => {
@@ -45,7 +42,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       const timer = setTimeout(() => {
         setIsToastVisible(false);
       }, 3000); // Adjust time as needed
-
       return () => clearTimeout(timer);
     }
   }, [isToastVisible]);
@@ -97,15 +93,13 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   }, [authState.token]);
 
   const handleClick = (scheme_id) => {
-    // const scheme = (activeTab != "Saved" ? dataFromApi.results: dataFromApi)
     const scheme = dataFromApi.results.find((item) => item.id === scheme_id);
     if (scheme) {
       setSelectedScheme(scheme); // Set the selected scheme
       setIsModalOpen(true); // Open the modal
       setSidePannelSelected(scheme_id);
     }
-  }
-
+  };
 
   // To save scheme
   const saveScheme = async (scheme_id) => {
@@ -161,8 +155,8 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     };
 
     try {
-      // console.log("Sending unsave request for scheme_id:", scheme_id);
-      // console.log("Request payload:", raw);
+      console.log("Sending unsave request for scheme_id:", scheme_id);
+      console.log("Request payload:", raw);
       const response = await fetch(
         `http://65.0.103.91:80/api/unsave_scheme/`,
         requestOptions
@@ -172,7 +166,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       if (response.ok) {
         // console.log(result);
         setIsUnSaveToastVisible(true); // Show the toast
-        setRemoveSaved((prev)=>!prev);
         return true;
       } else {
         console.error("Failed to unsave scheme");
@@ -226,13 +219,37 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
   const handleStateTag = (event) => {
     event.stopPropagation();
+    var state = event.target.innerText;
+    if(states[1] && states[1].includes(state)) return;
+    var stateId = 0;
+    for(let i = 0; i < 7; i++) {
+      if(statesFromApi[i].state_name == state) {
+        stateId = statesFromApi[i].id;
+        break;
+      }
+    }
+    setStates(prev => {
+      if(prev && prev[0] && prev[1]) {
+        return [[...prev[0], stateId], [...prev[1], state]];
+      } else {
+        return [[stateId], [state]];
+      }
+    });
   }
 
   const handleBeneficiaryTag = (event) => {
     event.stopPropagation();
+    var beneficiary = event.target.innerText
+    if(!beneficiary.includes("OBC") && !beneficiary.includes("SC")) return;
+    if(beneficiary.includes("SC")) {
+      setBeneficiaries(prev => [...prev, "SC"]);
+    }
+    else if(beneficiary.includes("OBC")) {
+      setBeneficiaries(prev => [...prev, "OBC"]);
+    }
+    console.log(beneficiaries);
   }
-// console.log(dataFromApi,"resultes")
-// console.log(totalPages,"totalpage")
+// console.log(dataFromApi.results,"resultes")
 
 // const totalSchemes = (activeTab != "Saved" ? dataFromApi.results: dataFromApi)
 
@@ -240,7 +257,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     <>
   {/* We have found {378} schemes based on your profile */}
   <div>
-    {(dataFromApi.results).map((item) => (
+    {(activeTab != "Saved" ? dataFromApi.results : dataFromApi).map((item) => (
       item.title && (
         <div
           className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
