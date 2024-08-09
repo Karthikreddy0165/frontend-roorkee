@@ -1,10 +1,14 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import FilterContext from '@/Context/FilterContext';
+import PageContext from "@/Context/PageContext";
 const DropdownMenu = () => {
+  const {  setCurrentPage } = useContext(PageContext);
   const uniqueCategories = ["SC / ST", "OBC"]
   .sort((a, b) => a[1].localeCompare(b[1]));
   const {beneficiaries, setBeneficiaries} = useContext(FilterContext);
   const handleItemClick = (value) => {
+
+    setCurrentPage(1);
     // const value = item == "SC / ST" ? "SC" : item;
     if (beneficiaries.includes(value)) {
       setBeneficiaries((prev)=>prev.filter(option => option !== value));
@@ -13,7 +17,7 @@ const DropdownMenu = () => {
     }
   };
   return (
-    <div className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0">
+    <div className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0 ">
       <ul className="flex flex-col font-sans list-none p-0 m-0 gap-0 pb-[18px]">
         {uniqueCategories.map((item, index) => (
           <li key={item + index} className="flex items-center justify-between hover:bg-gray-100 p-[8px] cursor-pointer hover:rounded-[8px]" onClick={() => handleItemClick(item == "SC / ST" ? "SC" : item)}>

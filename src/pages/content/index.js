@@ -7,38 +7,19 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
   const [schemes, setSchemes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [criteria, setCriteria] = useState([]);
-
+  console.log(scheme,"hallaaaa machao")
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [departmentsRes, statesRes, schemesRes, criteriaRes] = await Promise.all([
-          fetch(`http://65.0.103.91:80/api/departments/`),
-          fetch(`http://65.0.103.91:80/api/states/`),
-          fetch(`http://65.0.103.91:80/api/schemes/`),
+        const [criteriaRes] = await Promise.all([
           fetch(`http://65.0.103.91:80/api/criteria/`),
         ]);
-
-        if (!departmentsRes.ok)
-          throw new Error(`Error fetching departments: ${departmentsRes.statusText}`);
-        if (!statesRes.ok)
-          throw new Error(`Error fetching states: ${statesRes.statusText}`);
-        if (!schemesRes.ok)
-          throw new Error(`Error fetching schemes: ${schemesRes.statusText}`);
         if (!criteriaRes.ok)
           throw new Error(`Error fetching criteria: ${criteriaRes.statusText}`);
 
-        const [departmentsData, statesData, schemesData, criteriaData] = await Promise.all([
-          departmentsRes.json(),
-          statesRes.json(),
-          schemesRes.json(),
+        const [criteriaData] = await Promise.all([
           criteriaRes.json(),
           ]);
-        //   console.log(schemesRes,'schemeiaasldglas')
-        // console.log(criteriaRes,'criteriaasldglas')
-
-        setDepartments(departmentsData);
-        setStates(statesData);
-        setSchemes(schemesData);
         setCriteria(criteriaData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -49,22 +30,10 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
 
     fetchData();
   }, []);
-
-  // console.log(schemes,'schemeesdgtsx')
-  // console.log(schemes,'critereiaesdgtsx')
   
   if (!isOpen) return null;
 
-  const matchedScheme = schemes.find((s) => s.id === scheme.id);
-  const matchedDepartment = matchedScheme
-    ? departments.find((d) => d.id === matchedScheme.department.id)
-    : null;
-  const matchedState = matchedScheme
-    ? states.find((s) => s.state_name === matchedScheme.department.state)
-    : null;
-  // console.log(scheme.id,'schemeid')
-  // console.log(criteria.id,"criteraid")
-  const matchedCriteria = matchedScheme
+  const matchedCriteria = scheme
     ? criteria.find((c) => c.id === scheme.id)
     : null;
 
@@ -97,12 +66,12 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
               <>
                 {/* Last update date */}
                 <div className="w-full sm:max-w-3xl">
-                  {matchedScheme &&
-                    matchedScheme.created_at &&
-                    matchedScheme.created_at.split(" ")[0] !== "N/A" && (
+                  {scheme &&
+                    scheme.created_at &&
+                    scheme.created_at.split(" ")[0] !== "N/A" && (
                       <div>
                         <p className="py-0.5 px-2 text-black text-sm inline-block bg-[#EEF] rounded-[12px] mt-2">
-                          {`Last updated on ${matchedScheme.created_at.split(" ")[0]}`}
+                          {`Last updated on ${scheme.created_at.split(" ")[0]}`}
                         </p>
                       </div>
                     )}
@@ -110,48 +79,48 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
 
                 {/* Main data section */}
                 <div className="mt-8 space-y-4 w-full sm:max-w-3xl p-4">
-                  {matchedDepartment.department_name && (
+                  {scheme.department && scheme.department.department_name && (
                     <div className="flex items-start pb-2">
                       <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
                         Department
                       </h1>
                       <p className="ml-2 flex-1">
-                        {matchedDepartment.department_name}
+                        {scheme.department.department_name}
                       </p>
                     </div>
                   )}
                 
-                  {matchedDepartment.department_name && <hr />}
+                  {scheme.department && scheme.department.department_name && <hr />}
                 
-                  {matchedState.state_name && (
+                  {scheme.department && scheme.department.state && (
                     <div className="flex items-start pb-2 pt-2">
                       <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
                         State
                       </h1>
-                      <p className="ml-2 flex-1">{matchedState.state_name}</p>
+                      <p className="ml-2 flex-1">{scheme.department.state}</p>
                     </div>
                   )}
-                  {matchedState.state_name && <hr />}
+                  {scheme.department && scheme.department.state && <hr />}
 
-                  {matchedScheme.title && (
+                  {scheme.title && (
                     <div className="flex items-start pb-2 pt-2">
                       <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
                         Title
                       </h1>
-                      <p className="ml-2 flex-1">{matchedScheme.title}</p>
+                      <p className="ml-2 flex-1">{scheme.title}</p>
                     </div>
                   )}
-                  {matchedScheme.title && <hr />}
+                  {scheme.title && <hr />}
 
-                  {matchedScheme && matchedScheme.description &&(
+                  {scheme.description &&(
                     <div className="flex items-start pb-2 pt-2">
                       <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
                         Description
                       </h1>
-                      <p className="ml-2 flex-1">{matchedScheme.description}</p>
+                      <p className="ml-2 flex-1">{scheme.description}</p>
                     </div>
                   )}
-                  {matchedScheme && matchedScheme.description &&<hr />}
+                  {scheme.description &&<hr />}
 
                   {matchedCriteria.description && (
                     <div className="flex items-start pb-2 pt-2">
@@ -163,42 +132,39 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
                   )}
                   {matchedCriteria.description && <hr />}
 
-                  {matchedScheme &&
-                    matchedScheme.beneficiaries[0] &&
-                    matchedScheme.beneficiaries[0].beneficiary_type !== "N/A" && (
+                  {
+                    scheme.beneficiaries && scheme.beneficiaries.length != 0 &&
+                    scheme.beneficiaries[0].beneficiary_type &&  scheme.beneficiaries[0].beneficiary_type !== "N/A" && (
                       <div className="flex items-start pb-2 pt-2">
                         <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
                           Beneficiary Type
                         </h1>
                         <p className="ml-2 flex-1">
-                          {matchedScheme.beneficiaries[0].beneficiary_type}
+                          {scheme.beneficiaries[0].beneficiary_type}
                         </p>
                       </div>
                     )}
-                  {matchedScheme && matchedScheme.beneficiaries[0] && <hr />}
+                  {scheme.beneficiaries && scheme.beneficiaries.length != 0 &&
+                    scheme.beneficiaries[0].beneficiary_type &&  scheme.beneficiaries[0].beneficiary_type !== "N/A" && <hr />}
 
-                  {matchedScheme &&
-                    matchedScheme.sponsors &&
-                    matchedScheme.sponsors.length > 0 && (
+                  {scheme.sponsors && scheme.sponsors.length != 0 && scheme.sponsors[0].sponsor_type && (
                       <div className="flex items-start pb-2 pt-2">
                         <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
                           Sponsored By
                         </h1>
                         <p className="ml-2 flex-1">
-                          {matchedScheme.sponsors[0].sponsor_type}
+                          {scheme.sponsors[0].sponsor_type}
                         </p>
                       </div>
                     )}
-                  {matchedScheme &&
-                    matchedScheme.sponsors &&
-                    matchedScheme.sponsors.length > 0 && <hr />}
+                  {scheme.sponsors && scheme.sponsors.length != 0 && scheme.sponsors[0].sponsor_type && <hr />}
 
-                  {matchedScheme && matchedScheme.documents[0] && (
+                  {scheme.documents[0] && (
                     <div className="flex items-start pb-2 pt-2">
                       <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
                         Uploaded file
                       </h1>
-                      <p className="ml-2 flex-1">{matchedScheme.documents}</p>
+                      <p className="ml-2 flex-1">{scheme.documents}</p>
                     </div>
                   )}
                 </div>
@@ -206,9 +172,9 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
                 {/* Apply button */}
                 <div>
                   <div className=" z-50 bottom-8 right-8 w-100 mb-[70px]">
-                    {matchedScheme && matchedScheme.scheme_link ? (
+                    {scheme.scheme_link ? (
                       <a
-                        href={matchedScheme.scheme_link}
+                        href={scheme.scheme_link}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="relative py-3 px-12 bg-blue-600 text-white font-semibold rounded-[10px] transition hover:bg-onclick-btnblue ml-[300px]"

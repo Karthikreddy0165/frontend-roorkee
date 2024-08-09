@@ -12,13 +12,17 @@ export default function Schemes() {
     departments,
     beneficiaries,
     sponseredBy,
-  } = useContext(FilterContext);
-  const { currentPage } = useContext(PageContext);
+    } = useContext(FilterContext);
+    const { currentPage } = useContext(PageContext);
 
   const [dataOfApi, setDataOfApi] = useState({});
   const [totalPages, setTotalPages] = useState(0);
 
-  // console.log("sponsorby",sponseredBy)
+  console.log("sponsorby",currentPage)
+
+// useEffect(() =>{
+  
+// },[states])
 
   useEffect(() => {
     const fetchState = async () => {
@@ -32,7 +36,9 @@ export default function Schemes() {
 
           const raw = JSON.stringify({
             state_ids: states.length != 0 ?  states[0] : [],
-            department_ids: departments.length != 0 ? departments[0] : [],
+            department_ids: Object.keys(departments).reduce((acc,i)=>{
+              return [...acc,...departments[i]]
+            },[]),
             sponsor_ids: sponseredBy.length != 0 && sponseredBy[0][0]==2 ? sponseredBy[0] : [],
             beneficiary_keywords: beneficiaries,
             search_query: searchQuery,

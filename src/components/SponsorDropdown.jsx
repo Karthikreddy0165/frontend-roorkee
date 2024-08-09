@@ -3,7 +3,9 @@ import FilterContext from "@/Context/FilterContext";
 import StateDropdownMenu from "./DropdownMenu";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
+import PageContext from "@/Context/PageContext";
 const SponsorDropdownMenu = () => {
+  const {  setCurrentPage } = useContext(PageContext);
   const [allLevel, setAllLevel] = useState([]);
   const { sponseredBy, setSponseredBy, states, setStates } =
     useContext(FilterContext);
@@ -32,6 +34,7 @@ const SponsorDropdownMenu = () => {
   ];
 
   const handleItemClick = (value) => {
+    setCurrentPage(1);
     if (sponseredBy.length != 0 && sponseredBy[0].includes(value[0])) {
       setSponseredBy([])
       // if(value[0] == 2){
@@ -45,6 +48,9 @@ const SponsorDropdownMenu = () => {
       //   return [filteredIds, filteredSponseredBy];
       // });
     } else {
+      if(value[0] == 2){
+        setStates([]);
+      }
       setSponseredBy([[value[0]], [value[1]]]);
       // setSponseredBy((prev)=>{
       //   if(prev.length != 0){

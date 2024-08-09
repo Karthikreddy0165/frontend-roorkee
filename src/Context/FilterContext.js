@@ -7,7 +7,7 @@ const FilterContext = createContext();
 
 function FilterProvider({ children }){
   const [states, setStates] = useState([]);
-  const [departments, setDepartments] = useState([]);
+  const [departments, setDepartments] = useState({});
   const [beneficiaries, setBeneficiaries] = useState([]);
   const [fundingBy, setFundingBy] = useState([]);
   const [sponseredBy, setSponseredBy] = useState([]);
