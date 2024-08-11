@@ -9,12 +9,13 @@ const ApplyModal = ({
 }) => {
   const [loading, setLoading] = useState(true);
   const [criteria, setCriteria] = useState([]);
-  console.log(scheme, "hallaaaa machao");
+  // console.log(scheme, "hallaaaa machao");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [criteriaRes] = await Promise.all([
-          fetch(`http://65.0.103.91:80/api/criteria/`),
+          fetch(`http://65.0.103.91:80/api/schemes/${scheme.id}/criteria/`),
         ]);
         if (!criteriaRes.ok)
           throw new Error(`Error fetching criteria: ${criteriaRes.statusText}`);
@@ -33,13 +34,14 @@ const ApplyModal = ({
 
   if (!isOpen) return null;
 
-  // console.log(criteria, "citeria")
+  console.log(criteria, "citeria")
 
-  // const matchedCriteria = criteria;
+  const matchedCriteria = criteria[criteria.length - 1];
+  console.log(matchedCriteria,'matchedCriteriaaaaa')
 
-  const matchedCriteria = scheme
-    ? criteria.find((c) => c.id === scheme.id)
-    : null;
+  // const matchedCriteria = scheme
+  //   ? criteria.find((c) => c.id === scheme.id)
+  //   : null;
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center pointer-events-none pr-8 pl-8">
@@ -135,7 +137,8 @@ const ApplyModal = ({
                           .replace(/'/g, '"')
                           .replace(/None/g, "null");
                         const parsedData = JSON.parse(jsonData);
-
+                        console.log(parsedData,"parsedataawa")
+                      
                         // Check if parsedData has any valid criteria
                         const hasCriteria =
                           (parsedData[0].community &&
@@ -148,7 +151,6 @@ const ApplyModal = ({
                         if (!hasCriteria) {
                           return null;
                         }
-
                         return (
                           <>
                             <div className="flex items-start pb-2 pt-2">
@@ -160,7 +162,7 @@ const ApplyModal = ({
                                   parsedData[0].community.length > 0 && (
                                     <li>
                                       Community:{" "}
-                                      {parsedData[0].community.join(", ")}
+                                      {parsedData[0].community[0]}
                                     </li>
                                   )}
                                 {parsedData[0].income_limit && (
@@ -204,7 +206,7 @@ const ApplyModal = ({
                                     )}
                                   </>
                                 )}
-                                {parsedData[0].bpl_card_holder !== null && (
+                                {parsedData[0].bpl_card_holder && parsedData[0].bpl_card_holder !== null && (
                                   <li>
                                     BPL Card Holder:{" "}
                                     {parsedData[0].bpl_card_holder
@@ -212,7 +214,7 @@ const ApplyModal = ({
                                       : "No"}
                                   </li>
                                 )}
-                                {parsedData[0].education !== null && (
+                                {parsedData[0].education && parsedData[0].education !== null && (
                                   <>
                                     {parsedData[0].education.min_standard && (
                                       <li>
@@ -291,7 +293,7 @@ const ApplyModal = ({
 
                 {/* Apply button */}
                 <div>
-                  <div className=" z-50 bottom-8 right-8 w-100 mb-[70px]">
+                  <div className=" z-50 bottom-8 mt-8 right-8 w-100 mb-[70px]">
                     {scheme.scheme_link ? (
                       <a
                         href={scheme.scheme_link}
