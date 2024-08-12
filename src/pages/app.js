@@ -206,7 +206,10 @@ const App = () => {
             </div>
           </div>
           {/* FAQ Section */}
+          <div className="w-[1125px]">
+
           <FAQSection />
+          </div>
          
           {/* fifth row */}
           <div className="flex flex-col items-center w-full p-8 bg-gradient-to-b from-white to-[#FDFBF6] mt-8">
