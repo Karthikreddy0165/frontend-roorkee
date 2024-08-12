@@ -9,39 +9,54 @@ const ApplyModal = ({
 }) => {
   const [loading, setLoading] = useState(true);
   const [criteria, setCriteria] = useState([]);
-  // console.log(scheme, "hallaaaa machao");
+  const [documents, setDocuments] = useState([]);
+  const [error, setError] = useState(null); // Added error state
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const [criteriaRes] = await Promise.all([
-          fetch(`http://65.0.103.91:80/api/schemes/${scheme.id}/criteria/`),
-        ]);
-        if (!criteriaRes.ok)
-          throw new Error(`Error fetching criteria: ${criteriaRes.statusText}`);
+      if (scheme && scheme.id) {
+        try {
+          const [criteriaRes, documentsRes] = await Promise.all([
+            fetch(`http://65.0.103.91:80/api/schemes/${scheme.id}/criteria/`),
+            fetch(`http://65.0.103.91:80/api/schemes/${scheme.id}/documents/`),
+          ]);
 
-        const [criteriaData] = await Promise.all([criteriaRes.json()]);
+        if (!criteriaRes.ok) {
+          throw new Error(`Error fetching criteria: ${criteriaRes.statusText}`);
+        }
+        if (!documentsRes.ok) {
+          throw new Error(
+            `Error fetching documents: ${documentsRes.statusText}`
+          );
+        }
+
+        const [criteriaData, documentsData] = await Promise.all([
+          criteriaRes.json(),
+          documentsRes.json(),
+        ]);
+
         setCriteria(criteriaData);
+        setDocuments(documentsData);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setError("Failed to load data. Please try again later.");
       } finally {
         setLoading(false);
       }
-    };
+    } else {
+      setLoading(false);
+      setError("Invalid scheme data");
+    }
+  };
 
-    fetchData();
-  }, []);
+  fetchData();
+}, [scheme]);
 
   if (!isOpen) return null;
 
-  console.log(criteria, "citeria")
+  const documents_Name = documents.map((i) => i.document.document_name);
 
   const matchedCriteria = criteria[criteria.length - 1];
-  console.log(matchedCriteria,'matchedCriteriaaaaa')
-
-  // const matchedCriteria = scheme
-  //   ? criteria.find((c) => c.id === scheme.id)
-  //   : null;
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center pointer-events-none pr-8 pl-8">
@@ -137,8 +152,8 @@ const ApplyModal = ({
                           .replace(/'/g, '"')
                           .replace(/None/g, "null");
                         const parsedData = JSON.parse(jsonData);
-                        console.log(parsedData,"parsedataawa")
-                      
+                        console.log(parsedData, "parsedataawa");
+
                         // Check if parsedData has any valid criteria
                         const hasCriteria =
                           (parsedData[0].community &&
@@ -161,8 +176,7 @@ const ApplyModal = ({
                                 {parsedData[0].community &&
                                   parsedData[0].community.length > 0 && (
                                     <li>
-                                      Community:{" "}
-                                      {parsedData[0].community[0]}
+                                      Community: {parsedData[0].community[0]}
                                     </li>
                                   )}
                                 {parsedData[0].income_limit && (
@@ -206,32 +220,35 @@ const ApplyModal = ({
                                     )}
                                   </>
                                 )}
-                                {parsedData[0].bpl_card_holder && parsedData[0].bpl_card_holder !== null && (
-                                  <li>
-                                    BPL Card Holder:{" "}
-                                    {parsedData[0].bpl_card_holder
-                                      ? "Yes"
-                                      : "No"}
-                                  </li>
-                                )}
-                                {parsedData[0].education && parsedData[0].education !== null && (
-                                  <>
-                                    {parsedData[0].education.min_standard && (
-                                      <li>
-                                        Lower Education:{" "}
-                                        {parsedData[0].education.min_standard}
-                                      </li>
-                                    )}
-                                    {parsedData[0].education.max_standard !==
-                                      null && (
-                                      <li>
-                                        Upper Education:{" "}
-                                        {parsedData[0].education.max_standard ||
-                                          "No upper education limit"}
-                                      </li>
-                                    )}
-                                  </>
-                                )}
+                                {parsedData[0].bpl_card_holder &&
+                                  parsedData[0].bpl_card_holder !== null && (
+                                    <li>
+                                      BPL Card Holder:{" "}
+                                      {parsedData[0].bpl_card_holder
+                                        ? "Yes"
+                                        : "No"}
+                                    </li>
+                                  )}
+                                {parsedData[0].education &&
+                                  parsedData[0].education !== null && (
+                                    <>
+                                      {parsedData[0].education.min_standard && (
+                                        <li>
+                                          Lower Education:{" "}
+                                          {parsedData[0].education.min_standard}
+                                        </li>
+                                      )}
+                                      {parsedData[0].education.max_standard !==
+                                        null && (
+                                        <li>
+                                          Upper Education:{" "}
+                                          {parsedData[0].education
+                                            .max_standard ||
+                                            "No upper education limit"}
+                                        </li>
+                                      )}
+                                    </>
+                                  )}
                               </ul>
                             </div>
                             <hr />
@@ -281,12 +298,16 @@ const ApplyModal = ({
                     scheme.sponsors.length != 0 &&
                     scheme.sponsors[0].sponsor_type && <hr />}
 
-                  {scheme.documents[0] && (
+                  {documents_Name && documents_Name.length != 0 && (
                     <div className="flex items-start pb-2 pt-2">
                       <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
-                        Uploaded file
+                        Documents
                       </h1>
-                      <p className="ml-2 flex-1">{scheme.documents}</p>
+                      <ul className="list-disc pl-5">
+                        {documents_Name.map((document, index) => (
+                          <li key={index}>{document}</li>
+                        ))}
+                      </ul>
                     </div>
                   )}
                 </div>
