@@ -258,7 +258,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     <>
   {/* We have found {378} schemes based on your profile */}
   <div>
-    {(activeTab != "Saved" ? dataFromApi.results : dataFromApi).map((item) => (
+    {(dataFromApi.results).map((item) => (
       item.title && (
         <div
           className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
