@@ -10,15 +10,16 @@ const ApplyModal = ({
   const [loading, setLoading] = useState(true);
   const [criteria, setCriteria] = useState([]);
   const [documents, setDocuments] = useState([]);
-  // console.log(scheme, "hallaaaa machao");
+  const [error, setError] = useState(null); // Added error state
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const [criteriaRes, documentsRes] = await Promise.all([
-          fetch(`http://65.0.103.91:80/api/schemes/${scheme.id}/criteria/`),
-          fetch(`http://65.0.103.91:80/api/schemes/${scheme.id}/documents/`),
-        ]);
+      if (scheme && scheme.id) {
+        try {
+          const [criteriaRes, documentsRes] = await Promise.all([
+            fetch(`http://65.0.103.91:80/api/schemes/${scheme.id}/criteria/`),
+            fetch(`http://65.0.103.91:80/api/schemes/${scheme.id}/documents/`),
+          ]);
 
         if (!criteriaRes.ok) {
           throw new Error(`Error fetching criteria: ${criteriaRes.statusText}`);
@@ -38,27 +39,24 @@ const ApplyModal = ({
         setDocuments(documentsData);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setError("Failed to load data. Please try again later.");
       } finally {
         setLoading(false);
       }
-    };
+    } else {
+      setLoading(false);
+      setError("Invalid scheme data");
+    }
+  };
 
-    fetchData();
-  }, [scheme.id]);
+  fetchData();
+}, [scheme]);
 
   if (!isOpen) return null;
-  console.log(documents, "documents");
-  console.log(criteria, "citeria");
 
   const documents_Name = documents.map((i) => i.document.document_name);
-  console.log(documents_Name, "documentname");
 
   const matchedCriteria = criteria[criteria.length - 1];
-  console.log(matchedCriteria, "matchedCriteriaaaaa");
-
-  // const matchedCriteria = scheme
-  //   ? criteria.find((c) => c.id === scheme.id)
-  //   : null;
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center pointer-events-none pr-8 pl-8">
@@ -303,7 +301,7 @@ const ApplyModal = ({
                   {documents_Name && documents_Name.length != 0 && (
                     <div className="flex items-start pb-2 pt-2">
                       <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
-                        Uploaded file
+                        Documents
                       </h1>
                       <ul className="list-disc pl-5">
                         {documents_Name.map((document, index) => (
