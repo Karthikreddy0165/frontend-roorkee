@@ -18,12 +18,6 @@ export default function Schemes() {
   const [dataOfApi, setDataOfApi] = useState({});
   const [totalPages, setTotalPages] = useState(0);
 
-  console.log("sponsorby",currentPage)
-
-// useEffect(() =>{
-  
-// },[states])
-
   useEffect(() => {
     const fetchState = async () => {
       try {
@@ -69,13 +63,13 @@ export default function Schemes() {
 
 
 // console.log(dataOfApi,'shemesdata' );
-  if (dataOfApi.count==0 && (states.length != 0 || departments.length != 0)) {
-    return (
-      <div className="flex justify-center items-center mt-8">
-        No schemes found based on your preference
-      </div>
-    );
-  }
+  // if (dataOfApi.count==0 && (states.length != 0 || departments.length != 0)) {
+  //   return (
+  //     <div className="flex justify-center items-center mt-8">
+  //       No schemes found based on your preference
+  //     </div>
+  //   );
+  // }
 
 
   return (

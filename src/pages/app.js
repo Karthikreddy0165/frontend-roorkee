@@ -207,7 +207,6 @@ const App = () => {
           </div>
           {/* FAQ Section */}
           <div className="w-[1125px]">
-
           <FAQSection />
           </div>
          
