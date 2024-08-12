@@ -1,25 +1,26 @@
 import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 
-const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) => {
-  const [departments, setDepartments] = useState([]);
-  const [states, setStates] = useState([]);
-  const [schemes, setSchemes] = useState([]);
+const ApplyModal = ({
+  isOpen,
+  onRequestClose,
+  scheme,
+  setSidePannelSelected,
+}) => {
   const [loading, setLoading] = useState(true);
   const [criteria, setCriteria] = useState([]);
-  console.log(scheme,"hallaaaa machao")
+  // console.log(scheme, "hallaaaa machao");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [criteriaRes] = await Promise.all([
-          fetch(`http://65.0.103.91:80/api/criteria/`),
+          fetch(`http://65.0.103.91:80/api/schemes/${scheme.id}/criteria/`),
         ]);
         if (!criteriaRes.ok)
           throw new Error(`Error fetching criteria: ${criteriaRes.statusText}`);
 
-        const [criteriaData] = await Promise.all([
-          criteriaRes.json(),
-          ]);
+        const [criteriaData] = await Promise.all([criteriaRes.json()]);
         setCriteria(criteriaData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -30,13 +31,17 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
 
     fetchData();
   }, []);
-  
+
   if (!isOpen) return null;
 
-  const matchedCriteria = scheme
-    ? criteria.find((c) => c.id === scheme.id)
-    : null;
+  console.log(criteria, "citeria")
 
+  const matchedCriteria = criteria[criteria.length - 1];
+  console.log(matchedCriteria,'matchedCriteriaaaaa')
+
+  // const matchedCriteria = scheme
+  //   ? criteria.find((c) => c.id === scheme.id)
+  //   : null;
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center pointer-events-none pr-8 pl-8">
@@ -89,9 +94,11 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
                       </p>
                     </div>
                   )}
-                
-                  {scheme.department && scheme.department.department_name && <hr />}
-                
+
+                  {scheme.department && scheme.department.department_name && (
+                    <hr />
+                  )}
+
                   {scheme.department && scheme.department.state && (
                     <div className="flex items-start pb-2 pt-2">
                       <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
@@ -112,7 +119,7 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
                   )}
                   {scheme.title && <hr />}
 
-                  {scheme.description &&(
+                  {scheme.description && (
                     <div className="flex items-start pb-2 pt-2">
                       <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
                         Description
@@ -120,21 +127,128 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
                       <p className="ml-2 flex-1">{scheme.description}</p>
                     </div>
                   )}
-                  {scheme.description &&<hr />}
+                  {scheme.description && <hr />}
 
-                  {matchedCriteria.description && (
-                    <div className="flex items-start pb-2 pt-2">
-                      <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
-                        Criteria
-                      </h1>
-                      <p className="ml-2 flex-1">{matchedCriteria.description}</p>
-                    </div>
-                  )}
-                  {matchedCriteria.description && <hr />}
+                  {matchedCriteria.description &&
+                    matchedCriteria.description.length !== 0 &&
+                    (() => {
+                      try {
+                        const jsonData = matchedCriteria.description
+                          .replace(/'/g, '"')
+                          .replace(/None/g, "null");
+                        const parsedData = JSON.parse(jsonData);
+                        console.log(parsedData,"parsedataawa")
+                      
+                        // Check if parsedData has any valid criteria
+                        const hasCriteria =
+                          (parsedData[0].community &&
+                            parsedData[0].community.length > 0) ||
+                          parsedData[0].income_limit ||
+                          parsedData[0].age_limit ||
+                          parsedData[0].bpl_card_holder !== null ||
+                          parsedData[0].education !== null;
 
-                  {
-                    scheme.beneficiaries && scheme.beneficiaries.length != 0 &&
-                    scheme.beneficiaries[0].beneficiary_type &&  scheme.beneficiaries[0].beneficiary_type !== "N/A" && (
+                        if (!hasCriteria) {
+                          return null;
+                        }
+                        return (
+                          <>
+                            <div className="flex items-start pb-2 pt-2">
+                              <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
+                                Criteria
+                              </h1>
+                              <ul className="ml-2 flex-1 list-disc pl-5">
+                                {parsedData[0].community &&
+                                  parsedData[0].community.length > 0 && (
+                                    <li>
+                                      Community:{" "}
+                                      {parsedData[0].community[0]}
+                                    </li>
+                                  )}
+                                {parsedData[0].income_limit && (
+                                  <>
+                                    {parsedData[0].income_limit.general && (
+                                      <li>
+                                        Income Limit (General):{" "}
+                                        {parsedData[0].income_limit.general}
+                                      </li>
+                                    )}
+                                    {parsedData[0].income_limit.urban && (
+                                      <li>
+                                        Income Limit (Urban):{" "}
+                                        {parsedData[0].income_limit.urban}
+                                      </li>
+                                    )}
+                                    {parsedData[0].income_limit.rural && (
+                                      <li>
+                                        Income Limit (Rural):{" "}
+                                        {parsedData[0].income_limit.rural}
+                                      </li>
+                                    )}
+                                  </>
+                                )}
+                                {parsedData[0].age_limit && (
+                                  <>
+                                    {parsedData[0].age_limit.lower_age !==
+                                      null && (
+                                      <li>
+                                        Lower Age Limit:{" "}
+                                        {parsedData[0].age_limit.lower_age}
+                                      </li>
+                                    )}
+                                    {parsedData[0].age_limit.upper_age !==
+                                      null && (
+                                      <li>
+                                        Upper Age Limit:{" "}
+                                        {parsedData[0].age_limit.upper_age ||
+                                          "No upper age limit"}
+                                      </li>
+                                    )}
+                                  </>
+                                )}
+                                {parsedData[0].bpl_card_holder && parsedData[0].bpl_card_holder !== null && (
+                                  <li>
+                                    BPL Card Holder:{" "}
+                                    {parsedData[0].bpl_card_holder
+                                      ? "Yes"
+                                      : "No"}
+                                  </li>
+                                )}
+                                {parsedData[0].education && parsedData[0].education !== null && (
+                                  <>
+                                    {parsedData[0].education.min_standard && (
+                                      <li>
+                                        Lower Education:{" "}
+                                        {parsedData[0].education.min_standard}
+                                      </li>
+                                    )}
+                                    {parsedData[0].education.max_standard !==
+                                      null && (
+                                      <li>
+                                        Upper Education:{" "}
+                                        {parsedData[0].education.max_standard ||
+                                          "No upper education limit"}
+                                      </li>
+                                    )}
+                                  </>
+                                )}
+                              </ul>
+                            </div>
+                            <hr />
+                          </>
+                        );
+                      } catch (error) {
+                        console.error("Invalid JSON:", error);
+                        return null;
+                      }
+                    })()}
+
+                  {/* {matchedCriteria.description && <hr />} */}
+
+                  {scheme.beneficiaries &&
+                    scheme.beneficiaries.length != 0 &&
+                    scheme.beneficiaries[0].beneficiary_type &&
+                    scheme.beneficiaries[0].beneficiary_type !== "N/A" && (
                       <div className="flex items-start pb-2 pt-2">
                         <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
                           Beneficiary Type
@@ -144,10 +258,16 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
                         </p>
                       </div>
                     )}
-                  {scheme.beneficiaries && scheme.beneficiaries.length != 0 &&
-                    scheme.beneficiaries[0].beneficiary_type &&  scheme.beneficiaries[0].beneficiary_type !== "N/A" && <hr />}
+                  {scheme.beneficiaries &&
+                    scheme.beneficiaries.length != 0 &&
+                    scheme.beneficiaries[0].beneficiary_type &&
+                    scheme.beneficiaries[0].beneficiary_type !== "N/A" && (
+                      <hr />
+                    )}
 
-                  {scheme.sponsors && scheme.sponsors.length != 0 && scheme.sponsors[0].sponsor_type && (
+                  {scheme.sponsors &&
+                    scheme.sponsors.length != 0 &&
+                    scheme.sponsors[0].sponsor_type && (
                       <div className="flex items-start pb-2 pt-2">
                         <h1 className="w-36 text-[14px] font-semibold leading-normal font-inter text-black">
                           Sponsored By
@@ -157,7 +277,9 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
                         </p>
                       </div>
                     )}
-                  {scheme.sponsors && scheme.sponsors.length != 0 && scheme.sponsors[0].sponsor_type && <hr />}
+                  {scheme.sponsors &&
+                    scheme.sponsors.length != 0 &&
+                    scheme.sponsors[0].sponsor_type && <hr />}
 
                   {scheme.documents[0] && (
                     <div className="flex items-start pb-2 pt-2">
@@ -171,7 +293,7 @@ const ApplyModal = ({ isOpen, onRequestClose, scheme, setSidePannelSelected }) =
 
                 {/* Apply button */}
                 <div>
-                  <div className=" z-50 bottom-8 right-8 w-100 mb-[70px]">
+                  <div className=" z-50 bottom-8 mt-8 right-8 w-100 mb-[70px]">
                     {scheme.scheme_link ? (
                       <a
                         href={scheme.scheme_link}
