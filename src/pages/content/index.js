@@ -144,7 +144,7 @@ const ApplyModal = ({
                   )}
                   {scheme.description && <hr />}
 
-                  {matchedCriteria.description &&
+                  {!matchedCriteria ? "": matchedCriteria.description &&
                     matchedCriteria.description.length !== 0 &&
                     (() => {
                       try {
