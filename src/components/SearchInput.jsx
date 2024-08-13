@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useContext, } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useTabContext } from "@/Context/TabContext";
+import { IoCloseSharp } from "react-icons/io5";
+
 function SearchInput() {
-  const {searchQuery, setSearchQuery} = useTabContext();
+  const { searchQuery, setSearchQuery } = useTabContext();
 
   return (
-
     <div className="flex items-center gap-8 h-14 px-3 rounded-lg border border-gray-300 bg-white mb-[24px] mr-2">
       <svg
         className="w-5 h-5"
@@ -24,6 +25,9 @@ function SearchInput() {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
+      <div className="transform scale-150 cursor-pointer hover:scale-170">
+        <IoCloseSharp />
+      </div>
     </div>
   );
 }
