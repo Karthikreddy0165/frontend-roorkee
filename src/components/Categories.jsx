@@ -34,7 +34,12 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     setBeneficiaries,
     statesFromApi,
     setStatesFromApi,
+    departments,
   } = useContext(FilterContext);
+
+  useEffect(() => {
+    setIsModalOpen(false);
+  }, [states, beneficiaries, departments]);
 
   // Close the toast after a certain time
   useEffect(() => {
