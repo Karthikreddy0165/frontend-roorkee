@@ -21,7 +21,7 @@ export default function Saved() {
   };
 
 
-  // console.log(beneficiaries, "bsjlhgiousdbgiusd")
+  // console.log(authState.token, "authtoken")
 
   useEffect(() => {
     if (!authState.token) {
@@ -33,7 +33,6 @@ export default function Saved() {
         setDataOfApi({});
 
         let url = `http://65.0.103.91/api/saved-schemes/filter/?limit=10&page=${currentPage}`;
-
 
         const myHeaders = new Headers();
 
@@ -67,7 +66,7 @@ export default function Saved() {
         // console.log(data, "saveddata")
         setDataOfApi(data);
         setTotalPages(Math.ceil(data.count / 10));
-        // console.log("Data fetched and state updated:", data);
+        console.log("Data fetched and state updated:", data);
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }

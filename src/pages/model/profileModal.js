@@ -349,7 +349,7 @@ const ProfileModal = ({ onClose }) => {
                 </div>
 
                 <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                  {/* <label className="block mb-2 text-[12px] font-semibold text-black">
                     Minority
                   </label>
                   <select
@@ -361,6 +361,20 @@ const ProfileModal = ({ onClose }) => {
                     <option value="">Select minority status</option>
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
+                  </select> */}
+                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                    BPL Card Holder
+                  </label>
+                  <select
+                    name="bpl_card_holder"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    value={profileData.bpl_card_holder}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="Maybe">Maybe</option>
                   </select>
                 </div>
               </div>
@@ -385,19 +399,18 @@ const ProfileModal = ({ onClose }) => {
                   </select>
                 </div>
                 <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
-                    BPL Card Holder
+                <label className="block mb-2 text-[12px] font-semibold text-black">
+                    Disability
                   </label>
                   <select
-                    name="bpl_card_holder"
+                    name="disability"
                     className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
-                    value={profileData.bpl_card_holder}
+                    value={profileData.disability}
                     onChange={handleChange}
                   >
-                    <option value="">Select</option>
+                    <option value="">Select disability status</option>
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
-                    <option value="Maybe">Maybe</option>
                   </select>
                 </div>
               </div>
@@ -422,18 +435,19 @@ const ProfileModal = ({ onClose }) => {
                   </select>
                 </div>
                 <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
-                    Disability
+                <label className="block mb-2 text-[12px] font-semibold text-black">
+                    Employment
                   </label>
                   <select
-                    name="disability"
+                    name="community"
                     className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
-                    value={profileData.disability}
+                    value={profileData.employment}
                     onChange={handleChange}
                   >
-                    <option value="">Select disability status</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
+                    <option value="">Select Employed Status</option>
+                    <option value="General">Employed</option>
+                    <option value="OBC">Self-employed / Business</option>
+                    <option value="SC">Unemployed</option>
                   </select>
                 </div>
               </div>
@@ -499,23 +513,6 @@ const ProfileModal = ({ onClose }) => {
                 </div>
 
                 <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
-                    Employment
-                  </label>
-                  <select
-                    name="community"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
-                    value={profileData.employment}
-                    onChange={handleChange}
-                  >
-                    <option value="">Select Employed Status</option>
-                    <option value="General">Employed</option>
-                    <option value="OBC">Self-employed / Business</option>
-                    <option value="SC">Unemployed</option>
-                  </select>
-                </div>
-              </div>
-              <div className="flex-1">
                 <label className="block mb-2 text-[12px] font-semibold text-black">
                   Annual Income (in lakhs)
                 </label>
@@ -537,7 +534,31 @@ const ProfileModal = ({ onClose }) => {
                   onChange={handleSliderChange}
                   className="w-full mt-2 custom-slide"
                 />
+                </div>
               </div>
+              {/* <div className="flex-1">
+                <label className="block mb-2 text-[12px] font-semibold text-black">
+                  Annual Income (in lakhs)
+                </label>
+                <input
+                  type="text"
+                  name="income"
+                  className="w-full h-[44px] border border-gray-300 p-2 rounded-lg bg-gray-100 text-[12px] font-semibold text-black"
+                  placeholder="Enter your income"
+                  value={profileData.income}
+                  onChange={handleChange}
+                />
+                <input
+                  type="range"
+                  name="incomeRange"
+                  min="0"
+                  max="20"
+                  step="1"
+                  value={profileData.income}
+                  onChange={handleSliderChange}
+                  className="w-full mt-2 custom-slide"
+                />
+              </div> */}
             </div>
 
             <hr className="w-full mt-4 mb-2" />

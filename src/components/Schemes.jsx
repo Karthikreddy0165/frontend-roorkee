@@ -52,6 +52,7 @@ export default function Schemes() {
           let data = await response.json();
           setDataOfApi(data);
           setTotalPages(Math.ceil(data.count/10));
+          // console.log(data, 'schemedata')
           localStorage.setItem(url, JSON.stringify(data));
       } catch (error) {
         console.error("Failed to fetch data:", error);
