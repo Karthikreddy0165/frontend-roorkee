@@ -8,7 +8,6 @@ import image02 from "../assets/Image002.png";
 import image03 from "../assets/Image003.png";
 import image04 from "../assets/Image004.png";
 
-
 import Image from "next/image";
 
 import { useTabContext } from "@/Context/TabContext";
@@ -23,9 +22,9 @@ const App = () => {
     router.push("/schemes");
   };
 
-  const handleClickFindrightSchemeForYOu =() =>{
-    router.push("/preferences")
-  }
+  const handleClickFindrightSchemeForYOu = () => {
+    router.push("/preferences");
+  };
 
   const handleSchemesClick = () => {
     setActiveTab("Schemes");
@@ -64,8 +63,7 @@ const App = () => {
             {/* Left Div */}
             <div className="flex flex-col w-[482px] items-start gap-[20px]">
               <h1 className="text-[#3F3BE1] font-inter text-[40px] font-semibold">
-              Empowering the
-              marginalized community
+                Empowering the marginalized community
               </h1>
               <p className="text-[#424242] font-inter text-[16px] font-normal leading-[180%]">
                 Helping all communities across India find personalized schemes,
@@ -118,12 +116,11 @@ const App = () => {
                 src={image04}
                 alt="Image loading..."
               />
-
             </div>
           </div>
 
           {/* Second Row */}
-          <div className="flex flex-col items-center w-full p-8 bg-gradient-to-b from-white to-[#FDFBF6] mt-12">
+          <div className="flex flex-col items-center w-full p-8 bg-gradient-to-b from-white to-[#FBFBFE] mt-12">
             <div className="self-stretch flex justify-center">
               <p className="text-center text-[#3431BB] font-inter text-[16px] font-normal leading-normal">
                 HOW IT WORKS
@@ -137,11 +134,11 @@ const App = () => {
 
             <div className="steps flex h-[155px] gap-[20px] items-center mt-4 justify-content-center  ">
               <div>
-                <p className="text-[#C89456] font-inter text-[14px] font-semibold leading-normal">
+                <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
                   Step 1
                 </p>
-                <div className="containt flex h-[140px] w-[318px] justify-center items-center gap-[8px] flex-[1_0_0] self-stretch rounded-[8px] border border-[#C89456]">
-                  <div className="flex w-[60px] h-[60px] pt-[12px] pr-[11.5px] pb-[12px] pl-[12.5px] justify-center items-center rounded-full bg-[#F6EEE4]">
+                <div className="containt flex h-[140px] w-[318px] justify-center items-center gap-[8px] flex-[1_0_0] self-stretch rounded-[8px] border border-[#3F3BE1]">
+                  <div className="flex w-[60px] h-[60px] pt-[12px] pr-[11.5px] pb-[12px] pl-[12.5px] justify-center items-center rounded-full bg-[#3F3BE1] bg-opacity-[10%]">
                     <HiOutlineClipboardDocumentList className="h-[31.5px] w-[31.5px]" />
                   </div>
                   <div className="text-[#424242] w-[8rem] font-inter text-base font-normal leading-normal">
@@ -150,11 +147,11 @@ const App = () => {
                 </div>
               </div>
               <div>
-                <p className="text-[#C89456] font-inter text-[14px] font-semibold leading-normal">
+                <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
                   Step 2
                 </p>
-                <div className="containt flex h-[140px] w-[318px] justify-center items-center gap-[8px] flex-[1_0_0] self-stretch rounded-[8px] border border-[#C89456]">
-                  <div className="flex w-[60px] h-[60px] pt-[12px] pr-[11.5px] pb-[12px] pl-[12.5px] justify-center items-center rounded-full bg-[#F6EEE4]">
+                <div className="containt flex h-[140px] w-[318px] justify-center items-center gap-[8px] flex-[1_0_0] self-stretch rounded-[8px] border border-[#3F3BE1]">
+                  <div className="flex w-[60px] h-[60px] pt-[12px] pr-[11.5px] pb-[12px] pl-[12.5px] justify-center items-center rounded-full bg-[#3F3BE1] bg-opacity-[10%]">
                     <HiOutlineClipboardDocumentList className="h-[31.5px] w-[31.5px]" />
                   </div>
                   <div className="text-[#424242] w-[9.5rem] line-clamp-2 font-inter text-[16px] font-normal leading-normal">
@@ -163,11 +160,11 @@ const App = () => {
                 </div>
               </div>
               <div>
-                <p className="text-[#C89456] font-inter text-[14px] font-semibold leading-normal">
+                <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
                   Step 3
                 </p>
-                <div className="containt flex h-[140px] w-[318px] justify-center items-center gap-[8px] flex-[1_0_0] self-stretch rounded-[8px] border border-[#C89456]">
-                  <div className="flex w-[60px] h-[60px] pt-[12px] pr-[11.5px] pb-[12px] pl-[12.5px] justify-center items-center rounded-full bg-[#F6EEE4]">
+                <div className="containt flex h-[140px] w-[318px] justify-center items-center gap-[8px] flex-[1_0_0] self-stretch rounded-[8px] border border-[#3F3BE1]">
+                  <div className="flex w-[60px] h-[60px] pt-[12px] pr-[11.5px] pb-[12px] pl-[12.5px] justify-center items-center rounded-full bg-[#3F3BE1] bg-opacity-[10%]">
                     <HiOutlineClipboardDocumentList className="h-[31.5px] w-[31.5px]" />
                   </div>
                   <p className="text-[#424242] w-[7rem] line-clamp-2 font-inter text-[16px] font-normal leading-normal ">
@@ -177,14 +174,18 @@ const App = () => {
               </div>
             </div>
             <div className="self-stretch flex justify-center mt-8 ">
-              <button className="text-center text-white font-inter text-[16px] font-normal leading-normal bg-[#3431BB] pt-[10px] pr-[44px] pb-[10px] pl-[44px] rounded-[8px] hover:bg-blue-700" onClick={handleClickFindrightSchemeForYOu}>
+              <button
+                className="text-center text-white font-inter text-[16px] font-normal leading-normal bg-[#3431BB] pt-[10px] pr-[44px] pb-[10px] pl-[44px] rounded-[8px] hover:bg-blue-700"
+                onClick={handleClickFindrightSchemeForYOu}
+              >
                 Find the Right scheme for me
               </button>
             </div>
           </div>
 
           {/* Third row */}
-          <div className=""
+          <div
+            className="mb-16"
             style={{
               marginTop: "3vw",
               width: "70w",
@@ -230,7 +231,7 @@ const App = () => {
             </div>
           </div>
 
-{/* 4th row*/}
+          {/* 4th row*/}
           <div>
             <svg
               width="1439"
