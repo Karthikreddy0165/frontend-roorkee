@@ -26,7 +26,7 @@ function SearchInput() {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       <div className="transform scale-150 cursor-pointer hover:scale-170">
-        <IoCloseSharp />
+        <IoCloseSharp onClick={()=>{setSearchQuery('')}}/>
       </div>
     </div>
   );
