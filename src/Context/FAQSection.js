@@ -12,7 +12,7 @@ const FAQSection = () => {
   const renderHeader = (title, isExpanded) => (
     <div className="flex items-center justify-between w-full p-4  rounded-lg cursor-pointer ">
       <span className="not-italic text-black font-inter text-base font-normal leading-normal">{title}</span>
-      {isExpanded ? <FaMinus className="text-black text-sm" /> : <FaPlus className="text-black text-sm" />}
+      {/* {isExpanded ? <FaMinus className="text-black text-sm" /> : <FaPlus className="text-black text-sm" />} */}
     </div>
   );
 
