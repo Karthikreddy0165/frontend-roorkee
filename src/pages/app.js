@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { FaBriefcase, FaGraduationCap } from "react-icons/fa6";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { PiNotepadBold } from "react-icons/pi";
+import { useState } from "react";
 
 import image01 from "../assets/Image001.png";
 import image02 from "../assets/Image002.png";
@@ -19,7 +20,7 @@ const App = () => {
   const { activeTab, setActiveTab } = useTabContext();
 
   const handleClickGetStarted = () => {
-    router.push("/schemes");
+    router.push("/login");
   };
 
   const handleClickFindrightSchemeForYOu = () => {
