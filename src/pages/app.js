@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import { FaBriefcase, FaGraduationCap } from "react-icons/fa6";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { PiNotepadBold } from "react-icons/pi";
+import { useState } from "react";
+import { useAuth } from "@/Context/AuthContext";
 
 import image01 from "../assets/Image001.png";
 import image02 from "../assets/Image002.png";
@@ -15,12 +17,17 @@ import NavBar from "@/components/NavBar";
 import VerifiedStatus from "@/components/isVerfiedComponent";
 import FAQSection from "src/Context/FAQSection.js"; // Import FAQSection
 const App = () => {
+  const { authState, logout } = useAuth();
   const router = useRouter();
   const { activeTab, setActiveTab } = useTabContext();
 
   const handleClickGetStarted = () => {
-    router.push("/schemes");
+    router.push("/login");
   };
+
+  const handleClickAfterLogin =() =>{
+    router.push("/schemes")
+  }
 
   const handleClickFindrightSchemeForYOu = () => {
     router.push("/preferences");
@@ -69,12 +76,26 @@ const App = () => {
                 Helping all communities across India find personalized schemes,
                 jobs, and scholarships based on eligibility.
               </p>
+
+
+              {authState.token ? (
               <button
+                className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#3431BB] text-white mb-[12px] mt-[12px] hover:bg-blue-700"
+                onClick={handleClickAfterLogin}
+              >
+                My Schemes
+              </button>
+              ) : (
+                <button
                 className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#3431BB] text-white mb-[12px] mt-[12px] hover:bg-blue-700"
                 onClick={handleClickGetStarted}
               >
                 Get Started
               </button>
+              )}
+
+
+
               <div className="flex w-[472px] h-[59px] items-start gap-[40px]">
                 <div className="flex flex-col justify-center items-start gap-[8px] flex-1 border-r-[1px] border-[#EDEDED]">
                   <div className="text-center text-[#000] font-inter text-[14px] font-semibold">
@@ -97,17 +118,17 @@ const App = () => {
             <div className="w-[482px] h-[300px]">
               {/* Right content here */}
               <Image
-                className="relative h-[334px] w-[228px] rounded-tl-[10rem] -right-[220px] pb-8"
+                className="relative h-[334px] w-[258px] rounded-tl-[10rem] -right-[190px] pb-8"
                 src={image01}
                 alt="Image loading..."
               />
               <Image
-                className="relative h-[120.7px] w-[120px] rounded-tl-[10rem] rounded-tr-[10rem] rounded-bl-[10rem] -right-[90px] bottom-[280px]"
+                className="relative h-[120.7px] w-[120px] rounded-tl-[10rem] rounded-tr-[10rem] rounded-bl-[10rem] -right-[60px] bottom-[280px]"
                 src={image02}
                 alt="Image loading..."
               />
               <Image
-                className="relative bg-white h-[160px] w-[155px] rounded-tl-[4rem] -right-[100px] bottom-[260px] p-2"
+                className="relative bg-white h-[160px] w-[155px] rounded-tl-[4rem] -right-[70px] bottom-[260px] p-2"
                 src={image03}
                 alt="Image loading..."
               />
