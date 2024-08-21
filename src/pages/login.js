@@ -214,7 +214,7 @@ const login = () => {
                   placeholder="Enter your email"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.email}
+                  value={formik.values.email.toLowerCase()}
                 />
               </div>
               <div className="mt-[24px] relative">

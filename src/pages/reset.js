@@ -69,7 +69,7 @@ const EnterResPass = () => {
                             <input
                                 type="email"
                                 placeholder="Enter your email"
-                                value={email}
+                                value={email.toLowerCase()}
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="px-4 py-2 border rounded-lg w-full"
                             />
