@@ -263,7 +263,7 @@ const CreateAcc01 = () => {
                     placeholder="Enter your email"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.email}
+                    value={formik.values.email.toLowerCase()}
                   />
                 </div>
                 <div className="relative mt-6">
