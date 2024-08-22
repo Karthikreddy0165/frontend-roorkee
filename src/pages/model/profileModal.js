@@ -1,11 +1,22 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState,useContext } from "react";
 import { MdClose } from "react-icons/md";
 import { useAuth } from "../../Context/AuthContext";
 import { MdVerified } from "react-icons/md";
 import { VscUnverified } from "react-icons/vsc";
+import FilterContext from "@/Context/FilterContext";
+
 
 const ProfileModal = ({ onClose }) => {
+  const {
+    states,
+    setStates,
+    statesFromApi,
+    beneficiaries,
+    setBeneficiaries,
+    
+  } = useContext(FilterContext);
   const { authState } = useAuth();
+  const [isSaved, setIsSaved] = useState(false);
   const [stateOptions, setStateOptions] = useState([]);
   const [educationOptions, setEducationOptions] = useState([]);
   const [profileData, setProfileData] = useState({
@@ -25,11 +36,10 @@ const ProfileModal = ({ onClose }) => {
   const [loading, setLoading] = useState(true);
   const [emailData, setEmailData] = useState(null);
   const [sentEmailText, setSentEmailText] = useState(false);
-  // const [sentEmailToast, setSentEmailToast] = useState(false);
   const modalRef = useRef(null);
   
 
-  const notify = () => toast('🦄 Wow so easy!')
+
 
   const resendEmail = async()=>{
     setSentEmailText(true);
@@ -45,9 +55,7 @@ const ProfileModal = ({ onClose }) => {
       const response = await fetch("http://65.0.103.91:80/api/resend-verification-email/", requestOptions)
       const data = await response.json()
       if (response.ok){
-        setSentEmailText(false)
-        notify()
-
+        setSentEmailText(false);
       }
     }
     
@@ -84,6 +92,7 @@ const ProfileModal = ({ onClose }) => {
             income: pData.income || "",
             employment: pData.employment || "",
           });
+          // console.log(pData, "jvjgvvgjv")
         } catch (error) {
           console.error("Error fetching profile data:", error);
         } finally {
@@ -93,7 +102,7 @@ const ProfileModal = ({ onClose }) => {
     };
 
     fetchProfileData();
-  }, [authState.token]);
+  }, [authState.token, isSaved]);
 
   useEffect(() => {
     document.body.classList.add("overflow-hidden");
@@ -184,6 +193,7 @@ const ProfileModal = ({ onClose }) => {
     }));
   };
 
+
   const handleSave = async () => {
     if (authState.token) {
       const requestOptions = {
@@ -213,6 +223,18 @@ const ProfileModal = ({ onClose }) => {
           }),
         });
 
+        localStorage.setItem("profiledata",JSON.stringify(profileData))
+        localStorage.setItem("prince",JSON.stringify(''))
+
+        // console.log(localStorage.getItem("prince"),"pdsouhtosdh")
+        // localStorage.setItem("pofiledata","prince ko ")
+        // setBeneficiaries([profileData.category]);
+        // const selectedValue = profileData.state_of_residence;
+        // const selectedState = statesFromApi.find((it) => it.state_name === selectedValue);
+        // if (selectedState) {
+        //   setStates([[selectedState.id], [selectedState.state_name]]);
+        // }
+        setIsSaved(true)
         onClose();
       } catch (error) {
         console.error("Error saving profile data:", error);
@@ -281,7 +303,7 @@ const ProfileModal = ({ onClose }) => {
                   <div className="relative flex-grow">
                     <input
                       type="text"
-                      className="w-full h-[44px] border border-gray-300 p-2 pl-10 rounded-lg bg-gray-100 text-[12px] font-semibold text-black cursor-none"
+                      className="w-full h-[44px] border border-gray-300 p-2 pl-10 rounded-lg bg-gray-100 text-[12px] font-semibold text-black"
                       value={emailData?.email || ""}
                       onChange={handleChange}
                       readOnly
@@ -292,9 +314,15 @@ const ProfileModal = ({ onClose }) => {
                       <VscUnverified className="absolute top-3 left-3 text-red-500" />
                     )}
                   </div>
-                  <button className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431BB] text-white hover:bg-blue-700 text-sm" onClick={resendEmail}>
-                    {sentEmailText ? "sending..." : "resend email"}
-                  </button>
+                  {!emailData?.is_email_verified && (
+  <button 
+    className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431BB] text-white hover:bg-blue-700 text-sm" 
+    onClick={resendEmail}
+  >
+    {sentEmailText ? "sending..." : "resend email"}
+  </button>
+)}
+
                 </div>
               </div>
               <div className="flex gap-4 w-full ">
@@ -343,8 +371,8 @@ const ProfileModal = ({ onClose }) => {
                     <option value="">Select category</option>
                     <option value="General">General</option>
                     <option value="OBC">OBC</option>
-                    <option value="SC">SC</option>
-                    <option value="ST">ST</option>
+                    <option value="SC">SC/ST</option>
+                    {/* <option value="ST">ST</option> */}
                   </select>
                 </div>
 
