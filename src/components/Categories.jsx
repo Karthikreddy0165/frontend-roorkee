@@ -34,12 +34,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     setBeneficiaries,
     statesFromApi,
     setStatesFromApi,
-    departments,
   } = useContext(FilterContext);
-
-  useEffect(() => {
-    setIsModalOpen(false);
-  }, [states, beneficiaries, departments]);
 
   // Close the toast after a certain time
   useEffect(() => {
@@ -242,21 +237,30 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     });
   }
 
-  const handleBeneficiaryTag = (event) => {
-    event.stopPropagation();
-    var beneficiary = event.target.innerText
-    if(!beneficiary.includes("OBC") && !beneficiary.includes("SC")) return;
-    if(beneficiaries.includes("SC")) return;
-    if(beneficiaries.includes("OBC")) return;
-    if(beneficiary.includes("SC")) {
-      setBeneficiaries(prev => [...prev, "SC"]);
-    }
-    else if(beneficiary.includes("OBC")) {
-      setBeneficiaries(prev => [...prev, "OBC"]);
-    }
+  const handleBeneficiaryTag = (e) => {
+    e.stopPropagation();
+    var beneficiary = e.target.innerText;
+    if(!beneficiary.includes("OBC") && !beneficiary.includes("SC") && !beneficiaries.includes(beneficiary)) {
+      setBeneficiaries(prev => [...prev, beneficiary]);
+      // console.log(beneficiaries);
+    };
+    if(beneficiary.includes("OBC") && !beneficiaries.includes("OBC")) setBeneficiaries(prev => [...prev, "OBC"])
+    if(beneficiary.includes("SC") && !beneficiaries.includes("SC") || beneficiary == "Scheduled caste") setBeneficiaries(prev => [...prev, "SC"])
   }
+  // const handleBeneficiaryTag = (event) => {
+  //   event.stopPropagation();
+  //   var beneficiary = event.target.innerText
+  //   if(!beneficiary.includes("OBC") && !beneficiary.includes("SC")) return;
+  //   if(beneficiaries.includes("SC")) return;
+  //   if(beneficiaries.includes("OBC")) return;
+  //   if(beneficiary.includes("SC")) {
+  //     setBeneficiaries(prev => [...prev, "SC"]);
+  //   }
+  //   else if(beneficiary.includes("OBC")) {
+  //     setBeneficiaries(prev => [...prev, "OBC"]);
+  //   }
+  // }
 // console.log(dataFromApi.results,"resultes")
-// console.log('departmentsName')
 
 // const totalSchemes = (activeTab != "Saved" ? dataFromApi.results: dataFromApi)
 
@@ -264,16 +268,15 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     <>
   {/* We have found {378} schemes based on your profile */}
   <div>
-    {(dataFromApi.results).map((item) => {
-      return(
+    {(activeTab != "Saved" ? dataFromApi.results : dataFromApi).map((item) => (
       item.title && (
         <div
-        className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
-        key={item.id}
-        style={{
-          backgroundColor: item.id == sidePannelSelected ? "#DDD6FE" : "",
+          className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
+          key={item.id}
+          style={{
+            backgroundColor: item.id == sidePannelSelected ? "#DDD6FE" : "",
           }}
-          >
+        >
           <div onClick={() => handleClick(item.id)}>
             {/* <button
               className="text-center text-[12px] px-[8px] py-[6px] rounded-[4px] gap-[10px]"
@@ -299,14 +302,12 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                 <span className="font-semibold">Description: </span>
                 {item.description}
               </p>
-
-              
-              {item.department && <p className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[26px] line-clamp-2 text-decoration-line: underline ">
+              <p className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[26px] line-clamp-2 text-decoration-line: underline ">
                 {item.department.department_name}
-              </p>}
+              </p>
 
               
-              {item.department && <div className="flex gap-5 mb-[16px]">
+              <div className="flex gap-5 mb-[16px]">
                 <button className="flex items-center justify-center pr-[12px] pl-[12px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium py-2 hover:border-onclick-btnblue hover:text-onclick-btnblue" onClick={(event) => handleStateTag(event)}>
                   {item.department.state}
                 </button>
@@ -321,7 +322,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                       {item.beneficiaries[0].beneficiary_type}
                     </button>
                   )}
-              </div>}
+              </div>
             </div>
           </div>
 
@@ -337,7 +338,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
           </div>
         </div>
       )
-  )})}
+    ))}
 
     {/* for pagination */}
     {totalPages !== 0 && (
