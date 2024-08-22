@@ -4,17 +4,16 @@ import { useAuth } from "../../Context/AuthContext";
 import { MdVerified } from "react-icons/md";
 import { VscUnverified } from "react-icons/vsc";
 import FilterContext from "@/Context/FilterContext";
+// import 
 
 
 const ProfileModal = ({ onClose }) => {
   const {
-    states,
     setStates,
-    statesFromApi,
-    beneficiaries,
     setBeneficiaries,
-    
+    statesFromApi
   } = useContext(FilterContext);
+
   const { authState } = useAuth();
   const [isSaved, setIsSaved] = useState(false);
   const [stateOptions, setStateOptions] = useState([]);
@@ -92,7 +91,6 @@ const ProfileModal = ({ onClose }) => {
             income: pData.income || "",
             employment: pData.employment || "",
           });
-          // console.log(pData, "jvjgvvgjv")
         } catch (error) {
           console.error("Error fetching profile data:", error);
         } finally {
@@ -173,7 +171,6 @@ const ProfileModal = ({ onClose }) => {
             requestOptions
           );
           const data = await response.json();
-          // console.log(data, "in sfgfgfgdfgfd")
           setEmailData(data);
         } catch (error) {
           console.error("Error fetching email data:", error);
@@ -224,16 +221,21 @@ const ProfileModal = ({ onClose }) => {
         });
 
         localStorage.setItem("profiledata",JSON.stringify(profileData))
-        localStorage.setItem("prince",JSON.stringify(''))
+        const selectedValue = profileData.state;
+      
+        const selectedState = statesFromApi.find(
+          (it) => it.state_name === selectedValue
+        );
+    
+        if (selectedState) {
+          setStates([[selectedState.id], [selectedState.state_name]]);
+        }
+      if (profileData.community){
+        setBeneficiaries([profileData.community])
+      }
 
-        // console.log(localStorage.getItem("prince"),"pdsouhtosdh")
-        // localStorage.setItem("pofiledata","prince ko ")
-        // setBeneficiaries([profileData.category]);
-        // const selectedValue = profileData.state_of_residence;
-        // const selectedState = statesFromApi.find((it) => it.state_name === selectedValue);
-        // if (selectedState) {
-        //   setStates([[selectedState.id], [selectedState.state_name]]);
-        // }
+
+
         setIsSaved(true)
         onClose();
       } catch (error) {
@@ -250,7 +252,6 @@ const ProfileModal = ({ onClose }) => {
     }));
   };
 
-  // console.log("authstate in profile", authState);
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       

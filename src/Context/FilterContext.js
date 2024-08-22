@@ -20,10 +20,32 @@ function FilterProvider({ children }){
         }
         else{
           const data = await res.json();
+          const dataFromLocalStorage = JSON.parse(localStorage.getItem("profiledata"));
+          if (dataFromLocalStorage?.community
+          ) {
+            setBeneficiaries([dataFromLocalStorage.community
+            ]);
+          } else {
+            setBeneficiaries([]);
+          }
+          const selectedValue = dataFromLocalStorage?.state;
+          // console.log(statesFromApi, "select");
+          const selectedState = data.find(
+            (it) => it.state_name === selectedValue
+            );
+          console.log(selectedValue,"hahahahahahahahah");
+      
+          if (selectedState) {
+            setStates([[selectedState.id], [selectedState.state_name]]);
+          } else {
+            setStates([]);
+          }
           setStatesFromApi(data);
         }
       }
       fetchedStates();
+      // setStates(JSON.parse(localStorage.getItem("profiledata")).state || [])
+   
   },[])
 
   return (

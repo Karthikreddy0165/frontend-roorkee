@@ -1,8 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import FilterContext from "@/Context/FilterContext";
 import { useAuth } from "@/Context/AuthContext";
-// import { json } from "stream/consumers";
+import PreferenceContext from "@/Context/preferenceContext";
 function SelectedFilters() {
+
+  const { state, beneficiarie } = useContext(PreferenceContext);
+
+    // console.log(state, "state");
+    // console.log(beneficiarie, "beneficiaries");
+
+
   const {
     states,
     setStates,
@@ -15,6 +22,8 @@ function SelectedFilters() {
     setSponseredBy,
     setFundingBy,
   } = useContext(FilterContext);
+
+
   const { authState } = useAuth();
   const [newSponser, setNewSponser] = useState([]);
   const [newState, setNewState] = useState([]);
@@ -27,23 +36,15 @@ function SelectedFilters() {
     setNewDepartment(Object.keys(departments) ? Object.keys(departments) : []);
   }, [sponseredBy, states, departments]);
 
-  const kisiOrNamse = (localStorage.getItem("profiledata"))
-  // console.log(kisiOrNamse,"kisiornamse")
   useEffect(() => {
     const fetchEmailData = async () => {
       if (authState.token) {
-        // const profiledataa = localStorage.getItem("profiledata")
-        // console.log(mypreferences, "ullaaa")
-        const profiledataa = localStorage.getItem("profiledata");
-        // const mypreferences = JSON.parse(profiledataa)
-        // console.log(profiledataa, "proi")
-        // setProfileData(profiledataa)
-        setProfileData(JSON.parse(profiledataa));
+        // console.log(state, "state")
       }
     };
 
     fetchEmailData();
-  },[kisiOrNamse]);
+  },[]);
 
   const clearAllFilters = () => {
     setStates([]);
@@ -62,19 +63,18 @@ function SelectedFilters() {
     setNewDepartment([]);
     setNewState([]);
     setBeneficiaries([]);
-
+    const preferenceData = JSON.parse(localStorage.getItem("profiledata"));
+    console.log(preferenceData);
     // Set the new default state values
-    if (profileData.community
+    if (preferenceData.community
     ) {
-      setBeneficiaries([profileData.community
+      setBeneficiaries([preferenceData.community
       ]);
     } else {
       setBeneficiaries([]);
     }
 
-    // console.log(profileData, "profiledatafinal");
-    // console.log(profileData,"profiledatafilnal")
-    const selectedValue = profileData.state;
+    const selectedValue = preferenceData.state;
     // console.log(statesFromApi, "select");
     const selectedState = statesFromApi.find(
       (it) => it.state_name === selectedValue
