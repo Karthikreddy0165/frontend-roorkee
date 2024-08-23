@@ -68,13 +68,13 @@ function SelectedFilters() {
     // Set the new default state values
     if (preferenceData.community
     ) {
-      setBeneficiaries([preferenceData.community
+      setBeneficiaries([preferenceData?.community
       ]);
     } else {
       setBeneficiaries([]);
     }
 
-    const selectedValue = preferenceData.state;
+    const selectedValue = preferenceData?.state;
     // console.log(statesFromApi, "select");
     const selectedState = statesFromApi.find(
       (it) => it.state_name === selectedValue
