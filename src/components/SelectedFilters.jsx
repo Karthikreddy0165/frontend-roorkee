@@ -66,7 +66,7 @@ function SelectedFilters() {
     const preferenceData = JSON.parse(localStorage.getItem("profiledata"));
     console.log(preferenceData);
     // Set the new default state values
-    if (preferenceData.community
+    if (preferenceData?.community
     ) {
       setBeneficiaries([preferenceData?.community
       ]);
