@@ -338,10 +338,10 @@ function SelectedFilters() {
       </div>
       <div>
         <button
-          className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431BB] text-white hover:bg-blue-700 text-sm"
+          className="flex-shrink-0 px-4 py-2 rounded-lg  border border-gray-400 bg-white text-gray-600 font-inter text-sm font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
           onClick={clearAllFilters}
         >
-          All schemes
+          My Preference
         </button>
       </div>
     </div>
@@ -350,14 +350,14 @@ function SelectedFilters() {
       <div className="mt-0 mb-5 flex gap-2 flex-wrap">
         <div>
           <p className="text-[#616161] text-sm mb-1 italic">Selected Filters</p>
-          <button className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue">
+          <button className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium hover:border-onclick hover:text-onclick-btnblue">
             None
           </button>
         </div>
       </div>
       <div>
         <button
-          className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431BB] text-white hover:bg-blue-700 text-sm"
+          className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-sm"
           onClick={handleDefaultFilter}
         >
           My Preference

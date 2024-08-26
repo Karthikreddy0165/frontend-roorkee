@@ -283,7 +283,7 @@ const CreateAcc01 = () => {
                     value={formik.values.password}
                   />
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-4" onClick={togglePasswordVisibility}>
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    {showPassword ? <FaEye /> : <FaEyeSlash />}
                   </div>
                 </div>
 
