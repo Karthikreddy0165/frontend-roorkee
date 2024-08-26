@@ -237,7 +237,7 @@ const login = () => {
                   className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 cursor-pointer mb-1 "
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  {showPassword ? <FaEye /> : <FaEyeSlash />}
                 </div>
               </div>
 
