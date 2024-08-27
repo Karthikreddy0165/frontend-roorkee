@@ -337,7 +337,7 @@ function SelectedFilters() {
         </div>
       </div>
       <div>
-        <button
+      <button
           className="flex-shrink-0 px-4 py-2 rounded-lg  border border-gray-400 bg-white text-gray-600 font-inter text-sm font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
           onClick={clearAllFilters}
         >
@@ -356,7 +356,9 @@ function SelectedFilters() {
         </div>
       </div>
       <div>
+        
         <button
+        
           className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-sm"
           onClick={handleDefaultFilter}
         >
