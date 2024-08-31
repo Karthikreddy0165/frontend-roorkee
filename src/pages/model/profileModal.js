@@ -4,7 +4,6 @@ import { useAuth } from "../../Context/AuthContext";
 import { MdVerified } from "react-icons/md";
 import { VscUnverified } from "react-icons/vsc";
 import FilterContext from "@/Context/FilterContext";
-// import 
 
 
 const ProfileModal = ({ onClose }) => {
@@ -30,7 +29,7 @@ const ProfileModal = ({ onClose }) => {
     disability: "",
     occupation: "",
     income: "",
-    employment: "",
+    employment_status: "",
   });
   const [loading, setLoading] = useState(true);
   const [emailData, setEmailData] = useState(null);
@@ -72,10 +71,11 @@ const ProfileModal = ({ onClose }) => {
           };
 
           const profileResponse = await fetch(
-            `http://65.0.103.91:80/api/user/profile/`,
+            "http://65.0.103.91:80/api/user/profile/",
             requestOptions
           );
           const pData = await profileResponse.json();
+          console.log(pData, "fetching Saved data")
 
           setProfileData({
             name: pData.name || "",
@@ -89,8 +89,8 @@ const ProfileModal = ({ onClose }) => {
             disability: pData.disability === true ? "Yes" : "No",
             occupation: pData.occupation || "",
             income: pData.income || "",
-            employment: pData.employment || "",
-          });
+            employment_status: pData.employment_status || ""
+          })
         } catch (error) {
           console.error("Error fetching profile data:", error);
         } finally {
@@ -113,7 +113,7 @@ const ProfileModal = ({ onClose }) => {
     const fetchStateOptions = async () => {
       try {
         const response = await fetch(
-          `http://65.0.103.91:80/api/choices/state/`
+          "http://65.0.103.91:80/api/choices/state/"
         );
         const data = await response.json();
         const formattedData = data.map((item) => item[0]);
@@ -126,7 +126,7 @@ const ProfileModal = ({ onClose }) => {
     const fetchEducationOptions = async () => {
       try {
         const response = await fetch(
-          `http://65.0.103.91:80/api/choices/education/`
+         " http://65.0.103.91:80/api/choices/education/"
         );
         const data = await response.json();
         const formattedData = data.map((item) => item[0]);
@@ -202,7 +202,7 @@ const ProfileModal = ({ onClose }) => {
       };
 
       try {
-        await fetch(`http://65.0.103.91:80/api/user/profile/`, {
+        await fetch("http://65.0.103.91:80/api/user/profile/", {
           ...requestOptions,
           body: JSON.stringify({
             name: profileData.name,
@@ -216,12 +216,14 @@ const ProfileModal = ({ onClose }) => {
             education: profileData.education,
             occupation: profileData.occupation,
             income: profileData.income,
-            employment: profileData.employment,
-          }),
+            employment_status: profileData.employment_status
+          })
         });
 
         localStorage.setItem("profiledata",JSON.stringify(profileData))
+        console.log(profileData,"putting profile data")
         const selectedValue = profileData.state;
+
       
         const selectedState = statesFromApi.find(
           (it) => it.state_name === selectedValue
@@ -463,22 +465,26 @@ const ProfileModal = ({ onClose }) => {
                     ))}
                   </select>
                 </div>
+
+
                 <div className="flex-1">
                 <label className="block mb-2 text-[12px] font-semibold text-black">
                     Employment
                   </label>
                   <select
-                    name="community"
+                    name="employment_status"
                     className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
-                    value={profileData.employment}
+                    value={profileData.employment_status}
                     onChange={handleChange}
                   >
                     <option value="">Select Employed Status</option>
-                    <option value="General">Employed</option>
-                    <option value="OBC">Self-employed / Business</option>
-                    <option value="SC">Unemployed</option>
+                    <option value="Employed">Employed</option>
+                    <option value="Self-employed">Self-employed / Business</option>
+                    <option value="Unemployed">Unemployed</option>
                   </select>
                 </div>
+
+
               </div>
 
               <div className="flex gap-4 w-full">
@@ -565,29 +571,6 @@ const ProfileModal = ({ onClose }) => {
                 />
                 </div>
               </div>
-              {/* <div className="flex-1">
-                <label className="block mb-2 text-[12px] font-semibold text-black">
-                  Annual Income (in lakhs)
-                </label>
-                <input
-                  type="text"
-                  name="income"
-                  className="w-full h-[44px] border border-gray-300 p-2 rounded-lg bg-gray-100 text-[12px] font-semibold text-black"
-                  placeholder="Enter your income"
-                  value={profileData.income}
-                  onChange={handleChange}
-                />
-                <input
-                  type="range"
-                  name="incomeRange"
-                  min="0"
-                  max="20"
-                  step="1"
-                  value={profileData.income}
-                  onChange={handleSliderChange}
-                  className="w-full mt-2 custom-slide"
-                />
-              </div> */}
             </div>
 
             <hr className="w-full mt-4 mb-2" />
