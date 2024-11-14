@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 const states = ["Jammu and Kashmir", "Maharashtra", "Meghalaya", "Puducherry", "Tamil Nadu"];
 
-const DropdownSheme = forwardRef((props, ref) => {
+const DropdownScheme = forwardRef((props, ref) => {
   return (
     <div className="absolute mt-[-70px] bg-[rgb(251,251,251)] rounded-[12px] max-w-[600px] flex flex-col z-50" ref={ref}>
       <ul className="flex flex-col font-sans list-none px-[23px] text-[14px]">
@@ -17,4 +17,4 @@ const DropdownSheme = forwardRef((props, ref) => {
   );
 });
 
-export default DropdownSheme;
+export default DropdownScheme;

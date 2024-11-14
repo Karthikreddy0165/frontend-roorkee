@@ -18,8 +18,8 @@ function SelectedFilters() {
     setDepartments,
     beneficiaries,
     setBeneficiaries,
-    sponseredBy,
-    setSponseredBy,
+    sponsoredBy,
+    setSponsoredBy,
     setFundingBy,
   } = useContext(FilterContext);
 
@@ -31,10 +31,10 @@ function SelectedFilters() {
   const [profileData, setProfileData] = useState([]);
 
   useEffect(() => {
-    setNewSponser(sponseredBy[1] ? sponseredBy[1] : []);
+    setNewSponser(sponsoredBy[1] ? sponsoredBy[1] : []);
     setNewState(states[1] ? states[1] : []);
     setNewDepartment(Object.keys(departments) ? Object.keys(departments) : []);
-  }, [sponseredBy, states, departments]);
+  }, [sponsoredBy, states, departments]);
 
   useEffect(() => {
     const fetchEmailData = async () => {
@@ -51,14 +51,14 @@ function SelectedFilters() {
     setDepartments({});
     setBeneficiaries([]);
     setFundingBy([]);
-    setSponseredBy([]);
+    setSponsoredBy([]);
   };
 
   const handleDefaultFilter = () => {
     // Clear existing states
     setDepartments({});
     setFundingBy([]);
-    setSponseredBy([]);
+    setSponsoredBy([]);
     setNewSponser([]);
     setNewDepartment([]);
     setNewState([]);
@@ -95,7 +95,7 @@ function SelectedFilters() {
       <div>
         <p className="text-[#616161] text-sm mb-1 italic">Selected Filters</p>
         <div className="mt-0 mb-5 flex gap-2 flex-wrap">
-          {newState.length == 2 ? (
+          {newState.length === 2 ? (
             <div className=" flex gap-2">
               <button
                 className="flex items-center justify-center px-2 py-[5px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
@@ -155,7 +155,7 @@ function SelectedFilters() {
             <></>
           )}
 
-          {newDepartment.length == 2 ? (
+          {newDepartment.length === 2 ? (
             <div className=" flex gap-2">
               <button
                 className="flex items-center justify-center px-2 py-[5px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
@@ -215,7 +215,7 @@ function SelectedFilters() {
             <></>
           )}
 
-          {beneficiaries.length == 2 ? (
+          {beneficiaries.length === 2 ? (
             <div className=" flex gap-2">
               <button
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
@@ -275,7 +275,7 @@ function SelectedFilters() {
             <></>
           )}
 
-          {newSponser.length == 2 ? (
+          {newSponser.length === 2 ? (
             <div className=" flex gap-2">
               <button
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"

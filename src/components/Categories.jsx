@@ -71,7 +71,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
             redirect: "follow",
           };
           const response = await fetch(
-            `http://65.0.103.91:80/api/user/saved_schemes/`,
+            `http://localhost:8000/api/user/saved_schemes/`,
             requestOptions
           );
           if (!response.ok) {
@@ -120,7 +120,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
     try {
       const response = await fetch(
-        `http://65.0.103.91:80/api/save_scheme/`,
+        `http://localhost:8000/api/save_scheme/`,
         requestOptions
       );
       if (response.ok) {
@@ -158,7 +158,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       console.log("Sending unsave request for scheme_id:", scheme_id);
       console.log("Request payload:", raw);
       const response = await fetch(
-        `http://65.0.103.91:80/api/unsave_scheme/`,
+        `http://localhost:8000/api/unsave_scheme/`,
         requestOptions
       );
       const result = await response.json();
@@ -201,7 +201,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     }
   };
 
-  if (Object.keys(dataFromApi).length == 0) {
+  if (Object.keys(dataFromApi).length === 0) {
     return (
       <div className="text-onclick-btnblue mt-[120px] italic flex justify-center items-center text-[18px]">
         Loading...
@@ -223,7 +223,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     if(states[1] && states[1].includes(state)) return;
     var stateId = 0;
     for(let i = 0; i < 7; i++) {
-      if(statesFromApi[i].state_name == state) {
+      if(statesFromApi[i].state_name === state) {
         stateId = statesFromApi[i].id;
         break;
       }
@@ -245,7 +245,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       // console.log(beneficiaries);
     };
     if(beneficiary.includes("OBC") && !beneficiaries.includes("OBC")) setBeneficiaries(prev => [...prev, "OBC"])
-    if(beneficiary.includes("SC") && !beneficiaries.includes("SC") || beneficiary == "Scheduled caste") setBeneficiaries(prev => [...prev, "SC"])
+    if(beneficiary.includes("SC") && !beneficiaries.includes("SC") || beneficiary === "Scheduled caste") setBeneficiaries(prev => [...prev, "SC"])
   }
   // const handleBeneficiaryTag = (event) => {
   //   event.stopPropagation();
@@ -268,13 +268,13 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     <>
   {/* We have found {378} schemes based on your profile */}
   <div>
-    {(activeTab != "Saved" ? dataFromApi.results : dataFromApi).map((item) => (
+    {(activeTab !== "Saved" ? dataFromApi.results : dataFromApi).map((item) => (
       item.title && (
         <div
           className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
           key={item.id}
           style={{
-            backgroundColor: item.id == sidePannelSelected ? "#DDD6FE" : "",
+            backgroundColor: item.id === sidePannelSelected ? "#DDD6FE" : "",
           }}
         >
           <div onClick={() => handleClick(item.id)}>

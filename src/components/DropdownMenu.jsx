@@ -29,7 +29,7 @@ const StateDropdownMenu = () => {
       }
       else{
         setStates((prev)=>{
-          if(prev.length != 0){
+          if(prev.length !== 0){
             return [[...prev[0],value[0]],[...prev[1],value[1]]]
           }
           else{
@@ -50,7 +50,7 @@ const StateDropdownMenu = () => {
               </p>
               </div>
               <div className='w-[16.5] h-[16.5] '>
-              <input type="checkbox" value={item} checked={states.length != 0 ? states[0].includes(item[0]):false} className="ml-10 custom-checkbox pointer-events-none w-full h-full" />
+              <input type="checkbox" value={item} checked={states.length !== 0 ? states[0].includes(item[0]):false} className="ml-10 custom-checkbox pointer-events-none w-full h-full" />
               </div>
             </li>
             ))}

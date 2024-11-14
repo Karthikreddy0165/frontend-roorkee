@@ -12,9 +12,9 @@ const DepartmentDropdownMenu = () => {
   const ids = useRef([]);
   useEffect(()=>{
     async function fetchedStates(){
-      const res = await fetch(`http://65.0.103.91:80/api/departments/`);
+      const res = await fetch(`http://localhost:8000/api/departments/`);
       if (!res.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${res.status}`);
       }
       else{
         const data = await res.json();
@@ -44,7 +44,7 @@ const DepartmentDropdownMenu = () => {
       const updatedVersion = {}
       if(Object.keys(departments).includes(value)){
         Object.keys(departments).filter((i)=>{
-          if(i != value){
+          if(i !== value){
             updatedVersion[i] = departments[i]
           }
         })

@@ -12,7 +12,7 @@ export default function Scholarships() {
     states,
     departments,
     beneficiaries,
-    sponseredBy,
+    sponsoredBy,
   } = useContext(FilterContext);
   const { currentPage } = useContext(PageContext);
   const [dataOfApi, setDataOfApi] = useState({});
@@ -23,7 +23,7 @@ export default function Scholarships() {
     const fetchState = async () => {
       try {
         setDataOfApi({});
-        let url = `http://65.0.103.91:80/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
+        let url = `http://localhost:8000/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
         // const cachedData = localStorage.getItem(url);
         
         // if (cachedData) {
@@ -37,7 +37,7 @@ export default function Scholarships() {
             department_ids: Object.keys(departments).reduce((acc,i)=>{
               return [...acc,...departments[i]]
             },[]),
-            sponsor_ids: sponseredBy.length != 0 ? sponseredBy[0] : [],
+            sponsor_ids: sponsoredBy.length != 0 ? sponsoredBy[0] : [],
             beneficiary_keywords: beneficiaries,
             search_query: searchQuery,
             tag: "scholarship",
@@ -66,7 +66,7 @@ export default function Scholarships() {
     };
 
     fetchState();
-  }, [searchQuery, currentPage, sponseredBy, states, departments, beneficiaries]);
+  }, [searchQuery, currentPage, sponsoredBy, states, departments, beneficiaries]);
 
   if (dataOfApi.count==0 && (states.length != 0 || departments.length != 0)) {
     return (

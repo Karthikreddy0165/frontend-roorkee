@@ -27,7 +27,7 @@ const DropdownMenu = () => {
           </p>
           </div>
           <div className='w-[16.5] h-[16.5]'>
-          <input type="checkbox" value={item} checked={beneficiaries.includes(item == "SC / ST" ? "SC" : item)} className="ml-10 custom-checkbox pointer-events-none w-full h-full" />
+          <input type="checkbox" value={item} checked={beneficiaries.includes(item === "SC / ST" ? "SC" : item)} className="ml-10 custom-checkbox pointer-events-none w-full h-full" />
           </div>
         </li>
         ))}

@@ -7,11 +7,11 @@ import PageContext from "@/Context/PageContext";
 const SponsorDropdownMenu = () => {
   const {  setCurrentPage } = useContext(PageContext);
   const [allLevel, setAllLevel] = useState([]);
-  const { sponseredBy, setSponseredBy, states, setStates } =
+  const { sponsoredBy, setSponsoredBy, states, setStates } =
     useContext(FilterContext);
   // useEffect(()=>{
   //   async function fetchedSponsors(){
-  //     const res = await fetch(`http://65.0.103.91:80/api/sponsors/`);
+  //     const res = await fetch(`http://localhost:8000/api/sponsors/`);
   //     if (!res.ok) {
   //       throw new Error(`HTTP error! status: ${response.status}`);
   //     }
@@ -35,24 +35,24 @@ const SponsorDropdownMenu = () => {
 
   const handleItemClick = (value) => {
     setCurrentPage(1);
-    if (sponseredBy.length != 0 && sponseredBy[0].includes(value[0])) {
-      setSponseredBy([])
+    if (sponsoredBy.length != 0 && sponsoredBy[0].includes(value[0])) {
+      setSponsoredBy([])
       // if(value[0] == 2){
-      //   setSponseredBy([]);
+      //   setSponsoredBy([]);
       // }
-      // setSponseredBy((prev) => {
+      // setSponsoredBy((prev) => {
       //   const filteredIds = prev[0].filter((id) => id != value[0]);
-      //   const filteredSponseredBy = prev[1].filter(
+      //   const filteredsponsoredBy = prev[1].filter(
       //     (sponsors) => sponsors != value[1]
       //   );
-      //   return [filteredIds, filteredSponseredBy];
+      //   return [filteredIds, filteredsponsoredBy];
       // });
     } else {
-      if(value[0] == 2){
+      if(value[0] === 2){
         setStates([]);
       }
-      setSponseredBy([[value[0]], [value[1]]]);
-      // setSponseredBy((prev)=>{
+      setSponsoredBy([[value[0]], [value[1]]]);
+      // setSponsoredBy((prev)=>{
       //   if(prev.length != 0){
       //     return [[...prev[0],value[0]],[...prev[1],value[1]]]
       //   }
@@ -74,34 +74,34 @@ const SponsorDropdownMenu = () => {
             <div>
             <p className="flex leading-5 overflow-hidden overflow-ellipsis line-clamp-2 max-h-10 text-black">
                 {item[1]}
-                {item[1] == "State" && states.length !== 0 ? <span className = "w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{states[1].length}</span> : <></>}
+                {item[1] === "State" && states.length !== 0 ? <span className = "w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{states[1].length}</span> : <></>}
               </p>
             </div>
-            {item[0] != 1 && (
+            {item[0] !== 1 && (
               <div className="w-[16.5] h-[16.5]">
                 <input
                   type="checkbox"
                   value={item}
                   checked={
-                    sponseredBy.length != 0
-                      ? sponseredBy[0].includes(item[0])
+                    sponsoredBy.length !== 0
+                      ? sponsoredBy[0].includes(item[0])
                       : false
                   }
                   className="ml-10 custom-checkbox pointer-events-none w-full h-full"
                 />
               </div>
             )}
-            {item[0] == 1 &&
-              sponseredBy.length != 0 &&
-              sponseredBy[0][0] == 1 && <IoIosArrowUp className="text-black" />}
-            {item[0] == 1 &&
-              ((sponseredBy.length != 0 && sponseredBy[0][0] != 1) ||
-                sponseredBy.length == 0) && (
+            {item[0] === 1 &&
+              sponsoredBy.length !== 0 &&
+              sponsoredBy[0][0] === 1 && <IoIosArrowUp className="text-black" />}
+            {item[0] === 1 &&
+              ((sponsoredBy.length !== 0 && sponsoredBy[0][0] !== 1) ||
+                sponsoredBy.length === 0) && (
                 <IoIosArrowDown className="text-black" />
               )}
           </li>
         ))}
-        {sponseredBy.length != 0 && sponseredBy[0][0] == 1 && (
+        {sponsoredBy.length !== 0 && sponsoredBy[0][0] === 1 && (
           <StateDropdownMenu />
         )}
       </ul>

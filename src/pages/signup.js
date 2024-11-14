@@ -61,7 +61,7 @@ const CreateAcc01 = () => {
         redirect: "follow",
       };
 
-      const response = await fetch(`http://65.0.103.91:80/api/login/`, requestOptions);
+      const response = await fetch(`http://localhost:8000/api/login/`, requestOptions);
       const result = await response.json();
 
       if (!response.ok) {
@@ -201,7 +201,7 @@ const CreateAcc01 = () => {
               redirect: "follow",
             };
 
-            fetch(`http://65.0.103.91:80/api/register/`, requestOptions)
+            fetch(`http://localhost:8000/api/register/`, requestOptions)
               .then((response) => response.json())
               .then((result) => {
                 

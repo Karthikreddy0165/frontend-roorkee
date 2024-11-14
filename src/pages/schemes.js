@@ -5,14 +5,14 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import BeneficiaryDropdownMenu from "../components/BeneficiariesDropdown";
 import DepartmentDropdownMenu from "../components/DepartmentDropDown";
-
+import image from '../assets/backgroundimg.png'
 import SponsorsDropdownMenu from "@/components/SponsorDropdown";
 
 import FilterContext from '@/Context/FilterContext';
 import VerifiedStatus from "@/components/isVerfiedComponent";
 
 const schemesAll = () => {
-  const { states, setStates, departments, setDepartments, beneficiaries, setBeneficiaries, setFundingBy, sponseredBy, setSponseredBy} = useContext(FilterContext);
+  const { states, setStates, departments, setDepartments, beneficiaries, setBeneficiaries, setFundingBy, sponsoredBy, setSponsoredBy} = useContext(FilterContext);
   const [filteredData, setFilteredData] = useState([]);
   const [test, setTest] = useState(0);
   const [test1, setTest1] = useState(0);
@@ -48,7 +48,7 @@ const schemesAll = () => {
     LevelOpen: false,
   });
 
-  // console.log(sponseredBy.length,"sponseredBy.length")
+  // console.log(sponsoredBy.length,"sponsoredBy.length")
 const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fbanners%2FScheme_details_page_banner_TvdKXuh.png&w=3840&q=75"
   useEffect(() => {
     if(data){
@@ -152,7 +152,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
 
 
   useEffect(() => {
-    fetch("http://65.0.103.91:80/api/banners/")
+    fetch("http://localhost:8000/api/banners/")
       .then((response) => response.json())
       .then((data) => {
         // Find the active banner
@@ -196,7 +196,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
     setDepartments({});
     setBeneficiaries([]);
     setFundingBy([]);
-    setSponseredBy([]);
+    setSponsoredBy([]);
     setDropDownStates(
       {
         dropDownOpen: false,
@@ -217,10 +217,10 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
       <VerifiedStatus/>
       {/* <BackButton /> */}
       <div className="relative w-[80vw] mx-auto mb-8 flex justify-center items-center max-w-[80%]">
-        <div className="h-60 w-full relative brightness-70 mb-4">
+        <div className="h-60 w-full relative brightness-70 mb-4 mt-5">
           {bannerImage ? (
             <Image
-              src={bannerImage}
+              src={backUpBannerImage}
               alt="Loading Image..."
               layout="fill"
               objectFit="contain"
@@ -228,7 +228,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
             />
           ) : (
             <Image
-              src={backUpBannerImage}
+              src={image}
               alt="Loading Image..."
               layout="fill"
               objectFit="contain"
@@ -238,7 +238,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
         </div>
       </div>
   
-      <div className="max-w-[80%] mx-auto">
+      <div className="max-w-[80%] mx-auto mt-10">
         <div className="flex -ml-4">
           <div className="flex-1 max-w-[25%] p-4 mr-2">
             <div className="flex justify-between items-center -mt-16 ">
@@ -312,7 +312,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                 <DropdownMenu />
               )} */}
 
-              {sponseredBy.length !=0 &&(
+              {sponsoredBy.length !=0 &&(
               <div
                 className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
                 onClick={() => toggleDropdown("departmentOpen")}
@@ -347,7 +347,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                 />
               )}
           
-          {sponseredBy.length !=0 &&(
+          {sponsoredBy.length !=0 &&(
               <div
                 className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
                 onClick={() => toggleDropdown("beneficiaryOpen")}

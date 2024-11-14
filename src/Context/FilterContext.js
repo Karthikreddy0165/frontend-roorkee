@@ -10,11 +10,11 @@ function FilterProvider({ children }){
   const [departments, setDepartments] = useState({});
   const [beneficiaries, setBeneficiaries] = useState([]);
   const [fundingBy, setFundingBy] = useState([]);
-  const [sponseredBy, setSponseredBy] = useState([]);
+  const [sponsoredBy, setSponsoredBy] = useState([]);
   const [statesFromApi, setStatesFromApi] = useState([]);
   useEffect(()=>{
     async function fetchedStates(){
-        const res = await fetch(`http://65.0.103.91:80/api/states/`);
+        const res = await fetch(`http://localhost:8000/api/states/`);
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -54,7 +54,7 @@ function FilterProvider({ children }){
         departments, setDepartments, 
         beneficiaries, setBeneficiaries,
         fundingBy, setFundingBy,
-        sponseredBy, setSponseredBy,
+        sponsoredBy, setSponsoredBy,
         statesFromApi, setStatesFromApi
         }}>
       {children}
