@@ -1,12 +1,12 @@
 import { useAuth } from "@/Context/AuthContext";
-import SavedModal from "@/pages/model/savedModal";
+import SavedModal from "@/pages/Modals/savedModal";
 import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { GoBookmarkFill } from "react-icons/go";
-import ApplyModal from "../pages/content";
-import Toast from "./SavedToast.jsx";
-import UnSaveToast from "./UnsaveToast";
+import ApplyModal from "@/pages/Modals/ApplySchemesModal";
+import Toast from "./ComponentsUtils/SavedToast.jsx";
+import UnSaveToast from "./ComponentsUtils/UnsaveToast";
 import PageContext from "@/Context/PageContext";
 import { useContext } from "react";
 import FilterContext from "@/Context/FilterContext";

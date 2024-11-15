@@ -3,10 +3,10 @@ import Tabs from "@/components/Tabs";
 import Image from "next/image";
 import { useContext, useEffect, useRef, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import BeneficiaryDropdownMenu from "../components/BeneficiariesDropdown";
-import DepartmentDropdownMenu from "../components/DepartmentDropDown";
+import BeneficiaryDropdownMenu from "../components/Dropdowns/BeneficiariesDropdown";
+import DepartmentDropdownMenu from "../components/Dropdowns/DepartmentDropDown";
 import image from '../assets/backgroundimg.png'
-import SponsorsDropdownMenu from "@/components/SponsorDropdown";
+import SponsorsDropdownMenu from "@/components/Dropdowns/SponsorDropdown";
 
 import FilterContext from '@/Context/FilterContext';
 import VerifiedStatus from "@/components/isVerfiedComponent";
@@ -263,7 +263,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                 id="LevelBtn"
               >
                 <span>
-                  {levelName != "" ? (
+                  {levelName !== "" ? (
                     <span className="inline-flex items-center">
                       Sponsored By
                       <span className="w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">
@@ -312,7 +312,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                 <DropdownMenu />
               )} */}
 
-              {sponsoredBy.length !=0 &&(
+              {sponsoredBy.length !==0 &&(
               <div
                 className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
                 onClick={() => toggleDropdown("departmentOpen")}
@@ -347,7 +347,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
                 />
               )}
           
-          {sponsoredBy.length !=0 &&(
+          {sponsoredBy.length !== 0 &&(
               <div
                 className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
                 onClick={() => toggleDropdown("beneficiaryOpen")}

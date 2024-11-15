@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import * as Yup from "yup";
-import { useAuth } from "../Context/AuthContext";
-import { useFormData } from "../Context/FormContext";
+import { useAuth } from "@/Context/AuthContext";
+import { useFormData } from "@/Context/FormContext";
 import loginperson from "../assets/image.png";
 import IndialImg from "../assets/ind2.png";
+
 
 const validationSchema = Yup.object({
   qualification: Yup.string().required(
@@ -59,7 +60,7 @@ const CreateAcc03 = () => {
       .then((response) => response.json())
       .then((result) => {
         // console.log(result);
-        router.push("/schemesLoginsucc");
+        router.push("/SchemesLoginSuccess");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -72,9 +73,9 @@ const CreateAcc03 = () => {
 
   const handleSkip = () => {
     if (authState.token) {
-      router.push("/accCreatedsucc");
+      router.push("../utils/AccountCreated");
       setTimeout(() => {
-        router.push("/schemesLoginsucc");
+        router.push("/SchemesLoginSuccess");
       }, 2000);
     } else {
       console.error("User token not available.");

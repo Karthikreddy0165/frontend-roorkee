@@ -25,13 +25,13 @@ function SelectedFilters() {
 
 
   const { authState } = useAuth();
-  const [newSponser, setNewSponser] = useState([]);
+  const [newSponsor, setNewSponsor] = useState([]);
   const [newState, setNewState] = useState([]);
   const [newDepartment, setNewDepartment] = useState([]);
   const [profileData, setProfileData] = useState([]);
 
   useEffect(() => {
-    setNewSponser(sponsoredBy[1] ? sponsoredBy[1] : []);
+    setNewSponsor(sponsoredBy[1] ? sponsoredBy[1] : []);
     setNewState(states[1] ? states[1] : []);
     setNewDepartment(Object.keys(departments) ? Object.keys(departments) : []);
   }, [sponsoredBy, states, departments]);
@@ -59,7 +59,7 @@ function SelectedFilters() {
     setDepartments({});
     setFundingBy([]);
     setSponsoredBy([]);
-    setNewSponser([]);
+    setNewSponsor([]);
     setNewDepartment([]);
     setNewState([]);
     setBeneficiaries([]);
@@ -87,7 +87,7 @@ function SelectedFilters() {
     }
   };
 
-  return newSponser.length > 0 ||
+  return newSponsor.length > 0 ||
     newState.length > 0 ||
     newDepartment.length > 0 ||
     beneficiaries.length > 0 ? (
@@ -275,60 +275,60 @@ function SelectedFilters() {
             <></>
           )}
 
-          {newSponser.length === 2 ? (
+          {newSponsor.length === 2 ? (
             <div className=" flex gap-2">
               <button
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
-                data-full-text={newSponser[0]}
+                data-full-text={newSponsor[0]}
               >
-                {newSponser[0].length > 30
-                  ? `${newSponser[0].substring(0, 30)}...`
-                  : newSponser[0]}
+                {newSponsor[0].length > 30
+                  ? `${newSponsor[0].substring(0, 30)}...`
+                  : newSponsor[0]}
               </button>
               <button
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
-                data-full-text={newSponser[1]}
+                data-full-text={newSponsor[1]}
               >
-                {newSponser[1].length > 30
-                  ? `${newSponser[1].substring(0, 30)}...`
-                  : newSponser[1]}
+                {newSponsor[1].length > 30
+                  ? `${newSponsor[1].substring(0, 30)}...`
+                  : newSponsor[1]}
               </button>
             </div>
           ) : (
             <></>
           )}
-          {newSponser.length > 0 && newSponser.length <= 1 ? (
+          {newSponsor.length > 0 && newSponsor.length <= 1 ? (
             <div className=" flex gap-2">
               <button
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
-                data-full-text={newSponser[0]}
+                data-full-text={newSponsor[0]}
               >
-                {newSponser[0].length > 30
-                  ? `${newSponser[0].substring(0, 30)}...`
-                  : newSponser[0]}
+                {newSponsor[0].length > 30
+                  ? `${newSponsor[0].substring(0, 30)}...`
+                  : newSponsor[0]}
               </button>
             </div>
           ) : (
             <></>
           )}
-          {newSponser.length > 2 ? (
+          {newSponsor.length > 2 ? (
             <div className=" flex gap-2">
               <button
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
-                data-full-text={newSponser[0]}
+                data-full-text={newSponsor[0]}
               >
-                {newSponser[0].length > 30
-                  ? `${newSponser[0].substring(0, 30)}...`
-                  : newSponser[0]}
+                {newSponsor[0].length > 30
+                  ? `${newSponsor[0].substring(0, 30)}...`
+                  : newSponsor[0]}
               </button>
               <button
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
-                data-full-text={newSponser[1]}
+                data-full-text={newSponsor[1]}
               >
-                {newSponser[1].length > 30
-                  ? `${newSponser[1].substring(0, 30)}...`
-                  : newSponser[1]}{" "}
-                + {newSponser.length - 2} more
+                {newSponsor[1].length > 30
+                  ? `${newSponsor[1].substring(0, 30)}...`
+                  : newSponsor[1]}{" "}
+                + {newSponsor.length - 2} more
               </button>
             </div>
           ) : (

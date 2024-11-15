@@ -7,9 +7,9 @@ import { CiBookmark } from "react-icons/ci";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import * as Yup from "yup";
-import { useFormData } from "../Context/FormContext";
+import { useFormData } from "@/Context/FormContext";
 import loginperson from "../assets/image.png";
-import AccCreatSucc from "./accCreatedsucc";
+import AccCreatSucc from "../utils/AccountCreated";
 
 const CreateAcc01 = () => {
   const router = useRouter();
@@ -30,7 +30,7 @@ const CreateAcc01 = () => {
   useEffect (() =>{
     const token = localStorage.getItem("token");
     if (token){
-      router.push("/app");
+      router.push("/App");
     }
   },[])
 
@@ -78,7 +78,7 @@ const CreateAcc01 = () => {
         showSucc.current = true;
         setTimeout(() => {
           showSucc.current = false;
-          router.push("/schemes");
+          router.push("/AllSchemes");
         }, 1500);
       }
     } catch (error) {
@@ -116,11 +116,11 @@ const CreateAcc01 = () => {
 
 
 
-          <div class="absolute w-[266px] h-auto p-[10.8px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] top-[305px] ml-[35px] ">
-            <p class="self-stretch text-[#000] mb-[5px] font-inter text-[9.452px] font-semibold leading-normal">
+          <div className="absolute w-[266px] h-auto p-[10.8px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] top-[305px] ml-[35px] ">
+            <p className="self-stretch text-[#000] mb-[5px] font-inter text-[9.452px] font-semibold leading-normal">
               Opening for bank staff
             </p>
-            <p class="self-stretch text-[#616161] font-inter text-[6.751px]  font-normal leading-normal underline">
+            <p className="self-stretch text-[#616161] font-inter text-[6.751px]  font-normal leading-normal underline">
               Welfare Department
             </p>
           </div>
@@ -156,8 +156,8 @@ const CreateAcc01 = () => {
           </div>
         </div>
 
-        <div class="absolute w-[266px] p-[7.919px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] bottom-[175px] mr-[270px] scale-[.8]">
-          <p class="self-stretch text-[#000] font-inter text-[8.929px] font-semibold leading-normal mb-[5.939px]">
+        <div className="absolute w-[266px] p-[7.919px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] bottom-[175px] mr-[270px] scale-[.8]">
+          <p className="self-stretch text-[#000] font-inter text-[8.929px] font-semibold leading-normal mb-[5.939px]">
             Scholarships for female student
           </p>
           <p className="self-stretch text-[#616161] font-inter text-[6.649px] font-semibold leading-normal opacity-60 line-clamp-2">

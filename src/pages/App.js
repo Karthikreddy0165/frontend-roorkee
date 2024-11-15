@@ -26,26 +26,26 @@ const App = () => {
   };
 
   const handleClickAfterLogin =() =>{
-    router.push("/schemes")
+    router.push("/AllSchemes")
   }
 
   const handleClickFindrightSchemeForYOu = () => {
-    router.push("/preferences");
+    router.push("../Modals/PreferencesModal");
   };
 
   const handleSchemesClick = () => {
     setActiveTab("Schemes");
-    router.push("/schemes?tab=Schemes");
+    router.push("/AllSchemes?tab=Schemes");
   };
 
   const handleJobsClick = () => {
     setActiveTab("Job Openings");
-    router.push("/schemes?tab=Job Openings");
+    router.push("/AllSchemes?tab=Job Openings");
   };
 
   const handleScholarshipsClick = () => {
     setActiveTab("Scholarships");
-    router.push("/schemes?tab=Scholarships");
+    router.push("/AllSchemes?tab=Scholarships");
   };
 
   return (
@@ -116,7 +116,7 @@ const App = () => {
             </div>
             {/* Right Div */}
             <div className="w-[482px] h-[300px]">
-              {/* Right content here */}
+              {/* Right Modals here */}
               <Image
                 className="relative h-[334px] w-[258px] rounded-tl-[10rem] -right-[190px] pb-8"
                 src={image01}

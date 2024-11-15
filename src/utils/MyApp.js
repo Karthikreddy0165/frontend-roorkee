@@ -1,4 +1,4 @@
-import { FormProvider } from '../Context/FormContext';
+import { FormProvider } from '@/Context/FormContext';
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {

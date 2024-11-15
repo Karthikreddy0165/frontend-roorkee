@@ -119,7 +119,7 @@ const preferencesModal = () => {
                   // onChange={handleChange}
                   onChange={(e) => {
                     statesFromApi.map(it => {
-                      if(e.target.value == it.id){
+                      if(e.target.value === it.id){
                         setStates((prev) => {
                           return [[it.id], [it.state_name]]
                         })

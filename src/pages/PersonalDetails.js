@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { FaAngleDown, FaSpinner } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import * as Yup from "yup";
-import { useAuth } from "../Context/AuthContext";
-import { useFormData } from "../Context/FormContext";
+import { useAuth } from "@/Context/AuthContext";
+import { useFormData } from "@/Context/FormContext";
 import loginperson from "../assets/image.png";
 import IndialImg from "../assets/ind2.png";
 
@@ -53,7 +53,7 @@ const CreateAcc02 = () => {
       .then((response) => response.json())
       .then((result) => {
         // console.log(result);
-        router.push("/proffesionalDetails");
+        router.push("/ProfessionalDetails");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -66,7 +66,7 @@ const CreateAcc02 = () => {
 
   const handleSkip = () => {
     if (authState.token) {
-      router.push("/proffesionalDetails");
+      router.push("/ProfessionalDetails");
     } else {
       console.error("User is not authenticated");
     }

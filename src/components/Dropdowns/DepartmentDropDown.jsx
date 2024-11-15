@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import FilterContext from '@/Context/FilterContext';
 import PageContext from "@/Context/PageContext";
-import { data } from 'autoprefixer';
-import { convertToObject } from 'typescript';
-import { object } from 'yup';
+// import { data } from 'autoprefixer';
+// import { convertToObject } from 'typescript';
+// import { object } from 'yup';
 const DepartmentDropdownMenu = () => {
   const {  setCurrentPage } = useContext(PageContext);
   const [allDepartments, setAllDepartments] = useState({});

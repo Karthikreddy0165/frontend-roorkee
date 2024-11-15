@@ -3,7 +3,7 @@ import Categories from "./Categories";
 import PageContext from "@/Context/PageContext";
 import FilterContext from "@/Context/FilterContext";
 import { useTabContext } from "@/Context/TabContext";
-import SchemeCount from "./SchemeCount";
+import SchemeCount from "./ComponentsUtils/SchemeCount";
 
 export default function Schemes() {
   const { searchQuery } = useTabContext();

@@ -2,7 +2,7 @@ import FilterContext from "@/Context/FilterContext";
 import PageContext from "@/Context/PageContext";
 import { useTabContext } from "@/Context/TabContext";
 import { useContext, useEffect, useState } from "react";
-import Categories from "./Categories";
+import Categories from "../Categories";
 import JobCount from "./JobCount";
 
 export default function JobOpenings() {

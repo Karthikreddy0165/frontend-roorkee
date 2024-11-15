@@ -16,7 +16,7 @@ function FilterProvider({ children }){
     async function fetchedStates(){
         const res = await fetch(`http://localhost:8000/api/states/`);
         if (!res.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`HTTP error! status: ${res.status}`);
         }
         else{
           const data = await res.json();
@@ -28,6 +28,7 @@ function FilterProvider({ children }){
           } else {
             setBeneficiaries([]);
           }
+          console.log(dataFromLocalStorage)
           const selectedValue = dataFromLocalStorage?.state;
           // console.log(statesFromApi, "select");
           const selectedState = data.find(

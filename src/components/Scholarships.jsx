@@ -1,4 +1,4 @@
-import ScholarshipCount from "./ScholarshipCount";
+import ScholarshipCount from "./ComponentsUtils/ScholarshipCount";
 import { useEffect, useState, useContext } from "react";
 import Categories from "./Categories";
 import PageContext from "@/Context/PageContext";
