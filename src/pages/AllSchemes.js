@@ -152,7 +152,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
 
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/banners/")
+    fetch("http://65.0.103.91:80/api/banners/")
       .then((response) => response.json())
       .then((data) => {
         // Find the active banner

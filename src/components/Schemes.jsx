@@ -22,7 +22,7 @@ export default function Schemes() {
     const fetchState = async () => {
       try {
         setDataOfApi({});
-        let url = `http://localhost:8000/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
+        let url = `http://65.0.103.91:80/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
 
         const myHeaders = new Headers();
 

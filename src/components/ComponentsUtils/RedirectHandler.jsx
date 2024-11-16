@@ -15,7 +15,7 @@ export default function RedirectHandler(){
           if (currentURL.includes(`reset-password-confirm/${uid}/${token}`)) {
               setResetPasswordToken(token);
               setUID(uid);
-              router.push(`/reset-password-confirm`);
+              router.push(`../reset-password-confirm`);
 
           }
       }

@@ -2,17 +2,17 @@ import FilterContext from "@/Context/FilterContext";
 import Router from "next/router";
 import { useContext, useState } from "react";
 import { MdClose } from "react-icons/md";
-
+// import schemesAll from "@/pages/AllSchemes";
 const preferencesModal = () => {
   const [stateOptions, setStateOptions] = useState([]);
   const { states, setStates, statesFromApi, setBeneficiaries } = useContext(FilterContext);
 
   const handleOnClickApplyPreferences = () => {
-    Router.push("/schemes");
+    Router.push("@/pages/AllSchemes");
   };
 
   const handleClickToSchemePage=()=>{
-    Router.push("/schemes")
+    Router.push("@/pages/AllSchemes")
   }
   const handleChange = (e) => {
     const { name, value } = e.target;
