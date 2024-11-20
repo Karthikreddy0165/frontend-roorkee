@@ -5,7 +5,7 @@ const BackButton = () => {
   const router = useRouter();
 
   const handleGoBack = () => {
-    router.push('../App');
+    router.push('/App');
   };
 
   return (
