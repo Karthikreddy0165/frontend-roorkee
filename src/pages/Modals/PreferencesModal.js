@@ -8,11 +8,11 @@ const preferencesModal = () => {
   const { states, setStates, statesFromApi, setBeneficiaries } = useContext(FilterContext);
 
   const handleOnClickApplyPreferences = () => {
-    Router.push("@/pages/AllSchemes");
+    Router.push("/AllSchemes");
   };
 
   const handleClickToSchemePage=()=>{
-    Router.push("@/pages/AllSchemes")
+    Router.push("/AllSchemes")
   }
   const handleChange = (e) => {
     const { name, value } = e.target;

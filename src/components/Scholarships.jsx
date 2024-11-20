@@ -23,7 +23,7 @@ export default function Scholarships() {
     const fetchState = async () => {
       try {
         setDataOfApi({});
-        let url = `http://65.0.103.91:80/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
+        let url = `http://localhost:8000/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
         // const cachedData = localStorage.getItem(url);
         
         // if (cachedData) {
@@ -33,11 +33,11 @@ export default function Scholarships() {
           myHeaders.append("Content-Type", "application/json");
 
           const raw = JSON.stringify({
-            state_ids: states.length != 0 ?  states[0] : [],
+            state_ids: states.length !== 0 ?  states[0] : [],
             department_ids: Object.keys(departments).reduce((acc,i)=>{
               return [...acc,...departments[i]]
             },[]),
-            sponsor_ids: sponsoredBy.length != 0 ? sponsoredBy[0] : [],
+            sponsor_ids: sponsoredBy.length !== 0 ? sponsoredBy[0] : [],
             beneficiary_keywords: beneficiaries,
             search_query: searchQuery,
             tag: "scholarship",
@@ -68,7 +68,7 @@ export default function Scholarships() {
     fetchState();
   }, [searchQuery, currentPage, sponsoredBy, states, departments, beneficiaries]);
 
-  if (dataOfApi.count==0 && (states.length != 0 || departments.length != 0)) {
+  if (dataOfApi.count===0 && (states.length !== 0 || departments.length !== 0)) {
     return (
       <div className="flex justify-center items-center mt-8">
         No scholarship-related schemes found based on your preference

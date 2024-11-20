@@ -71,7 +71,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
             redirect: "follow",
           };
           const response = await fetch(
-            `http://65.0.103.91:80/api/user/saved_schemes/`,
+            `http://localhost:8000/api/user/saved_schemes/`,
             requestOptions
           );
           if (!response.ok) {
@@ -120,7 +120,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
     try {
       const response = await fetch(
-        `http://65.0.103.91:80/api/save_scheme/`,
+        `http://localhost:8000/api/save_scheme/`,
         requestOptions
       );
       if (response.ok) {
@@ -158,7 +158,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       console.log("Sending unsave request for scheme_id:", scheme_id);
       console.log("Request payload:", raw);
       const response = await fetch(
-        `http://65.0.103.91:80/api/unsave_scheme/`,
+        `http://localhost:8000/api/unsave_scheme/`,
         requestOptions
       );
       const result = await response.json();
@@ -269,9 +269,9 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   {/* We have found {378} schemes based on your profile */}
   <div>
     {(activeTab !== "Saved" ? dataFromApi.results : dataFromApi).map((item) => (
-      item.title && (
+      (
         <div
-          className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
+          className="flex items-start justify-between self-stretch relative border-[1px] border-gray-300 rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
           key={item.id}
           style={{
             backgroundColor: item.id === sidePannelSelected ? "#DDD6FE" : "",
@@ -287,17 +287,17 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
             <div className="gap-[12px] pt-[16px] pd-[16px]">
               <p
-                className="font-inter text-[18px] leading-[21.6px] cursor-pointer font-bold mb-[10px] line-clamp-2 w-8/12"
-                role="button"
-                tabIndex="0"
+                  className="font-inter text-[18px] leading-[21.6px] cursor-pointer font-semibold mb-[10px] line-clamp-2 w-8/12 text-gray-900"
+                  role="button"
+                  tabIndex="0"
               >
                 {item.title}
               </p>
               <p
-                className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[10px] line-clamp-2"
-                onClick={() => handleClick(item.id)}
-                role="button"
-                tabIndex="0"
+                  className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[10px] line-clamp-2"
+                  onClick={() => handleClick(item.id)}
+                  role="button"
+                  tabIndex="0"
               >
                 <span className="font-semibold">Description: </span>
                 {item.description}
@@ -306,34 +306,39 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                 {item.department.department_name}
               </p>
 
-              
+
               <div className="flex gap-5 mb-[16px]">
-                <button className="flex items-center justify-center pr-[12px] pl-[12px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium py-2 hover:border-onclick-btnblue hover:text-onclick-btnblue" onClick={(event) => handleStateTag(event)}>
+                <button
+                    className="flex items-center justify-center pr-[12px] pl-[12px] border border-onclick-btnblue rounded-[1rem] bg-white text-onclick-btnblue font-inter text-xs font-medium py-2 hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                    onClick={(event) => handleStateTag(event)}>
                   {item.department.state}
                 </button>
-                
-                {item.beneficiaries.length > 0 &&
-                  item.beneficiaries[0].beneficiary_type !== "N/A" && item.beneficiaries[0].beneficiary_type !== "" &&(
-                    <button
-                    className="relative flex items-center justify-center pr-[12px] pl-[12px] py-[5px] border  border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium pl-8px hover:border-onclick-btnblue hover:text-onclick-btnblue "
-                    onClick={(event) => handleBeneficiaryTag(event)}
-                    >
-                      {/* overflow-hidden text-ellipsis whitespace-nowrap max-w-[400px] */}
-                      {item.beneficiaries[0].beneficiary_type}
-                    </button>
-                  )}
-              </div>
-            </div>
-          </div>
 
-          <div
-            className="cursor-pointer px-2 py-2 right-[8.25px]"
-            onClick={(e) => toggleBookmark(e, item.id)}
-          >
-            {isBookmarked[item.id] ? (
-              <GoBookmarkFill className="w-[27.5px] h-[27.5px] text-[#3431BB]" />
-            ) : (
-              <CiBookmark className="w-[27.5px] h-[27.5px]" />
+                {item.beneficiaries.length > 0 &&
+                    item.beneficiaries[0].beneficiary_type !== "N/A" && item.beneficiaries[0].beneficiary_type !== "" && (
+                        <button
+                            className="relative flex items-center justify-center pr-[12px] pl-[12px] py-[5px] border  border-onclick-btnblue rounded-full bg-white text-onclick-btnblue font-inter text-xs font-medium pl-8px hover:border-onclick-btnblue hover:text-onclick-btnblue "
+                            onClick={(event) => handleBeneficiaryTag(event)}
+                        >
+                          {/* overflow-hidden text-ellipsis whitespace-nowrap max-w-[400px] */}
+                          {item.beneficiaries[0].beneficiary_type}
+                        </button>
+                    )}
+              </div>
+
+
+
+          </div>
+        </div>
+
+      <div
+      className="cursor-pointer px-2 py-2 right-[8.25px]"
+      onClick={(e) => toggleBookmark(e, item.id)}
+  >
+    {isBookmarked[item.id] ? (
+        <GoBookmarkFill className="w-[27.5px] h-[27.5px] text-[#3431BB]"/>
+    ) : (
+        <CiBookmark className="w-[27.5px] h-[27.5px]" />
             )}
           </div>
         </div>

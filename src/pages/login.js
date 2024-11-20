@@ -52,7 +52,7 @@ const login = () => {
       };
 
       const response = await fetch(
-        `http://65.0.103.91:80/api/login/`,
+        `http://localhost:8000/api/login/`,
         requestOptions
       );
       const result = await response.json();

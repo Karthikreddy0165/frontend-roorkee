@@ -4,10 +4,10 @@ import { FaAngleRight } from "react-icons/fa6";
 const SavedModal = ({ isOpen, onRequestClose }) => {
     const router = useRouter();
     const handleRoutetologin=()=>{
-        router.push("../login")
+        router.push("/login")
     }
     const handleRoutetoCreateacco1=()=>{
-        router.push("../Signup")
+        router.push("/Signup")
     }
 
     if (!isOpen) return null;

@@ -22,7 +22,7 @@ export default function Schemes() {
     const fetchState = async () => {
       try {
         setDataOfApi({});
-        let url = `http://65.0.103.91:80/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
+        let url = `http://localhost:8000/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
 
         const myHeaders = new Headers();
 
@@ -37,7 +37,7 @@ export default function Schemes() {
             beneficiary_keywords: beneficiaries,
             search_query: searchQuery,
           });
-          
+
           // console.log("uski length",states.length)
           const requestOptions = {
             method: "POST",

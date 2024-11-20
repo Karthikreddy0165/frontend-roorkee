@@ -56,11 +56,11 @@ const CreateAcc03 = () => {
       body: JSON.stringify(requestBody),
     };
 
-    fetch(`http://65.0.103.91:80/api/profile/professional/`, requestOptions)
+    fetch(`http://localhost:8000/api/profile/professional/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         // console.log(result);
-        router.push("/SchemesLoginSuccess");
+        router.push("/LoginSuccess");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -75,7 +75,7 @@ const CreateAcc03 = () => {
     if (authState.token) {
       router.push("../utils/AccountCreated");
       setTimeout(() => {
-        router.push("/SchemesLoginSuccess");
+        router.push("/LoginSuccess");
       }, 2000);
     } else {
       console.error("User token not available.");

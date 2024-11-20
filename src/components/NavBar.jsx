@@ -15,7 +15,7 @@ const NavBar = () => {
   };
   
   const handleClickLogo = () => {
-    router.push("/app")
+    router.push("/App")
   }
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
