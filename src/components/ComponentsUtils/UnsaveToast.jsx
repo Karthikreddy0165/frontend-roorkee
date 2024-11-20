@@ -8,7 +8,7 @@ const UnSaveToast = ({ message, onClose }) => {
   const [isClosing, setIsClosing] = useState(false);
 
   const handleViewSavedClick = () => {
-    router.push('/schemes?tab=Saved');
+    router.push('/AllSchemes?tab=Saved');
     handleClose();
   };
 
