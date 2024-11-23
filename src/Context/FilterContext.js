@@ -14,9 +14,9 @@ function FilterProvider({ children }){
   const [statesFromApi, setStatesFromApi] = useState([]);
   useEffect(()=>{
     async function fetchedStates(){
-        const res = await fetch(`http://65.0.103.91:80/api/states/`);
+        const res = await fetch(`http://13.201.99.1:8000///api/states/`);
         if (!res.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`HTTP error! status: ${res.status}`);
         }
         else{
           const data = await res.json();
@@ -33,7 +33,6 @@ function FilterProvider({ children }){
           const selectedState = data.find(
             (it) => it.state_name === selectedValue
             );
-          console.log(selectedValue,"hahahahahahahahah");
       
           if (selectedState) {
             setStates([[selectedState.id], [selectedState.state_name]]);

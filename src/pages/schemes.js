@@ -1,6 +1,8 @@
 import NavBarWithoutLogin from "@/components/NavBar";
 import Tabs from "@/components/Tabs";
 import Image from "next/image";
+
+import bannerImg from "../assets/backgroundimg.png";
 import { useContext, useEffect, useRef, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import BeneficiaryDropdownMenu from "../components/BeneficiariesDropdown";
@@ -151,19 +153,21 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
   ]);
 
 
-  useEffect(() => {
-    fetch("http://65.0.103.91:80/api/banners/")
-      .then((response) => response.json())
-      .then((data) => {
-        // Find the active banner
-        const activeBanner = data.find((banner) => banner.is_active);
-        // Set the image URL of the active banner
-        if (activeBanner) {
-          setBannerImage(activeBanner.image);
-        }
-      })
-      .catch((error) => console.error("Error fetching banner image:", error));
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://13.201.99.1:8000//api/banners/")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       // Find the active banner
+  //       console.log(data)
+  //       const activeBanner = data.find((banner) => banner.is_active);
+  //       // Set the image URL of the active banner
+  //       if (activeBanner) {
+  //         setBannerImage(activeBanner.image);
+  //       }
+  //     })
+  //     .catch((error) => console.error("Error fetching banner image:", error));
+  // }, []);
+
 
   useEffect(() => {
     setStateName('');
@@ -217,10 +221,10 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
       <VerifiedStatus/>
       {/* <BackButton /> */}
       <div className="relative w-[80vw] mx-auto mb-8 flex justify-center items-center max-w-[80%]">
-        <div className="h-60 w-full relative brightness-70 mb-4">
+        <div className="h-60 w-full relative brightness-70 mb-10">
           {bannerImage ? (
             <Image
-              src={bannerImage}
+              src={bannerImg}
               alt="Loading Image..."
               layout="fill"
               objectFit="contain"
@@ -228,7 +232,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
             />
           ) : (
             <Image
-              src={backUpBannerImage}
+              src={bannerImg}
               alt="Loading Image..."
               layout="fill"
               objectFit="contain"

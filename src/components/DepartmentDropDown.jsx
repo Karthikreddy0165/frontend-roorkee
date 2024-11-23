@@ -12,7 +12,7 @@ const DepartmentDropdownMenu = () => {
   const ids = useRef([]);
   useEffect(()=>{
     async function fetchedStates(){
-      const res = await fetch(`http://65.0.103.91:80/api/departments/`);
+      const res = await fetch(`http://13.201.99.1:8000//api/departments/`);
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
