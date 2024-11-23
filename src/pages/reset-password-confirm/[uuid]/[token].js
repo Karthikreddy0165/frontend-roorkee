@@ -23,7 +23,7 @@ const ResPass = () => {
   const handlePasswordReset = async (values, { setSubmitting }) => {
     setLoading(true);
     try {
-      let url = `http://65.0.103.91:80/api/password-reset-confirm/`;
+      let url = `http://13.201.99.1:8000///api/password-reset-confirm/`;
 
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");

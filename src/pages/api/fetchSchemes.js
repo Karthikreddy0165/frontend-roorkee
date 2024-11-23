@@ -3,7 +3,7 @@ import axios from "axios";
 export default async function handler(req, res) {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_SCHEMES_API_IP}/api/schemes`
+      `http://13.201.99.1:8000//api/schemes`
     );
     res.status(200).json(response.data);
   } catch (error) {

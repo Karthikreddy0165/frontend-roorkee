@@ -54,8 +54,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }),
-    [isUnSaveToastVisible];
+  }, [isUnSaveToastVisible]);
 
   // Fetch saved schemes so that we can mark saved schemes as bookmarked
   useEffect(() => {
@@ -71,7 +70,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
             redirect: "follow",
           };
           const response = await fetch(
-            `http://65.0.103.91:80/api/user/saved_schemes/`,
+            `http://13.201.99.1:8000//api/user/saved_schemes/`,
             requestOptions
           );
           if (!response.ok) {
@@ -120,7 +119,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
     try {
       const response = await fetch(
-        `http://65.0.103.91:80/api/save_scheme/`,
+        `http://13.201.99.1:8000//api/save_scheme/`,
         requestOptions
       );
       if (response.ok) {
@@ -158,7 +157,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       console.log("Sending unsave request for scheme_id:", scheme_id);
       console.log("Request payload:", raw);
       const response = await fetch(
-        `http://65.0.103.91:80/api/unsave_scheme/`,
+        `http://13.201.99.1:8000//api/unsave_scheme/`,
         requestOptions
       );
       const result = await response.json();
@@ -268,7 +267,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     <>
   {/* We have found {378} schemes based on your profile */}
   <div>
-    {(activeTab != "Saved" ? dataFromApi.results : dataFromApi).map((item) => (
+    {(activeTab != "Saved" ? dataFromApi.results : dataFromApi.results).map((item) => (
       item.title && (
         <div
           className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
@@ -362,6 +361,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
           [&_.p-paginator-page]:rounded-full mt-20 mb-20"
       />
     )}
+
     {isToastVisible && (
       <Toast
         message={toastMessage}
