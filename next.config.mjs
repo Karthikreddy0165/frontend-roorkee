@@ -2,11 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['127.0.0.1', 'localhost'], // Add your local domain here
+    domains: ['13.201.99.1'], // Add your local domain here
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: '127.0.0.1',
+        hostname: '13.201.99.1',
         port: '8000',
         pathname: '/media/banners/**',
       },
