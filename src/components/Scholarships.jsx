@@ -23,7 +23,7 @@ export default function Scholarships() {
     const fetchState = async () => {
       try {
         setDataOfApi({});
-        let url = `http://13.201.99.1:8000//api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
+        let url = `http://13.235.48.124:8000//api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
         // const cachedData = localStorage.getItem(url);
         
         // if (cachedData) {

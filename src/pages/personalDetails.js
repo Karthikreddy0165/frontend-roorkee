@@ -49,7 +49,7 @@ const CreateAcc02 = () => {
       body: JSON.stringify(requestBody),
     };
 
-    fetch(`http://13.201.99.1:8000///api/profile/personal/`, requestOptions)
+    fetch(`http://13.235.48.124:8000///api/profile/personal/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         // console.log(result);

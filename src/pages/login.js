@@ -52,7 +52,7 @@ const login = () => {
       };
 
       const response = await fetch(
-        `http://13.201.99.1:8000///api/login/`,
+        `http://13.235.48.124:8000///api/login/`,
         requestOptions
       );
       const result = await response.json();

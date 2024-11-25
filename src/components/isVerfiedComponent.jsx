@@ -23,7 +23,7 @@ const VerifiedStatus = () => {
           redirect: "follow"
         };
 
-        const response = await fetch(`http://13.201.99.1:8000//api/user/me/`, requestOptions);
+        const response = await fetch(`http://13.235.48.124:8000//api/user/me/`, requestOptions);
         const data = await response.json();
         // console.log("API Response: ", data);
 
