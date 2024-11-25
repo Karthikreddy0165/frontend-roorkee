@@ -15,7 +15,7 @@ RUN npm install -g pm2
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install --production ,RUN npm install --include=dev
+RUN npm install --production 
 
 # Copy the entire project into the container
 COPY . .
