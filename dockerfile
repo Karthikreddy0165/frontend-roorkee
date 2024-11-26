@@ -38,10 +38,8 @@ RUN npm install -g pm2
 # Copy necessary files and build artifacts from the build stage
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/.next ./.next
-COPY --from=build /app/node_modules ./node_modules
-
-# Only copy 'public' directory if it exists
 COPY --from=build /app/public ./public || true
+COPY --from=build /app/node_modules ./node_modules
 
 # Expose the application port
 EXPOSE 3000
