@@ -24,7 +24,7 @@ COPY . .
 RUN npm run build
 
 # Expose the port your application listens on
-EXPOSE 80
+EXPOSE 3000
 
 # Set the default command to start the app with pm2
 CMD ["pm2-runtime", "ecosystem.config.js"]
