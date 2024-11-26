@@ -18,7 +18,7 @@ RUN npm install -g npm@latest
 COPY package*.json ./
 
 # Clean install dependencies, avoiding unnecessary files
-RUN npm ci --only=production --silent && npm cache clean --force
+RUN npm ci --silent && npm cache clean --force
 
 # Copy the entire project
 COPY . .
@@ -32,17 +32,19 @@ FROM node:22-alpine3.19 AS production
 # Set working directory
 WORKDIR /app
 
-# Install pm2 in production stage (optional)
+# Install pm2 in production stage (optional, only if you want process management)
 RUN npm install -g pm2
 
 # Copy necessary files and build artifacts from the build stage
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/.next ./.next
-COPY --from=build /app/public ./public
 COPY --from=build /app/node_modules ./node_modules
+
+# Only copy 'public' directory if it exists
+COPY --from=build /app/public ./public || true
 
 # Expose the application port
 EXPOSE 3000
 
-# Use pm2 to manage the application (or `next start`)
+# Use pm2 to manage the application (or `next start` if PM2 is not required)
 CMD ["pm2-runtime", "start", "npm", "--", "run", "start"]
