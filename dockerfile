@@ -14,6 +14,7 @@ RUN npm install
 
 COPY . .
 
+NODE_OPTIONS="--max-old-space-size=4096" 
 RUN npm run build
 
 # Change ownership of the application directory to the new user
