@@ -1,5 +1,5 @@
-# Use a lightweight Node.js image
-FROM node:22-alpine3.19
+# Stage 1: Build stage
+FROM node:22-alpine3.19 AS build
 
 # Set working directory
 WORKDIR /app
@@ -11,37 +11,38 @@ ENV NODE_OPTIONS=--max_old_space_size=2048
 ARG ENVIRONMENT
 ENV ENVIRONMENT=${ENVIRONMENT}
 
-# Install global dependencies
-RUN npm install -g pm2 npm@latest
+# Install global dependencies (pm2 only in production stage if necessary)
+RUN npm install -g npm@latest
 
-# Copy only necessary files for dependency installation
+# Copy package.json and package-lock.json for dependency installation
 COPY package*.json ./
 
 # Clean install dependencies, avoiding unnecessary files
-RUN npm ci --only=production --silent \
-    && npm cache clean --force
+RUN npm ci --only=production --silent && npm cache clean --force
 
-# Copy project files
+# Copy the entire project
 COPY . .
 
-# Build with memory optimization
+# Build the app with memory optimization
 RUN npm run build
 
-# Expose application port
-EXPOSE 3000
+# Stage 2: Production stage
+FROM node:22-alpine3.19 AS production
 
-# Use multi-stage build optimization (optional but recommended)
-FROM node:22-alpine3.19
+# Set working directory
 WORKDIR /app
 
-# Copy only necessary artifacts
-COPY --from=0 /app/package*.json ./
-COPY --from=0 /app/.next ./.next
-COPY --from=0 /app/public ./public
-COPY --from=0 /app/node_modules ./node_modules
-
-# Install pm2
+# Install pm2 in production stage (optional)
 RUN npm install -g pm2
 
-# Use pm2 to manage application
-CMD ["pm2-runtime", "ecosystem.config.js"]
+# Copy necessary files and build artifacts from the build stage
+COPY --from=build /app/package*.json ./
+COPY --from=build /app/.next ./.next
+COPY --from=build /app/public ./public
+COPY --from=build /app/node_modules ./node_modules
+
+# Expose the application port
+EXPOSE 3000
+
+# Use pm2 to manage the application (or `next start`)
+CMD ["pm2-runtime", "start", "npm", "--", "run", "start"]
