@@ -1,30 +1,47 @@
 # Use a lightweight Node.js image
 FROM node:22-alpine3.19
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
+
+# Set memory limits for Node.js
+ENV NODE_OPTIONS=--max_old_space_size=2048
 
 # Set environment variables dynamically
 ARG ENVIRONMENT
 ENV ENVIRONMENT=${ENVIRONMENT}
 
-# Install pm2 globally
-RUN npm install -g pm2
+# Install global dependencies
+RUN npm install -g pm2 npm@latest
 
-# Copy package.json and package-lock.json for dependencies installation
+# Copy only necessary files for dependency installation
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install --production 
+# Clean install dependencies, avoiding unnecessary files
+RUN npm ci --only=production --silent \
+    && npm cache clean --force
 
-# Copy the entire project into the container
+# Copy project files
 COPY . .
 
-# Build the application (if applicable, e.g., for React or Next.js)
+# Build with memory optimization
 RUN npm run build
 
-# Expose the port your application listens on
+# Expose application port
 EXPOSE 3000
 
-# Set the default command to start the app with pm2
+# Use multi-stage build optimization (optional but recommended)
+FROM node:22-alpine3.19
+WORKDIR /app
+
+# Copy only necessary artifacts
+COPY --from=0 /app/package*.json ./
+COPY --from=0 /app/.next ./.next
+COPY --from=0 /app/public ./public
+COPY --from=0 /app/node_modules ./node_modules
+
+# Install pm2
+RUN npm install -g pm2
+
+# Use pm2 to manage application
 CMD ["pm2-runtime", "ecosystem.config.js"]
