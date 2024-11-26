@@ -3,7 +3,7 @@
  */
 const nextConfig = {
   images: {
-    domains: ['localhost'], // Add localhost to allowed domains
+    domains: ['65.0.103.91'], // Add localhost to allowed domains
   },
 };
 
