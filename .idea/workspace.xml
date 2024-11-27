@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="17f5cf14-28f2-4dcb-9e34-cffad5c125db" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/assets/img.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Dropdowns/BeneficiariesDropdown.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Dropdowns/DepartmentDropDown.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Dropdowns/Dropdowns.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Dropdowns/SponsorDropdown.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/AllSchemes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/styles/loginform.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postcss.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/postcss.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Context/AuthContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Context/AuthContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Context/FilterContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Context/FilterContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/BackButton.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ComponentsUtils/BackButton.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/BeneficiariesDropdown.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Categories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Categories.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Debounce.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ComponentsUtils/Debounce.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DepartmentDropDown.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DropdownMenu.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/FundingBy.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/JobCount.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ComponentsUtils/JobCount.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/JobOpenings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ComponentsUtils/JobOpenings.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NavBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavBar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/OccupationDropDown.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/OutsideClick.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ComponentsUtils/OutsideClick.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/RedirectHandler.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ComponentsUtils/RedirectHandler.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SavedToast.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ComponentsUtils/SavedToast.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SchemeCount.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ComponentsUtils/SchemeCount.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Schemes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Schemes.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ScholarshipCount.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ComponentsUtils/ScholarshipCount.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Scholarships.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Scholarships.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SearchInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ComponentsUtils/SearchInput.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SelectedFilters.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SelectedFilters.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ShemeTypeDropdown.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SortDropdown.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SponsorDropdown.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Tabs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tabs.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UnsaveToast.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ComponentsUtils/UnsaveToast.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/isVerfiedComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/isVerfiedComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/parentcomp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/stateSelector.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/savedForLoginuser.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/savedForLoginuser.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/EmailVarified.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/EmailVarified.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Emailvarification.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/EmailVerification.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/accCreatedsucc.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/AccountCreated.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/api/fetchSchemes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/fetchSchemes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/api/submit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/submit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/content/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Modals/ApplySchemesModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/content/shareModel/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Modals/shareModal/ShareModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/forgetpassSent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/ForgetPassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/loginSucc.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LoginSuccess.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/model/.profileModal.js.swp" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Modals/.profileModal.js.swp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/model/profileModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Modals/profileModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/model/savedModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Modals/savedModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/personalDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/PersonalDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/preferences.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Modals/PreferencesModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/proffesionalDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ProfessionalDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/reset-password-confirm/[uuid]/[token].js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/reset-password-confirm/[uuid]/[token].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/reset.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ResetEmailPassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/schemes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/dropdown.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/dropdown.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/newdeprt.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/newdeprt.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/schemes.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/schemes.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/tabs.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/tabs.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/MyApp.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/main" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="schemes.module.css" />
+              </list>
+            </value>
+          </entry>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/schemes.module.css" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2opQZHEPuJfH2lV9RGCr7XmlzOO" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Dropdown.js&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/soniyamalviya/WebstormProjects/frontend-roorkee&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/soniyamalviya/WebstormProjects/frontend-roorkee/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;ChangesTree.GroupingKeys&quot;: []
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/utils" />
+      <recent name="$PROJECT_DIR$/src/pages/Modals" />
+      <recent name="$PROJECT_DIR$/src/components/ComponentsUtils" />
+      <recent name="$PROJECT_DIR$/src/components/Dropdowns" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-WS-241.15989.105" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="17f5cf14-28f2-4dcb-9e34-cffad5c125db" name="Changes" comment="" />
+      <created>1731564090406</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1731564090406</updated>
+      <workItem from="1731564091498" duration="5526000" />
+      <workItem from="1731664142925" duration="72125000" />
+      <workItem from="1732044529455" duration="38862000" />
+      <workItem from="1732218614182" duration="241000" />
+      <workItem from="1732218881268" duration="4328000" />
+      <workItem from="1732228531102" duration="1560000" />
+      <workItem from="1732337896255" duration="14461000" />
+      <workItem from="1732525377820" duration="18514000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

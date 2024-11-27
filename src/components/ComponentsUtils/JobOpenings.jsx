@@ -1,12 +1,11 @@
-import ScholarshipCount from "./ComponentsUtils/ScholarshipCount";
-import { useEffect, useState, useContext } from "react";
-import Categories from "./Categories";
-import PageContext from "@/Context/PageContext";
 import FilterContext from "@/Context/FilterContext";
+import PageContext from "@/Context/PageContext";
 import { useTabContext } from "@/Context/TabContext";
-// import Scholarships from "./Scholarships";
+import { useContext, useEffect, useState } from "react";
+import Categories from "../Categories";
+import JobCount from "./JobCount";
 
-export default function Scholarships() {
+export default function JobOpenings() {
   const { searchQuery } = useTabContext();
   const {
     states,
@@ -18,7 +17,7 @@ export default function Scholarships() {
   const [dataOfApi, setDataOfApi] = useState({});
   const [totalPages, setTotalPages] = useState(0);
 
-  // console.log(states[1],"states")
+  // console.log(states,"states")
   useEffect(() => {
     const fetchState = async () => {
       try {
@@ -40,7 +39,8 @@ export default function Scholarships() {
             sponsor_ids: sponsoredBy.length !== 0 ? sponsoredBy[0] : [],
             beneficiary_keywords: beneficiaries,
             search_query: searchQuery,
-            tag: "scholarship",
+            tag: "job",
+            // ordering: "-title",
 
           });
 
@@ -68,18 +68,19 @@ export default function Scholarships() {
     fetchState();
   }, [searchQuery, currentPage, sponsoredBy, states, departments, beneficiaries]);
 
+  // console.log(dataOfApi,'shemesdata');
   if (dataOfApi.count===0 && (states.length !== 0 || departments.length !== 0)) {
     return (
       <div className="flex justify-center items-center mt-8">
-        No scholarship-related schemes found based on your preference
+        No Job Openings found based on your preference
       </div>
     );
   }
 
   return (
     <div className="bg-white font-sans">
-      <ScholarshipCount dataFromApi = {dataOfApi} />
-      <Categories ffff={"scholarship"} dataFromApi={dataOfApi} totalPages={totalPages}/>
+      <JobCount dataFromApi={dataOfApi}/>
+      <Categories ffff={"jobopening"} dataFromApi={dataOfApi} totalPages={totalPages}/>
 
     </div>
   );

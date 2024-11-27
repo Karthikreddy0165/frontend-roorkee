@@ -23,7 +23,7 @@ const VerifiedStatus = () => {
           redirect: "follow"
         };
 
-        const response = await fetch('http://65.0.103.91:80/api/user/me/', requestOptions);
+        const response = await fetch('http://localhost:8000/api/user/me/', requestOptions);
         const data = await response.json();
         // console.log("API Response: ", data);
 
@@ -48,14 +48,19 @@ const VerifiedStatus = () => {
   };
 
   return (
-    showMessage && (
-      <div className="flex items-center justify-between p-4 bg-violet-100 text-black border border-violet-800 rounded mx-auto w-full">
-        <span className='ml-32'>Email has been sent to your mail, Please Verify</span>
-        <button onClick={handleClose} className="bg-transparent border-none text-2xl font-bold leading-none cursor-pointer text-violet-800">
-          &times;
-        </button>
-      </div>
-    )
+      showMessage && (
+          <div className="flex items-center justify-between p-4 bg-violet-100 text-black border border-violet-800 rounded mx-auto w-full max-w-4xl sm:max-w-full sm:px-6 sm:py-3">
+        <span className='ml-4 sm:ml-2 text-sm sm:text-base'>
+          Email has been sent to your mail, Please Verify
+        </span>
+            <button
+                onClick={handleClose}
+                className="bg-transparent border-none text-2xl font-bold leading-none cursor-pointer text-violet-800 sm:text-xl"
+            >
+              &times;
+            </button>
+          </div>
+      )
   );
 };
 
