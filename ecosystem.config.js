@@ -10,3 +10,4 @@ module.exports = {
         PORT: 8000, // Change this to your actual port if different
       },
 }]
+}
