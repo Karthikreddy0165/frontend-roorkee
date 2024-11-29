@@ -61,7 +61,7 @@ const CreateAcc01 = () => {
         redirect: "follow",
       };
 
-      const response = await fetch(`http://13.235.48.124:8000///api/login/`, 
+      const response = await fetch(`http://3.109.208.148:8000/api/login/`, 
         requestOptions);
       const result = await response.json();
 
@@ -69,7 +69,7 @@ const CreateAcc01 = () => {
         throw new Error(result.message || `HTTP error! status: ${response.status}`);
       }
 
-      // console.log("Login successful. Token received:", result.access);
+      console.log("Login successful. Token received:", result.access);
 
       if (result.access) {
         const user = { token: result.access, email: values.email };
@@ -202,7 +202,7 @@ const CreateAcc01 = () => {
               redirect: "follow",
             };
 
-            fetch(`http://localhost:8000/api/register/`, requestOptions)
+            fetch(`http://3.109.208.148:8000/api/register/`, requestOptions)
               .then((response) => response.json())
               .then((result) => {
                 

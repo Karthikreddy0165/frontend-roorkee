@@ -7,7 +7,8 @@ env:
 phases:
   pre_build:
     commands:
-
+      - echo Logging in to Docker registry...
+      - echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
 
@@ -26,3 +27,7 @@ phases:
     commands:
       - echo Pushing Docker image to ECR...
       - docker push ${IMAGE_URI}
+
+artifacts:
+  files:
+    - '**/*'
