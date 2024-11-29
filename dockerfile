@@ -1,13 +1,19 @@
-# Build stage
-FROM node:22-alpine3.19 as builder
+FROM node:22-alpine3.19
+
 WORKDIR /app
+
+ARG ENVIRONMENT
+ENV ENVIRONMENT=${ENVIRONMENT}
+
+RUN npm install -g pm2
+
 COPY package*.json ./
 RUN npm install
+
 COPY . .
+
 RUN npm run build
 
-# Runtime stage
-FROM nginx:alpine
-COPY --from=builder /app/build /usr/share/nginx/html
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+CMD ["pm2-runtime", "ecosystem.config.js"]
