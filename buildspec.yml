@@ -16,7 +16,7 @@ phases:
     commands:
       - echo Fetching Git commit hash...
       - GIT_COMMIT_HASH=$(git rev-parse HEAD)
-      - echo Building Docker image...
+      - echo "Building Docker image..."
       - echo "Building image with tag: ${IMAGE_REPO_NAME}:${GIT_COMMIT_HASH}"
       - docker build -t ${IMAGE_REPO_NAME}:${GIT_COMMIT_HASH} .
 
@@ -34,8 +34,4 @@ phases:
       - echo "Pushing image with URI: ${IMAGE_URI}"
       # Push both the commit hash tag and the 'latest' tag
       - docker push ${IMAGE_URI}
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
-
-artifacts:
-  files:
-    - '**/*'
+      - docker push $AW
