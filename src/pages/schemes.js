@@ -2,7 +2,7 @@ import NavBarWithoutLogin from "@/components/NavBar";
 import Tabs from "@/components/Tabs";
 import Image from "next/image";
 
-import bannerImg from "../assets/backgroundimg.png";
+import bannerImg from "../assets/bannerImg.png"
 import { useContext, useEffect, useRef, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import BeneficiaryDropdownMenu from "../components/BeneficiariesDropdown";
@@ -224,7 +224,7 @@ const backUpBannerImage = "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fb
         <div className="h-60 w-full relative brightness-70 mb-10">
           {bannerImage ? (
             <Image
-              src={bannerImg}
+              src={bannerImage}
               alt="Loading Image..."
               layout="fill"
               objectFit="contain"
