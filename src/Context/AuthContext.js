@@ -96,6 +96,7 @@ export const AuthProvider = ({ children }) => {
               "Authorization": `Bearer ${storedToken}`,
             },
           });
+          // console.log(response);
 
           if (response.status === 401) { // Unauthorized
             await refreshToken();

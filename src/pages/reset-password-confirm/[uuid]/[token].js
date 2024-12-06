@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as Yup from "yup";
 
+
 const ResPass = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -23,7 +24,7 @@ const ResPass = () => {
   const handlePasswordReset = async (values, { setSubmitting }) => {
     setLoading(true);
     try {
-      let url = `http://65.0.103.91:80/api/password-reset-confirm/`;
+      let url = `http://localhost:8000/api/password-reset-confirm/`;
 
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -47,7 +48,7 @@ const ResPass = () => {
       }
 
       // Redirect to HeroPage on successful password reset
-      router.push("/login");
+      router.push("../../login");
     } catch (error) {
       console.error("Failed to fetch data:", error);
     } finally {

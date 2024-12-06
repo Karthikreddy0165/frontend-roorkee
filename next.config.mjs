@@ -1,9 +1,12 @@
-/** @type {import('next').NextConfig} */
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
-  reactStrictMode: true,
   images: {
-    domains: ['65.0.103.91'], // Add your hostname here
+    domains: ['65.0.103.91'], // Add localhost to allowed domains
   },
 };
 
 export default nextConfig;
+
+

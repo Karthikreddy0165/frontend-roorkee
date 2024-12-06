@@ -1,4 +1,4 @@
-export default function handler(req, res) {
+export default function FormSubmitHandler(req, res) {
     if (req.method === 'POST') {
       const data = req.body;
   
