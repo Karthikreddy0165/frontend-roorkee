@@ -1,6 +1,7 @@
-/** @type {import('next').NextConfig} */
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
-  reactStrictMode: true,
   images: {
     domains: ['3.109.208.148'], // Add your local domain here
     remotePatterns: [

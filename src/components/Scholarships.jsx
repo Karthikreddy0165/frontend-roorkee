@@ -1,4 +1,4 @@
-import ScholarshipCount from "./ScholarshipCount";
+import ScholarshipCount from "./ComponentsUtils/ScholarshipCount";
 import { useEffect, useState, useContext } from "react";
 import Categories from "./Categories";
 import PageContext from "@/Context/PageContext";
@@ -12,7 +12,7 @@ export default function Scholarships() {
     states,
     departments,
     beneficiaries,
-    sponseredBy,
+    sponsoredBy,
   } = useContext(FilterContext);
   const { currentPage } = useContext(PageContext);
   const [dataOfApi, setDataOfApi] = useState({});
@@ -33,11 +33,11 @@ export default function Scholarships() {
           myHeaders.append("Content-Type", "application/json");
 
           const raw = JSON.stringify({
-            state_ids: states.length != 0 ?  states[0] : [],
+            state_ids: states.length !== 0 ?  states[0] : [],
             department_ids: Object.keys(departments).reduce((acc,i)=>{
               return [...acc,...departments[i]]
             },[]),
-            sponsor_ids: sponseredBy.length != 0 ? sponseredBy[0] : [],
+            sponsor_ids: sponsoredBy.length !== 0 ? sponsoredBy[0] : [],
             beneficiary_keywords: beneficiaries,
             search_query: searchQuery,
             tag: "scholarship",
@@ -66,9 +66,9 @@ export default function Scholarships() {
     };
 
     fetchState();
-  }, [searchQuery, currentPage, sponseredBy, states, departments, beneficiaries]);
+  }, [searchQuery, currentPage, sponsoredBy, states, departments, beneficiaries]);
 
-  if (dataOfApi.count==0 && (states.length != 0 || departments.length != 0)) {
+  if (dataOfApi.count===0 && (states.length !== 0 || departments.length !== 0)) {
     return (
       <div className="flex justify-center items-center mt-8">
         No scholarship-related schemes found based on your preference

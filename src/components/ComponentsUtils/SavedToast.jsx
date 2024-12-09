@@ -1,14 +1,17 @@
+import { useTabContext } from "@/Context/TabContext";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 
-const UnSaveToast = ({ message, onClose }) => {
+const SaveToast = ({ message, onClose }) => {
+  const {activeTab, setActiveTab} = useTabContext();
   const router = useRouter();
   const [isToastVisible, setIsToastVisible] = useState(true);
   const [isClosing, setIsClosing] = useState(false);
 
   const handleViewSavedClick = () => {
-    router.push('/schemes?tab=Saved');
+    router.push('/AllSchemes?tab=Saved');
+    setActiveTab("Saved");
     handleClose();
   };
 
@@ -39,9 +42,16 @@ const UnSaveToast = ({ message, onClose }) => {
       <span className="text-[#0A0A0A] text-center font-inter text-sm font-medium">
         {message}
       </span>
-      Scheme has been removed from save
+      Scheme has been saved
+      <button
+        className="flex p-3 justify-center items-center gap-2 rounded-lg bg-[#3431BB] text-white"
+        onClick={handleViewSavedClick}
+      >
+        View in saved
+      </button>
+      {/* <button onClick={handleClose} className="ml-4">Close</button> */}
     </div>
   );
 };
 
-export default UnSaveToast;
+export default SaveToast;

@@ -1,4 +1,4 @@
-const ForgetPassSent = () => {
+const ForgetPassword = () => {
     return (
         <div className="flex flex-col items-center justify-center h-screen max-w-lg mx-auto">
             <div className="flex items-center justify-center max-w-lg w-full">
@@ -18,4 +18,4 @@ const ForgetPassSent = () => {
     );
 }
 
-export default ForgetPassSent;
+export default ForgetPassword;

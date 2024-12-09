@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default async function handler(req, res) {
+export default async function apiSchemesHandler(req, res) {
   try {
     const response = await axios.get(
       `http://localhost:8000/api/schemes`

@@ -1,5 +1,5 @@
 import { useAuth } from "@/Context/AuthContext";
-import ProfileModal from "@/pages/model/profileModal";
+import ProfileModal from "@/pages/Modals/profileModal";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
@@ -15,7 +15,7 @@ const NavBar = () => {
   };
   
   const handleClickLogo = () => {
-    router.push("/app")
+    router.push("/App")
   }
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);

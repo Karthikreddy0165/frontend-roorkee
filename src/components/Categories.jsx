@@ -1,12 +1,12 @@
 import { useAuth } from "@/Context/AuthContext";
-import SavedModal from "@/pages/model/savedModal";
+import SavedModal from "@/pages/Modals/savedModal";
 import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { GoBookmarkFill } from "react-icons/go";
-import ApplyModal from "../pages/content";
-import Toast from "./SavedToast.jsx";
-import UnSaveToast from "./UnsaveToast";
+import ApplyModal from "@/pages/Modals/ApplySchemesModal";
+import Toast from "./ComponentsUtils/SavedToast.jsx";
+import UnSaveToast from "./ComponentsUtils/UnsaveToast";
 import PageContext from "@/Context/PageContext";
 import { useContext } from "react";
 import FilterContext from "@/Context/FilterContext";
@@ -200,7 +200,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     }
   };
 
-  if (Object.keys(dataFromApi).length == 0) {
+  if (Object.keys(dataFromApi).length === 0) {
     return (
       <div className="text-onclick-btnblue mt-[120px] italic flex justify-center items-center text-[18px]">
         Loading...
@@ -222,7 +222,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     if(states[1] && states[1].includes(state)) return;
     var stateId = 0;
     for(let i = 0; i < 7; i++) {
-      if(statesFromApi[i].state_name == state) {
+      if(statesFromApi[i].state_name === state) {
         stateId = statesFromApi[i].id;
         break;
       }
@@ -244,7 +244,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       // console.log(beneficiaries);
     };
     if(beneficiary.includes("OBC") && !beneficiaries.includes("OBC")) setBeneficiaries(prev => [...prev, "OBC"])
-    if(beneficiary.includes("SC") && !beneficiaries.includes("SC") || beneficiary == "Scheduled caste") setBeneficiaries(prev => [...prev, "SC"])
+    if(beneficiary.includes("SC") && !beneficiaries.includes("SC") || beneficiary === "Scheduled caste") setBeneficiaries(prev => [...prev, "SC"])
   }
   // const handleBeneficiaryTag = (event) => {
   //   event.stopPropagation();
@@ -267,13 +267,13 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     <>
   {/* We have found {378} schemes based on your profile */}
   <div>
-    {(activeTab != "Saved" ? dataFromApi.results : dataFromApi.results).map((item) => (
-       item.title && (
+    {(activeTab !== "Saved" ? dataFromApi.results : dataFromApi).map((item) => (
+      item.title &&(
         <div
-          className="flex items-start justify-between self-stretch relative border-[1px] border-category-border rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
+          className="flex items-start justify-between self-stretch relative border-[1px] border-gray-300 rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
           key={item.id}
           style={{
-            backgroundColor: item.id == sidePannelSelected ? "#DDD6FE" : "",
+            backgroundColor: item.id === sidePannelSelected ? "#DDD6FE" : "",
           }}
         >
           <div onClick={() => handleClick(item.id)}>
@@ -286,17 +286,17 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
             <div className="gap-[12px] pt-[16px] pd-[16px]">
               <p
-                className="font-inter text-[18px] leading-[21.6px] cursor-pointer font-bold mb-[10px] line-clamp-2 w-8/12"
-                role="button"
-                tabIndex="0"
+                  className="font-inter text-[18px] leading-[21.6px] cursor-pointer font-semibold mb-[10px] line-clamp-2 w-8/12 text-gray-900"
+                  role="button"
+                  tabIndex="0"
               >
                 {item.title}
               </p>
               <p
-                className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[10px] line-clamp-2"
-                onClick={() => handleClick(item.id)}
-                role="button"
-                tabIndex="0"
+                  className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[10px] line-clamp-2"
+                  onClick={() => handleClick(item.id)}
+                  role="button"
+                  tabIndex="0"
               >
                 <span className="font-semibold">Description: </span>
                 {item.description}
@@ -305,34 +305,39 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                 {item.department.department_name}
               </p>
 
-              
+
               <div className="flex gap-5 mb-[16px]">
-                <button className="flex items-center justify-center pr-[12px] pl-[12px] border border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium py-2 hover:border-onclick-btnblue hover:text-onclick-btnblue" onClick={(event) => handleStateTag(event)}>
+                <button
+                    className="flex items-center justify-center pr-[12px] pl-[12px] border border-onclick-btnblue rounded-[1rem] bg-white text-onclick-btnblue font-inter text-xs font-medium py-2 hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                    onClick={(event) => handleStateTag(event)}>
                   {item.department.state}
                 </button>
-                
-                {item.beneficiaries.length > 0 &&
-                  item.beneficiaries[0].beneficiary_type !== "N/A" && item.beneficiaries[0].beneficiary_type !== "" &&(
-                    <button
-                    className="relative flex items-center justify-center pr-[12px] pl-[12px] py-[5px] border  border-gray-400 rounded-full bg-white text-gray-600 font-inter text-xs font-medium pl-8px hover:border-onclick-btnblue hover:text-onclick-btnblue "
-                    onClick={(event) => handleBeneficiaryTag(event)}
-                    >
-                      {/* overflow-hidden text-ellipsis whitespace-nowrap max-w-[400px] */}
-                      {item.beneficiaries[0].beneficiary_type}
-                    </button>
-                  )}
-              </div>
-            </div>
-          </div>
 
-          <div
-            className="cursor-pointer px-2 py-2 right-[8.25px]"
-            onClick={(e) => toggleBookmark(e, item.id)}
-          >
-            {isBookmarked[item.id] ? (
-              <GoBookmarkFill className="w-[27.5px] h-[27.5px] text-[#3431BB]" />
-            ) : (
-              <CiBookmark className="w-[27.5px] h-[27.5px]" />
+                {item.beneficiaries.length > 0 &&
+                    item.beneficiaries[0].beneficiary_type !== "N/A" && item.beneficiaries[0].beneficiary_type !== "" && (
+                        <button
+                            className="relative flex items-center justify-center pr-[12px] pl-[12px] py-[5px] border  border-onclick-btnblue rounded-full bg-white text-onclick-btnblue font-inter text-xs font-medium pl-8px hover:border-onclick-btnblue hover:text-onclick-btnblue "
+                            onClick={(event) => handleBeneficiaryTag(event)}
+                        >
+                          {/* overflow-hidden text-ellipsis whitespace-nowrap max-w-[400px] */}
+                          {item.beneficiaries[0].beneficiary_type}
+                        </button>
+                    )}
+              </div>
+
+
+
+          </div>
+        </div>
+
+      <div
+      className="cursor-pointer px-2 py-2 right-[8.25px]"
+      onClick={(e) => toggleBookmark(e, item.id)}
+  >
+    {isBookmarked[item.id] ? (
+        <GoBookmarkFill className="w-[27.5px] h-[27.5px] text-[#3431BB]"/>
+    ) : (
+        <CiBookmark className="w-[27.5px] h-[27.5px]" />
             )}
           </div>
         </div>

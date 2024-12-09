@@ -23,7 +23,7 @@ const VerifiedStatus = () => {
           redirect: "follow"
         };
 
-        const response = await fetch(`http://localhost:8000/api/user/me/`, requestOptions);
+        const response = await fetch('http://localhost:8000/api/user/me/', requestOptions);
         const data = await response.json();
         // console.log("API Response: ", data);
 

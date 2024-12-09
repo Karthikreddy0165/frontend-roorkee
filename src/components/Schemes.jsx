@@ -3,7 +3,7 @@ import Categories from "./Categories";
 import PageContext from "@/Context/PageContext";
 import FilterContext from "@/Context/FilterContext";
 import { useTabContext } from "@/Context/TabContext";
-import SchemeCount from "./SchemeCount";
+import SchemeCount from "./ComponentsUtils/SchemeCount";
 
 export default function Schemes() {
   const { searchQuery } = useTabContext();
@@ -11,7 +11,7 @@ export default function Schemes() {
     states,
     departments,
     beneficiaries,
-    sponseredBy,
+    sponsoredBy,
     } = useContext(FilterContext);
     const { currentPage } = useContext(PageContext);
 
@@ -30,15 +30,15 @@ export default function Schemes() {
           myHeaders.append("Content-Type", "application/json");
 
           const raw = JSON.stringify({
-            state_ids: states.length != 0 ?  states[0] : [],
+            state_ids: states.length !== 0 ?  states[0] : [],
             department_ids: Object.keys(departments).reduce((acc,i)=>{
               return [...acc,...departments[i]]
             },[]),
-            sponsor_ids: sponseredBy.length != 0 && sponseredBy[0][0]==2 ? sponseredBy[0] : [],
+            sponsor_ids: sponsoredBy.length !== 0 && sponsoredBy[0][0]===2 ? sponsoredBy[0] : [],
             beneficiary_keywords: beneficiaries,
             search_query: searchQuery,
           });
-          
+
           // console.log("uski length",states.length)
           const requestOptions = {
             method: "POST",
@@ -61,7 +61,7 @@ export default function Schemes() {
     };
 
     fetchState();
-  }, [searchQuery, currentPage, sponseredBy, states, departments, beneficiaries]);
+  }, [searchQuery, currentPage, sponsoredBy, states, departments, beneficiaries]);
 
 
 // console.log(dataOfApi,'shemesdata' );

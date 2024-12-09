@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect } from 'react';
 
 
-const LoginSucc = () => {
+const LoginSuccess = () => {
     const router = useRouter();
 
     return (
@@ -22,4 +22,4 @@ const LoginSucc = () => {
     )
 }
 
-export default LoginSucc;
+export default LoginSuccess;

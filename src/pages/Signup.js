@@ -258,7 +258,7 @@ const CreateAcc01 = () => {
                     Email Id
                   </label>
                   <input
-                    className="shadow appearance-none border rounded rounded-[8px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="shadow appearance-none border  rounded-[8px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="email"
                     type="email"
                     placeholder="Enter your email"
@@ -275,7 +275,7 @@ const CreateAcc01 = () => {
                     Password
                   </label>
                   <input
-                    className="shadow appearance-none border rounded rounded-[8px] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    className="shadow appearance-none border  rounded-[8px] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
@@ -298,7 +298,7 @@ const CreateAcc01 = () => {
 
                 <div>
                   <button
-                    className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-3 px-4 rounded  rounded-[8px] focus:outline-none focus:shadow-outline w-full mt-[35px]"
+                    className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-3 px-4   rounded-[8px] focus:outline-none focus:shadow-outline w-full mt-[35px]"
                     type="submit"
                     disabled={formik.isSubmitting}
                   >

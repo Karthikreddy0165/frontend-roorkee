@@ -6,7 +6,7 @@ import { AuthProvider } from "@/Context/AuthContext";
 import { PageProvider } from "@/Context/PageContext";
 import {FilterProvider} from "@/Context/FilterContext";
 import { PreferenceProvider } from "@/Context/preferenceContext";
-import RedirectHandler from "@/components/RedirectHandler";
+import RedirectHandler from "@/components/ComponentsUtils/RedirectHandler";
 
 export default function App({ Component, pageProps }) {
 
