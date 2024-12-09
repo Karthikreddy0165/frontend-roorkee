@@ -55,7 +55,7 @@ const CreateAcc03 = () => {
       body: JSON.stringify(requestBody),
     };
 
-    fetch(`http://3.109.208.148:8000/api/profile/professional/`, requestOptions)
+    fetch(`http://localhost:8000/api/profile/professional/`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         // console.log(result);

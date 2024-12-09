@@ -11,7 +11,7 @@ const SponsorDropdownMenu = () => {
     useContext(FilterContext);
   // useEffect(()=>{
   //   async function fetchedSponsors(){
-  //     const res = await fetch(`http://3.109.208.148:8000/api/sponsors/`);
+  //     const res = await fetch(`http://localhost:8000/api/sponsors/`);
   //     if (!res.ok) {
   //       throw new Error(`HTTP error! status: ${response.status}`);
   //     }

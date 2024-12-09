@@ -14,7 +14,7 @@ function FilterProvider({ children }){
   const [statesFromApi, setStatesFromApi] = useState([]);
   useEffect(()=>{
     async function fetchedStates(){
-        const res = await fetch(`http://3.109.208.148:8000/api/states/`);
+        const res = await fetch(`http://localhost:8000/api/states/`);
         if (!res.ok) {
           console.log(res.status)
 

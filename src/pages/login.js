@@ -52,7 +52,7 @@ const login = () => {
       };
 
       const response = await fetch(
-        `http://3.109.208.148:8000/api/login/`,
+        `http://localhost:8000/api/login/`,
         requestOptions
       );
       const result = await response.json();

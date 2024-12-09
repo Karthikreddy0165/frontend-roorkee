@@ -17,8 +17,8 @@ const ApplyModal = ({
       if (scheme && scheme.id) {
         try {
           const [criteriaRes, documentsRes] = await Promise.all([
-            fetch(`http://3.109.208.148:8000/api/schemes/${scheme.id}/criteria/`),
-            fetch(`http://3.109.208.148:8000/api/schemes/${scheme.id}/documents/`),
+            fetch(`http://localhost:8000/api/schemes/${scheme.id}/criteria/`),
+            fetch(`http://localhost:8000/api/schemes/${scheme.id}/documents/`),
           ]);
 
         if (!criteriaRes.ok) {
