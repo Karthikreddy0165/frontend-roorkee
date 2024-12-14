@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/Context/AuthContext";
 
-const VerifiedStatus = () => {
+const SchemeVerifiedStatus = () => {
   const { authState } = useAuth();
 
   const [showMessage, setShowMessage] = useState(false);
@@ -51,7 +51,7 @@ const VerifiedStatus = () => {
 
   return (
     showMessage && (
-      <div className="relative w-[482px] flex items-center justify-between p-4 bg-violet-100 text-black border border-violet-800 rounded mx-auto sm:w-full ">
+      <div className="relative  flex items-center justify-between p-4 bg-violet-100 text-black border border-violet-800 rounded mx-auto  ">
         <span className="ml-4  text-sm">
           Email has been sent to your mail, Please Verify
         </span>
@@ -66,4 +66,4 @@ const VerifiedStatus = () => {
   );
 };
 
-export default VerifiedStatus;
+export default SchemeVerifiedStatus;

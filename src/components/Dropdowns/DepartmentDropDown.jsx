@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
-import FilterContext from '@/Context/FilterContext';
+import React, { useContext, useEffect, useState, useRef } from "react";
+import FilterContext from "@/Context/FilterContext";
 import PageContext from "@/Context/PageContext";
 
 const DepartmentDropdownMenu = () => {
@@ -11,13 +11,13 @@ const DepartmentDropdownMenu = () => {
 
   useEffect(() => {
     async function fetchDepartments() {
-      const res = await fetch(`http://localhost:8000/api/departments/`);
+      const res = await fetch(`http://3.109.208.148:8000/api/departments/`);
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       } else {
         const data = await res.json();
         const onlyGroup = {};
-        data.forEach(i => {
+        data.forEach((i) => {
           if (!Object.keys(onlyGroup).includes(i.group)) {
             onlyGroup[i.group] = [];
           }
@@ -30,13 +30,16 @@ const DepartmentDropdownMenu = () => {
   }, []);
 
   // Loading state
-  if (Object.keys(allDepartments).length === 0) return (
+  if (Object.keys(allDepartments).length === 0)
+    return (
       <div className="text-onclick-btnblue text-[16px] mt-[-15px] mb-[7px]">
         loading...
       </div>
-  );
+    );
 
-  const uniqueCategories = Object.keys(allDepartments).sort((a, b) => a.localeCompare(b));
+  const uniqueCategories = Object.keys(allDepartments).sort((a, b) =>
+    a.localeCompare(b)
+  );
 
   const handleItemClick = (value) => {
     setCurrentPage(1); // Reset the current page to 1 on category selection
@@ -52,20 +55,34 @@ const DepartmentDropdownMenu = () => {
   };
 
   return (
-      <div className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0">
-        <ul id="scroll-container" className="flex flex-col font-sans list-none pr-2 m-0 gap-0 max-h-[300px] overflow-hidden">
-          {uniqueCategories.map((item, index) => (
-              <li key={item + index} className="flex items-center justify-between hover:bg-gray-100 p-[8px] cursor-pointer hover:rounded-[8px]" onClick={() => handleItemClick(item)}>
-                <div>
-                  <p className="leading-5 overflow-hidden overflow-ellipsis line-clamp-2 max-h-10">{item}</p>
-                </div>
-                <div className="w-[16.5] h-[16.5]">
-                  <input type="checkbox" value={item} checked={departments.hasOwnProperty(item)} className="ml-10 custom-checkbox pointer-events-none w-full h-full" />
-                </div>
-              </li>
-          ))}
-        </ul>
-      </div>
+    <div className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0">
+      <ul
+        id="scroll-container"
+        className="flex flex-col font-sans list-none pr-2 m-0 gap-0 max-h-[300px] overflow-hidden"
+      >
+        {uniqueCategories.map((item, index) => (
+          <li
+            key={item + index}
+            className="flex items-center justify-between hover:bg-gray-100 p-[8px] cursor-pointer hover:rounded-[8px]"
+            onClick={() => handleItemClick(item)}
+          >
+            <div>
+              <p className="leading-5 overflow-hidden overflow-ellipsis line-clamp-2 max-h-10">
+                {item}
+              </p>
+            </div>
+            <div className="w-[16.5] h-[16.5]">
+              <input
+                type="checkbox"
+                value={item}
+                checked={departments.hasOwnProperty(item)}
+                className="ml-10 custom-checkbox pointer-events-none w-full h-full"
+              />
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
