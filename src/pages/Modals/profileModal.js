@@ -19,7 +19,7 @@ const ProfileModal = ({ onClose }) => {
   const [educationOptions, setEducationOptions] = useState([]);
   const [profileData, setProfileData] = useState({
     name: "",
-    age: "",
+    age: 0,
     gender: "",
     community: "",
     minority: "",
@@ -50,7 +50,7 @@ const ProfileModal = ({ onClose }) => {
         },
         redirect:"follow"
       }
-      const response = await fetch("http://localhost:8000/api/resend-verification-email/", requestOptions)
+      const response = await fetch("http://3.109.208.148:8000/api/resend-verification-email/", requestOptions)
       const data = await response.json()
       if (response.ok){
         setSentEmailText(false);
@@ -71,7 +71,7 @@ const ProfileModal = ({ onClose }) => {
           };
 
           const profileResponse = await fetch(
-            "http://localhost:8000/api/user/profile/",
+            "http://3.109.208.148:8000/api/user/profile/",
             requestOptions
           );
           const pData = await profileResponse.json();
@@ -113,7 +113,7 @@ const ProfileModal = ({ onClose }) => {
     const fetchStateOptions = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8000/api/choices/state/"
+          "http://3.109.208.148:8000/api/choices/state/"
         );
         const data = await response.json();
         const formattedData = data.map((item) => item[0]);
@@ -126,7 +126,7 @@ const ProfileModal = ({ onClose }) => {
     const fetchEducationOptions = async () => {
       try {
         const response = await fetch(
-         " http://localhost:8000/api/choices/education/"
+         " http://3.109.208.148:8000/api/choices/education/"
         );
         const data = await response.json();
         const formattedData = data.map((item) => item[0]);
@@ -167,7 +167,7 @@ const ProfileModal = ({ onClose }) => {
 
         try {
           const response = await fetch(
-            "http://localhost:8000/api/user/me/",
+            "http://3.109.208.148:8000/api/user/me/",
             requestOptions
           );
           const data = await response.json();
@@ -183,8 +183,8 @@ const ProfileModal = ({ onClose }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    setProfileData((prevData) => ({
+    setProfileData((prevData) => (
+      {
       ...prevData,
       [name]: value,
     }));
@@ -202,12 +202,13 @@ const ProfileModal = ({ onClose }) => {
       };
 
       try {
-        await fetch("http://localhost:8000/api/user/profile/", {
+        console.log(profileData, "profile data before putting")
+        await fetch("http://3.109.208.148:8000/api/user/profile/", {
           ...requestOptions,
           body: JSON.stringify({
             name: profileData.name,
             gender: profileData.gender,
-            age: profileData.age,
+            age: profileData.age || 0,
             category: profileData.community,
             state_of_residence: profileData.state,
             minority: profileData.minority === "Yes",
@@ -235,9 +236,6 @@ const ProfileModal = ({ onClose }) => {
       if (profileData.community){
         setBeneficiaries([profileData.community])
       }
-
-
-
         setIsSaved(true)
         onClose();
       } catch (error) {
@@ -554,6 +552,8 @@ const ProfileModal = ({ onClose }) => {
                 <input
                   type="text"
                   name="income"
+                  min="0"
+                  max="20"
                   className="w-full h-[44px] border border-gray-300 p-2 rounded-lg bg-gray-100 text-[12px] font-semibold text-black"
                   placeholder="Enter your income"
                   value={profileData.income}

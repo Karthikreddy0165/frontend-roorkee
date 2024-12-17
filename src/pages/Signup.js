@@ -9,7 +9,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import * as Yup from "yup";
 import { useFormData } from "../Context/FormContext";
 import loginperson from "../assets/image.png";
-import AccCreatSucc from "./accCreatedsucc";
+import AccCreatSucc from "../utils/AccountCreated";
 
 const CreateAcc01 = () => {
   const router = useRouter();
@@ -61,10 +61,9 @@ const CreateAcc01 = () => {
         redirect: "follow",
       };
 
-      const response = await fetch(`http://localhost:8000/api/login/`, 
+      const response = await fetch(`http://3.109.208.148:8000/api/login/`, 
         requestOptions);
       const result = await response.json();
-
       if (!response.ok) {
         throw new Error(result.message || `HTTP error! status: ${response.status}`);
       }
@@ -79,7 +78,7 @@ const CreateAcc01 = () => {
         showSucc.current = true;
         setTimeout(() => {
           showSucc.current = false;
-          router.push("/schemes");
+          router.push("/AllSchemes");
         }, 1500);
       }
     } catch (error) {
@@ -202,7 +201,7 @@ const CreateAcc01 = () => {
               redirect: "follow",
             };
 
-            fetch(`http://localhost:8000/api/register/`, requestOptions)
+            fetch(`http://3.109.208.148:8000/api/register/`, requestOptions)
               .then((response) => response.json())
               .then((result) => {
                 

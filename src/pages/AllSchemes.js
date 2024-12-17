@@ -7,7 +7,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import DepartmentDropdownMenu from "../components/Dropdowns/DepartmentDropDown";
 import DropdownMenu from "@/components/Dropdowns/Dropdowns";
 import SponsorsDropdownMenu from "@/components/Dropdowns/SponsorDropdown";
-
+import bannerImg from '../assets/bannerImg.png'
 import FilterContext from '@/Context/FilterContext';
 import VerifiedStatus from "@/components/isVerfiedComponent";
 import BeneficiariesDropdown from "@/components/Dropdowns/BeneficiariesDropdown";
@@ -56,7 +56,7 @@ const schemesAll = () => {
 
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/banners/")
+    fetch("http://3.109.208.148:8000/api/banners/")
         .then((response) => response.json())
         .then((data) => {
           // Find the active banner
@@ -124,7 +124,7 @@ const schemesAll = () => {
           <div className="h-60 w-full relative brightness-70 mb-4">
             {bannerImage ? (
                 <Image
-                    src={bannerImage}
+                    src={bannerImg}
                     alt="Loading Image..."
                     layout="fill"
                     objectFit="contain"
@@ -132,7 +132,7 @@ const schemesAll = () => {
                 />
             ) : (
                 <Image
-                    src={backUpBannerImage}
+                    src={bannerImg}
                     alt="Loading Image..."
                     layout="fill"
                     objectFit="contain"

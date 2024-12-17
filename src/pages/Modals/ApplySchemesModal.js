@@ -12,13 +12,22 @@ const ApplyModal = ({
   const [documents, setDocuments] = useState([]);
   const [error, setError] = useState(null); // Added error state
 
+  const isValidJSON = (str) => {
+    try {
+      JSON.parse(str);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+  
   useEffect(() => {
     const fetchData = async () => {
       if (scheme && scheme.id) {
         try {
           const [criteriaRes, documentsRes] = await Promise.all([
-            fetch(`http://localhost:8000/api/schemes/${scheme.id}/criteria/`),
-            fetch(`http://localhost:8000/api/schemes/${scheme.id}/documents/`),
+            fetch(`http://3.109.208.148:8000/api/schemes/${scheme.id}/criteria/`),
+            fetch(`http://3.109.208.148:8000/api/schemes/${scheme.id}/documents/`),
           ]);
 
         if (!criteriaRes.ok) {
@@ -151,17 +160,15 @@ const ApplyModal = ({
                         const jsonData = matchedCriteria.description
                           .replace(/'/g, '"')
                           .replace(/None/g, "null");
-                        const parsedData = JSON.parse(jsonData);
-                        console.log(parsedData, "parsedataawa");
-
+                        const parsedData = JSON.parse(jsonData) 
                         // Check if parsedData has any valid criteria
                         const hasCriteria =
-                          (parsedData[0].community &&
-                            parsedData[0].community.length > 0) ||
-                          parsedData[0].income_limit ||
-                          parsedData[0].age_limit ||
-                          parsedData[0].bpl_card_holder !== null ||
-                          parsedData[0].education !== null;
+                          (parsedData[0]?.community &&
+                            parsedData[0]?.community.length > 0) ||
+                          parsedData[0]?.income_limit ||
+                          parsedData[0]?.age_limit ||
+                          parsedData[0]?.bpl_card_holder !== null ||
+                          parsedData[0]?.education !== null;
 
                         if (!hasCriteria) {
                           return null;
@@ -255,7 +262,8 @@ const ApplyModal = ({
                           </>
                         );
                       } catch (error) {
-                        console.error("Invalid JSON:", error);
+                        
+                        // console.error("Invalid JSON:", error);
                         return null;
                       }
                     })()}

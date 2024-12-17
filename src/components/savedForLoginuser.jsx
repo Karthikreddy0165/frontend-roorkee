@@ -32,7 +32,7 @@ export default function Saved() {
         try {
         setDataOfApi({});
 
-        let url = `http://localhost:8000/api/saved-schemes/filter/?limit=10&page=${currentPage}`;
+        let url = `http://3.109.208.148:8000/api/saved-schemes/filter/?limit=10&page=${currentPage}`;
 
         const myHeaders = new Headers();
 

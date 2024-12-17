@@ -26,7 +26,6 @@ const login = () => {
     router.push('/ResetEmailPassword');
 }
 
-
   useEffect (() =>{
     const token = localStorage.getItem("token");
     if (token){
@@ -43,7 +42,7 @@ const login = () => {
         email: values.email,
         password: values.password,
       });
-
+      console.log(JSON.stringify(raw));
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
@@ -52,18 +51,18 @@ const login = () => {
       };
 
       const response = await fetch(
-        `http://localhost:8000/api/login/`,
+        `http://3.109.208.148:8000/api/login/`,
         requestOptions
       );
       const result = await response.json();
-
+  
       if (!response.ok) {
+        console.log(response,3)
         throw new Error(
           result.message || `HTTP error! status: ${response.status}`
         );
       }
 
-      // console.log("Login successful. Token received:", result.access);
 
       if (result.access) {
         const user = { token: result.access, email: values.email };
@@ -208,7 +207,7 @@ const login = () => {
                   Email
                 </label>
                 <input
-                  className="shadow appearance-none border rounded rounded-[8px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border  rounded-[8px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="email"
                   type="email" // Change type to email
                   placeholder="Enter your email"
@@ -225,7 +224,7 @@ const login = () => {
                   Password
                 </label>
                 <input
-                  className="shadow appearance-none border rounded rounded-[8px] w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline mb-8"
+                  className="shadow appearance-none border  rounded-[8px] w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline mb-8"
                   id="password"
                   type={showPassword ? "text" : "password"} // Toggle password visibility
                   placeholder="Enter your password"
@@ -264,7 +263,7 @@ const login = () => {
 
               <div>
                 <button
-                  className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-3 px-4 rounded rounded-[8px] focus:outline-none focus:shadow-outline w-full"
+                  className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-3 px-4  rounded-[8px] focus:outline-none focus:shadow-outline w-full"
                   type="submit"
                   disabled={formik.isSubmitting}
                 >
