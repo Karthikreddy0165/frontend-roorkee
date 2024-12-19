@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { FaAngleRight, FaArrowLeftLong } from "react-icons/fa6";
-import { useAuth } from "../Context/AuthContext";
+import { useAuth } from "@/Context/AuthContext";
 import loginperson from "../assets/image.png";
 
 
@@ -19,18 +19,17 @@ const login = () => {
 
 
   const handleCreate01Click = () => {
-    router.push("/signup",);
+    router.push("/Signup",);
   };
 
   const handleClickForgetPass = () => {
-    router.push('/reset');
+    router.push('/ResetEmailPassword');
 }
-
 
   useEffect (() =>{
     const token = localStorage.getItem("token");
     if (token){
-      router.push("/app");
+      router.push("/App");
     }
   },[])
 
@@ -43,7 +42,7 @@ const login = () => {
         email: values.email,
         password: values.password,
       });
-
+      console.log(JSON.stringify(raw));
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
@@ -56,22 +55,22 @@ const login = () => {
         requestOptions
       );
       const result = await response.json();
-
+  
       if (!response.ok) {
+        console.log(response,3)
         throw new Error(
           result.message || `HTTP error! status: ${response.status}`
         );
       }
 
-      // console.log("Login successful. Token received:", result.access);
 
       if (result.access) {
         const user = { token: result.access, email: values.email };
         localStorage.setItem("token", result.access);
         login(result.access, user); // Save token and user information to the context
-        router.push("/loginSucc");
+        router.push("/LoginSuccess");
         setTimeout(() => {
-          router.push("/schemes");
+          router.push("/AllSchemes");
         }, 2000);
       } else {
         setErrorMessage("Email or password is invalid");
@@ -109,11 +108,11 @@ const login = () => {
 
 
 
-          <div class="absolute w-[266px] h-auto p-[10.8px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] top-[305px] ml-[35px] ">
-            <p class="self-stretch text-[#000] mb-[5px] font-inter text-[9.452px] font-semibold leading-normal">
+          <div className="absolute w-[266px] h-auto p-[10.8px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] top-[305px] ml-[35px] ">
+            <p className="self-stretch text-[#000] mb-[5px] font-inter text-[9.452px] font-semibold leading-normal">
               Opening for bank staff
             </p>
-            <p class="self-stretch text-[#616161] font-inter text-[6.751px]  font-normal leading-normal underline">
+            <p className="self-stretch text-[#616161] font-inter text-[6.751px]  font-normal leading-normal underline">
               Welfare Department
             </p>
           </div>
@@ -149,8 +148,8 @@ const login = () => {
           </div>
         </div>
 
-        <div class="absolute w-[266px] p-[7.919px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] bottom-[175px] mr-[270px] scale-[.8]">
-          <p class="self-stretch text-[#000] font-inter text-[8.929px] font-semibold leading-normal mb-[5.939px]">
+        <div className="absolute w-[266px] p-[7.919px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] bottom-[175px] mr-[270px] scale-[.8]">
+          <p className="self-stretch text-[#000] font-inter text-[8.929px] font-semibold leading-normal mb-[5.939px]">
             Scholarships for female student
           </p>
           <p className="self-stretch text-[#616161] font-inter text-[6.649px] font-semibold leading-normal opacity-60 line-clamp-2">
@@ -208,7 +207,7 @@ const login = () => {
                   Email
                 </label>
                 <input
-                  className="shadow appearance-none border rounded rounded-[8px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border  rounded-[8px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="email"
                   type="email" // Change type to email
                   placeholder="Enter your email"
@@ -225,7 +224,7 @@ const login = () => {
                   Password
                 </label>
                 <input
-                  className="shadow appearance-none border rounded rounded-[8px] w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline mb-8"
+                  className="shadow appearance-none border  rounded-[8px] w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline mb-8"
                   id="password"
                   type={showPassword ? "text" : "password"} // Toggle password visibility
                   placeholder="Enter your password"
@@ -264,7 +263,7 @@ const login = () => {
 
               <div>
                 <button
-                  className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-3 px-4 rounded rounded-[8px] focus:outline-none focus:shadow-outline w-full"
+                  className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-3 px-4  rounded-[8px] focus:outline-none focus:shadow-outline w-full"
                   type="submit"
                   disabled={formik.isSubmitting}
                 >

@@ -16,7 +16,7 @@ bun dev
 
 Open [http://54.79.141.24:8000](http://54.79.141.24:8000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `pages/ShareModal.js`. The page auto-updates as you edit the file.
 
 [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://54.79.141.24:8000/api/hello](http://54.79.141.24:8000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 

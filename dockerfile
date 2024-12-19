@@ -1,6 +1,6 @@
 FROM node:22-alpine3.19
 
-WORKDIR /app
+WORKDIR /App
 
 ARG ENVIRONMENT
 ENV ENVIRONMENT=${ENVIRONMENT}
@@ -12,7 +12,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+RUN npm run build 
 
 EXPOSE 80
 

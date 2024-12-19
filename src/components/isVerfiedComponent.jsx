@@ -9,7 +9,7 @@ const VerifiedStatus = () => {
   useEffect(() => {
     const checkEmailVerification = async () => {
       if (!authState.token) {
-        console.log("No token available");
+        // console.log("No token available");
         return;
       }
 
@@ -23,7 +23,7 @@ const VerifiedStatus = () => {
           redirect: "follow"
         };
 
-        const response = await fetch(`http://3.109.208.148:8000/api/user/me/`, requestOptions);
+        const response = await fetch('http://3.109.208.148:8000/api/user/me/', requestOptions);
         const data = await response.json();
         // console.log("API Response: ", data);
 

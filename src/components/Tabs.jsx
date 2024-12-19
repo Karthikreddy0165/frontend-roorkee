@@ -3,10 +3,10 @@ import { useContext } from "react";
 
 import PageContext from "@/Context/PageContext";
 import { useTabContext } from "@/Context/TabContext";
-import JobOpenings from "./JobOpenings";
+import JobOpenings from "./ComponentsUtils/JobOpenings";
 import Schemes from "./Schemes";
 import Scholarships from "./Scholarships";
-import SearchInput from "./SearchInput";
+import SearchInput from "./ComponentsUtils/SearchInput";
 import SelectedFilters from "./SelectedFilters";
 import Saved from "./savedForLoginuser";
 
