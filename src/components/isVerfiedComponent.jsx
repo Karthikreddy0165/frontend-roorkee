@@ -9,7 +9,7 @@ const VerifiedStatus = () => {
   useEffect(() => {
     const checkEmailVerification = async () => {
       if (!authState.token) {
-        console.log("No token available");
+        // console.log("No token available");
         return;
       }
 

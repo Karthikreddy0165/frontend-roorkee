@@ -92,6 +92,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   }, [authState.token]);
 
   const handleClick = (scheme_id) => {
+    console.log(scheme_id, "scheme_id")
     const scheme = dataFromApi.results.find((item) => item.id === scheme_id);
     console.log(scheme) //change1
     if (scheme) {
@@ -222,7 +223,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     var state = event.target.innerText;
     if(states[1] && states[1].includes(state)) return;
     var stateId = 0;
-    for(let i = 0; i < 7; i++) {
+    for(let i = 0; i < statesFromApi.length; i++) {
       if(statesFromApi[i].state_name === state) {
         stateId = statesFromApi[i].id;
         break;
