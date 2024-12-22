@@ -24,7 +24,7 @@ const ResPass = () => {
   const handlePasswordReset = async (values, { setSubmitting }) => {
     setLoading(true);
     try {
-      let url = `http://65.0.122.213:8000/api/password-reset-confirm/`;
+      let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/password-reset-confirm/`;
 
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");

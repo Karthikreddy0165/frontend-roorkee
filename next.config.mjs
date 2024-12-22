@@ -3,7 +3,7 @@
  */
 const nextConfig = {
   images: {
-    domains: ['65.0.122.213'], // Add your local domain here
+    domains: ['65.0.122.213','launchpad-media.s3.amazonaws.com'], // Add your local domain here
     remotePatterns: [
       {
         protocol: 'http',

@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
     if (!storedRefreshToken) return;
 
     try {
-      const response = await fetch("http://65.0.122.213:8000/api/refresh-token", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/refresh-token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -91,7 +91,7 @@ export const AuthProvider = ({ children }) => {
       // Check token validity and refresh if needed
       const checkTokenValidity = async () => {
         try {
-          const response = await fetch("http://65.0.122.213:8000/api/check-token", {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/check-token`, {
             headers: {
               "Authorization": `Bearer ${storedToken}`,
             },
