@@ -3,11 +3,11 @@
  */
 const nextConfig = {
   images: {
-    domains: ['3.109.208.148'], // Add your local domain here
+    domains: ['65.0.122.213'], // Add your local domain here
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: '3.109.208.148',
+        hostname: '65.0.122.213',
         port: '8000',
         pathname: '/media/banners/**',
       },

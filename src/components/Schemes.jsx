@@ -23,7 +23,7 @@ export default function Schemes() {
       try {
       
         setDataOfApi({});
-        let url = `http://3.109.208.148:8000/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
+        let url = `http://65.0.122.213:8000/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
 
         const myHeaders = new Headers();
 

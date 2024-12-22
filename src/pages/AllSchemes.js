@@ -56,7 +56,7 @@ const schemesAll = () => {
 
 
   useEffect(() => {
-    fetch("http://3.109.208.148:8000/api/banners/")
+    fetch("http://65.0.122.213:8000/api/banners/")
         .then((response) => response.json())
         .then((data) => {
           // Find the active banner

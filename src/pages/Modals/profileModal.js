@@ -50,7 +50,7 @@ const ProfileModal = ({ onClose }) => {
         },
         redirect:"follow"
       }
-      const response = await fetch("http://3.109.208.148:8000/api/resend-verification-email/", requestOptions)
+      const response = await fetch("http://65.0.122.213:8000/api/resend-verification-email/", requestOptions)
       const data = await response.json()
       if (response.ok){
         setSentEmailText(false);
@@ -71,7 +71,7 @@ const ProfileModal = ({ onClose }) => {
           };
 
           const profileResponse = await fetch(
-            "http://3.109.208.148:8000/api/user/profile/",
+            "http://65.0.122.213:8000/api/user/profile/",
             requestOptions
           );
           const pData = await profileResponse.json();
@@ -113,7 +113,7 @@ const ProfileModal = ({ onClose }) => {
     const fetchStateOptions = async () => {
       try {
         const response = await fetch(
-          "http://3.109.208.148:8000/api/choices/state/"
+          "http://65.0.122.213:8000/api/choices/state/"
         );
         const data = await response.json();
         const formattedData = data.map((item) => item[0]);
@@ -126,7 +126,7 @@ const ProfileModal = ({ onClose }) => {
     const fetchEducationOptions = async () => {
       try {
         const response = await fetch(
-         " http://3.109.208.148:8000/api/choices/education/"
+         " http://65.0.122.213:8000/api/choices/education/"
         );
         const data = await response.json();
         const formattedData = data.map((item) => item[0]);
@@ -167,7 +167,7 @@ const ProfileModal = ({ onClose }) => {
 
         try {
           const response = await fetch(
-            "http://3.109.208.148:8000/api/user/me/",
+            "http://65.0.122.213:8000/api/user/me/",
             requestOptions
           );
           const data = await response.json();
@@ -203,7 +203,7 @@ const ProfileModal = ({ onClose }) => {
 
       try {
         console.log(profileData, "profile data before putting")
-        await fetch("http://3.109.208.148:8000/api/user/profile/", {
+        await fetch("http://65.0.122.213:8000/api/user/profile/", {
           ...requestOptions,
           body: JSON.stringify({
             name: profileData.name,
