@@ -7,7 +7,7 @@ import { CiBookmark } from "react-icons/ci";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import * as Yup from "yup";
-import { useFormData } from "@/Context/FormContext";
+import { useFormData } from "../Context/FormContext";
 import loginperson from "../assets/image.png";
 import AccCreatSucc from "../utils/AccountCreated";
 
@@ -30,7 +30,7 @@ const CreateAcc01 = () => {
   useEffect (() =>{
     const token = localStorage.getItem("token");
     if (token){
-      router.push("/App");
+      router.push("/app");
     }
   },[])
 
@@ -61,14 +61,14 @@ const CreateAcc01 = () => {
         redirect: "follow",
       };
 
-      const response = await fetch(`http://localhost:8000/api/login/`, requestOptions);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/login/`, 
+        requestOptions);
       const result = await response.json();
-
       if (!response.ok) {
         throw new Error(result.message || `HTTP error! status: ${response.status}`);
       }
 
-      // console.log("Login successful. Token received:", result.access);
+      console.log("Login successful. Token received:", result.access);
 
       if (result.access) {
         const user = { token: result.access, email: values.email };
@@ -116,11 +116,11 @@ const CreateAcc01 = () => {
 
 
 
-          <div className="absolute w-[266px] h-auto p-[10.8px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] top-[305px] ml-[35px] ">
-            <p className="self-stretch text-[#000] mb-[5px] font-inter text-[9.452px] font-semibold leading-normal">
+          <div class="absolute w-[266px] h-auto p-[10.8px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] top-[305px] ml-[35px] ">
+            <p class="self-stretch text-[#000] mb-[5px] font-inter text-[9.452px] font-semibold leading-normal">
               Opening for bank staff
             </p>
-            <p className="self-stretch text-[#616161] font-inter text-[6.751px]  font-normal leading-normal underline">
+            <p class="self-stretch text-[#616161] font-inter text-[6.751px]  font-normal leading-normal underline">
               Welfare Department
             </p>
           </div>
@@ -156,8 +156,8 @@ const CreateAcc01 = () => {
           </div>
         </div>
 
-        <div className="absolute w-[266px] p-[7.919px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] bottom-[175px] mr-[270px] scale-[.8]">
-          <p className="self-stretch text-[#000] font-inter text-[8.929px] font-semibold leading-normal mb-[5.939px]">
+        <div class="absolute w-[266px] p-[7.919px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] bottom-[175px] mr-[270px] scale-[.8]">
+          <p class="self-stretch text-[#000] font-inter text-[8.929px] font-semibold leading-normal mb-[5.939px]">
             Scholarships for female student
           </p>
           <p className="self-stretch text-[#616161] font-inter text-[6.649px] font-semibold leading-normal opacity-60 line-clamp-2">
@@ -201,7 +201,7 @@ const CreateAcc01 = () => {
               redirect: "follow",
             };
 
-            fetch(`http://localhost:8000/api/register/`, requestOptions)
+            fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/register/`, requestOptions)
               .then((response) => response.json())
               .then((result) => {
                 
@@ -257,7 +257,7 @@ const CreateAcc01 = () => {
                     Email Id
                   </label>
                   <input
-                    className="shadow appearance-none border rounded rounded-[8px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="shadow appearance-none border  rounded-[8px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="email"
                     type="email"
                     placeholder="Enter your email"
@@ -274,7 +274,7 @@ const CreateAcc01 = () => {
                     Password
                   </label>
                   <input
-                    className="shadow appearance-none border rounded rounded-[8px] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    className="shadow appearance-none border  rounded-[8px] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
@@ -297,7 +297,7 @@ const CreateAcc01 = () => {
 
                 <div>
                   <button
-                    className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-3 px-4 rounded  rounded-[8px] focus:outline-none focus:shadow-outline w-full mt-[35px]"
+                    className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-3 px-4   rounded-[8px] focus:outline-none focus:shadow-outline w-full mt-[35px]"
                     type="submit"
                     disabled={formik.isSubmitting}
                   >

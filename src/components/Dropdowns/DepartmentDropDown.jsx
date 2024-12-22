@@ -11,7 +11,7 @@ const DepartmentDropdownMenu = () => {
 
   useEffect(() => {
     async function fetchDepartments() {
-      const res = await fetch(`http://localhost:8000/api/departments/`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/departments/`);
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       } else {

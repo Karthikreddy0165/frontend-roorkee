@@ -3,10 +3,16 @@
  */
 const nextConfig = {
   images: {
-    domains: ['65.0.103.91'], // Add localhost to allowed domains
+    domains: ['65.0.122.213','launchpad-media.s3.amazonaws.com'], // Add your local domain here
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: '65.0.122.213',
+        port: '8000',
+        pathname: '/media/banners/**',
+      },
+    ],
   },
 };
 
 export default nextConfig;
-
-

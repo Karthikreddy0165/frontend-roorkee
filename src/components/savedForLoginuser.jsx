@@ -32,7 +32,7 @@ export default function Saved() {
         try {
         setDataOfApi({});
 
-        let url = `http://65.0.103.91/api/saved-schemes/filter/?limit=10&page=${currentPage}`;
+        let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/saved-schemes/filter/?limit=10&page=${currentPage}`;
 
         const myHeaders = new Headers();
 

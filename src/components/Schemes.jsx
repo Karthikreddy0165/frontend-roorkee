@@ -21,8 +21,9 @@ export default function Schemes() {
   useEffect(() => {
     const fetchState = async () => {
       try {
+      
         setDataOfApi({});
-        let url = `http://localhost:8000/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
+        let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
 
         const myHeaders = new Headers();
 

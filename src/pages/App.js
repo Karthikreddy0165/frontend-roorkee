@@ -57,7 +57,7 @@ const App = () => {
 
       <div
         className="flex flex-col items-center justify-center min-h-screen bg-white text-black"
-        style={{ maxWidth: "80%", margin: "0 auto" }}
+        style={{ maxWidth: "100%", margin: "0 auto" }}
       >
         {/* Main Container */}
         <div

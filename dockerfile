@@ -12,8 +12,8 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+RUN npm run build 
 
-EXPOSE 3000
+EXPOSE 80
 
 CMD ["pm2-runtime", "ecosystem.config.js"]
