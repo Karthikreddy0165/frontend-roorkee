@@ -2,13 +2,14 @@
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+  env: {
+    NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  },
   images: {
-    domains: ['3.109.208.148'], // Add your local domain here
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: '3.109.208.148',
-        port: '8000',
+        protocol: 'https',
+        hostname: 'launchpad-media.s3.amazonaws.com',
         pathname: '/media/banners/**',
       },
     ],

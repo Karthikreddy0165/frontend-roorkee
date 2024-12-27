@@ -7,7 +7,6 @@ import PageContext from "@/Context/PageContext";
 import DropdownMenu from "@/components/Dropdowns/Dropdowns";
 const SponsorDropdownMenu = () => {
   const {  setCurrentPage } = useContext(PageContext);
-  const [allLevel, setAllLevel] = useState([]);
   const { sponsoredBy, setSponsoredBy, states, setStates,statesFromApi } =
       useContext(FilterContext);
 

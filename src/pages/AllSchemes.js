@@ -56,7 +56,7 @@ const schemesAll = () => {
 
 
   useEffect(() => {
-    fetch("http://3.109.208.148:8000/api/banners/")
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/banners/`)
         .then((response) => response.json())
         .then((data) => {
           // Find the active banner
@@ -124,7 +124,7 @@ const schemesAll = () => {
           <div className="h-60 w-full relative brightness-70 mb-4">
             {bannerImage ? (
                 <Image
-                    src={bannerImg}
+                    src={bannerImage}
                     alt="Loading Image..."
                     layout="fill"
                     objectFit="contain"

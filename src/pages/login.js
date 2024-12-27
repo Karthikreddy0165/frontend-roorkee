@@ -51,7 +51,7 @@ const login = () => {
       };
 
       const response = await fetch(
-        `http://3.109.208.148:8000/api/login/`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/login/`,
         requestOptions
       );
       const result = await response.json();
