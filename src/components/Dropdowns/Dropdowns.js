@@ -106,7 +106,7 @@ const DropdownMenu = ({
                                     type="checkbox"
                                     value={item.value}
                                     checked={isChecked}
-                                    className="ml-5 custom-checkbox pointer-events-none w-[20px] h-full"
+                                    className="custom-checkbox pointer-events-none w-[20px] h-full"
                                     readOnly
                                 />
                             </div>
