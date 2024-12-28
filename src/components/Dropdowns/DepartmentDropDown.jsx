@@ -53,7 +53,7 @@ const DepartmentDropdownMenu = () => {
 
   return (
       <div className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0">
-        <ul id="scroll-container" className="flex flex-col font-sans list-none pr-2 m-0 gap-0 max-h-[300px] overflow-y-auto">
+        <ul id="scroll-container" className="flex flex-col font-sans list-none m-0 gap-0 max-h-[300px] overflow-y-auto">
           {uniqueCategories.map((item, index) => (
               <li key={item + index} className="flex items-center justify-between hover:bg-gray-100 p-[8px] cursor-pointer hover:rounded-[8px]" onClick={() => handleItemClick(item)}>
                 <div>
