@@ -17,7 +17,7 @@ const FAQSection = () => {
   );
 
   return (
-    <div className="flex flex-col items-center sm:w-full w-[482px] bg-gradient-to-b p-8 sm:p-12">
+    <div className="flex flex-col items-center sm:w-full w-[482px] bg-gradient-to-b sm:p-10 p-8 sm:p-12">
       <div className="self-stretch flex justify-center">
         <h1 className="text-black text-center font-inter text-2xl font-semibold leading-[150%] mb-6">
           Frequently Asked Questions

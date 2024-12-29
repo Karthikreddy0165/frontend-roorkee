@@ -172,7 +172,7 @@ const App = () => {
         </div>
 
           {/* Second Row */}
-        <div className="flex flex-col items-center w-full p-8 bg-gradient-to-b from-white to-[#FBFBFE] mt-[16px]">
+        <div className="flex flex-col items-center w-full bg-gradient-to-b from-white to-[#FBFBFE] mt-[16px]">
             <div className="self-stretch flex justify-center">
               <p className="text-center text-[#3431BB] font-semibold text-[16px] font-normal leading-normal">
                 HOW IT WORKS
@@ -242,7 +242,7 @@ const App = () => {
           </div>
           {/* Third row */}
           <div
-              className="mb-16"
+              className=""
               style={{
                 marginTop: "3vw",
                 width: "100%",
@@ -251,8 +251,8 @@ const App = () => {
                 alignItems: "center",
               }}
             >
-              <div className="flex justify-center mt-20">
-                <h1 className="font-semibold relative sm:text-3xl text-xl text-center">
+              <div className="flex justify-center mt-[16px] sm:mt-[32px]">
+                <h1 className="font-semibold relative sm:text-3xl text-xl text-center ">
                   Discover Opportunities Below
                 </h1>
               </div>
@@ -291,7 +291,7 @@ const App = () => {
 
               {/* Mission, Vision, and Values Section */}
               
-              <div className="relative flex flex-col lg:flex-row justify-between gap-6 mt-40 px-6">
+              <div className="relative flex flex-col lg:flex-row justify-between gap-6 mt-[32px] px-6 sm:mt-[100px]">
                 {/* Mission Section */}
                 <div className=" flex flex-col gap-2 p-6 border border-[#3F3BE1] rounded-lg h-[250px] sm:w-[550px] sm:h-[266px]  relative">
                   <p className="font-semibold text-lg lg:text-left">Mission</p>

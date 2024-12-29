@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState, useContext } from "react";
+import { useEffect, useRef, useState,useContext } from "react";
 import { MdClose } from "react-icons/md";
 import { useAuth } from "../../Context/AuthContext";
 import { MdVerified } from "react-icons/md";
 import { VscUnverified } from "react-icons/vsc";
 import FilterContext from "@/Context/FilterContext";
+
 
 const ProfileModal = ({ onClose }) => {
   const {
@@ -34,24 +35,31 @@ const ProfileModal = ({ onClose }) => {
   const [emailData, setEmailData] = useState(null);
   const [sentEmailText, setSentEmailText] = useState(false);
   const modalRef = useRef(null);
+  const [progress, setProgress] = useState(0);
+  
 
-  const resendEmail = async () => {
+  const fieldsCount = Object.keys(profileData).length;
+
+
+
+  const resendEmail = async()=>{
     setSentEmailText(true);
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${authState.token}`,
-      },
-      redirect: "follow"
-    };
-    const response = await fetch("http://3.109.208.148:8000/api/resend-verification-email/", requestOptions)
-    const data = await response.json();
-    if (response.ok) {
-      setSentEmailText(false);
-    }
-  };
 
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authState.token}`,
+        },
+        redirect:"follow"
+      }
+      const response = await fetch("http://65.0.122.213:8000/api/resend-verification-email/", requestOptions)
+      const data = await response.json()
+      if (response.ok){
+        setSentEmailText(false);
+      }
+    }
+    
   useEffect(() => {
     const fetchProfileData = async () => {
       if (authState.token) {
@@ -66,10 +74,12 @@ const ProfileModal = ({ onClose }) => {
           };
 
           const profileResponse = await fetch(
-            "http://3.109.208.148:8000/api/user/profile/",
+            "http://65.0.122.213:8000/api/user/profile/",
             requestOptions
           );
           const pData = await profileResponse.json();
+          console.log(pData, "fetching Saved data")
+
           setProfileData({
             name: pData.name || "",
             age: pData.age || "",
@@ -83,7 +93,7 @@ const ProfileModal = ({ onClose }) => {
             occupation: pData.occupation || "",
             income: pData.income || "",
             employment_status: pData.employment_status || ""
-          });
+          })
         } catch (error) {
           console.error("Error fetching profile data:", error);
         } finally {
@@ -106,7 +116,7 @@ const ProfileModal = ({ onClose }) => {
     const fetchStateOptions = async () => {
       try {
         const response = await fetch(
-          "http://3.109.208.148:8000/api/choices/state/"
+          "http://65.0.122.213:8000/api/choices/state/"
         );
         const data = await response.json();
         const formattedData = data.map((item) => item[0]);
@@ -119,7 +129,7 @@ const ProfileModal = ({ onClose }) => {
     const fetchEducationOptions = async () => {
       try {
         const response = await fetch(
-          "http://3.109.208.148:8000/api/choices/education/"
+         " http://65.0.122.213:8000/api/choices/education/"
         );
         const data = await response.json();
         const formattedData = data.map((item) => item[0]);
@@ -160,7 +170,7 @@ const ProfileModal = ({ onClose }) => {
 
         try {
           const response = await fetch(
-            "http://3.109.208.148:8000/api/user/me/",
+            "http://65.0.122.213:8000/api/user/me/",
             requestOptions
           );
           const data = await response.json();
@@ -174,6 +184,13 @@ const ProfileModal = ({ onClose }) => {
     fetchEmailData();
   }, [authState.token]);
 
+  useEffect(() => {
+    const filledFields = Object.values(profileData).filter((value) => value.trim() !== "").length;
+    const percentage = Math.round((filledFields / fieldsCount) * 100);
+    setProgress(percentage);
+  }, [profileData]);
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -182,6 +199,7 @@ const ProfileModal = ({ onClose }) => {
       [name]: value,
     }));
   };
+
 
   const handleSave = async () => {
     if (authState.token) {
@@ -194,7 +212,7 @@ const ProfileModal = ({ onClose }) => {
       };
 
       try {
-        await fetch("http://3.109.208.148:8000/api/user/profile/", {
+        await fetch("http://65.0.122.213:8000/api/user/profile/", {
           ...requestOptions,
           body: JSON.stringify({
             name: profileData.name,
@@ -212,20 +230,25 @@ const ProfileModal = ({ onClose }) => {
           })
         });
 
-        localStorage.setItem("profiledata", JSON.stringify(profileData));
+        localStorage.setItem("profiledata",JSON.stringify(profileData))
+        console.log(profileData,"putting profile data")
         const selectedValue = profileData.state;
+
+      
         const selectedState = statesFromApi.find(
           (it) => it.state_name === selectedValue
         );
-
+    
         if (selectedState) {
           setStates([[selectedState.id], [selectedState.state_name]]);
         }
-        if (profileData.community) {
-          setBeneficiaries([profileData.community]);
-        }
+      if (profileData.community){
+        setBeneficiaries([profileData.community])
+      }
 
-        setIsSaved(true);
+
+
+        setIsSaved(true)
         onClose();
       } catch (error) {
         console.error("Error saving profile data:", error);
@@ -243,16 +266,28 @@ const ProfileModal = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      
       <div
         ref={modalRef}
-        className="bg-white rounded-lg sm:w-[90%] lg:w-[560px] max-h-[80vh] p-6 flex flex-col items-start overflow-y-auto relative"
+        className="bg-white rounded-lg w-[560px] h-[750px] p-6 flex flex-col items-start flex-shrink-0 relative"
       >
+        <div className="w-full mb-4">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Profile Completion</label>
+              <div className="w-full bg-gray-200 rounded-full h-4">
+                <div
+                  className="bg-blue-500 h-4 rounded-full"
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
+              <p className="text-sm font-semibold text-gray-500 mt-1">{progress}% completed</p>
+            </div>
         {loading ? (
           <div className="flex items-center justify-center w-full h-full">
             <div className="w-8 h-8 border-4 border-t-transparent border-blue-500 border-solid rounded-full animate-spin"></div>
           </div>
         ) : (
           <>
+            {/* First Div */}
             <div className="flex justify-between items-center mb-2 -mt-2 w-full">
               <h2 className="text-2xl font-semibold text-[#0A0A0A]">Profile</h2>
               <button
@@ -262,282 +297,317 @@ const ProfileModal = ({ onClose }) => {
                 <MdClose className="w-6 h-6" />
               </button>
             </div>
+
             <hr className="w-full" />
 
+            {/* Second Div */}
             <div
               id="scroll-container"
-              className="space-y-4 mt-4 w-full"
+              className="space-y-4 mt-4 w-full overflow-y-auto"
             >
-              {/* Profile Fields */}
               <div>
-                <label className="block mb-2 text-sm font-semibold text-black">Name</label>
+                <label className="block mb-2 text-[12px] font-semibold text-black">
+                  Full Name
+                </label>
                 <input
                   type="text"
                   name="name"
+                  className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                  placeholder="Enter your name"
                   value={profileData.name}
                   onChange={handleChange}
-                  className="block w-full p-3 border rounded-md"
                 />
               </div>
-
-              <div>
-                <label className="block mb-2 text-sm font-semibold text-black">Email</label>
-                <input
-                  type="text"
-                  value={emailData ? emailData.email : ""}
-                  className="block w-full p-3 border rounded-md bg-gray-200 cursor-not-allowed"
-                  disabled
-                />
-                {!emailData?.email_verified && (
-                  <div className="flex items-center gap-2 text-xs text-red-500 mt-2">
-                    <VscUnverified />
-                    <span>Your email is not verified.</span>
-                    <button
-                      onClick={resendEmail}
-                      disabled={sentEmailText}
-                      className="text-[#3431Bb] underline"
-                    >
-                      Resend verification
-                    </button>
+              <div className="relative">
+                <label className="block mb-2 text-[12px] font-semibold text-black">
+                  Email
+                </label>
+                <div className="relative flex items-center space-x-2 w-full">
+                  <div className="relative flex-grow">
+                    <input
+                      type="text"
+                      className="w-full h-[44px] border border-gray-300 p-2 pl-10 rounded-lg bg-gray-100 text-[12px] font-semibold text-black"
+                      value={emailData?.email || ""}
+                      onChange={handleChange}
+                      readOnly
+                    />
+                    {emailData?.is_email_verified ? (
+                      <MdVerified className="absolute top-3 left-3 text-green-500" />
+                    ) : (
+                      <VscUnverified className="absolute top-3 left-3 text-red-500" />
+                    )}
                   </div>
-                )}
+                  {!emailData?.is_email_verified && (
+  <button 
+    className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431BB] text-white hover:bg-blue-700 text-sm" 
+    onClick={resendEmail}
+  >
+    {sentEmailText ? "sending..." : "resend email"}
+  </button>
+)}
+
+                </div>
+              </div>
+              <div className="flex gap-4 w-full ">
+                <div className="flex-1">
+                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                    Age
+                  </label>
+                  <input
+                    type="number"
+                    name="age"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    placeholder="Enter your age"
+                    value={profileData.age}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="flex-1">
+                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                    Gender
+                  </label>
+                  <select
+                    name="gender"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    value={profileData.gender}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
               </div>
 
-              <div>
-                <label className="block mb-2 text-sm font-semibold text-black">Age</label>
-                <input
-                  type="number"
-                  name="age"
-                  value={profileData.age}
-                  onChange={handleChange}
-                  className="block w-full p-3 border rounded-md"
-                />
+              <div className="flex gap-4 w-full">
+                <div className="flex-1">
+                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                    Category
+                  </label>
+                  <select
+                    name="community"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    value={profileData.community}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select category</option>
+                    <option value="General">General</option>
+                    <option value="OBC">OBC</option>
+                    <option value="SC">SC/ST</option>
+                    {/* <option value="ST">ST</option> */}
+                  </select>
+                </div>
+
+                <div className="flex-1">
+                  {/* <label className="block mb-2 text-[12px] font-semibold text-black">
+                    Minority
+                  </label>
+                  <select
+                    name="minority"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    value={profileData.minority}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select minority status</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select> */}
+                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                    BPL Card Holder
+                  </label>
+                  <select
+                    name="bpl_card_holder"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    value={profileData.bpl_card_holder}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="Maybe">Maybe</option>
+                  </select>
+                </div>
               </div>
 
-              <div>
-                <label className="block mb-2 text-sm font-semibold text-black">Gender</label>
-                <select
-                  name="gender"
-                  value={profileData.gender}
-                  onChange={handleChange}
-                  className="block w-full p-3 border rounded-md"
-                >
-                  <option value="">Select Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
+              <div className="flex gap-4 w-full">
+                <div className="flex-1">
+                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                    State of Residence
+                  </label>
+                  <select
+                    name="state"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    value={profileData.state}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select state</option>
+                    {stateOptions.map((state) => (
+                      <option key={state} value={state}>
+                        {state}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="flex-1">
+                <label className="block mb-2 text-[12px] font-semibold text-black">
+                    Disability
+                  </label>
+                  <select
+                    name="disability"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    value={profileData.disability}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select disability status</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
               </div>
 
-              <div>
-                <label className="block mb-2 text-sm font-semibold text-black">Community</label>
+              <div className="flex gap-4 w-full">
+                <div className="flex-1">
+                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                    Education
+                  </label>
+                  <select
+                    name="education"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    value={profileData.education}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select education</option>
+                    {educationOptions.map((education) => (
+                      <option key={education} value={education}>
+                        {education}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+
+                <div className="flex-1">
+                <label className="block mb-2 text-[12px] font-semibold text-black">
+                    Employment
+                  </label>
+                  <select
+                    name="employment_status"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    value={profileData.employment_status}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select Employed Status</option>
+                    <option value="Employed">Employed</option>
+                    <option value="Self-employed">Self-employed / Business</option>
+                    <option value="Unemployed">Unemployed</option>
+                  </select>
+                </div>
+
+
+              </div>
+
+              <div className="flex gap-4 w-full">
+                <div className="flex-1">
+                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                    Occupation
+                  </label>
+                  <select
+                    name="occupation"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    value={profileData.occupation}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select occupation</option>
+                    <option value="Farmer">Farmer</option>
+                    <option value="HouseWife">Housewife</option>
+                    <option value="Student">Student</option>
+                    <option value="Health">Health</option>
+                    <option value="Education">Education</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Arts & Design">Arts & Design</option>
+                    <option value="Construction">Construction</option>
+                    <option value="Legal">Legal</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Manufacturing">Manufacturing</option>
+                    <option value="Hospitality">Hospitality</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Social Services">Social Services</option>
+                    <option value="Science & Research">
+                      Science & Research
+                    </option>
+                    <option value="Administration">Administration</option>
+                    <option value="Agriculture">Agriculture</option>
+                    <option value="Retail">Retail</option>
+                    <option value="Maintenance & Repair">
+                      Maintenance & Repair
+                    </option>
+                    <option value="Public Safety">Public Safety</option>
+                    <option value="Government">Government</option>
+                    <option value="Real Estate">Real Estate</option>
+                    <option value="Media & Communication">
+                      Media & Communication
+                    </option>
+                    <option value="Skilled Trades">Skilled Trades</option>
+                    <option value="Consulting">Consulting</option>
+                    <option value="Sports & Recreation">
+                      Sports & Recreation
+                    </option>
+                    <option value="Non-Profit">Non-Profit</option>
+                    <option value="Human Resources">Human Resources</option>
+                    <option value="Energy & Utilities">
+                      Energy & Utilities
+                    </option>
+                    <option value="Environment & Natural Resources">
+                      Environment & Natural Resources
+                    </option>
+                  </select>
+                </div>
+
+                <div className="flex-1">
+                <label className="block mb-2 text-[12px] font-semibold text-black">
+                  Annual Income (in lakhs)
+                </label>
                 <input
                   type="text"
-                  name="community"
-                  value={profileData.community}
-                  onChange={handleChange}
-                  className="block w-full p-3 border rounded-md"
-                />
-              </div>
-
-              <div>
-                <label className="block mb-2 text-sm font-semibold text-black">Minority</label>
-                <select
-                  name="minority"
-                  value={profileData.minority}
-                  onChange={handleChange}
-                  className="block w-full p-3 border rounded-md"
-                >
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block mb-2 text-sm font-semibold text-black">State</label>
-                <select
-                  name="state"
-                  value={profileData.state}
-                  onChange={handleChange}
-                  className="block w-full p-3 border rounded-md"
-                >
-                  <option value="">Select State</option>
-                  {stateOptions.map((state) => (
-                    <option key={state} value={state}>
-                      {state}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* <div>
-                <label className="block mb-2 text-sm font-semibold text-black">BPL Card Holder</label>
-                <input
-                  type="text"
-                  name="bpl_card_holder"
-                  value={profileData.bpl_card_holder}
-                  onChange={handleChange}
-                  className="block w-full p-3 border rounded-md"
-                />
-              </div> */}
-
-              <div>
-                <label className="block mb-2 text-sm font-semibold text-black">Education</label>
-                <select
-                  name="education"
-                  value={profileData.education}
-                  onChange={handleChange}
-                  className="block w-full p-3 border rounded-md"
-                >
-                  <option value="">Select Education</option>
-                  {educationOptions.map((education) => (
-                    <option key={education} value={education}>
-                      {education}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block mb-2 text-sm font-semibold text-black">Disability</label>
-                <select
-                  name="disability"
-                  value={profileData.disability}
-                  onChange={handleChange}
-                  className="block w-full p-3 border rounded-md"
-                >
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
-              </div>
-
-              <div className="flex flex-col md:flex-row gap-4 w-full">
-  {/* Dropdown for Occupation */}
-  <div className="flex-1">
-    <label className="block mb-2 text-[12px] md:text-sm font-semibold text-black">
-      Occupation
-    </label>
-    <select
-      name="occupation"
-      className="w-full h-[44px] md:h-[50px] border border-gray-300 p-2 md:p-3 rounded-lg bg-gray-100 text-[12px] md:text-sm font-semibold text-black"
-      value={profileData.occupation}
-      onChange={handleChange}
-    >
-      <option value="">Select occupation</option>
-      <option value="Farmer">Farmer</option>
-      <option value="HouseWife">Housewife</option>
-      <option value="Student">Student</option>
-      <option value="Health">Health</option>
-      <option value="Education">Education</option>
-      <option value="Engineering">Engineering</option>
-      <option value="Technology">Technology</option>
-      <option value="Finance">Finance</option>
-      <option value="Arts & Design">Arts & Design</option>
-      <option value="Construction">Construction</option>
-      <option value="Legal">Legal</option>
-      <option value="Marketing">Marketing</option>
-      <option value="Sales">Sales</option>
-      <option value="Manufacturing">Manufacturing</option>
-      <option value="Hospitality">Hospitality</option>
-      <option value="Transportation">Transportation</option>
-      <option value="Social Services">Social Services</option>
-      <option value="Science & Research">Science & Research</option>
-      <option value="Administration">Administration</option>
-      <option value="Agriculture">Agriculture</option>
-      <option value="Retail">Retail</option>
-      <option value="Maintenance & Repair">Maintenance & Repair</option>
-      <option value="Public Safety">Public Safety</option>
-      <option value="Government">Government</option>
-      <option value="Real Estate">Real Estate</option>
-      <option value="Media & Communication">Media & Communication</option>
-      <option value="Skilled Trades">Skilled Trades</option>
-      <option value="Consulting">Consulting</option>
-      <option value="Sports & Recreation">Sports & Recreation</option>
-      <option value="Non-Profit">Non-Profit</option>
-      <option value="Human Resources">Human Resources</option>
-      <option value="Energy & Utilities">Energy & Utilities</option>
-      <option value="Environment & Natural Resources">
-        Environment & Natural Resources
-      </option>
-    </select>
-  </div>
-
-  {/* Input for Occupation */}
-  <div>
-    <label className="block mb-2 text-[12px] md:text-sm font-semibold text-black">
-      Occupation
-    </label>
-    <input
-      type="text"
-      name="occupation"
-      value={profileData.occupation}
-      onChange={handleChange}
-      className="block w-full h-[44px] md:h-[50px] p-2 md:p-3 border rounded-md text-[12px] md:text-sm"
-    />
-  </div>
-</div>
-
-              <div>
-                <label className="block mb-2 text-sm font-semibold text-black">Income</label>
-                <input
-                  type="number"
                   name="income"
+                  className="w-full h-[44px] border border-gray-300 p-2 rounded-lg bg-gray-100 text-[12px] font-semibold text-black"
+                  placeholder="Enter your income"
                   value={profileData.income}
                   onChange={handleChange}
-                  className="block w-full p-3 border rounded-md"
                 />
+                <input
+                  type="range"
+                  name="incomeRange"
+                  min="0"
+                  max="20"
+                  step="1"
+                  value={profileData.income}
+                  onChange={handleSliderChange}
+                  className="w-full mt-2 custom-slide"
+                />
+                </div>
               </div>
+            </div>
 
-              <div className="flex-1">
-  <label className="block mb-2 text-[12px] md:text-sm font-semibold text-black">
-    Employment
-  </label>
-  <select
-    name="employment_status"
-    className="w-full h-[44px] md:h-[50px] border border-gray-300 p-2 rounded-lg bg-gray-100 text-[12px] md:text-sm font-semibold text-black"
-    value={profileData.employment_status}
-    onChange={handleChange}
-  >
-    <option value="">Select Employed Status</option>
-    <option value="Employed">Employed</option>
-    <option value="Self-employed">Self-employed / Business</option>
-    <option value="Unemployed">Unemployed</option>
-  </select>
-</div>
-
-<div className="flex-1">
-  <label className="block mb-2 text-[12px] md:text-sm font-semibold text-black">
-    BPL Card Holder
-  </label>
-  <select
-    name="bpl_card_holder"
-    className="w-full h-[44px] md:h-[50px] border border-gray-300 p-2 md:p-3 rounded-lg bg-gray-100 text-[12px] md:text-sm font-semibold text-black"
-    value={profileData.bpl_card_holder}
-    onChange={handleChange}
-  >
-    <option value="">Select</option>
-    <option value="Yes">Yes</option>
-    <option value="No">No</option>
-    <option value="Maybe">Maybe</option>
-  </select>
-</div>
-
-
-
-              <div className="flex justify-center mt-4 gap-4">
-                <button
-                  onClick={handleSave}
-                  className="bg-[#3431Bb] text-white px-6 py-2 rounded-md"
-                >
-                  Save Changes
-                </button>
-                <button
-                  onClick={onClose}
-                  className="bg-gray-500 text-white px-6 py-2 rounded-md"
-                >
-                  Cancel
-                </button>
-              </div>
+            <hr className="w-full mt-4 mb-2" />
+            {/* Third Div */}
+            <div className="flex justify-end mt-2 gap-4 w-full">
+              <button
+                onClick={onClose}
+                className="px-4 py-2 rounded-lg border border-gray-300 bg-gray-100 text-black"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSave}
+                className="px-4 py-2 rounded-lg border border-transparent bg-[#3431BB] text-white hover:bg-blue-700"
+              >
+                Save
+              </button>
             </div>
           </>
         )}
@@ -547,5 +617,3 @@ const ProfileModal = ({ onClose }) => {
 };
 
 export default ProfileModal;
-
-

@@ -98,7 +98,7 @@ function SelectedFilters() {
           {newState.length === 2 ? (
             <div className=" flex gap-2">
               <button
-                className="flex items-center justify-center px-2 py-[5px] border border-gray-400 rounded-[2px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center px-2 py-[5px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newState[0]}
               >
                 {newState[0].length > 30
@@ -106,7 +106,7 @@ function SelectedFilters() {
                   : newState[0]}
               </button>
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[2px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newState[1]}
               >
                 {newState[1].length > 30
@@ -120,7 +120,7 @@ function SelectedFilters() {
           {newState.length > 0 && newState.length <= 1 ? (
             <div className=" flex gap-2">
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newState[0]}
               >
                 {newState[0].length > 30
@@ -134,7 +134,7 @@ function SelectedFilters() {
           {newState.length > 2 ? (
             <div className=" flex gap-2">
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newState[0]}
               >
                 {newState[0].length > 30
@@ -142,7 +142,7 @@ function SelectedFilters() {
                   : newState[0]}
               </button>
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newState[1]}
               >
                 {newState[1].length > 30
@@ -158,7 +158,7 @@ function SelectedFilters() {
           {newDepartment.length === 2 ? (
             <div className=" flex gap-2">
               <button
-                className="flex items-center justify-center px-2 py-[5px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center px-2 py-[5px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newDepartment[0]}
               >
                 {newDepartment[0].length > 30
@@ -166,7 +166,7 @@ function SelectedFilters() {
                   : newDepartment[0]}
               </button>
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newDepartment[1]}
               >
                 {newDepartment[1].length > 30
@@ -180,7 +180,7 @@ function SelectedFilters() {
           {newDepartment.length > 0 && newDepartment.length <= 1 ? (
             <div className=" flex gap-2">
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newDepartment[0]}
               >
                 {newDepartment[0].length > 30
@@ -194,7 +194,7 @@ function SelectedFilters() {
           {newDepartment.length > 2 ? (
             <div className=" flex gap-2">
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newDepartment[0]}
               >
                 {newDepartment[0].length > 30
@@ -202,7 +202,7 @@ function SelectedFilters() {
                   : newDepartment[0]}
               </button>
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newDepartment[1]}
               >
                 {newDepartment[1].length > 30
@@ -238,7 +238,7 @@ function SelectedFilters() {
           {beneficiaries.length === 2 ? (
             <div className=" flex gap-2">
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={beneficiaries[0]}
               >
                 {beneficiaries[0].length > 30
@@ -246,7 +246,7 @@ function SelectedFilters() {
                   : beneficiaries[0]}
               </button>
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={beneficiaries[1]}
               >
                 {beneficiaries[1].length > 30
@@ -260,7 +260,7 @@ function SelectedFilters() {
           {beneficiaries.length === 1 ? (
             <div className=" flex gap-2">
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={beneficiaries[0]}
               >
                 {beneficiaries[0].length > 30
@@ -274,7 +274,7 @@ function SelectedFilters() {
           {beneficiaries.length > 2 ? (
             <div className=" flex gap-2">
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={beneficiaries[0]}
               >
                 {beneficiaries[0].length > 30
@@ -282,7 +282,7 @@ function SelectedFilters() {
                   : beneficiaries[0]}
               </button>
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={beneficiaries[1]}
               >
                 {beneficiaries[1].length > 30
@@ -298,7 +298,7 @@ function SelectedFilters() {
           {newSponser.length === 2 ? (
             <div className=" flex gap-2">
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newSponser[0]}
               >
                 {newSponser[0].length > 30
@@ -306,7 +306,7 @@ function SelectedFilters() {
                   : newSponser[0]}
               </button>
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newSponser[1]}
               >
                 {newSponser[1].length > 30
@@ -320,7 +320,7 @@ function SelectedFilters() {
           {newSponser.length > 0 && newSponser.length <= 1 ? (
             <div className=" flex gap-2">
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newSponser[0]}
               >
                 {newSponser[0].length > 30
@@ -334,7 +334,7 @@ function SelectedFilters() {
           {newSponser.length > 2 ? (
             <div className=" flex gap-2">
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newSponser[0]}
               >
                 {newSponser[0].length > 30
@@ -342,7 +342,7 @@ function SelectedFilters() {
                   : newSponser[0]}
               </button>
               <button
-                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
+                className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newSponser[1]}
               >
                 {newSponser[1].length > 30
@@ -358,7 +358,7 @@ function SelectedFilters() {
       </div>
       <div className="p-4">
         {/* Tooltip applied to the button */}
-        <ToolTips tooltip="Apply your preference">
+        <ToolTips tooltip="Set Your Preferences Here">
           <button
             className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
             onClick={handleDefaultFilter}
@@ -375,7 +375,7 @@ function SelectedFilters() {
           <p className="text-gray-600 sm:text-sm mb-1 text-[16px]">
             Selected Filters
           </p>
-          <button className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick hover:text-onclick-btnblue">
+          <button className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick hover:text-onclick-btnblue">
             None
           </button>
         </div>

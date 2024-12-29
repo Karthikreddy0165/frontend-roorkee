@@ -24,7 +24,7 @@ const VerifiedStatus = () => {
         };
 
         const response = await fetch(
-          "http://3.109.208.148:8000/api/user/me/",
+          "http://65.0.122.213:8000/api/user/me/",
           requestOptions
         );
         const data = await response.json();

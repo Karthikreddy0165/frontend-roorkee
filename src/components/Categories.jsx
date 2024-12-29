@@ -72,7 +72,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
             redirect: "follow",
           };
           const response = await fetch(
-            `http://3.109.208.148:8000/api/user/saved_schemes/`,
+            `http://65.0.122.213:8000/api/user/saved_schemes/`,
             requestOptions
           );
           if (!response.ok) {
@@ -121,7 +121,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
     try {
       const response = await fetch(
-        `http://3.109.208.148:8000/api/save_scheme/`,
+        `http://65.0.122.213:8000/api/save_scheme/`,
         requestOptions
       );
       if (response.ok) {
@@ -159,7 +159,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       console.log("Sending unsave request for scheme_id:", scheme_id);
       console.log("Request payload:", raw);
       const response = await fetch(
-        `http://3.109.208.148:8000/api/unsave_scheme/`,
+        `http://65.0.122.213:8000/api/unsave_scheme/`,
         requestOptions
       );
       const result = await response.json();

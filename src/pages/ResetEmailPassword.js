@@ -23,7 +23,7 @@ const EnterResPass = () => {
             };
 
             const response = await fetch(
-                `http://3.109.208.148:8000/api/password-reset/`,
+                `http://65.0.122.213:8000/api/password-reset/`,
                 requestOptions
             );
             const result = await response.json();

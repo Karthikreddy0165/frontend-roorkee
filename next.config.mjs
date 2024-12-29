@@ -3,9 +3,9 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
 
-    domains: ['65.0.103.91'], // Add your hostname here
+    domains: ['65.0.103.91'],
 
-    domains: ['3.109.208.148'], // Add your hostname here
+    domains: ['3.109.208.148'], 
 
   },
 };

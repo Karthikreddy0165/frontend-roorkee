@@ -17,7 +17,7 @@ const ToolTips = ({ children, tooltip }) => {
           {tooltip}
 
           {/* Tooltip Arrow */}
-          <span className="tooltip-arrow"></span>
+          <span className="tooltip-arrow absolute top-[-5px] left-1/2 transform -translate-x-1/2"></span>
         </span>
       )}
     </div>
