@@ -339,14 +339,14 @@ const App = () => {
               </svg>
 
                   </div>
+                  
                 </div>
+                <FAQSection />
+               
               </div>
 
           </div>
-          <div>
-              <FAQSection />
-            </div>
-
+         
           </div>
             
         </div>
