@@ -159,7 +159,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       console.log("Sending unsave request for scheme_id:", scheme_id);
       console.log("Request payload:", raw);
       const response = await fetch(
-        `http://65.0.122.213:8000/api/unsave_scheme/`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/unsave_scheme/`,
         requestOptions
       );
       const result = await response.json();

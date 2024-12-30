@@ -24,7 +24,7 @@ const SchemeVerifiedStatus = () => {
         };
 
         const response = await fetch(
-          "http://65.0.122.213:8000/api/user/me/",
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/me/`,
           requestOptions
         );
         const data = await response.json();

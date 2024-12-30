@@ -36,7 +36,7 @@ const SchemesAll = () => {
     "/_next/image?url=http%3A%2F%2F65.0.103.91%2Fmedia%2Fbanners%2FScheme_details_page_banner_TvdKXuh.png&w=3840&q=75";
 
   useEffect(() => {
-    fetch("http://65.0.122.213:8000/api/banners/")
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/banners/`)
       .then((response) => response.json())
       .then((data) => {
         const activeBanner = data.find((banner) => banner.is_active);

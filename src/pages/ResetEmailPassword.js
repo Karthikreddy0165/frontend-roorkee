@@ -23,7 +23,7 @@ const EnterResPass = () => {
             };
 
             const response = await fetch(
-                `http://65.0.122.213:8000/api/password-reset/`,
+                `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/password-reset/`,
                 requestOptions
             );
             const result = await response.json();

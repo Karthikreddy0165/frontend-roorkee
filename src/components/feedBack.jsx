@@ -44,7 +44,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
     try {
       // Make the API call to submit feedback
       const response = await fetch(
-        "http://localhost:8000/api/feedback/website-feedback/",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/feedback/website-feedback/`,
         requestOptions
       );
 

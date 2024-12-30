@@ -1,12 +1,18 @@
-/** @type {import('next').NextConfig} */
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
-  reactStrictMode: true,
+  env: {
+    NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  },
   images: {
-
-    domains: ['65.0.103.91'],
-
-    domains: ['3.109.208.148'], 
-
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'launchpad-media.s3.amazonaws.com',
+        pathname: '/media/banners/**',
+      },
+    ],
   },
 };
 

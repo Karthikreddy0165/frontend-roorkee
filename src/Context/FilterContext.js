@@ -13,7 +13,7 @@ function FilterProvider({ children }) {
 
     useEffect(() => {
         async function fetchedStates() {
-            const res = await fetch(`http://65.0.122.213:8000/api/states/`);
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/states/`);
             if (!res.ok) {
                 throw new Error(`HTTP error! status: ${res.status}`);
             } else {

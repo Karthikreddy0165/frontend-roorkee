@@ -18,7 +18,7 @@ export default function JobOpenings() {
     const fetchState = async () => {
       try {
         setDataOfApi({});
-        let url = `http://3.109.208.148:8000/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
+        let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
         // const cachedData = localStorage.getItem(url);
 
         // if (cachedData) {

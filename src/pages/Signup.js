@@ -61,7 +61,7 @@ const CreateAcc01 = () => {
         redirect: "follow",
       };
 
-      const response = await fetch(`http://65.0.122.213:8000/api/login/`, requestOptions);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/login/`, requestOptions);
       const result = await response.json();
 
       if (!response.ok) {
@@ -207,7 +207,7 @@ const CreateAcc01 = () => {
                     redirect: "follow",
                   };
 
-                  fetch(`http://65.0.122.213:8000/api/register/`, requestOptions)
+                  fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/register/`, requestOptions)
                       .then((response) => response.json())
                       .then((result) => {
                         if (result.user) {
