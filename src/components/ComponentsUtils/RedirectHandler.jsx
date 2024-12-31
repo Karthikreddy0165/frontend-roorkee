@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useAuth } from "@/Context/AuthContext";
-// import ResPass from "./ResPass/ResPass";
+
 export default function RedirectHandler() {
   const { setResetPasswordToken, setUID } = useAuth();
   const router = useRouter();
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const currentURL = window.location.href;
@@ -18,6 +19,7 @@ export default function RedirectHandler() {
         router.push(`/reset-password-confirm`);
       }
     }
-  }, [router]);
+  }, [router, setResetPasswordToken, setUID]);
+
   console.log(router);
 }

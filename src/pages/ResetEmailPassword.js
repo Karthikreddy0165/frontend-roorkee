@@ -39,9 +39,14 @@ const EnterResPass = () => {
                 }
             }
 
+            // console.log("Password reset email sent successfully:", result);
+
+            // Handle success (e.g., show a success message or redirect)
             setErrorMessage("Password reset email sent successfully. Please check your email to verify.");
         } catch (error) {
             console.error("Error during password reset:", error);
+            // Display the specific error message
+
             setErrorMessage(error.message);
         } finally {
             setLoading(false);
@@ -49,45 +54,46 @@ const EnterResPass = () => {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen px-4 md:px-0">
-            <div className="flex flex-col items-center gap-8 w-full max-w-sm md:max-w-lg">
-                <div className="text-center">
-                    <h1 className="font-bold text-xl md:text-2xl">Enter Your Email</h1>
-                </div>
 
-                <div className="text-center mt-2">
-                    <p className="text-sm md:text-base">
-                        Please enter your registered email address to receive the password reset link.
-                    </p>
-                </div>
-
-                <div className="mt-6 w-full">
-                    <input
-                        type="email"
-                        placeholder="Enter your email"
-                        value={email.toLowerCase()}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="px-4 py-2 border rounded-lg w-full text-sm md:text-base"
-                    />
-                </div>
-
-                <div
-                    className="bg-[#3431BB] px-6 py-3 rounded-lg w-full flex justify-center cursor-pointer hover:bg-[#282797]"
-                    onClick={handleSubmit}
-                >
-                    <button
-                        className="text-white font-medium"
-                        disabled={loading}
-                    >
-                        {loading ? "Sending..." : "Continue"}
-                    </button>
-                </div>
-
-                {errorMessage && (
-                    <div className="mt-4 text-red-500 text-sm md:text-base">
-                        {errorMessage}
+        <div className="flex items-center justify-center h-screen">
+            <div className="flex flex-col items-center gap-[59px] w-[400px]">
+                <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
+                    <div className="flex items-center justify-center max-w-lg w-full">
+                        <h1 className="font-bold text-36px">Enter Your Email</h1>
                     </div>
-                )}
+
+                    <div className="text-center mt-4 max-w-lg w-auto">
+                        <h1>Please enter your registered email address to receive the password reset link.</h1>
+                    </div>
+
+                    <div className="mt-8 w-full flex flex-col gap-4">
+                        <div className="flex flex-col w-full">
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                value={email.toLowerCase()}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="px-4 py-2 border rounded-lg w-full"
+                            />
+                        </div>
+                    </div>
+
+                    <div
+                        className="bg-[#3431BB] px-8 py-4 rounded-[13px] mt-8 max-w-lg w-full flex justify-center cursor-pointer hover:bg-[#282797]"
+                        onClick={handleSubmit}
+                    >
+                        <button className="text-white px-4 hover:bg-[#282797]" disabled={loading}>
+                            {loading ? "Sending..." : "Continue"}
+                        </button>
+                    </div>
+
+                    {errorMessage && (
+                        <div className="mt-4 text-red-500">
+                            {errorMessage}
+                        </div>
+                    )}
+                </div>
+
             </div>
         </div>
     );

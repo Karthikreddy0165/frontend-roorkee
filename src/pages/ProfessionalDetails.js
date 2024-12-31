@@ -56,7 +56,9 @@ const CreateAcc03 = () => {
       body: JSON.stringify(requestBody),
     };
 
+
     fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/profile/personal/`, requestOptions)
+
       .then((response) => response.json())
       .then((result) => {
         // console.log(result);
@@ -73,7 +75,9 @@ const CreateAcc03 = () => {
 
   const handleSkip = () => {
     if (authState.token) {
+
       router.push("/AccountCreated");
+
       setTimeout(() => {
         router.push("/LoginSuccess");
       }, 2000);

@@ -214,26 +214,6 @@ function SelectedFilters() {
           ) : (
             <></>
           )}
-          {/*{beneficiaries.length > 0 && beneficiaries.length <= 2 ? (*/}
-          {/*    <div className="flex gap-2">*/}
-          {/*      {beneficiaries.map((beneficiary, index) => (*/}
-          {/*          <button*/}
-          {/*              key={index}*/}
-          {/*              className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"*/}
-          {/*              data-full-text={beneficiary}*/}
-          {/*          >*/}
-          {/*            {beneficiary.length > 30 ? `${beneficiary.substring(0, 30)}...` : beneficiary}*/}
-          {/*          </button>*/}
-          {/*      ))}*/}
-          {/*{beneficiaries.length > 2 && (*/}
-          {/*    <button*/}
-          {/*        className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[5px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"*/}
-          {/*    >*/}
-          {/*      + {beneficiaries.length - 2} more*/}
-          {/*    </button>*/}
-          {/*)}*/}
-          {/*</div>*/}
-          {/*) : null}*/}
 
           {beneficiaries.length === 2 ? (
             <div className=" flex gap-2">

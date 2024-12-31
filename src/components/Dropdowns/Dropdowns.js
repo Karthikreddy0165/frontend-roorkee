@@ -1,17 +1,17 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import FilterContext from '@/Context/FilterContext';
 import PageContext from '@/Context/PageContext';
 
 const DropdownMenu = ({
-                          apiEndpoint = null, // API URL to fetch options
-                          staticOptions = [], // Static options if API is not provided
-                          labelKey = 'label', // Key for the display label in the dropdown
-                          valueKey = 'value', // Key for the unique value of each item
-                          contextState, // Current selected state (array of selected IDs/values and labels)
-                          setContextState, // Function to update the selected state
-                          allowMultipleSelection = true, // Allow multiple selections
-                          onItemSelected = () => {}, // Callback when an item is selected/deselected
-                      }) => {
+    apiEndpoint = null, // API URL to fetch options
+    staticOptions = [], // Static options if API is not provided
+    labelKey = 'label', // Key for the display label in the dropdown
+    valueKey = 'value', // Key for the unique value of each item
+    contextState, // Current selected state (array of selected IDs/values and labels)
+    setContextState, // Function to update the selected state
+    allowMultipleSelection = true, // Allow multiple selections
+    onItemSelected = () => {}, // Callback when an item is selected/deselected
+}) => {
     const { setCurrentPage } = useContext(PageContext); // Reset page on selection
     const { departments, setDepartments } = useContext(FilterContext); // For department-specific context (if needed)
     const [options, setOptions] = useState(staticOptions); // Dropdown options
@@ -101,12 +101,12 @@ const DropdownMenu = ({
                                     {item.label}
                                 </p>
                             </div>
-                            <div >
+                            <div className="w-[16.5px] h-[16.5px]">
                                 <input
                                     type="checkbox"
                                     value={item.value}
                                     checked={isChecked}
-                                    className="ml-10 custom-checkbox pointer-events-none w-[20px] h-full"
+                                    className="custom-checkbox pointer-events-none w-[20px] h-full"
                                     readOnly
                                 />
                             </div>
