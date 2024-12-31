@@ -53,7 +53,7 @@ const NavBar = () => {
   return (
     <div>
       {/* Navbar Container */}
-      <div className="flex justify-between items-center py-2 px-6 bg-white shadow-md z-10 relative sm:h-14 gap-2">
+      <div className="flex justify-between items-center py-2 px-6 bg-white shadow-md z-10 relative sm:h-14 gap-2 w-[482px] sm:w-full">
         <svg
           width="40"
           height="40"
