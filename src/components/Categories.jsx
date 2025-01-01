@@ -12,6 +12,7 @@ import { useContext } from "react";
 import FilterContext from "@/Context/FilterContext";
 import { useTabContext } from "@/Context/TabContext";
 import { Paginator } from "primereact/paginator";
+import ToolTips from "./ComponentsUtils/tooltips.jsx";
 
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const { activeTab, setActiveTab } = useTabContext(); // Accessing context
@@ -54,7 +55,8 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [isUnSaveToastVisible]);
+  }),
+    [isUnSaveToastVisible];
 
   // Fetch saved schemes so that we can mark saved schemes as bookmarked
   useEffect(() => {
@@ -92,9 +94,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   }, [authState.token]);
 
   const handleClick = (scheme_id) => {
-    console.log(scheme_id, "scheme_id")
     const scheme = dataFromApi.results.find((item) => item.id === scheme_id);
-    console.log(scheme) //change1
     if (scheme) {
       setSelectedScheme(scheme); // Set the selected scheme
       setIsModalOpen(true); // Open the modal
@@ -201,6 +201,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       setIsSavedModalOpen(true);
     }
   };
+  console.log(dataFromApi);
 
   if (Object.keys(dataFromApi).length === 0) {
     return (
@@ -221,33 +222,45 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   const handleStateTag = (event) => {
     event.stopPropagation();
     var state = event.target.innerText;
-    if(states[1] && states[1].includes(state)) return;
+    if (states[1] && states[1].includes(state)) return;
     var stateId = 0;
-    for(let i = 0; i < statesFromApi.length; i++) {
-      if(statesFromApi[i].state_name === state) {
+    for (let i = 0; i < 7; i++) {
+      if (statesFromApi[i].state_name === state) {
         stateId = statesFromApi[i].id;
         break;
       }
     }
-    setStates(prev => {
-      if(prev && prev[0] && prev[1]) {
-        return [[...prev[0], stateId], [...prev[1], state]];
+    setStates((prev) => {
+      if (prev && prev[0] && prev[1]) {
+        return [
+          [...prev[0], stateId],
+          [...prev[1], state],
+        ];
       } else {
         return [[stateId], [state]];
       }
     });
-  }
+  };
 
   const handleBeneficiaryTag = (e) => {
     e.stopPropagation();
     var beneficiary = e.target.innerText;
-    if(!beneficiary.includes("OBC") && !beneficiary.includes("SC") && !beneficiaries.includes(beneficiary)) {
-      setBeneficiaries(prev => [...prev, beneficiary]);
+    if (
+      !beneficiary.includes("OBC") &&
+      !beneficiary.includes("SC") &&
+      !beneficiaries.includes(beneficiary)
+    ) {
+      setBeneficiaries((prev) => [...prev, beneficiary]);
       // console.log(beneficiaries);
-    };
-    if(beneficiary.includes("OBC") && !beneficiaries.includes("OBC")) setBeneficiaries(prev => [...prev, "OBC"])
-    if(beneficiary.includes("SC") && !beneficiaries.includes("SC") || beneficiary === "Scheduled caste") setBeneficiaries(prev => [...prev, "SC"])
-  }
+    }
+    if (beneficiary.includes("OBC") && !beneficiaries.includes("OBC"))
+      setBeneficiaries((prev) => [...prev, "OBC"]);
+    if (
+      (beneficiary.includes("SC") && !beneficiaries.includes("SC")) ||
+      beneficiary === "Scheduled caste"
+    )
+      setBeneficiaries((prev) => [...prev, "SC"]);
+  };
   // const handleBeneficiaryTag = (event) => {
   //   event.stopPropagation();
   //   var beneficiary = event.target.innerText
@@ -261,103 +274,107 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   //     setBeneficiaries(prev => [...prev, "OBC"]);
   //   }
   // }
-// console.log(dataFromApi.results,"resultes")
+  // console.log(dataFromApi.results,"resultes")
 
-// const totalSchemes = (activeTab != "Saved" ? dataFromApi.results: dataFromApi)
+  // const totalSchemes = (activeTab != "Saved" ? dataFromApi.results: dataFromApi)
 
   return (
     <>
-  {/* We have found {378} schemes based on your profile */}
-  <div>
-    {(activeTab !== "Saved" ? dataFromApi.results : dataFromApi.results).map((item) => (
-      item.title &&(
-        <div
-          className="flex items-start justify-between self-stretch relative border-[1px] border-gray-300 rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
-          key={item.id}
-          style={{
-            backgroundColor: item.id === sidePannelSelected ? "#DDD6FE" : "",
-          }}
-        >
-          <div onClick={() => handleClick(item.id)}>
-            {/* <button
+      {/* We have found {378} schemes based on your profile */}
+      <div>
+        {(activeTab !== "Saved"
+          ? dataFromApi.results
+          : dataFromApi.results
+        ).map(
+          (item) =>
+            item.title && (
+              <div
+                className="flex items-start justify-between self-stretch relative border-[1px] border-gray-300 rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
+                key={item.id}
+                style={{
+                  backgroundColor:
+                    item.id === sidePannelSelected ? "#DDD6FE" : "",
+                }}
+              >
+                <div onClick={() => handleClick(item.id)}>
+                  {/* <button
               className="text-center text-[12px] px-[8px] py-[6px] rounded-[4px] gap-[10px]"
               style={{ color: "#151280", backgroundColor: "#EEEEFF" }}
             >
               New update
             </button> */}
 
-            <div className="gap-[12px] pt-[16px] pd-[16px]">
-              <p
-                  className="font-inter text-[18px] leading-[21.6px] cursor-pointer font-semibold mb-[10px] line-clamp-2 w-8/12 text-gray-900"
-                  role="button"
-                  tabIndex="0"
-              >
-                {item.title}
-              </p>
-              <p
-                  className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[10px] line-clamp-2"
-                  onClick={() => handleClick(item.id)}
-                  role="button"
-                  tabIndex="0"
-              >
-                <span className="font-semibold">Description: </span>
-                {item.description}
-              </p>
-              <p className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[26px] line-clamp-2 text-decoration-line: underline ">
-                {item.department.department_name}
-              </p>
+                  <div className="gap-[12px] pt-[16px] pd-[16px]">
+                    <p
+                      className="font-inter text-[16px] sm:text-[18px] leading-[21.6px] cursor-pointer font-semibold mb-[10px] line-clamp-2 w-8/12 text-gray-700"
+                      role="button"
+                      tabIndex="0"
+                    >
+                      {item.title}
+                    </p>
+                    <p
+                      className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[10px] line-clamp-2"
+                      onClick={() => handleClick(item.id)}
+                      role="button"
+                      tabIndex="0"
+                    >
+                      <span className="font-semibold ">Description: </span>
+                      {item.description}
+                    </p>
+                    <p className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[26px] line-clamp-2 text-decoration-line: underline ">
+                      {item.department.department_name}
+                    </p>
 
+                    <div className="flex gap-5 mb-[16px]">
+                      <button
+                        className="flex items-center justify-center pr-[12px] pl-[12px] border border-onclick-btnblue rounded-[5px] bg-white text-onclick-btnblue font-inter text-xs font-medium py-2 hover:border-onclick-btnblue hover:text-onclick-btnblue sm:block hidden"
+                        onClick={(event) => handleStateTag(event)}
+                      >
+                        {item.department.state}
+                      </button>
 
-              <div className="flex gap-5 mb-[16px]">
-                <button
-                    className="flex items-center justify-center pr-[12px] pl-[12px] border border-onclick-btnblue rounded-[1rem] bg-white text-onclick-btnblue font-inter text-xs font-medium py-2 hover:border-onclick-btnblue hover:text-onclick-btnblue"
-                    onClick={(event) => handleStateTag(event)}>
-                  {item.department.state}
-                </button>
-
-                {item.beneficiaries.length > 0 &&
-                    item.beneficiaries[0].beneficiary_type !== "N/A" && item.beneficiaries[0].beneficiary_type !== "" && (
-                        <button
-                            className="relative flex items-center justify-center pr-[12px] pl-[12px] py-[5px] border  border-onclick-btnblue rounded-full bg-white text-onclick-btnblue font-inter text-xs font-medium pl-8px hover:border-onclick-btnblue hover:text-onclick-btnblue "
+                      {item.beneficiaries.length > 0 &&
+                        item.beneficiaries[0].beneficiary_type !== "N/A" &&
+                        item.beneficiaries[0].beneficiary_type !== "" && (
+                          <button
+                            className="relative flex items-center justify-center pr-[12px] pl-[12px] py-[5px] border  border-onclick-btnblue rounded-[5px] bg-white text-onclick-btnblue font-inter text-xs font-medium pl-8px hover:border-onclick-btnblue hover:text-onclick-btnblue sm:block hidden"
                             onClick={(event) => handleBeneficiaryTag(event)}
-                        >
-                          {/* overflow-hidden text-ellipsis whitespace-nowrap max-w-[400px] */}
-                          {item.beneficiaries[0].beneficiary_type}
-                        </button>
+                          >
+                            {/* overflow-hidden text-ellipsis whitespace-nowrap max-w-[400px] */}
+                            {item.beneficiaries[0].beneficiary_type}
+                          </button>
+                        )}
+                    </div>
+                  </div>
+                </div>
+                <ToolTips tooltip="Save scheme">
+                  <div
+                    className="cursor-pointer px-2 py-2 right-[8.25px]"
+                    onClick={(e) => toggleBookmark(e, item.id)}
+                  >
+                    {isBookmarked[item.id] ? (
+                      <GoBookmarkFill className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[20px] text-[#3431BB]" />
+                    ) : (
+                      <CiBookmark className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[20px]" />
                     )}
+                  </div>
+                </ToolTips>
               </div>
+            )
+        )}
 
-
-
-          </div>
-        </div>
-
-      <div
-      className="cursor-pointer px-2 py-2 right-[8.25px]"
-      onClick={(e) => toggleBookmark(e, item.id)}
-  >
-    {isBookmarked[item.id] ? (
-        <GoBookmarkFill className="w-[27.5px] h-[27.5px] text-[#3431BB]"/>
-    ) : (
-        <CiBookmark className="w-[27.5px] h-[27.5px]" />
-            )}
-          </div>
-        </div>
-      )
-    ))}
-
-    {/* for pagination */}
-    {totalPages !== 0 && (
-      <Paginator
-      first={(currentPage-1)*10}
-      rows={rows}
-      totalRecords={totalPages * rows}
-      onPageChange={(e) => {
-          // setFirst(e.first);
-          setCurrentPage(e.page + 1);
-        }}
-        template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
-        className="custom-paginator gap-8 hover:cursor-pointer
+        {/* for pagination */}
+        {totalPages !== 0 && (
+          <Paginator
+            first={(currentPage - 1) * 10}
+            rows={rows}
+            totalRecords={totalPages * rows}
+            onPageChange={(e) => {
+              // setFirst(e.first);
+              setCurrentPage(e.page + 1);
+            }}
+            template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+            className="custom-paginator gap-8 hover:cursor-pointer
           [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
           [&_.p-paginator-page.p-highlight]:text-white 
           [&_.p-paginator-page]:transition-colors 
@@ -366,41 +383,39 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
           [&_.p-paginator-page]:px-3 
           [&_.p-paginator-page]:py-1 
           [&_.p-paginator-page]:rounded-full mt-20 mb-20"
-      />
-    )}
+          />
+        )}
+        {isToastVisible && (
+          <Toast
+            message={toastMessage}
+            onClose={() => setIsToastVisible(false)}
+          />
+        )}
 
-    {isToastVisible && (
-      <Toast
-        message={toastMessage}
-        onClose={() => setIsToastVisible(false)}
-      />
-    )}
+        {isUnSaveToastVisible && (
+          <UnSaveToast
+            message={toastMessage}
+            onClose={() => setIsUnSaveToastVisible(false)}
+          />
+        )}
 
-    {isUnSaveToastVisible && (
-      <UnSaveToast
-        message={toastMessage}
-        onClose={() => setIsUnSaveToastVisible(false)}
-      />
-    )}
-
-    {isModalOpen && selectedScheme && (
-      <ApplyModal
-        isOpen={isModalOpen}
-        onRequestClose={() => {
-          setIsModalOpen(false)
-          setSidePannelSelected(null)
-        }}
-        scheme={selectedScheme}
-      />
-    )}
-    {isSavedModalOpen && (
-      <SavedModal
-        isOpen={isSavedModalOpen}
-        onRequestClose={() => setIsSavedModalOpen(false)}
-      />
-    )}
-  </div>
-</>
-
+        {isModalOpen && selectedScheme && (
+          <ApplyModal
+            isOpen={isModalOpen}
+            onRequestClose={() => {
+              setIsModalOpen(false);
+              setSidePannelSelected(null);
+            }}
+            scheme={selectedScheme}
+          />
+        )}
+        {isSavedModalOpen && (
+          <SavedModal
+            isOpen={isSavedModalOpen}
+            onRequestClose={() => setIsSavedModalOpen(false)}
+          />
+        )}
+      </div>
+    </>
   );
 }

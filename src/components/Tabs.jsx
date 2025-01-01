@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useContext } from "react";
-
 import PageContext from "@/Context/PageContext";
 import { useTabContext } from "@/Context/TabContext";
 import JobOpenings from "./ComponentsUtils/JobOpenings";
@@ -9,15 +8,22 @@ import Scholarships from "./Scholarships";
 import SearchInput from "./ComponentsUtils/SearchInput";
 import SelectedFilters from "./SelectedFilters";
 import Saved from "./savedForLoginuser";
+import React from "react";
 
-
-export default function Tabs(props) {
+export default function Tabs() {
   const router = useRouter();
   const { activeTab, setActiveTab } = useTabContext();
   const { currentPage, setCurrentPage } = useContext(PageContext);
 
+  // Sync activeTab with query params on route change
+  React.useEffect(() => {
+    const { tab } = router.query;
+    if (tab) {
+      setActiveTab(tab);
+    }
+  }, [router.query, setActiveTab]);
+
   const handleTabClick = (tab) => {
-    
     setActiveTab(tab);
     setCurrentPage(1);
     router.push({
@@ -35,17 +41,12 @@ export default function Tabs(props) {
   };
 
   return (
-    <div className=" -mt-12 ">
+    <div>
       <SearchInput />
-
-      {/* <div className=" flex items-center gap-8 h-14 px-3 ">
-        <FcAlphabeticalSortingZa className="relative left-[800px]"/>
-        <FcAlphabeticalSortingAz className="relative left-[700px]"/>
-      </div> */}
-
       <SelectedFilters />
 
-      <div className="flex justify-center items-center gap-[15px]">
+      {/* Tabs for Larger Screens */}
+      <div className="hidden sm:flex justify-center items-center gap-[15px]">
         <button
           className={getButtonClass("Schemes")}
           onClick={() => handleTabClick("Schemes")}
@@ -71,9 +72,10 @@ export default function Tabs(props) {
           Saved
         </button>
       </div>
-      <hr />
 
-      {/* Render the corresponding component based on activeTab */}
+      <hr className="sm:hidden" />
+
+      {/* Render the Corresponding Component Based on activeTab */}
       {activeTab === "Schemes" && <Schemes />}
       {activeTab === "Job Openings" && <JobOpenings />}
       {activeTab === "Scholarships" && <Scholarships />}

@@ -1,0 +1,10 @@
+/* styles.css */
+
+
+@media (max-width: 768px) {
+  .vision-mission{
+    display: grid;
+    grid-row: 3;
+    grid-column: 1;
+  }
+}
