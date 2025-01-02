@@ -1,9 +1,11 @@
 version: 0.0
 os: linux
 files:
-  - source: /deploy-scripts/frontend_deploy.sh
-    destination: /home/ubuntu/deploy-scripts/frontend_deploy.sh
+  # No files are being copied since the deploy script is already on the EC2 instance.
 hooks:
   AfterInstall:
     - location: /home/ubuntu/deploy-scripts/frontend_deploy.sh
       timeout: 300
+      runas: root
+      # Directly run the script using full path
+      command: bash /home/ubuntu/deploy-scripts/frontend_deploy.sh
