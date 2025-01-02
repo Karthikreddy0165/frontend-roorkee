@@ -1,11 +1,14 @@
 version: 0.0
 os: linux
-files:
-  # No files are being copied since the deploy script is already on the EC2 instance.
 hooks:
-  AfterInstall:
-    - location: /home/ubuntu/deploy-scripts/frontend_deploy.sh
+  BeforeInstall:
+    - location: /bin/bash
       timeout: 300
       runas: root
-      # Directly run the script using full path
-      command: bash /home/ubuntu/deploy-scripts/frontend_deploy.sh
+      command: |
+        mkdir -p /opt/codedeploy-agent/deployment-root/
+        cp /home/ubuntu/deploy-scripts/frontend_deploy.sh /opt/codedeploy-agent/deployment-root/frontend_deploy.sh
+  AfterInstall:
+    - location: /opt/codedeploy-agent/deployment-root/frontend_deploy.sh
+      timeout: 300
+      runas: root
