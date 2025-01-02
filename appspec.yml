@@ -1,14 +1,7 @@
 version: 0.0
 os: linux
 hooks:
-  BeforeInstall:
-    - location: /bin/bash
-      timeout: 300
-      runas: root
-      command: |
-        mkdir -p /opt/codedeploy-agent/deployment-root/
-        cp /home/ubuntu/deploy-scripts/frontend_deploy.sh /opt/codedeploy-agent/deployment-root/frontend_deploy.sh
   AfterInstall:
-    - location: /opt/codedeploy-agent/deployment-root/frontend_deploy.sh
+    - command: bash /home/ubuntu/deploy-scripts/frontend_deploy.sh
       timeout: 300
       runas: root
