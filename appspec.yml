@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 hooks:
-  AfterInstall:
-    - command: bash /home/ubuntu/deploy-scripts/frontend_deploy.sh
+  ApplicationStart:
+    - location: /home/ubuntu/deploy-scripts/frontend_deploy.sh
       timeout: 300
-      runas: root
+      runas: ubuntu
