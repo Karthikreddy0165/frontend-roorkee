@@ -3,7 +3,7 @@ import ProfileModal from "@/pages/Modals/profileModal";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
-import { IoMenuOutline, IoMdClose } from "react-icons/io5"; // For menu icon in mobile
+import { IoMdClose } from "react-icons/io"; // For menu icon in mobile
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "@/Context/AuthContext";
