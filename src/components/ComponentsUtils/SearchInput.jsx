@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import { useTabContext } from "@/Context/TabContext";
 import { IoCloseSharp } from "react-icons/io5";
 
@@ -6,9 +6,10 @@ function SearchInput() {
   const { searchQuery, setSearchQuery } = useTabContext();
 
   return (
-    <div className="flex items-center gap-8 h-14 px-3 rounded-lg border border-gray-300 bg-white mb-[24px] mr-2">
+    <div className="flex items-center gap-3 h-14 px-3 rounded-lg border border-gray-300 bg-white mb-6 mr-2 hidden sm:flex">
+      {/* Search Icon */}
       <svg
-        className="w-5 h-5"
+        className="w-5 h-5 text-gray-500"
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -18,17 +19,24 @@ function SearchInput() {
       >
         <path d="M20 20l-4.585-4.585M10 17a7 7 0 100-14 7 7 0 000 14z"></path>
       </svg>
+
+      {/* Search Input */}
       <input
         type="text"
         placeholder="Search schemes, job opportunities, or scholarships"
-        className="flex-1 px-2 text-sm bg-transparent focus:outline-none w-64 placeholder-[#616161]"
+        className="flex-1 px-2 text-sm bg-transparent focus:outline-none placeholder-[#616161]"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
 
-      <div className="transform scale-150 cursor-pointer hover:scale-170 mr-2">
-        {searchQuery && <IoCloseSharp onClick={()=>{setSearchQuery('')}}/>}
-
+      {/* Clear Input Icon */}
+      <div className="cursor-pointer hover:scale-110">
+        {searchQuery && (
+          <IoCloseSharp
+            className="text-gray-500 w-5 h-5"
+            onClick={() => setSearchQuery("")}
+          />
+        )}
       </div>
     </div>
   );

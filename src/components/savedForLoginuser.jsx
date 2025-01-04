@@ -8,28 +8,27 @@ import Categories from "../components/Categories";
 
 export default function Saved() {
   const { searchQuery } = useTabContext();
-  const { states, departments, beneficiaries, sponsoredBy } = useContext(FilterContext);
+  const { states, departments, beneficiaries, sponsoredBy } =
+    useContext(FilterContext);
   const { currentPage, removeSaved } = useContext(PageContext);
   const { authState } = useAuth();
   const [dataOfApi, setDataOfApi] = useState({});
   const router = useRouter();
   const [totalPages, setTotalPages] = useState(0);
- 
 
   const handleLogin = () => {
     router.push("/login");
   };
-
 
   // console.log(authState.token, "authtoken")
 
   useEffect(() => {
     if (!authState.token) {
       return;
-      }
-      
-      const fetchState = async () => {
-        try {
+    }
+
+    const fetchState = async () => {
+      try {
         setDataOfApi({});
 
         let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/saved-schemes/filter/?limit=10&page=${currentPage}`;
@@ -40,20 +39,23 @@ export default function Saved() {
         myHeaders.append("Content-Type", "application/json");
 
         const raw = JSON.stringify({
-          state_ids: states.length !== 0 ?  states[0] : [],
-          department_ids: Object.keys(departments).reduce((acc,i)=>{
-            return [...acc,...departments[i]]
-          },[]),
-          sponsor_ids: sponsoredBy.length !== 0 && sponsoredBy[0][0]===2 ? sponsoredBy[0] : [],
+          state_ids: states.length !== 0 ? states[0] : [],
+          department_ids: Object.keys(departments).reduce((acc, i) => {
+            return [...acc, ...departments[i]];
+          }, []),
+          sponsor_ids:
+            sponsoredBy.length !== 0 && sponsoredBy[0][0] === 2
+              ? sponsoredBy[0]
+              : [],
           beneficiary_keywords: beneficiaries,
           q: searchQuery,
         });
 
         const requestOptions = {
           method: "POST",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
         };
 
         const response = await fetch(url, requestOptions);
@@ -73,13 +75,25 @@ export default function Saved() {
     };
 
     fetchState();
-  }, [authState.token, searchQuery, currentPage, sponsoredBy, states, departments, beneficiaries, removeSaved]);
+  }, [
+    authState.token,
+    searchQuery,
+    currentPage,
+    sponsoredBy,
+    states,
+    departments,
+    beneficiaries,
+    removeSaved,
+  ]);
 
   if (!authState.token) {
     return (
       <div className="flex justify-center items-center mt-8">
         Please
-        <span className="mx-1 text-[#3431BB] hover:text-blue-600 cursor-pointer" onClick={handleLogin}>
+        <span
+          className="mx-1 text-[#3431BB] hover:text-blue-600 cursor-pointer"
+          onClick={handleLogin}
+        >
           log in
         </span>
         to see your saved data.
@@ -87,14 +101,14 @@ export default function Saved() {
     );
   }
 
-  if (dataOfApi.count===0 && (sponsoredBy.length !== 0)) {
+  if (dataOfApi.count === 0 && sponsoredBy.length !== 0) {
     return (
       <div className="flex justify-center items-center mt-8">
         No saved schemes found based on your preference.
       </div>
     );
   }
-  if (authState.token && dataOfApi.count===0 && (sponsoredBy.length === 0)) {
+  if (authState.token && dataOfApi.count === 0 && sponsoredBy.length === 0) {
     return (
       <div className="flex justify-center items-center mt-8">
         No Saved Schemes
@@ -104,7 +118,11 @@ export default function Saved() {
 
   return (
     <div className="bg-white font-sans">
-      <Categories ffff={"saved"} dataFromApi={dataOfApi} totalPages={totalPages} />
+      <Categories
+        ffff={"saved"}
+        dataFromApi={dataOfApi}
+        totalPages={totalPages}
+      />
     </div>
   );
 }

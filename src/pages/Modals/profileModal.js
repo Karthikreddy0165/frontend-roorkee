@@ -19,7 +19,7 @@ const ProfileModal = ({ onClose }) => {
   const [educationOptions, setEducationOptions] = useState([]);
   const [profileData, setProfileData] = useState({
     name: "",
-    age: 0,
+    age: "",
     gender: "",
     community: "",
     minority: "",
@@ -35,7 +35,10 @@ const ProfileModal = ({ onClose }) => {
   const [emailData, setEmailData] = useState(null);
   const [sentEmailText, setSentEmailText] = useState(false);
   const modalRef = useRef(null);
+  const [progress, setProgress] = useState(0);
   
+
+  const fieldsCount = Object.keys(profileData).length;
 
 
 
@@ -181,10 +184,17 @@ const ProfileModal = ({ onClose }) => {
     fetchEmailData();
   }, [authState.token]);
 
+  useEffect(() => {
+    const filledFields = Object.values(profileData).filter((value) => value.trim() !== "").length;
+    const percentage = Math.round((filledFields / fieldsCount) * 100);
+    setProgress(percentage);
+  }, [profileData]);
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProfileData((prevData) => (
-      {
+
+    setProfileData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -202,13 +212,12 @@ const ProfileModal = ({ onClose }) => {
       };
 
       try {
-        console.log(profileData, "profile data before putting")
         await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/profile/`, {
           ...requestOptions,
           body: JSON.stringify({
             name: profileData.name,
             gender: profileData.gender,
-            age: profileData.age || 0,
+            age: profileData.age,
             category: profileData.community,
             state_of_residence: profileData.state,
             minority: profileData.minority === "Yes",
@@ -236,6 +245,9 @@ const ProfileModal = ({ onClose }) => {
       if (profileData.community){
         setBeneficiaries([profileData.community])
       }
+
+
+
         setIsSaved(true)
         onClose();
       } catch (error) {
@@ -259,6 +271,16 @@ const ProfileModal = ({ onClose }) => {
         ref={modalRef}
         className="bg-white rounded-lg w-[560px] h-[750px] p-6 flex flex-col items-start flex-shrink-0 relative"
       >
+        <div className="w-full mb-4">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Profile Completion</label>
+              <div className="w-full bg-gray-200 rounded-full h-4">
+                <div
+                  className="bg-blue-500 h-4 rounded-full"
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
+              <p className="text-sm font-semibold text-gray-500 mt-1">{progress}% completed</p>
+            </div>
         {loading ? (
           <div className="flex items-center justify-center w-full h-full">
             <div className="w-8 h-8 border-4 border-t-transparent border-blue-500 border-solid rounded-full animate-spin"></div>
@@ -552,8 +574,6 @@ const ProfileModal = ({ onClose }) => {
                 <input
                   type="text"
                   name="income"
-                  min="0"
-                  max="20"
                   className="w-full h-[44px] border border-gray-300 p-2 rounded-lg bg-gray-100 text-[12px] font-semibold text-black"
                   placeholder="Enter your income"
                   value={profileData.income}

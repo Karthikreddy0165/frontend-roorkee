@@ -46,6 +46,7 @@ const EnterResPass = () => {
         } catch (error) {
             console.error("Error during password reset:", error);
             // Display the specific error message
+
             setErrorMessage(error.message);
         } finally {
             setLoading(false);
@@ -53,6 +54,7 @@ const EnterResPass = () => {
     };
 
     return (
+
         <div className="flex items-center justify-center h-screen">
             <div className="flex flex-col items-center gap-[59px] w-[400px]">
                 <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
@@ -91,6 +93,7 @@ const EnterResPass = () => {
                         </div>
                     )}
                 </div>
+
             </div>
         </div>
     );
