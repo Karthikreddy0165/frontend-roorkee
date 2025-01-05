@@ -12,6 +12,8 @@
     "@fortawesome/free-regular-svg-icons": "^6.7.1",
     "@fortawesome/free-solid-svg-icons": "^6.7.1",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@types/node": "20.14.2",
+    "autoprefixer": "^10.4.20",
     "axios": "^1.7.2",
     "dotenv": "^16.4.7",
     "formik": "^2.4.6",
@@ -19,6 +21,7 @@
     "ionicons": "^7.4.0",
     "lodash": "^4.17.21",
     "next": "14.2.4",
+    "postcss": "^8.4.38",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
     "primereact": "^10.6.6",
@@ -31,12 +34,9 @@
     "react-router-dom": "^6.26.0",
     "react-share": "^5.1.0",
     "sharp": "^0.33.4",
-    "yup": "^1.4.0",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
     "typescript": "^5.4.5",
-     "tailwindcss": "^3.4.4",
-     "@types/node": "20.14.2"
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/node": "20.14.2"

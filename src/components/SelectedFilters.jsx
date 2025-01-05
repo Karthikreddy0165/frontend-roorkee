@@ -3,8 +3,10 @@ import FilterContext from "@/Context/FilterContext";
 import { useAuth } from "@/Context/AuthContext";
 import ToolTips from "./ComponentsUtils/tooltips";
 import PreferenceContext from "@/Context/preferenceContext";
+import { useRouter } from "next/router";
 function SelectedFilters() {
   const { state, beneficiarie } = useContext(PreferenceContext);
+  const router = useRouter();
 
   // console.log(state, "state");
   // console.log(beneficiarie, "beneficiaries");
@@ -54,6 +56,10 @@ function SelectedFilters() {
 
   const handleDefaultFilter = () => {
     // Clear existing states
+    if (!authState.token) {
+      router.push("/login");
+      return;
+    }
     setDepartments({});
     setFundingBy([]);
     setSponsoredBy([]);
