@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
-import { FaArrowLeftLong } from "react-icons/fa6";
+import {FaArrowLeftLong} from "react-icons/fa6"
 import { useAuth } from "@/Context/AuthContext";
 import loginperson from "../assets/image.png";
 
