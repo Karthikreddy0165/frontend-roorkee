@@ -1,4 +1,6 @@
+
 const StateSelector = ({ states = [], handleStateChange }) => {
+
   const allStates = ["State 1", "State 2", "State 3"]; // Example states, replace with your dynamic data
 
   const handleToggle = (state) => {
