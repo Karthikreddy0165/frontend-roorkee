@@ -192,7 +192,12 @@ const App = () => {
                   </p>
                   <div className="flex h-[160px] w-[318px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[8px] border border-[#3F3BE1] p-4">
                     <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-[#3F3BE1] bg-opacity-[10%]">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-check"><path d="M11 18H3"/><path d="m15 18 2 2 4-4"/><path d="M16 12H3"/><path d="M16 6H3"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-list-check">
+                      <path d="M11 18H3"/>
+                      <path d="m15 18 2 2 4-4"/>
+                      <path d="M16 12H3"/>
+                      <path d="M16 6H3"/>
+                    </svg>
                     </div>
                     <div className="text-[#424242] text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
                       Tell Us About Yourself
