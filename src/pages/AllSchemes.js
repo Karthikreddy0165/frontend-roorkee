@@ -8,7 +8,7 @@ import SponsorsDropdownMenu from "@/components/Dropdowns/SponsorDropdown";
 import BeneficiariesDropdown from "@/components/Dropdowns/BeneficiariesDropdown";
 import FilterContext from "@/Context/FilterContext";
 import SchemeVerifiedStatus from "@/components/SchemeEmailVerification";
-import img from '../assets/img.png'
+import img from '../assets/img.png';
 
 const SchemesAll = () => {
   const {
@@ -48,10 +48,18 @@ const SchemesAll = () => {
   }, []);
 
   const toggleDropdown = (key) => {
-    setDropDownStates((prevState) => ({
-      ...prevState,
-      [key]: !prevState[key],
-    }));
+    setDropDownStates((prevState) => {
+      const newState = { ...prevState, [key]: !prevState[key] };
+      if (!prevState[key]) {
+        // Close other dropdowns when opening a new one
+        Object.keys(prevState).forEach((dropdownKey) => {
+          if (dropdownKey !== key) {
+            newState[dropdownKey] = false;
+          }
+        });
+      }
+      return newState;
+    });
   };
 
   const clearAllFilters = () => {
@@ -88,24 +96,22 @@ const SchemesAll = () => {
 
       {/* Banner Image */}
       <div className="relative max-w-[90%] mx-auto mb-[16px] sm:mb-8 mt-2">
-  <div className="relative w-full">
-    <Image
-      src={img || backUpBannerImage}
-      alt="Loading Image..."
-      layout="responsive"
-      width={100}
-      height={50}
-      className="rounded-[15px] object-contain"
-    />
-  </div>
-</div>
-
-
+        <div className="relative w-full">
+          <Image
+            src={img || bannerImage || backUpBannerImage}
+            alt="Loading Image..."
+            layout="responsive"
+            width={100}
+            height={50}
+            className="rounded-[15px] object-contain"
+          />
+        </div>
+      </div>
 
       <div className="max-w-[90%] mx-auto flex flex-col md:flex-row">
         {/* Filters Section */}
         <div className="flex-1 md:max-w-[25%] p-4 md:mr-2 order-2 md:order-1 hidden md:block">
-          <div className="sticky  bg-white z-10  top-0">
+          <div className="sticky bg-white z-10 top-0">
             <div className="flex justify-between items-center">
               <h1 className="m-0 font-semibold">Filters</h1>
               <button
@@ -216,21 +222,20 @@ const SchemesAll = () => {
 
               {/* Department Dropdown */}
               {isDepartmentVisible && (
-              <div
-                 className="flex justify-between items-center"
-                onClick={() => toggleDropdown("departmentOpen")}
-              >
-                <span>Department</span>
-                {dropDownStates.departmentOpen ? (
-                  <IoIosArrowUp className="text-black" />
-                ) : (
-                  <IoIosArrowDown className="text-black" />
-                )}
-              </div>
-            )}
-            {isDepartmentVisible &&
-              dropDownStates.departmentOpen && <DepartmentDropdownMenu />}
-
+                <div
+                  className="flex justify-between items-center"
+                  onClick={() => toggleDropdown("departmentOpen")}
+                >
+                  <span>Department</span>
+                  {dropDownStates.departmentOpen ? (
+                    <IoIosArrowUp className="text-black" />
+                  ) : (
+                    <IoIosArrowDown className="text-black" />
+                  )}
+                </div>
+              )}
+              {isDepartmentVisible &&
+                dropDownStates.departmentOpen && <DepartmentDropdownMenu />}
 
               {/* Beneficiaries Dropdown */}
               {isBeneficiaryVisible && (

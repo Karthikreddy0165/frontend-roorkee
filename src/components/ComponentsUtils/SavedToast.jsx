@@ -11,6 +11,7 @@ const SaveToast = ({ message, onClose }) => {
 
   const handleViewSavedClick = () => {
     router.push("/AllSchemes?tab=Saved");
+
     setActiveTab("Saved");
     handleClose();
   };

@@ -14,6 +14,7 @@ const DepartmentDropdownMenu = () => {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/departments/`
       );
+
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       } else {
@@ -60,7 +61,7 @@ const DepartmentDropdownMenu = () => {
     <div className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0">
       <ul
         id="scroll-container"
-        className="flex flex-col font-sans list-none pr-2 m-0 gap-0 max-h-[300px] overflow-hidden"
+        className="flex flex-col font-sans list-none m-0 gap-0 max-h-[300px] overflow-y-auto"
       >
         {uniqueCategories.map((item, index) => (
           <li

@@ -60,7 +60,7 @@ const App = () => {
 
       <div className="sm:w-full w-[482px] mx-auto">
         {/* Main Container */}
-        <div className=" p-[50px_0]">
+        <div className=" p-[50px_0] mx-auto">
           {/* First Row */}
           <div className="flex flex-col items-center lg:flex-row justify-center gap-8 p-4">
             {/* Left Div */}
@@ -296,7 +296,7 @@ const App = () => {
 
               {/* Mission, Vision, and Values Section */}
               
-              <div className="relative flex flex-col lg:flex-row justify-between gap-6 mt-[32px] px-6 sm:mt-[100px]">
+              <div className="relative flex flex-col lg:flex-row justify-between gap-6 mt-[32px] px-6 sm:mt-[100px] mx-auto">
                 {/* Mission Section */}
                 <div className=" flex flex-col gap-2 p-6 border border-[#3F3BE1] rounded-lg h-[250px] sm:w-[550px] sm:h-[266px]  relative">
                   <p className="font-semibold text-lg lg:text-left">Mission</p>
@@ -344,14 +344,13 @@ const App = () => {
               </svg>
 
                   </div>
-                  
                 </div>
-                <FAQSection />
-               
+                <FAQSection/>
               </div>
 
           </div>
-         
+          
+
           </div>
             
         </div>

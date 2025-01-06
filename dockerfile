@@ -4,6 +4,7 @@ WORKDIR /App
 
 ARG ENVIRONMENT
 ENV ENVIRONMENT=${ENVIRONMENT}
+ENV NEXT_PUBLIC_API_BASE_URL=http://65.0.122.213:8000
 
 RUN npm install -g pm2
 
@@ -12,8 +13,8 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+RUN npm run build 
 
-EXPOSE 3000
+EXPOSE 80
 
 CMD ["pm2-runtime", "ecosystem.config.js"]

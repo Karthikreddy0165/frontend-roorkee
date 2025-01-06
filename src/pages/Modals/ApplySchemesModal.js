@@ -158,7 +158,6 @@ const ApplyModal = ({
                     >
                       Click here for preview
                     </a>
-                    {/* <div className="mt-2">
                       {scheme.pdf_url && scheme.pdf_url.startsWith('https://launchpad-pdf-files') ? (
                         <div className="flex justify-start mt-4">
                           <button
@@ -169,7 +168,6 @@ const ApplyModal = ({
                           </button>
                         </div>
                       ) : null}
-                    </div> */}
                   </div>
                 </div>
               )}

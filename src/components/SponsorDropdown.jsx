@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import FilterContext from "@/Context/FilterContext";
+// import StateDropdownMenu from "./DropdownMenu";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 import PageContext from "@/Context/PageContext";
 import DropdownMenu from "@/components/Dropdowns/Dropdowns";
-
 const SponsorDropdownMenu = () => {
   const { setCurrentPage } = useContext(PageContext);
+  const [allLevel, setAllLevel] = useState([]);
   const { sponsoredBy, setSponsoredBy, states, setStates, statesFromApi } =
     useContext(FilterContext);
 
@@ -18,15 +19,14 @@ const SponsorDropdownMenu = () => {
   const handleItemClick = (value) => {
     setCurrentPage(1);
     if (sponsoredBy.length !== 0 && sponsoredBy[0].includes(value[0])) {
-      setSponsoredBy([]); // Deselect if already selected
+      setSponsoredBy([]);
     } else {
       if (value[0] === 2) {
-        setStates([]); // Clear states if Central is selected
+        setStates([]);
       }
-      setSponsoredBy([[value[0]], [value[1]]]); // Set new selection
+      setSponsoredBy([[value[0]], [value[1]]]);
     }
   };
-
   return (
     <div className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0">
       <ul className="flex flex-col font-sans list-none p-0 m-0 gap-0 pb-[18px]">
@@ -48,9 +48,8 @@ const SponsorDropdownMenu = () => {
                 )}
               </p>
             </div>
-
             {item[0] !== 1 && (
-              <div className="w-[16.5] h-[16.5]">
+              <div>
                 <input
                   type="checkbox"
                   value={item}
@@ -59,17 +58,15 @@ const SponsorDropdownMenu = () => {
                       ? sponsoredBy[0].includes(item[0])
                       : false
                   }
-                  className="ml-10 custom-checkbox pointer-events-none w-full h-full"
+                  className="ml-10 custom-checkbox pointer-events-none w-[30px] h-full"
                 />
               </div>
             )}
-
             {item[0] === 1 &&
               sponsoredBy.length !== 0 &&
               sponsoredBy[0][0] === 1 && (
                 <IoIosArrowUp className="text-black" />
               )}
-
             {item[0] === 1 &&
               ((sponsoredBy.length !== 0 && sponsoredBy[0][0] !== 1) ||
                 sponsoredBy.length === 0) && (
@@ -77,7 +74,6 @@ const SponsorDropdownMenu = () => {
               )}
           </li>
         ))}
-
         {sponsoredBy.length !== 0 && sponsoredBy[0][0] === 1 && (
           <DropdownMenu
             staticOptions={statesFromApi.map((state) => ({

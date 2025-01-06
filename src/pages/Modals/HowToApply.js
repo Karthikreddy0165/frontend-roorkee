@@ -3,8 +3,6 @@ import { useMediaQuery } from 'react-responsive';
 
 const HowToApply = ({ closeModal }) => {
   const [currentStep, setCurrentStep] = useState(1);
-  
-  // Media query hook to detect mobile view
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   const steps = [
@@ -18,16 +16,12 @@ const HowToApply = ({ closeModal }) => {
     {
       title: "Step 2",
       content: "After clicking on the preferred scheme, click on the 'Apply' button on the scheme description page to apply for the scheme.",
-      image: isMobile 
-        ? "/_next/static/media/step2.64e5a384.jpeg" 
-        : "/_next/static/media/step2.64e5a384.jpeg",
+      image: "/_next/static/media/step2.64e5a384.jpeg",
     },
     {
       title: "Step 3",
       content: "If you are not currently applying but wish to apply for the scheme in the future, you can use the 'Save for Later' button.",
-      image: isMobile 
-        ? "/_next/static/media/step2.64e5a384.jpeg"
-        : "/_next/static/media/step2.64e5a384.jpeg",
+      image: "/_next/static/media/step2.64e5a384.jpeg",
     },
   ];
 
@@ -45,14 +39,16 @@ const HowToApply = ({ closeModal }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-50">
-      <div className="bg-white rounded-lg sm:h-[80%] h-[90%] w-[90%] sm:w-[80%] md:w-[70%] lg:w-[600px] xl:w-[700px] p-6 max-w-full flex flex-col">
+      <div className="bg-white rounded-lg sm:h-[80%] h-[90%] w-[90%] sm:w-[80%] md:w-[70%] lg:w-[600px] xl:w-[700px] p-6 max-w-full flex flex-col relative">
         <h2 className="sm:text-2xl text-[20px] font-semibold text-center mb-6 text-[#3431BB]">
           How to Apply for Schemes
         </h2>
 
-        <div className="flex-grow space-y-6">
+        {/* Content Section */}
+        <div className="flex-grow space-y-6 overflow-y-auto">
           <div className="flex flex-col items-center justify-center space-y-4">
-            <div className="border border-[#3431BB] rounded-[6px] p-6 w-full">
+
+          <div className="border border-[#3431BB] rounded-[6px] p-6 w-full">
               <h3 className="text-[16px] font-semibold text-center">
                 {steps[currentStep - 1].title}
               </h3>
@@ -60,7 +56,7 @@ const HowToApply = ({ closeModal }) => {
                 {steps[currentStep - 1].content}
               </p>
             </div>
-
+            {/* Image Section */}
             {steps[currentStep - 1].image && (
               <div className="mt-4">
                 <img
@@ -70,10 +66,14 @@ const HowToApply = ({ closeModal }) => {
                 />
               </div>
             )}
+
+            {/* Text Content */}
+          
           </div>
         </div>
 
-        <div className="mt-8 flex justify-between">
+        {/* Fixed Footer for Buttons */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t flex justify-between">
           <button
             onClick={prevStep}
             className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
@@ -82,21 +82,19 @@ const HowToApply = ({ closeModal }) => {
             Previous
           </button>
           <button
+            onClick={closeModal}
+            className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
+          >
+            Close
+          </button>
+          <button
             onClick={nextStep}
             className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
             disabled={currentStep === steps.length}
           >
             Next
           </button>
-        </div>
-
-        <div className="mt-4 flex justify-center">
-          <button
-            onClick={closeModal}
-            className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
-          >
-            Close
-          </button>
+         
         </div>
       </div>
     </div>
