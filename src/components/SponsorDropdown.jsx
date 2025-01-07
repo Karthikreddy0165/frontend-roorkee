@@ -4,11 +4,13 @@ import FilterContext from "@/Context/FilterContext";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 import PageContext from "@/Context/PageContext";
+import DropdownMenu from "@/components/Dropdowns/Dropdowns";
 const SponsorDropdownMenu = () => {
-  const {  setCurrentPage } = useContext(PageContext);
+  const { setCurrentPage } = useContext(PageContext);
   const [allLevel, setAllLevel] = useState([]);
-  const { sponseredBy, setSponseredBy, states, setStates } =
+  const { sponsoredBy, setSponsoredBy, states, setStates, statesFromApi } =
     useContext(FilterContext);
+
   const uniqueCategories = [
     [2, "Central"],
     [1, "State"],
@@ -16,15 +18,13 @@ const SponsorDropdownMenu = () => {
 
   const handleItemClick = (value) => {
     setCurrentPage(1);
-    if (sponseredBy.length != 0 && sponseredBy[0].includes(value[0])) {
-      setSponseredBy([])
-
+    if (sponsoredBy.length !== 0 && sponsoredBy[0].includes(value[0])) {
+      setSponsoredBy([]);
     } else {
-      if(value[0] == 2){
+      if (value[0] === 2) {
         setStates([]);
       }
-      setSponseredBy([[value[0]], [value[1]]]);
-
+      setSponsoredBy([[value[0]], [value[1]]]);
     }
   };
   return (
@@ -37,37 +37,52 @@ const SponsorDropdownMenu = () => {
             onClick={() => handleItemClick(item)}
           >
             <div>
-            <p className="flex leading-5 overflow-hidden overflow-ellipsis line-clamp-2 max-h-10 text-black">
+              <p className="flex leading-5 overflow-hidden overflow-ellipsis line-clamp-2 max-h-10 text-black">
                 {item[1]}
-                {item[1] == "State" && states.length !== 0 ? <span className = "w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">{states[1].length}</span> : <></>}
+                {item[1] === "State" && states.length !== 0 ? (
+                  <span className="w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">
+                    {states[1].length}
+                  </span>
+                ) : (
+                  <></>
+                )}
               </p>
             </div>
-            {item[0] != 1 && (
-              <div className="w-[16.5] h-[16.5]">
+            {item[0] !== 1 && (
+              <div>
                 <input
                   type="checkbox"
                   value={item}
                   checked={
-                    sponseredBy.length != 0
-                      ? sponseredBy[0].includes(item[0])
+                    sponsoredBy.length !== 0
+                      ? sponsoredBy[0].includes(item[0])
                       : false
                   }
-                  className="ml-10 custom-checkbox pointer-events-none w-full h-full"
+                  className="ml-10 custom-checkbox pointer-events-none w-[30px] h-full"
                 />
               </div>
             )}
-            {item[0] == 1 &&
-              sponseredBy.length != 0 &&
-              sponseredBy[0][0] == 1 && <IoIosArrowUp className="text-black" />}
-            {item[0] == 1 &&
-              ((sponseredBy.length != 0 && sponseredBy[0][0] != 1) ||
-                sponseredBy.length == 0) && (
+            {item[0] === 1 &&
+              sponsoredBy.length !== 0 &&
+              sponsoredBy[0][0] === 1 && (
+                <IoIosArrowUp className="text-black" />
+              )}
+            {item[0] === 1 &&
+              ((sponsoredBy.length !== 0 && sponsoredBy[0][0] !== 1) ||
+                sponsoredBy.length === 0) && (
                 <IoIosArrowDown className="text-black" />
               )}
           </li>
         ))}
-        {sponseredBy.length != 0 && sponseredBy[0][0] == 1 && (
-          <StateDropdownMenu />
+        {sponsoredBy.length !== 0 && sponsoredBy[0][0] === 1 && (
+          <DropdownMenu
+            staticOptions={statesFromApi.map((state) => ({
+              label: state.state_name,
+              value: state.id,
+            }))}
+            contextState={states}
+            setContextState={setStates}
+          />
         )}
       </ul>
     </div>

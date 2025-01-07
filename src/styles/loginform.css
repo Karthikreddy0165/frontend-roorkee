@@ -1,0 +1,47 @@
+/* General styles for the form */
+form {
+    width: 100%;
+    max-width: 400px; /* Limit the form's width on larger screens */
+    margin: 0 auto; /* Center the form */
+}
+
+/* Hide the image on smaller screens */
+@media (max-width: 768px) {
+    .login-image {
+        display: none;
+    }
+
+    .left-section {
+        display: none; /* Hides the left section with the image */
+    }
+
+    .right-section {
+        width: 100%; /* Make the form occupy full width */
+        padding: 16px; /* Add padding for smaller screens */
+    }
+
+    form {
+        margin-top: 20px;
+    }
+}
+
+/* Adjust font sizes and spacing for mobile screens */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    input {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 12px;
+    }
+}

@@ -2,7 +2,6 @@ import React from 'react';
 import { useRouter } from "next/router";
 import { useEffect } from 'react';
 
-
 const LoginSuccess = () => {
     const router = useRouter();
 
@@ -20,6 +19,7 @@ const LoginSuccess = () => {
         </div>
     </div>
     )
+
 }
 
 export default LoginSuccess;
