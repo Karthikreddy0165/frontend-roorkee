@@ -2,25 +2,36 @@ import React, { useState } from "react";
 
 const FeedbackModal = ({ isOpen, onRequestClose }) => {
   const [rating, setRating] = useState(0);
-  const [feedback, setFeedback] = useState("");
+  const [reportFormData, setReportFormData] = useState({
+    category: "",
+    description: "",
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Handle the rating change
+  // Handle form data changes
+  const handleReportFormChange = (e) => {
+    const { name, value } = e.target;
+    setReportFormData({ ...reportFormData, [name]: value });
+  };
+
+  // Handle rating change
   const handleRatingChange = (rating) => {
     setRating(rating);
   };
 
   // Handle feedback submission
   const handleSubmitFeedback = async () => {
-    if (rating === 0 || feedback === "") {
-      setError("Please provide a rating and feedback.");
+    const { category, description } = reportFormData;
+
+    if (rating === 0 || !category || !description) {
+      setError("Please provide a rating, category, and description.");
       return;
     }
 
     setLoading(true);
+    setError(null);
 
-    // Prepare the request headers
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append(
@@ -28,10 +39,9 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
       "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1OTczNTg4LCJpYXQiOjE3MzUxMDk1ODgsImp0aSI6ImVjOGI1NWQ2YjMzOTQyZTY5NGVlNWIzOTAwNDJlODJkIiwidXNlcl9pZCI6MX0.2emHvQsagNbIpHpSuC6nlAEy-_p5Q4xFFFSymvUPxE4"
     );
 
-    // Prepare the body data to be sent
     const raw = JSON.stringify({
-      rating: rating,
-      description: feedback,
+      category,
+      description,
     });
 
     const requestOptions = {
@@ -42,7 +52,10 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
     };
 
     try {
-      // Make the API call to submit feedback
+      console.log(
+        "come inside",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/feedback/website-feedback/`
+      );
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/feedback/website-feedback/`,
         requestOptions
@@ -52,18 +65,21 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
         throw new Error("Failed to submit feedback.");
       }
 
-      // Clear form on successful submission
+      // Clear form and close modal on success
       setRating(0);
-      setFeedback("");
-      onRequestClose(); // Close the modal
-    } catch (error) {
-      setError(error.message);
+      setReportFormData({ category: "", description: "" });
+      onRequestClose();
+    } catch (err) {
+      setError(err.message);
+      console.log(err.message);
     } finally {
       setLoading(false);
     }
   };
 
   if (!isOpen) return null;
+
+  console.log(reportFormData);
 
   return (
     <div className="fixed inset-0 z-50 bg-gray-800 bg-opacity-50 flex justify-center items-center">
@@ -72,9 +88,8 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
           Feedback Form
         </h2>
 
-        {/* Error Message */}
         {error && (
-          <div className="text-red-500 text-centre text-sm mb-4">{error}</div>
+          <div className="text-red-500 text-center text-sm mb-4">{error}</div>
         )}
 
         {/* Star Rating */}
@@ -90,36 +105,54 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
               fill="currentColor"
               onClick={() => handleRatingChange(star)}
             >
-              <path
-                fillRule="evenodd"
-                d="M10 15.27L16.18 19l-1.64-7.03L19 7.24l-7.19-.61L10 0 8.19 6.63 1 7.24l4.46 4.73L3.82 19z"
-                clipRule="evenodd"
-              />
+              <path d="M10 15.27L16.18 19l-1.64-7.03L19 7.24l-7.19-.61L10 0 8.19 6.63 1 7.24l4.46 4.73L3.82 19z" />
             </svg>
           ))}
         </div>
 
-        {/* Feedback Textarea */}
-        <textarea
-          className="w-full p-2 border border-gray-300 rounded-lg mb-4"
-          rows="4"
-          placeholder="Your feedback..."
-          value={feedback}
-          onChange={(e) => setFeedback(e.target.value)}
-        ></textarea>
+        {/* Feedback Form */}
+        <div className="mb-4">
+          <label className="block text-sm font-semibold mb-2">Category</label>
+          <select
+            name="category"
+            value={reportFormData.category}
+            onChange={handleReportFormChange}
+            required
+            className="w-full p-2 border text-sm rounded-md"
+          >
+            <option value="">Select Category</option>
+            <option value="General">Incorrect information</option>
+            <option value="Urgent">Outdated information</option>
+            <option value="Feedback">Other</option>
+          </select>
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-semibold mb-2">
+            Description
+          </label>
+          <textarea
+            name="description"
+            value={reportFormData.description}
+            onChange={handleReportFormChange}
+            required
+            rows="4"
+            className="w-full p-2 border rounded-md"
+          />
+        </div>
 
         {/* Submit and Cancel Buttons */}
         <div className="flex justify-between">
           <button
             onClick={handleSubmitFeedback}
-            className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3330BA] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
+            className="px-2 py-2 rounded-lg bg-[#3330BA] text-white hover:bg-blue-700"
             disabled={loading}
           >
             {loading ? "Submitting..." : "Submit Feedback"}
           </button>
           <button
             onClick={onRequestClose}
-            className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-gray-500 text-white hover:bg-blue-700 text-[12px] sm:text-sm"
+            className="px-2 py-2 rounded-lg bg-gray-500 text-white hover:bg-gray-600"
           >
             Cancel
           </button>
@@ -132,17 +165,11 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
 const FeedbackButton = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const handleOptionClick = (option) => {
-    if (option === "feeBack") {
-      setModalOpen(true);
-    }
-  };
-
   return (
     <>
       <button
         className="w-full text-left p-3 text-[14px] hover:bg-[#EEEEFF] hover:border-l-[3px] hover:border-[#3431BB] flex items-center gap-2"
-        onClick={() => handleOptionClick("feeBack")}
+        onClick={() => setModalOpen(true)}
       >
         <svg
           width="20"
@@ -162,7 +189,6 @@ const FeedbackButton = () => {
         Feedback
       </button>
 
-      {/* Feedback Modal */}
       <FeedbackModal
         isOpen={isModalOpen}
         onRequestClose={() => setModalOpen(false)}

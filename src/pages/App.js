@@ -60,7 +60,7 @@ const App = () => {
 
       <div className="sm:w-full w-[482px] mx-auto">
         {/* Main Container */}
-        <div className=" p-[50px_0]">
+        <div className=" p-[50px_0] mx-auto">
           {/* First Row */}
           <div className="flex flex-col items-center lg:flex-row justify-center gap-8 p-4">
             {/* Left Div */}
@@ -192,7 +192,12 @@ const App = () => {
                   </p>
                   <div className="flex h-[160px] w-[318px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[8px] border border-[#3F3BE1] p-4">
                     <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-[#3F3BE1] bg-opacity-[10%]">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-check"><path d="M11 18H3"/><path d="m15 18 2 2 4-4"/><path d="M16 12H3"/><path d="M16 6H3"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-list-check">
+                      <path d="M11 18H3"/>
+                      <path d="m15 18 2 2 4-4"/>
+                      <path d="M16 12H3"/>
+                      <path d="M16 6H3"/>
+                    </svg>
                     </div>
                     <div className="text-[#424242] text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
                       Tell Us About Yourself
@@ -291,7 +296,7 @@ const App = () => {
 
               {/* Mission, Vision, and Values Section */}
               
-              <div className="relative flex flex-col lg:flex-row justify-between gap-6 mt-[32px] px-6 sm:mt-[100px]">
+              <div className="relative flex flex-col lg:flex-row justify-between gap-6 mt-[32px] px-6 sm:mt-[100px] mx-auto">
                 {/* Mission Section */}
                 <div className=" flex flex-col gap-2 p-6 border border-[#3F3BE1] rounded-lg h-[250px] sm:w-[550px] sm:h-[266px]  relative">
                   <p className="font-semibold text-lg lg:text-left">Mission</p>
@@ -340,13 +345,11 @@ const App = () => {
 
                   </div>
                 </div>
-                <FAQSection />
+                <FAQSection/>
               </div>
 
           </div>
-          <div>
-              
-            </div>
+          
 
           </div>
             

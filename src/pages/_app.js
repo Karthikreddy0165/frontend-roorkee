@@ -26,7 +26,10 @@ export default function App({ Component, pageProps }) {
                       <Component {...pageProps} />
                     </div>
                     {/* Footer */}
-                    <Footer />
+                  <div className="w-full mb-auto">
+                  <Footer />
+                  </div>
+                    
                   </div>
                 </PrimeReactProvider>
               </FormProvider>
