@@ -1,7 +1,7 @@
 import { FormProvider } from "@/Context/FormContext";
 import { TabProvider } from "@/Context/TabContext";
 import "@/styles/globals.css";
-import Footer from "@/components/Footer";
+
 import { PrimeReactProvider } from "primereact/api";
 import { AuthProvider } from "@/Context/AuthContext";
 import { PageProvider } from "@/Context/PageContext";
@@ -25,10 +25,7 @@ export default function App({ Component, pageProps }) {
                       {/* <RedirectHandler /> */}
                       <Component {...pageProps} />
                     </div>
-                    {/* Footer */}
-                  <div className="w-full mb-auto">
-                  <Footer />
-                  </div>
+
                   </div>
                 </PrimeReactProvider>
               </FormProvider>

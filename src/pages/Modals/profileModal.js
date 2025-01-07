@@ -4,6 +4,7 @@ import { useAuth } from "../../Context/AuthContext";
 import { MdVerified } from "react-icons/md";
 import { VscUnverified } from "react-icons/vsc";
 import FilterContext from "@/Context/FilterContext";
+import { values } from "lodash";
 
 
 const ProfileModal = ({ onClose }) => {
@@ -185,7 +186,10 @@ const ProfileModal = ({ onClose }) => {
   }, [authState.token]);
 
   useEffect(() => {
-    const filledFields = Object.values(profileData).filter((value) =>typeof value === 'string' && value.trim() !== "").length;
+
+    const filledFields = Object.values(profileData).filter((value) =>
+     value !== "").length;
+
     const percentage = Math.round((filledFields / fieldsCount) * 100);
     setProgress(percentage);
   }, [profileData]);

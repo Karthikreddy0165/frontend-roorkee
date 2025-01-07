@@ -13,6 +13,7 @@ import FilterContext from "@/Context/FilterContext";
 import { useTabContext } from "@/Context/TabContext";
 import { Paginator } from "primereact/paginator";
 import ToolTips from "./ComponentsUtils/tooltips.jsx";
+import Footer from "./Footer.jsx";
 
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const { activeTab, setActiveTab } = useTabContext(); // Accessing context
