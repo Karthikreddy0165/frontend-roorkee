@@ -1,12 +1,12 @@
 const Footer = () => {
   return (
     <>
-      <footer className="bg-[#3431BB] text-white py-8 px-4 gap-5 mt-[50px]">
+      <footer className="bg-[#ededf2] text-black py-8 px-4 gap-5 mt-[50px]">
         <div className="max-w-screen-xl mx-auto flex flex-wrap justify-between space-y-8 md:space-y-0 gap-8">
           {/* Logo and Description */}
           <div className="flex-1 md:max-w-[40%]">
             <h1 className="text-lg font-semibold mb-5">LaunchPad</h1>
-            <p className="text-sm text-white">
+            <p className="text-sm text-[#212020]">
               This Portal is dedicated to bridging the information gap by
               providing an accessible platform that consolidates scholarships,
               government schemes, and job opportunities. Designed with a focus
@@ -21,19 +21,19 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Navigation</h4>
             <ul className="space-y-2">
               <li>
-                <a href="/" className="text-white hover:text-white">
+                <a href="/" className="text-black hover:text-white">
                   Home
                 </a>
               </li>
               <li>
-                <a href="/AllSchemes" className="text-white hover:text-white">
+                <a href="/AllSchemes" className="text-[#000000] hover:text-[#000000]">
                   Schemes
                 </a>
               </li>
               <li>
                 <a
                   href="/AllSchemes?tab=Job+Openings"
-                  className="text-white hover:text-white"
+                  className="text-[#000000] hover:text-[#000000]"
                 >
                   Job openings
                 </a>
@@ -41,7 +41,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/AllSchemes?tab=Scholarships"
-                  className="text-white hover:text-white"
+                  className="text-[#000000] hover:text-[#000000]"
                 >
                   Scholarships
                 </a>
@@ -49,7 +49,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/AllSchemes?tab=Saved"
-                  className="text-white hover:text-white"
+                  className="text-[#000000] hover:text-[#000000]"
                 >
                   Saved
                 </a>
@@ -62,14 +62,14 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Important Links</h4>
             <ul className="space-y-2">
               <li>
-                <a href="/faqs" className="text-white hover:text-white">
+                <a href="/faqs" className="text-[#000000] hover:text-[#000000]">
                   FAQ’s
                 </a>
               </li>
               <li>
                 <a
                   href="/privacy-policy"
-                  className="text-white hover:text-white"
+                  className="text-[#000000] hover:text-[#000000]"
                 >
                   Privacy Policy
                 </a>
@@ -77,7 +77,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/terms-conditions"
-                  className="text-white hover:text-white"
+                  className="text-[#000000] hover:text-[#000000]"
                 >
                   Terms and Conditions
                 </a>
@@ -88,13 +88,13 @@ const Footer = () => {
           {/* Contact Information and Social Media */}
           <div className="flex-1 md:max-w-[30%]">
             <h4 className="text-lg font-semibold mb-4">Get in Touch</h4>
-            <p className="text-sm text-white mb-2">
+            <p className="text-sm text-[#000000] mb-2">
               <strong>Address:</strong> 1234 Street Name, City, Country
             </p>
-            <p className="text-sm text-white mb-2">
+            <p className="text-sm text-[#000000] mb-2">
               <strong>Email Id:</strong> contact@launchpad.com
             </p>
-            <p className="text-sm text-white mb-4">
+            <p className="text-sm text-[#000000] mb-4">
               <strong>Phone No:</strong> +1 (234) 567-890
             </p>
 
@@ -204,7 +204,7 @@ const Footer = () => {
         </div>
 
         {/* Footer Bottom Text */}
-        <div className="mt-8 text-center text-sm text-white">
+        <div className="mt-8 text-center text-sm text-[#000000]">
           &copy; 2024 Launchpad. All Rights Reserved.
         </div>
       </footer>
