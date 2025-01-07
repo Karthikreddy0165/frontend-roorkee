@@ -185,10 +185,8 @@ const ProfileModal = ({ onClose }) => {
     fetchEmailData();
   }, [authState.token]);
 
-  useEffect(() => {
-
-    const filledFields = Object.values(profileData).filter((value) =>
-     value !== "").length;
+useEffect(() => {
+    const filledFields = Object.values(profileData).filter((value) =>typeof value === 'string' && value.trim() !== "").length;
 
     const percentage = Math.round((filledFields / fieldsCount) * 100);
     setProgress(percentage);
