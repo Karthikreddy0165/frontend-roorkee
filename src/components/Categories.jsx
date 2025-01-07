@@ -202,7 +202,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       setIsSavedModalOpen(true);
     }
   };
-  console.log(dataFromApi);
+  // console.log(dataFromApi);
 
   if (Object.keys(dataFromApi).length === 0) {
     return (

@@ -25,9 +25,7 @@ export default function App({ Component, pageProps }) {
                       {/* <RedirectHandler /> */}
                       <Component {...pageProps} />
                     </div>
-                    
-                  
-                    
+
                   </div>
                 </PrimeReactProvider>
               </FormProvider>

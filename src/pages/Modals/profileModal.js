@@ -186,6 +186,7 @@ const ProfileModal = ({ onClose }) => {
   }, [authState.token]);
 
   useEffect(() => {
+
     const filledFields = Object.values(profileData).filter((value) =>
      value !== "").length;
 
