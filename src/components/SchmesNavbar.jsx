@@ -418,6 +418,7 @@ const NavBarScheme = () => {
             </svg>
             Profile
           </button>
+          <FeedbackButton />
 
           <button
             className="w-full text-left p-3 text-[14px] hover:bg-[#EEEEFF] hover:border-l-[3px] hover:border-[#3431BB] flex items-center gap-2"
@@ -445,8 +446,6 @@ const NavBarScheme = () => {
             </svg>
             Logout
           </button>
-
-          <FeedbackButton />
 
           {/* Modal (Popup) for feedback */}
         </div>

@@ -10,7 +10,7 @@ import * as Yup from "yup";
 
 import { useFormData } from "@/Context/FormContext";
 import loginperson from "../assets/image.png";
-import AccCreatSucc from "@/utils/AccountCreated";  // Success component
+import AccCreatSucc from "@/utils/AccountCreated";
 
 const CreateAcc01 = () => {
   const router = useRouter();
@@ -19,16 +19,19 @@ const CreateAcc01 = () => {
   const [apiErrors, setApiErrors] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showSucc, setShowSucc] = useState(false);  // Use state instead of useRef
+  const [showSuccess, setShowSuccess] = useState(false); // State to control success screen
+
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email address").required("Email is required"),
-    password: Yup.string().min(8, "Password must be at least 8 characters").required("Password is required"),
+    password: Yup.string()
+      .min(8, "Password must be at least 8 characters")
+      .required("Password is required"),
   });
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      router.push("/app");
+      router.push("/App");
     }
   }, [router]);
 
@@ -73,11 +76,11 @@ const CreateAcc01 = () => {
 
         console.log("Login successful. Token received:", result.access);
 
-        // After successful login, show success message and navigate
-        setShowSucc(true);
+        // Show success message and redirect
+        setShowSuccess(true);
         setTimeout(() => {
-          setShowSucc(false);
-          router.push("/AllSchemes");  // Redirect after success
+          setShowSuccess(false);
+          router.push("/AllSchemes");
         }, 1500);
       }
     } catch (error) {
@@ -85,38 +88,113 @@ const CreateAcc01 = () => {
     }
   };
 
-  if (showSucc) {
-    return <AccCreatSucc />;  // Show success page
+  if (showSuccess) {
+    return <AccCreatSucc />;
   }
 
   return (
-    <div className="flex h-screen overflow-hidden -mb-6">
-      <div className="w-1/2 bg-[#FEF6F0] relative flex items-center justify-center">
-        {/* Background and content */}
-        <div className="absolute top-0 text-[#000] mt-20 ml-8 mr-8">
-          <h1 className="text-purple-400 font-inter italic font-bold text-3xl mb-4 w-[500px]">
-            “For the Indians by the Indians”
-          </h1>
-          <p className="text-[#000] font-inter text-[22px] text-base font-medium w-[500px] opacity-0.4">
-            Find all the details about government schemes, scholarships, and job openings for all states in one place.
-          </p>
+    <div className="flex h-screen overflow-hidden flex-col md:flex-row">
+       <div className="w-1/2 bg-[#FEF6F0] relative flex items-center justify-center">
+          <div className="absolute top-0 text-[#000] mt-20 ml-8 mr-8">
+            <h1 className="text-purple-400 font-inter italic font-bold text-3xl mb-4 w-[500px]">
+              “For the Indians by the Indians”
+            </h1>
+            <p className="text-[#000] font-inter text-[22px] text-base font-medium w-[500px] opacity-0.4">
+              Find all the details about government schemes, scholarships, and job
+              openings for all states in one place.
+            </p>
+
+            {/* bg div images */}
+            <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 opacity-5 bg-[#DF8317] ml-[530px] mt-[-150px] z-0"></div>
+
+            <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 rounded-[55px] bg-[rgba(223,131,23,0.2)] ml-[230px] mt-[300px] z-0"></div>
+
+            <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 opacity-5 bg-[#DF8317] rounded-[55px] ml-[-340px] mt-[500px] z-0"></div>
+
+            {/* <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 rounded-[55px] bg-[#DF8317]  ml-[-340px] mt-[500px] z-0"></div> */}
+
+
+
+
+            <div className="absolute w-[266px] h-auto p-[10.8px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] top-[305px] ml-[35px] ">
+              <p className="self-stretch text-[#000] mb-[5px] font-inter text-[9.452px] font-semibold leading-normal">
+                Opening for bank staff
+              </p>
+              <p className="self-stretch text-[#616161] font-inter text-[6.751px]  font-normal leading-normal underline">
+                Welfare Department
+              </p>
+            </div>
+          </div>
+
+          <div className="absolute w-[326px] p-[10.802px] items-center gap-[8.102px] rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] top-[450px] mr-[295px] ">
+            <div className="flex ">
+              <p className=" text-[10.584px] mb-[10px] font-semibold mr-12">
+                Adi Dravidar and Tribal Welfare Department
+              </p>
+              <CiBookmark/>
+            </div>
+            <p className="self-stretch text-[#616161] font-inter text-[8.274px] font-semibold leading-normal opacity-60 mb-[9.93px] line-clamp-2">
+              <span className="font-bold">Description:</span> Free education up to
+              12th Std. to all i.e. tuition fee will not be collected and the
+              amount will be reimbursed by the government
+            </p>
+            <p className="self-stretch text-[#616161] font-inter text-[8.274px] font-normal leading-normal opacity-60 mb-[10px] line-clamp-2 underline">
+              Welfare Department
+            </p>
+
+            <div className="flex mt-[-7px]">
+              <div className="flex items-center justify-center pr-2 pl-2 py-[5px] ml-[-15px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium scale-[.6]">
+                TamilNadu
+              </div>
+
+              <div className="flex items-center justify-center pr-2 pl-2 py-[5px] ml-[-20px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium scale-[.6]">
+                Student
+              </div>
+              <div className="flex items-center justify-center pr-2 pl-2 py-[5px] ml-[-15px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium scale-[.6]">
+                SC/ ST
+              </div>
+            </div>
+          </div>
+
+          <div className="absolute w-[266px] p-[7.919px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] bottom-[175px] mr-[270px] scale-[.8]">
+            <p className="self-stretch text-[#000] font-inter text-[8.929px] font-semibold leading-normal mb-[5.939px]">
+              Scholarships for female student
+            </p>
+            <p className="self-stretch text-[#616161] font-inter text-[6.649px] font-semibold leading-normal opacity-60 line-clamp-2">
+              <span className="font-bold">Description:</span> Free education upto
+              12th Std. to all i.e. tution fee will not be collected and the
+              amount will be reimbursed by government
+            </p>
+          </div>
+
+          <div className="absolute bottom-0 right-4 ">
+            <Image
+                className="z-10 image-opacity transform -scale-x-100"
+                src={loginperson}
+                alt="Login Person Image"
+                // width={360}
+                height={477}
+            />
+          </div>
         </div>
 
-        <div className="absolute bottom-0 right-4 ">
-          <Image className="z-10 image-opacity transform -scale-x-100" src={loginperson} alt="Login Person Image" height={477} />
-        </div>
-      </div>
 
-      <div className="relative w-1/2 flex items-center justify-center z-80 bg-white">
+      <div className="relative w-full h-screen md:w-1/2 flex items-center justify-center bg-white px-4 sm:px-8">
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={{
+            email: "",
+            password: "",
+          }}
           validationSchema={validationSchema}
           onSubmit={(values, { setSubmitting }) => {
             setIsLoading(true); // Start loading
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
-            const raw = JSON.stringify({ email: values.email, password: values.password });
+            const raw = JSON.stringify({
+              email: values.email,
+              password: values.password,
+            });
 
             const requestOptions = {
               method: "POST",
@@ -131,8 +209,8 @@ const CreateAcc01 = () => {
                 if (result.user) {
                   setApiErrors({ email: "", password: "" });
                   updateFormData(values);
-                  login(result.token, result.user);  // Update authState
-                  handleAfterLogin(values);  // Proceed with login
+                  login(result.token, result.user); // Update authState
+                  handleAfterLogin(values); // Call handleAfterLogin with the form values
                 } else {
                   console.error(result);
                   setApiErrors({
@@ -149,26 +227,25 @@ const CreateAcc01 = () => {
               })
               .finally(() => {
                 setSubmitting(false);
-                setIsLoading(false);  // Stop loading
+                setIsLoading(false); // Stop loading
               });
           }}
         >
           {(formik) => {
             let errorMessage = getErrorMessage(formik.errors, apiErrors);
 
-            // Handle specific error case
+            // Check for specific error messages and modify them
             if (errorMessage.includes("This password is too common.") && errorMessage.includes("This password is entirely numeric.")) {
               errorMessage = "This password is too common. This password is entirely numeric.";
             }
 
             return (
-              <form className="w-full h-full ml-20 mr-24 relative mt-60" onSubmit={formik.handleSubmit}>
+              <form className="w-full max-w-md space-y-6" onSubmit={formik.handleSubmit}>
                 <button type="button" className="flex gap-[8px] mb-[24px]" onClick={() => router.back()}>
-                  <FaArrowLeftLong className="mt-1"/>
+                  <FaArrowLeftLong className="mt-1" />
                   Back
                 </button>
                 <h1 className="text-2xl font-bold mb-[32px]">Create an Account</h1>
-
                 <div>
                   <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                     Email Id
@@ -183,7 +260,6 @@ const CreateAcc01 = () => {
                     value={formik.values.email.toLowerCase()}
                   />
                 </div>
-
                 <div className="relative mt-6">
                   <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                     Password

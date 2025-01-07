@@ -32,8 +32,10 @@ const PreferencesModal = () => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-[#3431BB] bg-opacity-10 z-50">
-      <div className="bg-white rounded-lg w-[90%] sm:w-[720px] h-[90%] sm:h-[750px] p-6 flex flex-col items-start flex-shrink-0 relative overflow-y-auto">
+/* Inside your modal container */
+<div className="fixed inset-0 flex items-center justify-center bg-[#3431BB] bg-opacity-10 z-50 h-screen">
+  <div className="bg-white rounded-lg w-[90%] sm:w-[720px] max-h-[90vh] overflow-y-auto p-6 flex flex-col items-start relative">
+
         {/* Header */}
         <div className="flex justify-between items-center mb-2 -mt-2 w-full">
           <h2 className="text-2xl font-semibold text-[#0A0A0A]">

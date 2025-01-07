@@ -10,14 +10,16 @@ const FAQSection = () => {
   };
 
   const renderHeader = (title, isExpanded) => (
-    <div className="flex items-center justify-between w-full rounded-lg cursor-pointer py-3 px-4">
+    <div className="flex items-center justify-between w-full rounded-lg cursor-pointer py-3 px-4 ">
       <span className="text-black font-inter text-base font-normal leading-normal">{title}</span>
-      {/* {isExpanded ? <FaMinus className="text-black text-sm" /> : <FaPlus className="text-black text-sm" />} */}
+
     </div>
   );
 
   return (
-    <div className="flex flex-col items-center sm:w-full w-[482px] bg-gradient-to-b sm:p-10 mt-[32px] sm:p-12">
+
+    <div className="flex flex-col items-center  bg-gradient-to-b sm:p-10 mt-[32px] sm:p-12">
+
       <div className="self-stretch flex justify-center">
         <h1 className="text-black text-center font-inter text-2xl font-semibold leading-[150%] mb-6">
           Frequently Asked Questions

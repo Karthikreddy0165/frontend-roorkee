@@ -1,13 +1,15 @@
-import ProfileModal from "@/pages/Modals/profileModal";
-
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
+
 import {IoMdClose } from "react-icons/io"; // For menu icon in mobile
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "@/Context/AuthContext";
-import FeedBack from "./feedBack";
+import { IoIosPerson } from "react-icons/io";
+import { CgProfile } from "react-icons/cg";
+import ProfileModal from "../pages/Modals/profileModal";
 
 const NavBar = () => {
   const router = useRouter();
@@ -18,9 +20,6 @@ const NavBar = () => {
 
   const handleGotologin = () => {
     router.push("/login");
-  };
-  const handleFeedBack = () => {
-    router.push("/feedBack");
   };
 
   const handleClickLogo = () => {
@@ -53,7 +52,7 @@ const NavBar = () => {
   return (
     <div>
       {/* Navbar Container */}
-      <div className="flex justify-between items-center py-2 px-6 bg-white shadow-md z-10 relative sm:h-14 gap-2 w-[482px] sm:w-full">
+      <div className="flex justify-between items-center py-2 px-6 bg-white shadow-md z-10 relative sm:h-14 gap-2 sm:w-full w-[482px]">
         <svg
           width="40"
           height="40"
@@ -102,16 +101,23 @@ const NavBar = () => {
           LAUNCHPAD
         </div>
 
-        {/* Profile or Login Section */}
         <div className="flex gap-4 items-center ml-auto">
           {authState.token ? (
             <div className="relative">
-              {/* Profile Button */}
+              {/* Profile Button for Desktop */}
               <button
                 className="flex items-center px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 hidden md:flex"
                 onClick={toggleDropdown}
               >
                 Profile <IoIosArrowDown className="ml-2" />
+              </button>
+
+              {/* Profile Button for Mobile */}
+              <button
+                className="flex items-center px-4 py-2   text-gray-500 text-[35px] font-semibold rounded-lg  md:hidden"
+                onClick={toggleDropdown}
+              >
+                <CgProfile />{" "}
               </button>
 
               {/* Dropdown Menu */}
@@ -126,7 +132,6 @@ const NavBar = () => {
                         My Profile
                       </button>
                     </li>
-                    {/* <hr /> */}
                     <li>
                       <button
                         className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left hover:rounded-b-lg"
@@ -143,7 +148,7 @@ const NavBar = () => {
             <div>
               {/* Login Button */}
               <button
-                className="px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700  hidden sm:block"
+                className="px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 hidden sm:block"
                 onClick={handleGotologin}
               >
                 Login
@@ -151,54 +156,12 @@ const NavBar = () => {
             </div>
           )}
         </div>
+
+        {/* Profile Modal (Visible only on mobile) */}
+        {isProfileModalOpen && ProfileModal && (
+          <ProfileModal onClose={closeProfileModal} />
+        )}
       </div>
-
-      {/* Profile Modal (Visible only on mobile) */}
-      {isProfileModalOpen && ProfileModal && (
-        <ProfileModal onClose={closeProfileModal} />
-      )}
-
-      {/* Sidebar for Mobile */}
-      {isSidebarOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-20">
-          <div className="bg-white w-64 p-6 absolute top-0 right-0 h-full">
-            <button className="text-2xl text-gray-700" onClick={toggleSidebar}>
-              <IoMdClose />
-            </button>
-            <ul className="mt-8">
-              {authState.token ? (
-                <>
-                  <li>
-                    <button
-                      className="block py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left"
-                      onClick={() => handleOptionClick("MyProfile")}
-                    >
-                      My Profile
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      className="block py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left"
-                      onClick={() => handleOptionClick("Logout")}
-                    >
-                      Log Out
-                    </button>
-                  </li>
-                </>
-              ) : (
-                <li>
-                  <button
-                    className="block py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left"
-                    onClick={handleGotologin}
-                  >
-                    Login
-                  </button>
-                </li>
-              )}
-            </ul>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
