@@ -29,7 +29,6 @@ export default function App({ Component, pageProps }) {
                   <div className="w-full mb-auto">
                   <Footer />
                   </div>
-                    
                   </div>
                 </PrimeReactProvider>
               </FormProvider>
