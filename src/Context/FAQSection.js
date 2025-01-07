@@ -26,13 +26,13 @@ const FAQSection = () => {
         </h1>
       </div>
       <Accordion
-        className="mt-4 w-full max-w-4xl mx-auto"
+        className="mt-4 w-full sm:w-full max-w-4xl mx-auto"
         activeIndex={activeIndex}
         onTabChange={handleTabChange}
       >
         <AccordionTab header={renderHeader("What is the product name?", activeIndex === 0)}>
           <div className="p-4 sm:p-6">
-            <p>
+            <p className="mx-auto">
               The product is an all-inclusive platform that provides tailored information on various government schemes, job opportunities, and scholarships for individuals across India.
             </p>
           </div>

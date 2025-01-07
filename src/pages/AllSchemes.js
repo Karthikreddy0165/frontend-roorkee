@@ -9,6 +9,7 @@ import BeneficiariesDropdown from "@/components/Dropdowns/BeneficiariesDropdown"
 import FilterContext from "@/Context/FilterContext";
 import SchemeVerifiedStatus from "@/components/SchemeEmailVerification";
 import img from '../assets/img.png';
+import Footer from "@/components/Footer";
 
 const SchemesAll = () => {
   const {
@@ -90,10 +91,10 @@ const SchemesAll = () => {
   };
 
   return (
-    <>
+    <div>
       <NavBarScheme />
       <SchemeVerifiedStatus />
-
+  
       {/* Banner Image */}
       <div className="relative max-w-[90%] mx-auto mb-[16px] sm:mb-8 mt-2">
         <div className="relative w-full">
@@ -107,7 +108,7 @@ const SchemesAll = () => {
           />
         </div>
       </div>
-
+  
       <div className="max-w-[90%] mx-auto flex flex-col md:flex-row">
         {/* Filters Section */}
         <div className="flex-1 md:max-w-[25%] p-4 md:mr-2 order-2 md:order-1 hidden md:block">
@@ -123,7 +124,7 @@ const SchemesAll = () => {
             </div>
             <hr />
           </div>
-
+  
           {/* Only show these dropdowns on larger screens, hide on mobile */}
           <div className="hidden md:block">
             {/* Sponsored By Dropdown */}
@@ -139,7 +140,7 @@ const SchemesAll = () => {
               )}
             </div>
             {dropDownStates.sponsoredOpen && <SponsorsDropdownMenu />}
-
+  
             {/* Department Dropdown */}
             {isDepartmentVisible && (
               <div
@@ -156,7 +157,7 @@ const SchemesAll = () => {
             )}
             {isDepartmentVisible &&
               dropDownStates.departmentOpen && <DepartmentDropdownMenu />}
-
+  
             {/* Beneficiaries Dropdown */}
             {isBeneficiaryVisible && (
               <div
@@ -175,13 +176,16 @@ const SchemesAll = () => {
               dropDownStates.beneficiaryOpen && <BeneficiariesDropdown />}
           </div>
         </div>
-
+  
         {/* Tabs Section */}
         <div className="flex-1 md:max-w-[75%] order-1 md:order-2">
           <Tabs />
         </div>
       </div>
-
+      <div className="mt-[100px]">
+      <Footer/>
+      </div>
+  
       {/* Mobile Filter Button */}
       <div className="md:hidden fixed bottom-4 right-4 z-50">
         <button
@@ -192,6 +196,7 @@ const SchemesAll = () => {
         </button>
       </div>
 
+  
       {/* Filter Modal (Mobile only) */}
       {isFilterModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -219,7 +224,7 @@ const SchemesAll = () => {
                 )}
               </div>
               {dropDownStates.sponsoredOpen && <SponsorsDropdownMenu />}
-
+  
               {/* Department Dropdown */}
               {isDepartmentVisible && (
                 <div
@@ -236,7 +241,7 @@ const SchemesAll = () => {
               )}
               {isDepartmentVisible &&
                 dropDownStates.departmentOpen && <DepartmentDropdownMenu />}
-
+  
               {/* Beneficiaries Dropdown */}
               {isBeneficiaryVisible && (
                 <div
@@ -254,7 +259,7 @@ const SchemesAll = () => {
               {isBeneficiaryVisible &&
                 dropDownStates.beneficiaryOpen && <BeneficiariesDropdown />}
             </div>
-
+  
             {/* Clear All Filters Button */}
             <div className="mt-4">
               <button
@@ -265,10 +270,12 @@ const SchemesAll = () => {
               </button>
             </div>
           </div>
+     
         </div>
       )}
-    </>
+    </div>
   );
+  
 };
 
 export default SchemesAll;
