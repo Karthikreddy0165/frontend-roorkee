@@ -34,7 +34,7 @@ const App = () => {
   }
 
   const handleClickFindrightSchemeForYOu = () => {
-    router.push("/Modals/PreferencesModal");
+    router.push("/AllSchemes");
   };
 
   const handleSchemesClick = () => {
@@ -267,29 +267,29 @@ const App = () => {
               >
                 {/* SCHEMES */}
                 <div
-                  className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
+                  className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:bg-[#3431BB] hover:text-white hover:cursor-pointer flex flex-col justify-center items-center"
                   onClick={handleSchemesClick}
                 >
-                  <p className="text-xs sm:text-base text-center text-[#3330BA] hover:text-white">SCHEMES</p>
+                  <p className="text-xs sm:text-base text-center hover:text-white">SCHEMES</p>
                   <PiNotepadBold className="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
                 </div>
 
                 {/* JOBS */}
                 <div
-                  className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
+                  className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
                   onClick={handleJobsClick}
                 >
-                  <p className="text-xs sm:text-base text-center text-[#3330BA] hover:text-white">JOBS</p>
+                  <p className="text-xs sm:text-base text-center hover:text-white">JOBS</p>
                   <FaBriefcase className="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
                 </div>
 
                 {/* SCHOLARSHIPS */}
                 <div
-                  className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
+                  className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
                   onClick={handleScholarshipsClick}
                 >
-                  <p className="text-xs sm:text-base text-center text-[#3330BA] hover:text-white">SCHOLARSHIPS</p>
-                  <FaGraduationCap className="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
+                  <p className="text-xs sm:text-base text-center  hover:text-white">SCHOLARSHIPS</p>
+                  <FaGraduationCap className="opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
                 </div>
               </div>
 
