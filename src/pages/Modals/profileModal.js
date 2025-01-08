@@ -218,7 +218,7 @@ useEffect(() => {
           ...requestOptions,
           body: JSON.stringify({
             name: profileData.name,
-            gender: profileData.gender,
+            gender: profileData.gender || 0,
             age: profileData.age,
             category: profileData.community,
             state_of_residence: profileData.state,
