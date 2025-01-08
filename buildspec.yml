@@ -3,7 +3,7 @@ version: 0.2
 env:
   variables:
     ENVIRONMENT: ${ENVIRONMENT}
-
+    NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL}
 phases:
   pre_build:
     commands:
@@ -14,19 +14,15 @@ phases:
 
   build:
     commands:
-      - echo Fetching Git commit hash...
-      - GIT_COMMIT_HASH=$(git rev-parse HEAD)
       - echo Building Docker image...
-      - echo $IMAGE_REPO_NAME:$GIT_COMMIT_HASH
-      - docker build -t ${IMAGE_REPO_NAME}:${GIT_COMMIT_HASH} .
-      - IMAGE_URI="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$GIT_COMMIT_HASH"
-      - IMAGE_URI=$(echo ${IMAGE_URI} | tr -d '[:space:]')
-      - docker tag ${IMAGE_REPO_NAME}:${GIT_COMMIT_HASH} ${IMAGE_URI}
+      - docker build -t $IMAGE_REPO_NAME:latest .
+      - echo Tagging Docker image as 'latest'...
+      - docker tag $IMAGE_REPO_NAME:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
 
   post_build:
     commands:
       - echo Pushing Docker image to ECR...
-      - docker push ${IMAGE_URI}
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest
 
 artifacts:
   files:
