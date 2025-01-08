@@ -59,17 +59,17 @@ const App = () => {
       <VerifiedStatus />
       
 
-      <div className="sm:w-full w-[482px] mx-auto">
+      <div className="sm:w-full  mx-auto">
         {/* Main Container */}
-        <div className=" p-[50px_0] mx-auto">
+        <div className=" p-[40px_0] mx-auto">
           {/* First Row */}
           <div className="flex flex-col items-center lg:flex-row justify-center gap-8 p-4">
             {/* Left Div */}
             <div className="flex flex-col w-full lg:w-[482px]  items-start gap-[20px] lg:text-left">
-              <h1 className="text-[#3F3BE1] font-inter text-[1.5rem] lg:text-[40px] font-semibold">
+              <h1 className="text-[#3F3BE1] font-inter text-[20px] lg:text-[40px] font-semibold">
                 Empowering the marginalized community
               </h1>
-              <p className="text-[#424242]  text-[16px] font-start leading-[180%]">
+              <p className="text-[#000000]  sm:text-[16px] text-[14px] font-start leading-[180%]">
                 Helping all communities across India find personalized schemes, jobs, and scholarships based on eligibility.
               </p>
 
@@ -89,30 +89,30 @@ const App = () => {
                 </button>
               )}
 
-            <div className="hidden sm:flex w-full max-w-[472px] h-auto items-center gap-[40px] sm:justify-between sm:flex-row">
-              <div className="flex flex-col justify-center items-center flex-1 border-r-[1px] border-[#EDEDED] sm:border-r">
-                <div className="text-center text-[#000] font-inter text-[14px] font-semibold">
-                  Thousands of schemes
-                </div>
-              </div>
-              <div className="flex flex-col justify-center items-center flex-1 border-r-[1px] border-[#EDEDED] sm:border-r">
-                <div className="text-center text-[#000] font-inter text-[14px] font-semibold">
-                  Hundred+ job postings
-                </div>
-              </div>
-              <div className="flex flex-col justify-center items-center flex-1 sm:border-none">
-                <div className="text-center text-[#000] font-inter text-[14px] font-semibold">
-                  Multiple scholarships
-                </div>
-              </div>
-            </div>
+<div className=" flex flex-row w-full h-auto items-center sm:items-start gap-4 sm:gap-8 p-6 md:p-8 rounded-[16px] justify-between shadow-lg">
+  <div className="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4">
+    Thousands of schemes
+  </div>
+
+  <div className="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4">
+    100+ job postings
+  </div>
+
+  <div className="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold pb-4 sm:pb-0">
+    Multiple scholarships
+  </div>
+</div>
+
+
+
+
 
 
 
             </div>
 
             {/* Right Div */}
-            <div className="w-[482px] h-[300px] mr-[30px] mb-[20px]">
+            <div className="w-[482px] h-[300px] mr-[30px] mb-[20px] sm:block hidden">
               {/* Right Modals here */}
               <Image
                 className="relative h-[334px] w-[258px] rounded-tl-[10rem] -right-[190px] pb-8"
@@ -137,7 +137,7 @@ const App = () => {
             </div>
             {authState.token ? (
                 <button
-                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center  gap-[20px] rounded-[8px] bg-[#3431BB] text-white mt-[12px] hover:bg-blue-700 block sm:hidden"
+                  className="flex h-[44px] px-[17px] py-[13px] justify-center items-center text-[16px]  gap-[20px] rounded-[8px] bg-[#3431BB] text-white mt-[12px] hover:bg-blue-700 block sm:hidden"
                   onClick={handleClickAfterLogin}
                 >
                   My Schemes
@@ -151,47 +151,31 @@ const App = () => {
                 </button>
               )}
 
-              <div className="flex w-[472px] h-[59px] items-start gap-[40px]  block sm:hidden">
-                <div className="flex flex-col justify-center items-start  flex-1 border-r-[1px] border-[#EDEDED]">
-                  <div className="text-center text-[#000] font-inter text-[14px] font-semibold">
-                    Thousands of schemes
-                  </div>
-                </div>
-                <div className="flex flex-col justify-center items-start  flex-1 border-r-[1px] border-[#EDEDED]">
-                  <div className="text-center text-[#000] font-inter text-[14px] font-semibold">
-                    Hundred+ job posting
-                  </div>
-                </div>
-                <div className="flex flex-col justify-center items-start  flex-1">
-                  <div className="text-center text-[#000] font-inter text-[14px] font-semibold">
-                    Multiple scholarships
-                  </div>
-                </div>
-              </div>
+            
 
           </div>
         </div>
 
           {/* Second Row */}
-        <div className="flex flex-col items-center w-full bg-gradient-to-b from-white to-[#FBFBFE] mt-[16px]">
+        <div className="flex flex-col items-center w-full bg-gradient-to-b from-white to-[#FBFBFE] sm:mt-[40px]">
             <div className="self-stretch flex justify-center">
-              <p className="text-center text-[#3431BB] font-semibold text-[16px] font-normal leading-normal">
+              <p className="text-center text-[#3431BB] font-semibold text-[18px] font-normal leading-normal">
                 HOW IT WORKS
               </p>
             </div>
             <div className="self-stretch flex justify-center mt-4">
-              <h1 className="text-center text-black font-inter text-[24px] font-semibold leading-[150%]">
+              <h1 className="text-center text-black font-inter text-[16px] sm:text-[24px] font-semibold leading-[150%]">
                 Easy and Simple steps to find right resource
               </h1>
             </div>
 
-            <div className="steps grid gap-4 sm:grid-cols-1 lg:grid-cols-3 items-center mt-4">
+            <div className="steps grid gap-[40px] sm:grid-cols-1 lg:grid-cols-3 items-center mt-[40px]">
            {/* Step 1 */}
-                <div className="flex flex-col gap-4  lg:items-start">
+                <div className="flex flex-col gap-4  lg:items-start sm:h-full sm:w-full">
                   <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
                     Step 1
                   </p>
-                  <div className="flex h-[160px] w-[318px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[8px] border border-[#3F3BE1] p-4">
+                  <div className="flex sm:h-[160px] sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px] border border-[#3F3BE1] p-4">
                     <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-[#3F3BE1] bg-opacity-[10%]">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-list-check">
                       <path d="M11 18H3"/>
@@ -211,7 +195,7 @@ const App = () => {
                   <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
                     Step 2
                   </p>
-                  <div className="flex h-[160px] w-full lg:w-[318px] justify-center items-center gap-4 rounded-[8px] border border-[#3F3BE1] p-4">
+                  <div className="flex sm:h-[160px] sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px] border border-[#3F3BE1] p-4">
                     <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-[#3F3BE1] bg-opacity-[10%]">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>      </div>
                     <div className="text-[#424242] text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
@@ -225,7 +209,7 @@ const App = () => {
                   <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
                     Step 3
                   </p>
-                  <div className="flex h-[160px] w-full lg:w-[318px] justify-center items-center gap-4 rounded-[8px] border border-[#3F3BE1] p-4">
+                  <div className="flex sm:h-[160px] sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px] border border-[#3F3BE1] p-4">
                     <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-[#3F3BE1] bg-opacity-[10%]">
                       <HiOutlineClipboardDocumentList className="h-[31.5px] w-[31.5px]" />
                     </div>
@@ -238,7 +222,7 @@ const App = () => {
 
             <div className="self-stretch flex justify-center mt-8 ">
               <button
-                className="text-center text-white font-inter text-[16px] font-normal leading-normal bg-[#3431BB] pt-[10px] pr-[44px] pb-[10px] pl-[44px] rounded-[8px] hover:bg-blue-700"
+                className="text-center text-white font-inter text-[16px] font-normal leading-normal bg-[#3431BB] pt-[10px] pr-[9px] sm:pr-[44px] pb-[10px] pl-[9px] sm:pl-[44px] rounded-[4px] hover:bg-blue-700"
                 onClick={handleClickFindrightSchemeForYOu}
               >
                 Find the Right scheme for me
@@ -248,18 +232,20 @@ const App = () => {
           </div>
           {/* Third row */}
           <div
-              className=""
-              style={{
-                marginTop: "3vw",
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
+  className=""
+  style={{
+    marginTop: "3vw",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    margin: "auto",
+    padding: "20px", 
+  }}
+>
               <div className="flex justify-center mt-[16px] sm:mt-[32px]">
-                <h1 className="font-semibold relative sm:text-3xl text-xl text-center ">
-                  Discover Opportunities Below
+                <h1 className="font-semibold relative sm:text-3xl text-[#000000]  text-center text-[16px]">
+                One solution for all information for social inclusion
                 </h1>
               </div>
 
@@ -299,9 +285,9 @@ const App = () => {
               
               <div className="relative flex flex-col lg:flex-row justify-between gap-6 mt-[32px] px-6 sm:mt-[100px] mx-auto">
                 {/* Mission Section */}
-                <div className=" flex flex-col gap-2 p-6 border border-[#3F3BE1] rounded-lg h-[250px] sm:w-[550px] sm:h-[266px]  relative">
-                  <p className="font-semibold text-lg lg:text-left">Mission</p>
-                  <p className="text-[#616161] lg:text-left">
+                <div className=" flex flex-col gap-2 p-6 border-[0.3px] border-[#000000] rounded-lg h-[250px] sm:w-[550px] sm:h-[266px]  relative">
+                  <p className="font-semibold text-lg lg:text-left text-[16px] sm:text-[20px]">Mission</p>
+                  <p className="text-[#616161] lg:text-left text-[14px] sm:text-[16px]">
                     Spread the feeling of harmony and build a strong, discrimination-free nation.
                   </p>
                   <div className="absolute bottom-4 right-4 text-4xl sm:text-3xl md:text-4xl lg:text-4xl text-gray-400">
@@ -312,9 +298,9 @@ const App = () => {
                 </div>
 
                 {/* Vision Section */}
-                <div className="flex flex-col gap-2 p-6 border border-[#3F3BE1] rounded-lg sm:w-[550px] sm:h-[266px]  h-[250px] relative">
-                  <p className="font-semibold text-lg lg:text-left">Vision</p>
-                  <p className="text-[#616161] lg:text-left">
+                <div className="flex flex-col gap-2 p-6 border-[0.3px] border-[#000000] rounded-lg sm:w-[550px] sm:h-[266px]  h-[250px] relative">
+                  <p className="font-semibold text-lg lg:text-left text-[16px] sm:text-[20px]">Vision</p>
+                  <p className="text-[#616161] lg:text-left text-[14px] sm:text-[16px]">
                     To be a significant contributor in the building of a discrimination-free and harmonious society.
                   </p>
                   <div className="absolute bottom-4 right-4 ">
@@ -329,27 +315,40 @@ const App = () => {
 
               {/* Values Section - New Row, Full Width */}
               <div className="mt-8 p-6">
-              <div className="flex flex-col gap-2 p-4 sm:p-6 border h-[350px] border-[#3F3BE1] rounded-lg w-full sm:w-[550px] lg:w-[1130px]  sm:h-[250px] relative">
-                <p className="font-semibold text-lg">Our Values</p>
-                <p className="text-[#616161]">1. Commitment to the Ideology.</p>
-                <p className="text-[#616161]">2. Positivity in every action.</p>
-                <p className="text-[#616161]">3. Transparency in all the activities.</p>
-                <p className="text-[#616161]">4. Being unbiased in our studies and research.</p>
-                <p className="text-[#616161]">5. Meaningful contribution in eradicating the feeling of inequality.</p>
+              <div className="flex flex-col gap-2 p-6 border-[0.3px] h-[350px] border-[#000000] rounded-lg w-full sm:w-[550px] lg:w-[1130px]  sm:h-[250px] relative">
+                <p className="font-semibold text-[16px] text-[20px]">Our Values</p>
+                <p className="text-[#616161] text-[14px] sm:text-[16px]">1. Commitment to the Ideology.</p>
+                <p className="text-[#616161] text-[14px] sm:text-[16px]">2. Positivity in every action.</p>
+                <p className="text-[#616161] text-[14px] sm:text-[16px]">3. Transparency in all the activities.</p>
+                <p className="text-[#616161] text-[14px] sm:text-[16px]">4. Being unbiased in our studies and research.</p>
+                <p className="text-[#616161] text-[14px] sm:text-[16px]">5. Meaningful contribution in eradicating the feeling of inequality.</p>
 
 
 
-                  <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 lg:bottom-6 lg:right-6 text-2xl sm:text-3xl lg:text-4xl text-gray-400" >
+                  <div className="absolute bottom-[10px] right-2 sm:bottom-4 sm:right-4 lg:bottom-6 lg:right-6 text-2xl sm:text-3xl lg:text-4xl text-gray-400" >
                   <svg width="100" height="100" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M34.5982 17.0726C34.1984 16.3537 33.5502 15.8388 32.773 15.6226C31.9958 15.4065 31.1864 15.516 30.4937 15.9311L22.2953 20.843C22.1992 19.4469 21.2695 18.1994 19.8962 17.8115L10.7452 15.2267C10.7216 15.22 10.6975 15.215 10.6731 15.2117C9.31092 15.0246 8.06751 15.3691 6.97734 16.2357L4.44907 18.2449L4.31991 17.7449C4.28314 17.6013 4.21931 17.4667 4.13211 17.349C4.04491 17.2312 3.93607 17.1325 3.81189 17.0586C3.68817 16.9839 3.55141 16.9354 3.40952 16.916C3.26763 16.8965 3.12342 16.9063 2.98523 16.945L0.807837 17.5504C0.227409 17.7119 -0.118254 18.3333 0.0372496 18.9357L3.19392 31.1613C3.23068 31.3049 3.29451 31.4395 3.38173 31.5573C3.46894 31.6751 3.57781 31.7737 3.70202 31.8476C3.86722 31.9472 4.05486 31.9998 4.24594 32C4.3403 32 4.4352 31.9871 4.52867 31.9612L6.706 31.3558C7.28643 31.1943 7.63209 30.573 7.47658 29.9706L7.34318 29.4539C8.67374 28.4056 9.89341 28.1086 11.3759 28.4614L16.6174 29.7084C17.077 29.8177 17.5189 29.8726 17.9457 29.8726C18.8163 29.8726 19.6242 29.6444 20.3906 29.1853L33.4984 21.3319C34.933 20.4724 35.4263 18.5616 34.5982 17.0726ZM4.25239 30.8584L1.0999 18.649L3.26145 18.0479L6.41393 30.2573L4.25239 30.8584ZM32.9494 20.345L19.8416 28.1985C18.9509 28.7322 17.9764 28.8629 16.8628 28.5978L11.6213 27.3508C9.94728 26.9526 8.50836 27.2381 7.03931 28.2771L4.75651 19.4358L7.64492 17.1402C8.49806 16.462 9.43012 16.1988 10.4935 16.3365L19.6078 18.9109C20.761 19.2367 21.4438 20.4754 21.13 21.6721C20.8161 22.8687 19.6229 23.5773 18.4694 23.2517L13.5812 21.871C13.4408 21.8314 13.2909 21.8513 13.1645 21.9263C13.0382 22.0013 12.9457 22.1253 12.9074 22.2711C12.8885 22.3433 12.8834 22.4186 12.8925 22.4929C12.9016 22.5671 12.9248 22.6387 12.9606 22.7036C12.9964 22.7686 13.0441 22.8256 13.1012 22.8714C13.1582 22.9171 13.2234 22.9508 13.2929 22.9704L18.1811 24.3511C18.4603 24.4302 18.7483 24.4703 19.0377 24.4704C20.3736 24.4704 21.6081 23.6115 22.0924 22.2802L31.0427 16.9178C31.4814 16.655 31.9947 16.5858 32.4888 16.7231C32.9826 16.8605 33.394 17.1868 33.6472 17.642C34.1728 18.5871 33.8598 19.7997 32.9494 20.345ZM7.50458 12.3728H15.1841C15.0904 12.803 15.0429 13.2427 15.0426 13.6838C15.0426 13.8349 15.1004 13.9798 15.2034 14.0867C15.3064 14.1935 15.446 14.2536 15.5916 14.2536H25.9952C26.1409 14.2536 26.2805 14.1935 26.3834 14.0867C26.4864 13.9798 26.5442 13.8349 26.5442 13.6838C26.5442 13.2333 26.4943 12.795 26.4027 12.3728H34.0823C34.2279 12.3728 34.3675 12.3128 34.4705 12.2059C34.5734 12.0991 34.6313 11.9542 34.6313 11.8031C34.6313 9.26779 33.0993 7.09812 30.946 6.23491C31.7333 5.5961 32.2409 4.60235 32.2409 3.48731C32.2409 1.56441 30.7333 0 28.8804 0C27.0274 0 25.52 1.56441 25.52 3.48731C25.52 4.60377 26.0287 5.59859 26.8176 6.23733C25.6455 6.70892 24.6357 7.57334 23.9675 8.7106C23.62 8.47107 23.2483 8.2716 22.859 8.11573C23.6462 7.47692 24.1538 6.48317 24.1538 5.36813C24.1538 3.44523 22.6463 1.88082 20.7934 1.88082C18.9404 1.88082 17.4329 3.44523 17.4329 5.36813C17.4329 6.48317 17.9404 7.47692 18.7277 8.11573C18.3385 8.27163 17.9668 8.4711 17.6192 8.7106C16.9511 7.57327 15.9412 6.70892 14.7691 6.23726C15.558 5.59852 16.0668 4.6037 16.0668 3.48731C16.0668 1.56441 14.5593 0 12.7063 0C10.8534 0 9.34599 1.56434 9.34599 3.48724C9.34599 4.60235 9.85354 5.59603 10.6407 6.23484C8.48756 7.09805 6.95559 9.26772 6.95559 11.803C6.95558 11.8778 6.96977 11.9519 6.99736 12.0211C7.02494 12.0902 7.06538 12.153 7.11636 12.2059C7.16734 12.2588 7.22786 12.3008 7.29448 12.3294C7.36109 12.3581 7.43248 12.3728 7.50458 12.3728ZM26.6179 3.48724C26.6179 2.1926 27.6328 1.13939 28.8803 1.13939C30.1278 1.13939 31.1428 2.19268 31.1428 3.48724C31.1428 4.78181 30.1278 5.8351 28.8803 5.8351C27.6328 5.8351 26.6179 4.78188 26.6179 3.48724ZM28.8803 6.97456C31.2602 6.97456 33.2285 8.83836 33.501 11.2334H26.035C25.7427 10.563 25.334 9.95416 24.8292 9.43743C25.6524 7.92914 27.2018 6.97456 28.8803 6.97456ZM18.5309 5.36799C18.5309 4.07335 19.5459 3.02014 20.7934 3.02014C22.041 3.02014 23.0558 4.07342 23.0558 5.36799C23.0558 6.66256 22.041 7.71585 20.7934 7.71585C19.5459 7.71585 18.5309 6.66263 18.5309 5.36799ZM25.414 13.1141H16.1727C16.4452 10.7192 18.4134 8.85531 20.7934 8.85531C23.1733 8.85531 25.1416 10.7192 25.414 13.1141ZM12.7064 1.13939C13.9539 1.13939 14.9688 2.19268 14.9688 3.48724C14.9688 4.78181 13.9539 5.8351 12.7064 5.8351C11.4589 5.8351 10.444 4.78188 10.444 3.48724C10.444 2.1926 11.4589 1.13939 12.7064 1.13939ZM12.7065 6.97456C14.385 6.97456 15.9344 7.92914 16.7575 9.43743C16.2528 9.95417 15.844 10.563 15.5518 11.2334H8.08577C8.35821 8.83836 10.3266 6.97456 12.7065 6.97456Z" fill="black"/>
               </svg>
 
                   </div>
+                 
                 </div>
-                <FAQSection/>
+
+               
+             
+               
               </div>
 
+              
+
           </div>
+          <div className="sm:px-[200px] mx-auto top-0 px-[40px] ">
+          <FAQSection/>
+          </div>
+
+         
+
+   
 
 
           <Footer/>

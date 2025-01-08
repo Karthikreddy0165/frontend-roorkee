@@ -33,7 +33,7 @@ export default function Tabs() {
   };
 
   const getButtonClass = (tabName) => {
-    return `flex-grow text-center font-sm p-[12px] rounded-t-[8px] text-semibold text-[14px] cursor-pointer font-sans ${
+    return `flex-grow text-center font-sm p-[12px] rounded-t-[8px] text-semibold text-[14px] cursor-pointer font-sans  ${
       activeTab === tabName
         ? "bg-[#EEEEFF] border-b-[3px] border-[#3431BB]"
         : "hover:bg-[#EEEEFF] hover:border-b-[3px] hover:border-[#3431BB]"
@@ -46,7 +46,7 @@ export default function Tabs() {
       <SelectedFilters />
 
       {/* Tabs for Larger Screens */}
-      <div className="hidden sm:flex justify-center items-center gap-[15px]">
+      <div className="hidden sm:flex justify-center items-center gap-[15px] border-b">
         <button
           className={getButtonClass("Schemes")}
           onClick={() => handleTabClick("Schemes")}

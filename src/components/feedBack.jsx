@@ -162,6 +162,22 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
   );
 };
 
+export const FeedbackButtonFooter = () => {
+  const [isModalOpen, setModalOpen] = useState(false);
+  return (
+    <>
+      <button className="text-lg" onClick={() => setModalOpen(true)}>
+        Feedback
+      </button>
+      ;
+      <FeedbackModal
+        isOpen={isModalOpen}
+        onRequestClose={() => setModalOpen(false)}
+      />
+    </>
+  );
+};
+
 const FeedbackButton = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
