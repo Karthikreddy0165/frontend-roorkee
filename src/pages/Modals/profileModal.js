@@ -186,10 +186,8 @@ const ProfileModal = ({ onClose }) => {
     fetchEmailData();
   }, [authState.token]);
 
-  useEffect(() => {
-
-    const filledFields = Object.values(profileData).filter((value) =>
-     value !== "").length;
+useEffect(() => {
+    const filledFields = Object.values(profileData).filter((value) =>typeof value === 'string' && value.trim() !== "").length;
 
     const percentage = Math.round((filledFields / fieldsCount) * 100);
     setProgress(percentage);
@@ -221,8 +219,10 @@ const ProfileModal = ({ onClose }) => {
           ...requestOptions,
           body: JSON.stringify({
             name: profileData.name,
+
             gender: profileData.gender,
             age: profileData.age || 0,
+
             category: profileData.community,
             state_of_residence: profileData.state,
             minority: profileData.minority === "Yes",
