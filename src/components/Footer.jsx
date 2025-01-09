@@ -3,7 +3,7 @@ import { FeedbackButtonFooter } from "./feedBack";
 const Footer = () => {
   return (
     <>
-      <footer className="text-black py-8 px-4 gap-5 mt-[10rem]">
+      <footer className="text-black py-8 px-4 gap-5 sm:mt-[10rem] ">
         <div className="max-w-screen-xl mx-auto flex flex-wrap justify-between space-y-8 md:space-y-0 gap-8">
           {/* Logo and Description */}
           <div className="flex-1 md:max-w-[40%]">
@@ -210,11 +210,12 @@ const Footer = () => {
                   </defs>
                 </svg>
               </a>
+
               <a
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className=" p-2 rounded-full w-10 h-10 flex items-center justify-center hover:bg-blue-600"
+                className="p-2 rounded-full w-10 h-10 flex items-center justify-center hover:bg-blue-600"
               >
                 <svg
                   width="25"
@@ -233,11 +234,9 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="  py-4 mt-8 text-center">
-          <p className="text-sm text-black">
-            &copy; {new Date().getFullYear()} LaunchPad. All Rights Reserved.
-          </p>
-        </div>
+        <p className="flex justify-center items-center text-sm text-black py-[2rem]">
+          &copy; {new Date().getFullYear()} LaunchPad. All Rights Reserved.
+        </p>
       </footer>
     </>
   );

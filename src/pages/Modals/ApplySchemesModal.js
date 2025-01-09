@@ -138,24 +138,6 @@ const ApplyModal = ({
 
   if (!isOpen) return null;
 
-  useEffect(() => {
-    const checkDescriptionLength = () => {
-      if (descriptionRef.current) {
-        const element = descriptionRef.current;
-        // Check if the content is overflowing (i.e., if it's more than 3 lines)
-        const isOverflowing = element.scrollHeight > element.clientHeight;
-        setIsDescriptionLong(isOverflowing);
-      }
-    };
-
-    checkDescriptionLength(); // Initial check
-    window.addEventListener("resize", checkDescriptionLength); // Re-check on window resize
-
-    return () => {
-      window.removeEventListener("resize", checkDescriptionLength); // Clean up event listener
-    };
-  }, [scheme.description]);
-
   
 
   return (
@@ -182,14 +164,14 @@ const ApplyModal = ({
 </div> */}
 
 
-<div className="flex flex-col items-start w-full py-[20px]">
+<div className="flex flex-col items-start w-full py-[20px] overflow-hidden">
   {/* Title and Report Button */}
   <div className="flex items-center justify-between w-full flex-wrap ">
-    <h1 className="text-[20px] font-bold mb-2 w-full sm:w-auto">{scheme.title}</h1>
+    <h1 className="text-[20px] font-bold mb-2 w-full sm:w-auto ">{scheme.title}</h1>
   </div>
 
   {/* Date and Report Button aligned */}
-  <div className="flex items-center space-between sm:gap-[200px] w-full mt-2">
+  <div className="flex items-center space-between sm:gap-[16rem] gap-[2rem] w-full mt-2">
     {/* Date */}
     {scheme?.created_at?.split(" ")[0] && (
       <p className="text-[11px]  sm:text-[14px] rounded-[12px] py-1 px-[6px] bg-[#EEF] mr-4 whitespace-nowrap">
@@ -246,27 +228,26 @@ const ApplyModal = ({
                 </div>
               )}
 
+{scheme.description && (
+                <div className="border-b-[1px] py-[2rem]">
+                  <h2 className="text-[14px] font-semibold mb-[10px]">Description:</h2>
+                  <p
+                    ref={descriptionRef}
+                    className={`${readMore || !isDescriptionLong ? "" : "line-clamp-3"} overflow-y-auto`}
+                  >
+                    {scheme.description}
+                  </p>
+                  {isDescriptionLong && (
+                    <button
+                      onClick={() => setReadMore(!readMore)}
+                      className="mt-2 text-[#3431Bb] text-sm"
+                    >
+                      {readMore ? "Read Less" : "Read More"}
+                    </button>
+                  )}
+                </div>
+              )}
 
-      <div className="border-b-[1px] py-[2rem]">
-        <h2 className="text-[14px] font-semibold  mb-[1rem] ">Description:</h2>
-        <p
-          ref={descriptionRef}
-          className={`${
-            readMore || !isDescriptionLong ? "" : "line-clamp-3"
-          } overflow-y-auto`}
-        >
-          {scheme.description}
-        </p>
-        {isDescriptionLong && (
-          <button
-            onClick={() => setReadMore(!readMore)}
-            className="mt-2 text-[#3431Bb] text-sm"
-          >
-            {readMore ? "Read Less" : "Read More"}
-          </button>
-        )}
-      </div>
-  
              
 
               {/* Updated "Uploaded File" Section */}

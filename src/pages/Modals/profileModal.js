@@ -186,10 +186,8 @@ const ProfileModal = ({ onClose }) => {
     fetchEmailData();
   }, [authState.token]);
 
-  useEffect(() => {
-
-    const filledFields = Object.values(profileData).filter((value) =>
-     value !== "").length;
+useEffect(() => {
+    const filledFields = Object.values(profileData).filter((value) =>typeof value === 'string' && value.trim() !== "").length;
 
     const percentage = Math.round((filledFields / fieldsCount) * 100);
     setProgress(percentage);
@@ -221,8 +219,10 @@ const ProfileModal = ({ onClose }) => {
           ...requestOptions,
           body: JSON.stringify({
             name: profileData.name,
+
             gender: profileData.gender,
             age: profileData.age || 0,
+
             category: profileData.community,
             state_of_residence: profileData.state,
             minority: profileData.minority === "Yes",
@@ -270,12 +270,12 @@ const ProfileModal = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex items-center justify-center h-full w-full   bg-black bg-opacity-50 z-50">
       
       
       <div
         ref={modalRef}
-        className="bg-white rounded-lg w-[720px] h-[750px] p-6 flex flex-col items-start flex-shrink-0 relative"
+        className="bg-white rounded-lg sm:w-[720px] sm:h-[750px] flex flex-col sm:flex h-full w-full p-6 flex flex-col items-start flex-shrink-0 relative"
       >
 
 <div className="flex justify-between items-center mb-2 -mt-2 w-full">
@@ -334,7 +334,7 @@ const ProfileModal = ({ onClose }) => {
                   <div className="relative flex-grow">
                     <input
                       type="text"
-                      className="w-full h-[44px] border border-gray-300 p-2 pl-10 rounded-lg bg-gray-100 text-[14px] font-semibold text-[#757575]"
+                      className="w-[100%] h-[44px] sm:w-full border border-gray-300 p-2 pl-10 rounded-lg bg-gray-100 text-[14px] font-semibold text-[#757575]"
                       value={emailData?.email || ""}
                       onChange={handleChange}
                       readOnly
@@ -602,21 +602,21 @@ const ProfileModal = ({ onClose }) => {
             </div>
 
             <hr className="w-full mt-4 mb-2" />
-            {/* Third Div */}
-            <div className="flex justify-end mt-2 gap-4 w-full">
-              <button
-                onClick={onClose}
-                className="px-4 py-2 rounded-lg border border-gray-300 bg-gray-100 text-black"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSave}
-                className="px-4 py-2 rounded-lg border border-transparent bg-[#3431BB] text-white hover:bg-blue-700"
-              >
-                Save
-              </button>
-            </div>
+            <div className="flex justify-start mt-2 gap-4 w-full">
+  <button
+    onClick={onClose}
+    className="px-4 py-2 rounded-lg border border-gray-300 bg-gray-100 text-black"
+  >
+    Cancel
+  </button>
+  <button
+    onClick={handleSave}
+    className="px-4 py-2 rounded-lg border border-transparent bg-[#3431BB] text-white hover:bg-blue-700"
+  >
+    Save
+  </button>
+</div>
+
           </>
         )}
       </div>
