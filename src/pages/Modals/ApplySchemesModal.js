@@ -3,7 +3,10 @@ import { IoMdClose } from "react-icons/io";
 import { useRouter } from "next/router";
 import HowToApply from './HowToApply';  
 import { useAuth } from "@/Context/AuthContext";
-import SavedModal from "./savedModal";
+import { useScheme } from "@/Context/schemeContext";
+import SavedModal from "@/pages/Modals/savedModal"
+import Toast from "@/components/ComponentsUtils/SavedToast";
+
 const ApplyModal = ({
   isOpen,
   onRequestClose,
@@ -26,7 +29,21 @@ const ApplyModal = ({
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const descriptionRef = useRef(null);
   const [isHowToApplyOpen, setIsHowToApplyOpen] = useState(false); 
+  const [isToastVisible, setIsToastVisible] = useState(false);
   const {authState} = useAuth()
+  const { saveScheme } = useScheme();
+
+  const handleSave = async (scheme_id, authState) => {
+    const success = await saveScheme(scheme_id, authState);
+    if (success) {
+      console.log("Scheme saved successfully!");
+      setIsToastVisible(true)
+    } else {
+      setIsSavedModalOpen(true)
+      console.error("Failed to save scheme");
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       if (scheme && scheme.id) {
@@ -271,9 +288,22 @@ const ApplyModal = ({
                 <>
                   <div className="mt-8 flex sm:gap-[50px] gap-[5px] justify-between">
 
-                    <div className="flex items-center text-[#3431Bb] font-semibold cursor-pointer">
+                    <div className="flex items-center text-[#3431Bb] font-semibold cursor-pointer" onClick={() => handleSave(scheme.id,authState)}>
                       Save for Later
                     </div>
+                    {isSavedModalOpen && (
+                      <SavedModal
+                        isOpen= {isSavedModalOpen}
+                        onRequestClose={() => setIsSavedModalOpen(false)}
+                      />
+                    )}
+
+                {isToastVisible && (
+                          <Toast
+                            message={""}
+                            onClose={() => setIsToastVisible(false)}
+                          />
+                        )}
 
                   
                     <div className="flex-shrink-0">
