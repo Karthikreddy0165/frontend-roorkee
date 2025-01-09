@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useMediaQuery } from 'react-responsive';
 import image02 from "../../assets/step2.jpeg"
+import { MdClose } from "react-icons/md";
 import imageformobile from "../../assets/step1mobile.jpeg"
 const HowToApply = ({ closeModal }) => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -45,9 +46,19 @@ const HowToApply = ({ closeModal }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-50">
       <div className="bg-white rounded-lg sm:h-[80%] h-[90%] w-[90%] sm:w-[80%] md:w-[70%] lg:w-[600px] xl:w-[700px] p-6 max-w-full flex flex-col relative">
+      <div className="flex justify-between items-center mb-2 w-full">
         <h2 className="sm:text-2xl text-[20px] font-semibold text-center mb-6 text-[#3431BB]">
           How to Apply for Schemes
         </h2>
+
+        <button
+          onClick={closeModal}
+          className="text-gray-500 hover:text-gray-700 w-10 h-10 flex items-center justify-center mb-6"
+        >
+          <MdClose className="w-6 h-6" />
+        </button>
+      </div>
+
 
         {/* Content Section */}
         <div className="flex-grow space-y-6 overflow-y-auto">
@@ -78,19 +89,13 @@ const HowToApply = ({ closeModal }) => {
         </div>
 
         {/* Fixed Footer for Buttons */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t flex justify-between">
+        <div className="absolute bottom-0 left-0 right-0 p-6 bg-white border-t flex justify-between">
           <button
             onClick={prevStep}
             className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
             disabled={currentStep === 1}
           >
             Previous
-          </button>
-          <button
-            onClick={closeModal}
-            className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
-          >
-            Close
           </button>
           <button
             onClick={nextStep}
