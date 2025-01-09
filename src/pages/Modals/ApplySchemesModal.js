@@ -3,13 +3,9 @@ import { IoMdClose } from "react-icons/io";
 import { useRouter } from "next/router";
 import HowToApply from './HowToApply';  
 import { useAuth } from "@/Context/AuthContext";
-
 import { useScheme } from "../../Context/schemeContext";
 import SavedModal from "../../pages/Modals/savedModal"
 import Toast from "../../components/ComponentsUtils/SavedToast";
-
-
-import SavedModal from "./savedModal";
 
 const ApplyModal = ({
   isOpen,
@@ -34,7 +30,6 @@ const ApplyModal = ({
   const descriptionRef = useRef(null);
   const [isHowToApplyOpen, setIsHowToApplyOpen] = useState(false); 
   const [isToastVisible, setIsToastVisible] = useState(false);
-  const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const {authState} = useAuth()
   const { saveScheme } = useScheme();
 
