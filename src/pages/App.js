@@ -35,14 +35,10 @@ const App = () => {
   }
 
   const handleClickFindrightSchemeForYOu = () => {
-<<<<<<< HEAD
-    router.push("/Modals/PreferencesModal");
-=======
 
-    router.push("/Modals/PreferencesModal");
+    router.push("/Modals/PreferencesModal");}
 
->>>>>>> 7525dcd0bbb07bca1020b7f84779812ead980575
-  };
+
 
   const handleSchemesClick = () => {
     setActiveTab("Schemes");

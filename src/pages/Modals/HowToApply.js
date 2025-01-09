@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import { useMediaQuery } from 'react-responsive';
-<<<<<<< HEAD
-import image01 from "../../assets/step1.jpeg"
-=======
-import image02 from "../../assets/step2.jpeg"
+
+
 import { MdClose } from "react-icons/md";
->>>>>>> 7525dcd0bbb07bca1020b7f84779812ead980575
-import imageformobile from "../../assets/step1mobile.jpeg"
+
 const HowToApply = ({ closeModal }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
