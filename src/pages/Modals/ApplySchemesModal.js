@@ -3,9 +3,13 @@ import { IoMdClose } from "react-icons/io";
 import { useRouter } from "next/router";
 import HowToApply from './HowToApply';  
 import { useAuth } from "@/Context/AuthContext";
+
 import { useScheme } from "../../Context/schemeContext";
 import SavedModal from "../../pages/Modals/savedModal"
 import Toast from "../../components/ComponentsUtils/SavedToast";
+
+
+import SavedModal from "./savedModal";
 
 const ApplyModal = ({
   isOpen,
@@ -25,6 +29,8 @@ const ApplyModal = ({
     description: "",
     report_category: "",
   });
+  const router = useRouter()
+  const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const descriptionRef = useRef(null);
   const [isHowToApplyOpen, setIsHowToApplyOpen] = useState(false); 
   const [isToastVisible, setIsToastVisible] = useState(false);
@@ -187,7 +193,7 @@ const ApplyModal = ({
 
     {/* Report Button */}
     <button
-      onClick={() => setReportModalOpen(true)}
+      onClick={() =>authState.token ? setReportModalOpen(true): setIsSavedModalOpen(true)}
       className="flex items-center px-4 py-2 text-red-500 rounded-lg mt-0"
     >
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
@@ -414,6 +420,14 @@ const ApplyModal = ({
       {isHowToApplyOpen && (
         <HowToApply closeModal={handleCloseHowToApply} /> 
       )}
+      {isSavedModalOpen && (
+          <SavedModal
+            isOpen={isSavedModalOpen}
+            onRequestClose={() => setIsSavedModalOpen(false)}
+            heading={'Report'}
+            tag={'report'}
+          />
+        )}
     </div>
   );
 };
