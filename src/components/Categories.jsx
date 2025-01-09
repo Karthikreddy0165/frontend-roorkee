@@ -414,6 +414,8 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
           <SavedModal
             isOpen={isSavedModalOpen}
             onRequestClose={() => setIsSavedModalOpen(false)}
+            heading={'Saved'}
+            tag={'save'}
           />
         )}
       </div>
