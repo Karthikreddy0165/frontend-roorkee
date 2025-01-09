@@ -234,9 +234,11 @@ const Footer = () => {
           </div>
         </div>
 
+
         <p className="flex justify-center items-center text-sm text-black py-[2rem]">
           &copy; {new Date().getFullYear()} LaunchPad. All Rights Reserved.
         </p>
+
       </footer>
     </>
   );

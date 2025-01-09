@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useAuth } from "@/Context/AuthContext";
+
 
 const FeedbackModal = ({ isOpen, onRequestClose }) => {
   const [rating, setRating] = useState(0);
@@ -8,6 +10,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const {authState} = useAuth()
 
   // Handle form data changes
   const handleReportFormChange = (e) => {
@@ -36,7 +39,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append(
       "Authorization",
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1OTczNTg4LCJpYXQiOjE3MzUxMDk1ODgsImp0aSI6ImVjOGI1NWQ2YjMzOTQyZTY5NGVlNWIzOTAwNDJlODJkIiwidXNlcl9pZCI6MX0.2emHvQsagNbIpHpSuC6nlAEy-_p5Q4xFFFSymvUPxE4"
+      `Bearer ${authState.token}`
     );
 
     const raw = JSON.stringify({
@@ -52,10 +55,6 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
     };
 
     try {
-      console.log(
-        "come inside",
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/feedback/website-feedback/`
-      );
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/feedback/website-feedback/`,
         requestOptions
@@ -121,9 +120,9 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
             className="w-full p-2 border text-sm rounded-md"
           >
             <option value="">Select Category</option>
-            <option value="General">Incorrect information</option>
-            <option value="Urgent">Outdated information</option>
-            <option value="Feedback">Other</option>
+            <option value="bug">Bug</option>
+            <option value="improvement">Improvement</option>
+            <option value="general">General</option>
           </select>
         </div>
 

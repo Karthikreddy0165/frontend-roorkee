@@ -6,6 +6,7 @@ import { PrimeReactProvider } from "primereact/api";
 import { AuthProvider } from "@/Context/AuthContext";
 import { PageProvider } from "@/Context/PageContext";
 import { FilterProvider } from "@/Context/FilterContext";
+import { SchemeProvider } from "@/Context/schemeContext"
 import { PreferenceProvider } from "@/Context/preferenceContext";
 import RedirectHandler from "@/components/ComponentsUtils/RedirectHandler";
 
@@ -17,6 +18,7 @@ export default function App({ Component, pageProps }) {
         <PageProvider>
           <TabProvider>
             <AuthProvider>
+            <SchemeProvider>
               <FormProvider>
                 <PrimeReactProvider>
                   <div className="flex flex-col min-h-screen">
@@ -29,6 +31,7 @@ export default function App({ Component, pageProps }) {
                   </div>
                 </PrimeReactProvider>
               </FormProvider>
+              </SchemeProvider>
             </AuthProvider>
           </TabProvider>
         </PageProvider>
