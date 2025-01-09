@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useRouter } from "next/router";
 import HowToApply from './HowToApply';  
-
+import { useAuth } from "@/Context/AuthContext";
+import SavedModal from "./savedModal";
 const ApplyModal = ({
   isOpen,
   onRequestClose,
@@ -17,12 +18,16 @@ const ApplyModal = ({
   const [readMore, setReadMore] = useState(false);
   const [reportModalOpen, setReportModalOpen] = useState(false);
   const [reportFormData, setReportFormData] = useState({
+    scheme_id: "",
     description: "",
-    category: "",
+    report_category: "",
   });
+  const router = useRouter()
+  const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const descriptionRef = useRef(null);
   const [isHowToApplyOpen, setIsHowToApplyOpen] = useState(false); 
-
+  const {authState} = useAuth()
+  
   useEffect(() => {
     const fetchData = async () => {
       if (scheme && scheme.id) {
@@ -64,12 +69,15 @@ const ApplyModal = ({
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     }
 
     return () => {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, [isOpen]);
 
@@ -81,23 +89,25 @@ const ApplyModal = ({
   }, [scheme?.description]);
 
   const handleReportFormChange = (e) => {
+
     const { name, value } = e.target;
     setReportFormData((prevData) => ({
       ...prevData,
+      scheme_id: scheme.id,
       [name]: value,
     }));
   };
 
+  
+
   const handleReportSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/feedback/scheme-reports/", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/feedback/scheme-reports/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1OTczNTg4LCJpYXQiOjE3MzUxMDk1ODgsImp0aSI6ImVjOGI1NWQ2YjMzOTQyZTY5NGVlNWIzOTAwNDJlODJkIiwidXNlcl9pZCI6MX0.2emHvQsagNbIpHpSuC6nlAEy-_p5Q4xFFFSymvUPxE4"
-
+          "Authorization": `Bearer ${authState.token}`
         },
         body: JSON.stringify(reportFormData),
       });
@@ -107,7 +117,7 @@ const ApplyModal = ({
       }
 
       alert("Report created successfully!");
-      setReportFormData({  description: "", category: "" });
+      setReportFormData({  description: "", report_category: "" });
       setReportModalOpen(false);
     } catch (error) {
       console.error("Error submitting report:", error);
@@ -124,10 +134,32 @@ const ApplyModal = ({
     setIsHowToApplyOpen(false); 
   };
 
+  
+
   if (!isOpen) return null;
 
+  useEffect(() => {
+    const checkDescriptionLength = () => {
+      if (descriptionRef.current) {
+        const element = descriptionRef.current;
+        // Check if the content is overflowing (i.e., if it's more than 3 lines)
+        const isOverflowing = element.scrollHeight > element.clientHeight;
+        setIsDescriptionLong(isOverflowing);
+      }
+    };
+
+    checkDescriptionLength(); // Initial check
+    window.addEventListener("resize", checkDescriptionLength); // Re-check on window resize
+
+    return () => {
+      window.removeEventListener("resize", checkDescriptionLength); // Clean up event listener
+    };
+  }, [scheme.description]);
+
+  
+
   return (
-    <div className="fixed inset-0 z-50 gap-[10px]">
+    <div className="fixed inset-0 z-50 gap-[10px] ">
       <div
         className={`absolute bg-white transition-all w-full h-full sm:w-[40%] sm:right-0 sm:rounded-lg border gap-[10px] border-gray-200 shadow-lg`}
       >
@@ -138,7 +170,7 @@ const ApplyModal = ({
           <IoMdClose className="w-[24px] h-[24px]" />
         </button>
 
-        <div className="flex flex-col p-8 h-full overflow-y-auto">
+        <div className="modal-content overflow-y-auto max-h-[90vh] p-8 h-full">
         {/* <div className="flex justify-between items-center w-full mb-4">
   <h1 className="text-[20px] font-bold">{scheme.title}</h1>
   
@@ -152,22 +184,22 @@ const ApplyModal = ({
 
 <div className="flex flex-col items-start w-full py-[20px]">
   {/* Title and Report Button */}
-  <div className="flex items-center justify-between w-full flex-wrap">
+  <div className="flex items-center justify-between w-full flex-wrap ">
     <h1 className="text-[20px] font-bold mb-2 w-full sm:w-auto">{scheme.title}</h1>
   </div>
 
   {/* Date and Report Button aligned */}
-  <div className="flex items-center space-between sm:gap-[250px] w-full mt-2">
+  <div className="flex items-center space-between sm:gap-[200px] w-full mt-2">
     {/* Date */}
     {scheme?.created_at?.split(" ")[0] && (
-      <p className="text-[11px]  sm:text-[14px] rounded-[12px] py-1 px-[6px] bg-[#EEF] mr-4">
+      <p className="text-[11px]  sm:text-[14px] rounded-[12px] py-1 px-[6px] bg-[#EEF] mr-4 whitespace-nowrap">
         {`Last updated on ${scheme.created_at.split(" ")[0]}`}
       </p>
     )}
 
     {/* Report Button */}
     <button
-      onClick={() => setReportModalOpen(true)}
+      onClick={() =>authState.token ? setReportModalOpen(true): setIsSavedModalOpen(true)}
       className="flex items-center px-4 py-2 text-red-500 rounded-lg mt-0"
     >
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
@@ -192,7 +224,7 @@ const ApplyModal = ({
              
 
               {scheme.department?.state && (
-                <div className="flex items-start py-[20px] border-b-[1px] mt-4">
+                <div className="flex items-start py-[2rem] border-b-[1px] mt-4">
                   <h2 className="w-28 text-[14px]  font-semibold">State:</h2>
                   <p className="flex-1">{scheme.department.state}</p>
                 </div>
@@ -201,44 +233,45 @@ const ApplyModal = ({
         
 
               {scheme.department?.department_name && (
-                <div className="flex items-start py-[20px] border-t-[1px] border-b-[1px]">
+                <div className="flex items-start py-[2rem] border-t-[1px] border-b-[1px]">
                   <h2 className="w-28 text-[14px] font-semibold">Department:</h2>
                   <p className="flex-1">{scheme.department.department_name}</p>
                 </div>
               )}
 
               {scheme.beneficiaries[0]?.beneficiary_type && (
-                <div className="flex items-start py-[20px]  border-b-[1px] py-[5px]">
+                <div className="flex items-start py-[2rem]  border-b-[1px]">
                   <h2 className="w-28 text-[14px] font-semibold">Beneficiaries:</h2>
                   <p className="flex-1">{scheme.beneficiaries[0].beneficiary_type}</p>
                 </div>
               )}
 
-              {scheme.description && (
-                <div className="mt-4 border-b-[1px] py-[20px] py-[5px]">
-                  <h2 className="text-[14px] font-semibold mb-[10px]">Description:</h2>
-                  <p
-                    ref={descriptionRef}
-                    className={`${readMore || !isDescriptionLong ? "" : "line-clamp-3"} overflow-y-auto`}
-                  >
-                    {scheme.description}
-                  </p>
-                  {isDescriptionLong && (
-                    <button
-                      onClick={() => setReadMore(!readMore)}
-                      className="mt-2 text-[#3431Bb] text-sm"
-                    >
-                      {readMore ? "Read Less" : "Read More"}
-                    </button>
-                  )}
-                </div>
-              )}
 
+      <div className="border-b-[1px] py-[2rem]">
+        <h2 className="text-[14px] font-semibold  mb-[1rem] ">Description:</h2>
+        <p
+          ref={descriptionRef}
+          className={`${
+            readMore || !isDescriptionLong ? "" : "line-clamp-3"
+          } overflow-y-auto`}
+        >
+          {scheme.description}
+        </p>
+        {isDescriptionLong && (
+          <button
+            onClick={() => setReadMore(!readMore)}
+            className="mt-2 text-[#3431Bb] text-sm"
+          >
+            {readMore ? "Read Less" : "Read More"}
+          </button>
+        )}
+      </div>
+  
              
 
               {/* Updated "Uploaded File" Section */}
               {scheme.pdf_url && (
-                <div className="flex items-start py-[20px] border-b-[1px] py-[5px]">
+                <div className="flex items-start py-[2rem] border-b-[1px]">
                   <h2 className="w-28 text-[14px] font-semibold">Uploaded File:</h2>
                   <div className="flex-1">
                     <a
@@ -316,16 +349,16 @@ const ApplyModal = ({
             <div>
                 <label className="block text-sm font-semibold mb-2">Category</label>
                 <select
-                  name="category"
+                  name="report_category"
                   value={reportFormData.category}
                   onChange={handleReportFormChange}
                   required
                   className="w-full p-2 border text-sm rounded-md"
                 >
                   <option value="">Select Category</option>
-                  <option value="General">Incorrect information</option>
-                  <option value="Urgent">Outdated information</option>
-                  <option value="Feedback">Other</option>
+                  <option value="incorrect_info">Incorrect information</option>
+                  <option value="outdated_info">Outdated information</option>
+                  <option value="other">Other</option>
                 </select>
               </div>
              
@@ -381,6 +414,14 @@ const ApplyModal = ({
       {isHowToApplyOpen && (
         <HowToApply closeModal={handleCloseHowToApply} /> 
       )}
+      {isSavedModalOpen && (
+          <SavedModal
+            isOpen={isSavedModalOpen}
+            onRequestClose={() => setIsSavedModalOpen(false)}
+            heading={'Report'}
+            tag={'report'}
+          />
+        )}
     </div>
   );
 };

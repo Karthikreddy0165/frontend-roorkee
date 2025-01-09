@@ -272,29 +272,14 @@ const ProfileModal = ({ onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       
+      
       <div
         ref={modalRef}
-        className="bg-white rounded-lg w-[560px] h-[750px] p-6 flex flex-col items-start flex-shrink-0 relative"
+        className="bg-white rounded-lg w-[720px] h-[750px] p-6 flex flex-col items-start flex-shrink-0 relative"
       >
-        <div className="w-full mb-4">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Profile Completion</label>
-              <div className="w-full bg-gray-200 rounded-full h-4">
-                <div
-                  className="bg-blue-500 h-4 rounded-full"
-                  style={{ width: `${progress}%` }}
-                ></div>
-              </div>
-              <p className="text-sm font-semibold text-gray-500 mt-1">{progress}% completed</p>
-            </div>
-        {loading ? (
-          <div className="flex items-center justify-center w-full h-full">
-            <div className="w-8 h-8 border-4 border-t-transparent border-blue-500 border-solid rounded-full animate-spin"></div>
-          </div>
-        ) : (
-          <>
-            {/* First Div */}
-            <div className="flex justify-between items-center mb-2 -mt-2 w-full">
-              <h2 className="text-2xl font-semibold text-[#0A0A0A]">Profile</h2>
+
+<div className="flex justify-between items-center mb-2 -mt-2 w-full">
+              <h2 className="text-2xl font-semibold text-[#000000]">Profile</h2>
               <button
                 onClick={onClose}
                 className="text-gray-500 hover:text-gray-700 w-10 h-10 flex items-center justify-center"
@@ -303,7 +288,25 @@ const ProfileModal = ({ onClose }) => {
               </button>
             </div>
 
-            <hr className="w-full" />
+        <div className="w-full ">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Profile Completion</label>
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div
+                  className="bg-[#3431BB] h-2 rounded-full"
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
+              <p className="text-sm font-semibold text-gray-500  mt-[1rem]">{progress}% completed</p>
+            </div>
+        {loading ? (
+          <div className="flex items-center justify-center w-full h-full">
+            <div className="w-8 h-8 border-4 border-t-transparent border-[#3431BB] border-solid rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <>
+            {/* First Div */}
+           
+
 
             {/* Second Div */}
             <div
@@ -311,27 +314,27 @@ const ProfileModal = ({ onClose }) => {
               className="space-y-4 mt-4 w-full overflow-y-auto"
             >
               <div>
-                <label className="block mb-2 text-[12px] font-semibold text-black">
+                <label className="block mb-2 text-[12px] font-semibold text-[#000000]">
                   Full Name
                 </label>
                 <input
                   type="text"
                   name="name"
-                  className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                  className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[14px] font-semibold text-[#757575]"
                   placeholder="Enter your name"
                   value={profileData.name}
                   onChange={handleChange}
                 />
               </div>
               <div className="relative">
-                <label className="block mb-2 text-[12px] font-semibold text-black">
+                <label className="block mb-2 text-[12px] font-semibold text-[#000000]">
                   Email
                 </label>
                 <div className="relative flex items-center space-x-2 w-full">
                   <div className="relative flex-grow">
                     <input
                       type="text"
-                      className="w-full h-[44px] border border-gray-300 p-2 pl-10 rounded-lg bg-gray-100 text-[12px] font-semibold text-black"
+                      className="w-full h-[44px] border border-gray-300 p-2 pl-10 rounded-lg bg-gray-100 text-[14px] font-semibold text-[#757575]"
                       value={emailData?.email || ""}
                       onChange={handleChange}
                       readOnly
@@ -355,25 +358,25 @@ const ProfileModal = ({ onClose }) => {
               </div>
               <div className="flex gap-4 w-full ">
                 <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                  <label className="block mb-2 text-[12px] font-semibold text-[#000000]">
                     Age
                   </label>
                   <input
                     type="number"
                     name="age"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[14px] font-semibold text-[#757575]"
                     placeholder="Enter your age"
                     value={profileData.age}
                     onChange={handleChange}
                   />
                 </div>
                 <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                  <label className="block mb-2 text-[12px] font-semibold text-[#000000]">
                     Gender
                   </label>
                   <select
                     name="gender"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[14px] font-semibold text-[#757575]"
                     value={profileData.gender}
                     onChange={handleChange}
                   >
@@ -387,12 +390,12 @@ const ProfileModal = ({ onClose }) => {
 
               <div className="flex gap-4 w-full">
                 <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                  <label className="block mb-2 text-[12px] font-semibold text-[#000000]">
                     Category
                   </label>
                   <select
                     name="community"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[14px] font-semibold text-[#757575]"
                     value={profileData.community}
                     onChange={handleChange}
                   >
@@ -418,12 +421,12 @@ const ProfileModal = ({ onClose }) => {
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
                   </select> */}
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                  <label className="block mb-2 text-[12px] font-semibold text-[#000000]">
                     BPL Card Holder
                   </label>
                   <select
                     name="bpl_card_holder"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[14px] font-semibold text-[#757575]"
                     value={profileData.bpl_card_holder}
                     onChange={handleChange}
                   >
@@ -437,12 +440,12 @@ const ProfileModal = ({ onClose }) => {
 
               <div className="flex gap-4 w-full">
                 <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                  <label className="block mb-2 text-[12px] font-semibold text-[#000000]">
                     State of Residence
                   </label>
                   <select
                     name="state"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[14px] font-semibold text-[#757575]"
                     value={profileData.state}
                     onChange={handleChange}
                   >
@@ -455,12 +458,12 @@ const ProfileModal = ({ onClose }) => {
                   </select>
                 </div>
                 <div className="flex-1">
-                <label className="block mb-2 text-[12px] font-semibold text-black">
+                <label className="block mb-2 text-[12px] font-semibold text-[#000000]">
                     Disability
                   </label>
                   <select
                     name="disability"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[14px] font-semibold text-[#757575]"
                     value={profileData.disability}
                     onChange={handleChange}
                   >
@@ -473,12 +476,12 @@ const ProfileModal = ({ onClose }) => {
 
               <div className="flex gap-4 w-full">
                 <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                  <label className="block mb-2 text-[12px] font-semibold text-[#000000]">
                     Education
                   </label>
                   <select
                     name="education"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[14px] font-semibold text-[#757575]"
                     value={profileData.education}
                     onChange={handleChange}
                   >
@@ -493,12 +496,12 @@ const ProfileModal = ({ onClose }) => {
 
 
                 <div className="flex-1">
-                <label className="block mb-2 text-[12px] font-semibold text-black">
+                <label className="block mb-2 text-[12px] font-semibold text-[#000000]">
                     Employment
                   </label>
                   <select
                     name="employment_status"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[14px] font-semibold text-[#757575]"
                     value={profileData.employment_status}
                     onChange={handleChange}
                   >
@@ -514,12 +517,12 @@ const ProfileModal = ({ onClose }) => {
 
               <div className="flex gap-4 w-full">
                 <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                  <label className="block mb-2 text-[12px] font-semibold text-[#000000]">
                     Occupation
                   </label>
                   <select
                     name="occupation"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[14px] font-semibold text-[#757575]"
                     value={profileData.occupation}
                     onChange={handleChange}
                   >
@@ -573,13 +576,13 @@ const ProfileModal = ({ onClose }) => {
                 </div>
 
                 <div className="flex-1">
-                <label className="block mb-2 text-[12px] font-semibold text-black">
+                <label className="block mb-2 text-[12px] font-semibold text-[#000000]">
                   Annual Income (in lakhs)
                 </label>
                 <input
                   type="text"
                   name="income"
-                  className="w-full h-[44px] border border-gray-300 p-2 rounded-lg bg-gray-100 text-[12px] font-semibold text-black"
+                  className="w-full h-[44px] border border-gray-300 p-2 rounded-lg bg-gray-100 text-[14px] font-semibold text-[#757575]"
                   placeholder="Enter your income"
                   value={profileData.income}
                   onChange={handleChange}

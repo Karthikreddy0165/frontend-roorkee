@@ -77,7 +77,7 @@ export default function Schemes() {
 
   if (dataOfApi.count === 0 && (states.length || departments.length)) {
     return (
-      <div className="flex justify-center items-center mt-8">
+      <div className="flex justify-center items-center mt-[8rem] p-[8rem]">
         No schemes found based on your preference
       </div>
     );

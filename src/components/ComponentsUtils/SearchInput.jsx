@@ -6,7 +6,7 @@ function SearchInput() {
   const { searchQuery, setSearchQuery } = useTabContext();
 
   return (
-    <div className="flex items-center gap-3 h-14 px-3 rounded-lg border border-gray-300 bg-white mb-6 mr-2 hidden sm:flex">
+    <div className="sticky top-0 z-20 flex items-center gap-3 h-14 px-3 rounded-lg border border-gray-300 bg-white mr-2 hidden sm:flex">
       {/* Search Icon */}
       <svg
         className="w-5 h-5 text-gray-500"
@@ -23,7 +23,7 @@ function SearchInput() {
       {/* Search Input */}
       <input
         type="text"
-        placeholder="Search schemes, job opportunities, or scholarships"
+        placeholder="Search schemes, job openings or scholarships"
         className="flex-1 px-2 text-sm bg-transparent focus:outline-none placeholder-[#616161]"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}

@@ -206,7 +206,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
   if (Object.keys(dataFromApi).length === 0) {
     return (
-      <div className="text-onclick-btnblue mt-[120px] italic flex justify-center items-center text-[18px]">
+      <div className="text-onclick-btnblue mt-[8rem] italic flex justify-center items-center text-[18px]">
         Loading...
       </div>
     );
@@ -305,7 +305,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
               New update
             </button> */}
 
-                  <div className="gap-[12px] pt-[16px] pd-[16px]">
+                  <div className="gap-[12px] pt-[16px] pd-[16px] w-[200px] md:w-8/12">
                     <p
                       className="font-inter text-[16px] sm:text-[18px] leading-[21.6px] cursor-pointer font-semibold mb-[10px] line-clamp-2 w-8/12 text-gray-700"
                       role="button"
