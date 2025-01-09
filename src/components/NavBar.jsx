@@ -114,7 +114,7 @@ const NavBar = () => {
 
               {/* Profile Button for Mobile */}
               <button
-                className="flex items-center px-4 py-2   text-gray-500 text-[35px] font-semibold rounded-lg  md:hidden"
+                className="flex items-center px-4 py-2   text-gray-500 text-[35px] font-semibold rounded-lg  sm:hidden"
                 onClick={toggleDropdown}
               >
                 <CgProfile />{" "}
