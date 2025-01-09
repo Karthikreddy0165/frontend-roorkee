@@ -6,7 +6,7 @@ import { PrimeReactProvider } from "primereact/api";
 import { AuthProvider } from "@/Context/AuthContext";
 import { PageProvider } from "@/Context/PageContext";
 import { FilterProvider } from "@/Context/FilterContext";
-import { SchemeProvider } from "../Context/schemeContext"
+import { SchemeProvider } from "@/Context/schemeContext"
 import { PreferenceProvider } from "@/Context/preferenceContext";
 import RedirectHandler from "@/components/ComponentsUtils/RedirectHandler";
 

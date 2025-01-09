@@ -3,9 +3,9 @@ import { IoMdClose } from "react-icons/io";
 import { useRouter } from "next/router";
 import HowToApply from './HowToApply';  
 import { useAuth } from "@/Context/AuthContext";
-import { useScheme } from "../../Context/schemeContext";
-import SavedModal from "../../pages/Modals/savedModal"
-import Toast from "../../components/ComponentsUtils/SavedToast";
+import { useScheme } from "@/Context/schemeContext";
+import SavedModal from "@/pages/Modals/savedModal"
+import Toast from "@/components/ComponentsUtils/SavedToast";
 
 const ApplyModal = ({
   isOpen,
