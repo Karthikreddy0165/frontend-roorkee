@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useMediaQuery } from 'react-responsive';
-import image02 from "../../assets/step2.jpeg"
+import image01 from "../../assets/step1.jpeg"
 import imageformobile from "../../assets/step1mobile.jpeg"
 const HowToApply = ({ closeModal }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
-    console.log(image02)
+    console.log(image01)
   const steps = [
     {
       title: "Step 1",
