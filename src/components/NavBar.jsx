@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
-import {IoMdClose } from "react-icons/io"; // For menu icon in mobile
+import { IoMdClose } from "react-icons/io"; // For menu icon in mobile
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -52,7 +52,7 @@ const NavBar = () => {
   return (
     <div>
       {/* Navbar Container */}
-      <div className="flex justify-between items-center py-2 px-6 bg-white shadow-md z-10 relative sm:h-14 gap-2 sm:w-full w-[482px]">
+      <div className="flex justify-between items-center py-2 px-6 bg-white shadow-md z-10 relative sm:h-[80px] gap-2 sm:w-full w-full">
         <svg
           width="40"
           height="40"

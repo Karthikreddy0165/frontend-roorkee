@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useMediaQuery } from 'react-responsive';
-
+import image02 from "../../assets/step2.jpeg"
+import imageformobile from "../../assets/step1mobile.jpeg"
 const HowToApply = ({ closeModal }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
-
+    console.log(image02)
   const steps = [
     {
       title: "Step 1",
@@ -16,12 +17,16 @@ const HowToApply = ({ closeModal }) => {
     {
       title: "Step 2",
       content: "After clicking on the preferred scheme, click on the 'Apply' button on the scheme description page to apply for the scheme.",
-      image: "/_next/static/media/step2.64e5a384.jpeg",
+      image: isMobile 
+        ? "/_next/static/media/step2.64e5a384.jpeg"
+        : "/_next/static/media/step2.64e5a384.jpeg", 
     },
     {
       title: "Step 3",
       content: "If you are not currently applying but wish to apply for the scheme in the future, you can use the 'Save for Later' button.",
-      image: "/_next/static/media/step2.64e5a384.jpeg",
+      image: isMobile 
+        ? "/_next/static/media/step2.64e5a384.jpeg"
+        : "/_next/static/media/step2.64e5a384.jpeg", 
     },
   ];
 

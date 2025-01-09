@@ -10,6 +10,7 @@ import FilterContext from "@/Context/FilterContext";
 import SchemeVerifiedStatus from "@/components/SchemeEmailVerification";
 import img from '../assets/img.png';
 import Footer from "@/components/Footer";
+import FeedbackButton from "@/components/feedBack";
 
 const SchemesAll = () => {
   const {
@@ -96,7 +97,7 @@ const SchemesAll = () => {
       <SchemeVerifiedStatus />
   
       {/* Banner Image */}
-      <div className="relative max-w-[90%] mx-auto mb-[16px] sm:mb-8 mt-2">
+      <div className="relative max-w-[90%] mx-auto mb-[16px] sm:mb-8 mt-2  sm:block hidden">
         <div className="relative w-full">
           <Image
             src={img || bannerImage || backUpBannerImage}
@@ -109,73 +110,73 @@ const SchemesAll = () => {
         </div>
       </div>
   
-      <div className="max-w-[90%] mx-auto flex flex-col md:flex-row">
-        {/* Filters Section */}
-        <div className="flex-1 md:max-w-[25%] p-4 md:mr-2 order-2 md:order-1 hidden md:block">
-          <div className="sticky bg-white z-10 top-0">
-            <div className="flex justify-between items-center">
-              <h1 className="m-0 font-semibold">Filters</h1>
-              <button
-                className="text-[#3431BB] font-semibold p-2 hover:bg-[#EEEEFF] hover:rounded-lg m-0 hidden md:block"
-                onClick={clearAllFilters}
-              >
-                Clear all filters
-              </button>
-            </div>
-            <hr />
-          </div>
-  
-          {/* Only show these dropdowns on larger screens, hide on mobile */}
-          <div className="hidden md:block">
-            {/* Sponsored By Dropdown */}
-            <div
-              className="flex justify-between items-center hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2 mt-2"
-              onClick={() => toggleDropdown("sponsoredOpen")}
-            >
-              <span>Sponsored By</span>
-              {dropDownStates.sponsoredOpen ? (
-                <IoIosArrowUp className="text-black" />
-              ) : (
-                <IoIosArrowDown className="text-black" />
-              )}
-            </div>
-            {dropDownStates.sponsoredOpen && <SponsorsDropdownMenu />}
-  
-            {/* Department Dropdown */}
-            {isDepartmentVisible && (
-              <div
-                className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
-                onClick={() => toggleDropdown("departmentOpen")}
-              >
-                <span>Department</span>
-                {dropDownStates.departmentOpen ? (
-                  <IoIosArrowUp className="text-black" />
-                ) : (
-                  <IoIosArrowDown className="text-black" />
-                )}
-              </div>
-            )}
-            {isDepartmentVisible &&
-              dropDownStates.departmentOpen && <DepartmentDropdownMenu />}
-  
-            {/* Beneficiaries Dropdown */}
-            {isBeneficiaryVisible && (
-              <div
-                className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
-                onClick={() => toggleDropdown("beneficiaryOpen")}
-              >
-                <span>Beneficiaries</span>
-                {dropDownStates.beneficiaryOpen ? (
-                  <IoIosArrowUp className="text-black" />
-                ) : (
-                  <IoIosArrowDown className="text-black" />
-                )}
-              </div>
-            )}
-            {isBeneficiaryVisible &&
-              dropDownStates.beneficiaryOpen && <BeneficiariesDropdown />}
-          </div>
-        </div>
+      <div className="max-w-[90%] mx-auto flex flex-col md:flex-row py-[20px]">
+      <div className="flex-1 md:max-w-[25%] p-4 md:mr-2 order-2 md:order-1 hidden md:block">
+  <div className="bg-white z-10 top-0">
+    <div className="flex justify-between items-center">
+      <h1 className="m-0 font-semibold">Filters</h1>
+      <button
+        className="text-[#3431BB] font-semibold p-2 hover:bg-[#EEEEFF] hover:rounded-lg m-0 hidden md:block"
+        onClick={clearAllFilters}
+      >
+        Clear all filters
+      </button>
+    </div>
+    <hr />
+  </div>
+
+  {/* Filters Section with Scrollable Content, no scrollbar */}
+  <div className="hidden md:block max-h-[70vh] overflow-y-auto scrollbar-none"> {/* Hide scrollbar */}
+    {/* Sponsored By Dropdown */}
+    <div
+      className="flex justify-between items-center hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2 mt-2"
+      onClick={() => toggleDropdown("sponsoredOpen")}
+    >
+      <span>Sponsored By</span>
+      {dropDownStates.sponsoredOpen ? (
+        <IoIosArrowUp className="text-black" />
+      ) : (
+        <IoIosArrowDown className="text-black" />
+      )}
+    </div>
+    {dropDownStates.sponsoredOpen && <SponsorsDropdownMenu />}
+
+    {/* Department Dropdown */}
+    {isDepartmentVisible && (
+      <div
+        className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
+        onClick={() => toggleDropdown("departmentOpen")}
+      >
+        <span>Department</span>
+        {dropDownStates.departmentOpen ? (
+          <IoIosArrowUp className="text-black" />
+        ) : (
+          <IoIosArrowDown className="text-black" />
+        )}
+      </div>
+    )}
+    {isDepartmentVisible && dropDownStates.departmentOpen && <DepartmentDropdownMenu />}
+
+    {/* Beneficiaries Dropdown */}
+    {isBeneficiaryVisible && (
+      <div
+        className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
+        onClick={() => toggleDropdown("beneficiaryOpen")}
+      >
+        <span>Beneficiaries</span>
+        {dropDownStates.beneficiaryOpen ? (
+          <IoIosArrowUp className="text-black" />
+        ) : (
+          <IoIosArrowDown className="text-black" />
+        )}
+      </div>
+    )}
+    {isBeneficiaryVisible && dropDownStates.beneficiaryOpen && <BeneficiariesDropdown />}
+  </div>
+</div>
+
+
+       
   
         {/* Tabs Section */}
         <div className="flex-1 md:max-w-[75%] order-1 md:order-2">

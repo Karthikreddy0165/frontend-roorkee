@@ -81,15 +81,16 @@ const NavBarScheme = () => {
   return (
     <div>
       {/* Navbar Container */}
-      <div className="flex justify-between items-center py-2 px-6 bg-white shadow-md z-10 relative sm:h-14 gap-2">
+      <div className="flex justify-between items-center py-2 px-6 bg-white shadow-md z-10 relative sm:h-[73px] h-[73px] gap-2 w-full">
+        {/* Logo Section */}
         <svg
-          width="40"
-          height="40"
-          viewBox="0 0 40 40"
+          width="50"
+          height="50"
+          viewBox="0 0 50 50"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <rect width="40" height="40" fill="url(#pattern0_924_1236)" />
+          <rect width="50" height="50" fill="url(#pattern0_924_1236)" />
           <defs>
             <pattern
               id="pattern0_924_1236"
@@ -120,9 +121,8 @@ const NavBarScheme = () => {
             />
           </defs>
         </svg>
-        {/* Logo Section */}
         <div
-          className={`sm:text-[16px] mt-2 font-semibold text-[#3431BB] text-sm hover:text-blue-700 cursor-pointer flex sm:flex gap-2 ${
+          className={`sm:text-[16px] mt-2 font-semibold text-[#3431BB] text-sm hover:text-blue-700 cursor-pointer flex gap-2 ${
             showSearch ? "hidden" : "block"
           } sm:block`}
           onClick={handleClickLogo}
@@ -142,23 +142,23 @@ const NavBarScheme = () => {
             <input
               type="text"
               placeholder="Search schemes, jobs, or scholarships"
-              className="flex-1 text-xs bg-transparent focus:outline-none placeholder-[#616161] w-full px-2"
+              className="flex-1 text-xs bg-transparent focus:outline-none placeholder-[#616161] w-full px-3"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
 
-            {/* Conditional rendering of the close icon when showSearch is true */}
+            {/* Close Icon to hide search */}
             <IoCloseOutline
-              className="cursor-pointer w-6 h-6 text-gray-500 mr-2"
+              className="cursor-pointer w-5 h-6 text-gray-500 mr-2"
               onClick={() => {
-                setShowSearch(false); // Close the search bar
+                setShowSearch(false);
                 setSearchQuery(""); // Optionally clear the search input
               }}
             />
           </div>
 
           {/* Search Icon to Trigger Search Field */}
-          <ToolTips tooltip="Search for schemes,job openings & scholarships"></ToolTips>
+          <ToolTips tooltip="Search for schemes, job openings & scholarships"></ToolTips>
           {!showSearch && (
             <IoSearchOutline
               className="cursor-pointer w-6 h-6 text-gray-500 absolute right-10"
@@ -167,9 +167,9 @@ const NavBarScheme = () => {
           )}
         </div>
 
-        {/* Hamburger Menu Icon */}
+        {/* Hamburger Menu Icon (Visible only on small screens) */}
         <div
-          className="sm:hidden cursor-pointer absolute right-6"
+          className="sm:hidden cursor-pointer absolute mr-[6px] right-6"
           onClick={toggleSidebar}
         >
           <IoMenuOutline size={28} color="gray" />
@@ -179,7 +179,7 @@ const NavBarScheme = () => {
         <div className="flex gap-4 items-center ml-auto">
           {authState.token ? (
             <div className="relative">
-              {/* Profile Button */}
+              {/* Profile Button (Visible on desktop) */}
               <button
                 className="flex items-center px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 hidden md:flex"
                 onClick={toggleDropdown}
@@ -199,7 +199,6 @@ const NavBarScheme = () => {
                         My Profile
                       </button>
                     </li>
-                    {/* <hr /> */}
                     <li>
                       <button
                         className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left hover:rounded-b-lg"
@@ -214,9 +213,17 @@ const NavBarScheme = () => {
             </div>
           ) : (
             <div>
-              {/* Login Button */}
+              {/* Login Button (Visible only on mobile, tablet, or when user is not logged in) */}
               <button
-                className="px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700  hidden sm:block"
+                className="px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 sm:hidden"
+                onClick={handleGotologin}
+              >
+                Login
+              </button>
+
+              {/* Login Button (Visible on desktop) */}
+              <button
+                className="px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 hidden sm:block"
                 onClick={handleGotologin}
               >
                 Login

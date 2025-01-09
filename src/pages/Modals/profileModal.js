@@ -7,6 +7,7 @@ import FilterContext from "@/Context/FilterContext";
 import { values } from "lodash";
 
 
+
 const ProfileModal = ({ onClose }) => {
   const {
     setStates,
@@ -218,8 +219,10 @@ useEffect(() => {
           ...requestOptions,
           body: JSON.stringify({
             name: profileData.name,
-            gender: profileData.gender || 0,
-            age: profileData.age,
+
+            gender: profileData.gender,
+            age: profileData.age || 0,
+
             category: profileData.community,
             state_of_residence: profileData.state,
             minority: profileData.minority === "Yes",

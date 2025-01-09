@@ -1,3 +1,5 @@
+import { FeedbackButtonFooter } from "./feedBack";
+
 const Footer = () => {
   return (
     <>
@@ -21,19 +23,19 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Navigation</h4>
             <ul className="space-y-2">
               <li>
-                <a href="/" className="text-black hover:text-white">
+                <a href="/" className="text-black ">
                   Home
                 </a>
               </li>
               <li>
-                <a href="/AllSchemes" className="text-[#000000] hover:text-[#000000]">
+                <a href="/AllSchemes" className="text-black ">
                   Schemes
                 </a>
               </li>
               <li>
                 <a
                   href="/AllSchemes?tab=Job+Openings"
-                  className="text-[#000000] hover:text-[#000000]"
+                  className="text-black hover:text-black"
                 >
                   Job openings
                 </a>
@@ -41,7 +43,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/AllSchemes?tab=Scholarships"
-                  className="text-[#000000] hover:text-[#000000]"
+                  className="text-black hover:text-black"
                 >
                   Scholarships
                 </a>
@@ -49,7 +51,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/AllSchemes?tab=Saved"
-                  className="text-[#000000] hover:text-[#000000]"
+                  className="text-black hover:text-black"
                 >
                   Saved
                 </a>
@@ -62,14 +64,23 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Important Links</h4>
             <ul className="space-y-2">
               <li>
-                <a href="/faqs" className="text-[#000000] hover:text-[#000000]">
+                <a href="/faqs" className="text-black hover:text-black">
                   FAQ’s
                 </a>
               </li>
+              {/* Uncomment the feedback link once you implement the button */}
+              {/* <li>
+                <a
+                  onClick={<FeedbackButtonFooter />}
+                  className="text-black hover:text-black"
+                >
+                  Feedback
+                </a>
+              </li> */}
               <li>
                 <a
                   href="/privacy-policy"
-                  className="text-[#000000] hover:text-[#000000]"
+                  className="text-black hover:text-black"
                 >
                   Privacy Policy
                 </a>
@@ -77,7 +88,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/terms-conditions"
-                  className="text-[#000000] hover:text-[#000000]"
+                  className="text-black hover:text-black"
                 >
                   Terms and Conditions
                 </a>
@@ -88,13 +99,14 @@ const Footer = () => {
           {/* Contact Information and Social Media */}
           <div className="flex-1 md:max-w-[30%]">
             <h4 className="text-lg font-semibold mb-4">Get in Touch</h4>
-            <p className="text-sm text-[#000000] mb-2">
+
+            <p className="text-sm text-black mb-2">
               <strong>Address:</strong> 1234 Street Name, City, Country
             </p>
-            <p className="text-sm text-[#000000] mb-2">
+            <p className="text-sm text-black mb-2">
               <strong>Email Id:</strong> contact@launchpad.com
             </p>
-            <p className="text-sm text-[#000000] mb-4">
+            <p className="text-sm text-black mb-4">
               <strong>Phone No:</strong> +1 (234) 567-890
             </p>
 
@@ -203,9 +215,10 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Footer Bottom Text */}
-        <div className="mt-8 text-center text-sm text-[#000000]">
-          &copy; 2024 Launchpad. All Rights Reserved.
+        <div className="border-t-2 border-[#3e5c6e] py-4 mt-8 text-center">
+          <p className="text-sm text-black">
+            &copy; {new Date().getFullYear()} LaunchPad. All Rights Reserved.
+          </p>
         </div>
       </footer>
     </>
