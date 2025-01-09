@@ -305,7 +305,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
               New update
             </button> */}
 
-                  <div className="gap-[12px] pt-[16px] pd-[16px]">
+                  <div className="gap-[12px] pt-[16px] pd-[16px] w-[200px] md:w-8/12">
                     <p
                       className="font-inter text-[16px] sm:text-[18px] leading-[21.6px] cursor-pointer font-semibold mb-[10px] line-clamp-2 w-8/12 text-gray-700"
                       role="button"
