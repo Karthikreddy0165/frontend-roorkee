@@ -35,7 +35,7 @@ const App = () => {
   }
 
   const handleClickFindrightSchemeForYOu = () => {
-    router.push("/AllSchemes");
+    router.push("/Modals/PreferencesModal");
   };
 
   const handleSchemesClick = () => {
