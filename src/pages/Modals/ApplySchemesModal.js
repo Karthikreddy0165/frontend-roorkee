@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useRouter } from "next/router";
 import HowToApply from './HowToApply';  
+import { useAuth } from "@/Context/AuthContext";
 
 const ApplyModal = ({
   isOpen,
@@ -17,12 +18,13 @@ const ApplyModal = ({
   const [readMore, setReadMore] = useState(false);
   const [reportModalOpen, setReportModalOpen] = useState(false);
   const [reportFormData, setReportFormData] = useState({
+    scheme_id: "",
     description: "",
-    category: "",
+    report_category: "",
   });
   const descriptionRef = useRef(null);
   const [isHowToApplyOpen, setIsHowToApplyOpen] = useState(false); 
-
+  const {authState} = useAuth()
   useEffect(() => {
     const fetchData = async () => {
       if (scheme && scheme.id) {
@@ -81,23 +83,23 @@ const ApplyModal = ({
   }, [scheme?.description]);
 
   const handleReportFormChange = (e) => {
+
     const { name, value } = e.target;
     setReportFormData((prevData) => ({
       ...prevData,
+      scheme_id: scheme.id,
       [name]: value,
     }));
   };
 
   const handleReportSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/feedback/scheme-reports/", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/feedback/scheme-reports/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM1OTczNTg4LCJpYXQiOjE3MzUxMDk1ODgsImp0aSI6ImVjOGI1NWQ2YjMzOTQyZTY5NGVlNWIzOTAwNDJlODJkIiwidXNlcl9pZCI6MX0.2emHvQsagNbIpHpSuC6nlAEy-_p5Q4xFFFSymvUPxE4"
-
+          "Authorization": `Bearer ${authState.token}`
         },
         body: JSON.stringify(reportFormData),
       });
@@ -107,7 +109,7 @@ const ApplyModal = ({
       }
 
       alert("Report created successfully!");
-      setReportFormData({  description: "", category: "" });
+      setReportFormData({  description: "", report_category: "" });
       setReportModalOpen(false);
     } catch (error) {
       console.error("Error submitting report:", error);
@@ -157,10 +159,10 @@ const ApplyModal = ({
   </div>
 
   {/* Date and Report Button aligned */}
-  <div className="flex items-center space-between sm:gap-[250px] w-full mt-2">
+  <div className="flex items-center space-between sm:gap-[200px] w-full mt-2">
     {/* Date */}
     {scheme?.created_at?.split(" ")[0] && (
-      <p className="text-[11px]  sm:text-[14px] rounded-[12px] py-1 px-[6px] bg-[#EEF] mr-4">
+      <p className="text-[11px]  sm:text-[14px] rounded-[12px] py-1 px-[6px] bg-[#EEF] mr-4 whitespace-nowrap">
         {`Last updated on ${scheme.created_at.split(" ")[0]}`}
       </p>
     )}
@@ -316,16 +318,16 @@ const ApplyModal = ({
             <div>
                 <label className="block text-sm font-semibold mb-2">Category</label>
                 <select
-                  name="category"
+                  name="report_category"
                   value={reportFormData.category}
                   onChange={handleReportFormChange}
                   required
                   className="w-full p-2 border text-sm rounded-md"
                 >
                   <option value="">Select Category</option>
-                  <option value="General">Incorrect information</option>
-                  <option value="Urgent">Outdated information</option>
-                  <option value="Feedback">Other</option>
+                  <option value="incorrect_info">Incorrect information</option>
+                  <option value="outdated_info">Outdated information</option>
+                  <option value="other">Other</option>
                 </select>
               </div>
              
