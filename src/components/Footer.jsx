@@ -215,7 +215,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t-2 border-[#3e5c6e] py-4 mt-8 text-center">
+        <div className=" py-4 mt-8 text-center">
           <p className="text-sm text-black">
             &copy; {new Date().getFullYear()} LaunchPad. All Rights Reserved.
           </p>
