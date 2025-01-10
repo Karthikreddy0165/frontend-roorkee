@@ -3,10 +3,12 @@ import { IoMdClose } from "react-icons/io";
 import { useRouter } from "next/router";
 import HowToApply from './HowToApply';  
 import { useAuth } from "@/Context/AuthContext";
-
+import { useBookmarkContext } from "@/Context/BookmarkContext";
 import { useScheme } from "@/Context/schemeContext";
 import SavedModal from "@/pages/Modals/savedModal"
 import Toast from "@/components/ComponentsUtils/SavedToast";
+import UnSaveToast from "@/components/ComponentsUtils/UnsaveToast";
+
 
 const ApplyModal = ({
   isOpen,
@@ -26,20 +28,32 @@ const ApplyModal = ({
     description: "",
     report_category: "",
   });
+  const { isBookmarked, toggleBookmark } = useBookmarkContext();
+  const [isSaved, setIsSaved] = useState(false);
   const router = useRouter()
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const descriptionRef = useRef(null);
   const [isHowToApplyOpen, setIsHowToApplyOpen] = useState(false); 
 
   const [isToastVisible, setIsToastVisible] = useState(false);
+  const [isUnSaveToastVisible, setIsUnSaveToastVisible] = useState(false);
   const {authState} = useAuth()
   const { saveScheme } = useScheme();
+  const { unsaveScheme } = useScheme();
 
   const handleSave = async (scheme_id, authState) => {
-    const success = await saveScheme(scheme_id, authState);
-    if (success) {
+    const success = isBookmarked[scheme_id]
+          ? await unsaveScheme(scheme_id, authState)
+          : await saveScheme(scheme_id, authState);
+    if (success && !isBookmarked[scheme_id]) {
+      toggleBookmark(scheme_id, isBookmarked[scheme_id])
       console.log("Scheme saved successfully!");
       setIsToastVisible(true)
+      setIsSaved(true)
+    }else if (success && isBookmarked[scheme_id]){
+      toggleBookmark(scheme_id, isBookmarked[scheme_id])
+      setIsUnSaveToastVisible(true)
+      setIsSaved(false)
     } else {
       setIsSavedModalOpen(true)
       console.error("Failed to save scheme");
@@ -81,13 +95,21 @@ const ApplyModal = ({
         setError("Invalid scheme data");
       }
     };
-
+    
     fetchData();
+    
   }, [scheme]);
 
 
 
   useEffect(() => {
+    if (isBookmarked[scheme?.id]) {
+      console.log("This scheme is already bookmarked.");
+      setIsSaved(true);
+    } else {
+      console.log("This scheme is not bookmarked.");
+      setIsSaved(false);
+    }
     if (isOpen) {
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
@@ -101,6 +123,7 @@ const ApplyModal = ({
       document.documentElement.style.overflow = "";
     };
   }, [isOpen]);
+
 
   useEffect(() => {
     if (descriptionRef.current) {
@@ -316,14 +339,9 @@ const ApplyModal = ({
                   <div className="mt-8 flex sm:gap-[50px] gap-[5px] justify-between">
 
                     <div className="flex items-center text-[#3431Bb] font-semibold cursor-pointer" onClick={() => handleSave(scheme.id,authState)}>
-                      Save for Later
+                    {isSaved ? "Unsave Scheme" : "Save for Later"}
                     </div>
-                    {isSavedModalOpen && (
-                      <SavedModal
-                        isOpen= {isSavedModalOpen}
-                        onRequestClose={() => setIsSavedModalOpen(false)}
-                      />
-                    )}
+                    
 
                 {isToastVisible && (
                           <Toast
@@ -331,6 +349,13 @@ const ApplyModal = ({
                             onClose={() => setIsToastVisible(false)}
                           />
                         )}
+
+            {isUnSaveToastVisible && (
+                      <UnSaveToast
+                        message={""}
+                        onClose={() => setIsUnSaveToastVisible(false)}
+                      />
+                    )}
 
                   
                     <div className="flex-shrink-0">
@@ -446,8 +471,8 @@ const ApplyModal = ({
           <SavedModal
             isOpen={isSavedModalOpen}
             onRequestClose={() => setIsSavedModalOpen(false)}
-            heading={'Report'}
-            tag={'report'}
+            heading={'Login to save'}
+            tag={'save'}
           />
         )}
     </div>
