@@ -64,6 +64,7 @@ const ApplyModal = ({
 
           const [criteriaData, documentsData] = await Promise.all([
             criteriaRes.json(),
+            
             documentsRes.json(),
           ]);
 
@@ -83,6 +84,8 @@ const ApplyModal = ({
 
     fetchData();
   }, [scheme]);
+
+
 
   useEffect(() => {
     if (isOpen) {
@@ -152,6 +155,8 @@ const ApplyModal = ({
     setIsHowToApplyOpen(false); 
   };
 
+  console.log(scheme, scheme.id)
+  
   
 
   if (!isOpen) return null;
@@ -246,6 +251,14 @@ const ApplyModal = ({
                 <div className="flex items-start py-[2rem]  border-b-[1px]">
                   <h2 className="w-28 text-[14px] font-semibold">Beneficiaries:</h2>
                   <p className="flex-1">{scheme.beneficiaries[0].beneficiary_type}</p>
+                </div>
+              )}
+
+{scheme.criteria?.state && (
+                <div className="flex items-start py-[2rem] border-b-[1px] mt-4">
+                  <h2 className="w-28 text-[14px]  font-semibold">Eligibility:
+</h2>
+                  <p className="flex-1">{scheme.department.criteria}</p>
                 </div>
               )}
 
