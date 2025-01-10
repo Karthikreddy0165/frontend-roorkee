@@ -5,7 +5,6 @@ const SchemeContext = createContext();
 
 export const SchemeProvider = ({ children }) => {
   const saveScheme = async (scheme_id, authState) => {
-    console.log("aa rahi hai", scheme_id, authState)
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${authState.token}`);
     myHeaders.append("Content-Type", "application/json");
@@ -39,9 +38,39 @@ export const SchemeProvider = ({ children }) => {
       return false;
     }
   };
+  const unsaveScheme = async (scheme_id, authState) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${authState.token}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({ scheme_id });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/unsave_scheme/`,
+        requestOptions
+      );
+      if (response.ok) {
+        return true;
+      } else {
+        console.error("Failed to unsave scheme");
+        return false;
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+      return false;
+    }
+  };
 
   return (
-    <SchemeContext.Provider value={{ saveScheme }}>
+    <SchemeContext.Provider value={{ saveScheme, unsaveScheme }}>
       {children}
     </SchemeContext.Provider>
   );
