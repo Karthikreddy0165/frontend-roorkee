@@ -341,14 +341,7 @@ const ApplyModal = ({
                     <div className="flex items-center text-[#3431Bb] font-semibold cursor-pointer" onClick={() => handleSave(scheme.id,authState)}>
                     {isSaved ? "Unsave Scheme" : "Save for Later"}
                     </div>
-                    {isSavedModalOpen && (
-                      <SavedModal
-                        isOpen= {isSavedModalOpen}
-                        onRequestClose={() => setIsSavedModalOpen(false)}
-                        heading={'Saved'}
-                        tag={'save'}
-                      />
-                    )}
+                    
 
                 {isToastVisible && (
                           <Toast
@@ -478,8 +471,8 @@ const ApplyModal = ({
           <SavedModal
             isOpen={isSavedModalOpen}
             onRequestClose={() => setIsSavedModalOpen(false)}
-            heading={'Report'}
-            tag={'report'}
+            heading={'Login to save'}
+            tag={'save'}
           />
         )}
     </div>
