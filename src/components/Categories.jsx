@@ -189,9 +189,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
         if (success) {
           toggleBookmark(itemId, isBookmarked[itemId]);
-          setToastMessage(
-            isBookmarked[itemId] ? "" : ""
-          );
+          setToastMessage(isBookmarked[itemId] ? "" : "");
           setIsToastVisible(true);
         }
       } catch (error) {
@@ -283,7 +281,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       {/* We have found {378} schemes based on your profile */}
 
       <div className="overflow-y-auto max-h-screen">
-
         {(activeTab !== "Saved"
           ? dataFromApi.results
           : dataFromApi.results

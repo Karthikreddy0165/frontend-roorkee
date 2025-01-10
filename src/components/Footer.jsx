@@ -1,10 +1,10 @@
 import { FeedbackButtonFooter } from "./feedBack";
-import FeedbackButton from "./feedBack"
+import FeedbackButton from "./feedBack";
 
 const Footer = () => {
   return (
     <>
-      <footer className="text-black py-[5rem] px-4 gap-[5rem]  sm:mt-[10rem] ">
+      <footer className="text-black py-[5rem] px-4 gap-[5rem]  sm:mt-[2rem] ">
         <div className="max-w-screen-xl mx-auto flex flex-wrap justify-between space-y-8 md:space-y-0 gap-8">
           {/* Logo and Description */}
           <div className="flex-1 md:max-w-[40%]">
@@ -169,12 +169,10 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2">
               <li>
-                <a href="/faqs" className="text-black hover:text-black">
-                  FAQ’s
-                </a>
+                <a className="text-black hover:text-black">FAQ’s</a>
               </li>
-              <li> 
-                  <FeedbackButton className="text-black"/>
+              <li>
+                <FeedbackButton className="text-black" />
               </li>
               {/* Uncomment the feedback link once you implement the button */}
               {/* <li>
@@ -186,18 +184,10 @@ const Footer = () => {
                 </a>
               </li> */}
               <li>
-                <a
-                  href="/privacy-policy"
-                  className="text-black hover:text-black"
-                >
-                  Privacy Policy
-                </a>
+                <a className="text-black hover:text-black">Privacy Policy</a>
               </li>
               <li>
-                <a
-                  href="/terms-conditions"
-                  className="text-black hover:text-black"
-                >
+                <a className="text-black hover:text-black">
                   Terms and Conditions
                 </a>
               </li>
