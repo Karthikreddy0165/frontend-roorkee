@@ -193,7 +193,7 @@ const ApplyModal = ({
   >
 
     <div
-    className={`fixed inset-0 z-50 gap-[10px] ${isHowToApplyOpen || isReportModalOpen || setIsSavedModalOpen ? '' : 'pointer-events-none'}`}
+    className={`fixed inset-0 z-50 gap-[10px] ${isHowToApplyOpen || isReportModalOpen || isSavedModalOpen ? '' : 'pointer-events-none'}`}
   >
 <div
   className={`absolute h-full sm:h-screen bg-white transition-all w-full sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[40%] right-0 top-0 p-4 sm:p-6 rounded-lg border gap-[10px] border-gray-200 shadow-lg z-50 pointer-events-auto`}
