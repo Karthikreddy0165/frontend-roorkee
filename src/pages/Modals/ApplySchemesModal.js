@@ -188,9 +188,7 @@ const ApplyModal = ({
   
 
   return (
-<div
-    className={`fixed inset-0 z-50 gap-[10px] ${isHowToApplyOpen ? '' : 'pointer-events-none'}`}
-  >
+
 
     <div
     className={`fixed inset-0 z-50 gap-[10px] ${isHowToApplyOpen || isReportModalOpen || isSavedModalOpen ? '' : 'pointer-events-none'}`}
