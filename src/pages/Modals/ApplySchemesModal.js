@@ -188,9 +188,9 @@ const ApplyModal = ({
   
 
   return (
-
-    <div className="fixed inset-0 z-50 gap-[10px] pointer-events-none">
-     <div
+<div
+    className={`fixed inset-0 z-50 gap-[10px] ${isHowToApplyOpen ? '' : 'pointer-events-none'}`}
+  >
 
   className={`absolute h-screen sm:h-screen bg-white transition-all w-full sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[40%] right-0 top-0 p-4 sm:p-6 rounded-lg border gap-[10px] border-gray-200 shadow-lg z-50 pointer-events-auto`}
   style={{
