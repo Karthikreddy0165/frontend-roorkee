@@ -345,6 +345,8 @@ const ApplyModal = ({
                       <SavedModal
                         isOpen= {isSavedModalOpen}
                         onRequestClose={() => setIsSavedModalOpen(false)}
+                        heading={'Saved'}
+                        tag={'save'}
                       />
                     )}
 
