@@ -202,14 +202,10 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="/aboutus" className="text-black hover:text-black">
-                  About us
-                </a>
+                <a className="text-black hover:text-black">About us</a>
               </li>
               <li>
-                <a href="/resources" className="text-black hover:text-black">
-                  Resources
-                </a>
+                <a className="text-black hover:text-black">Resources</a>
               </li>
             </ul>
           </div>

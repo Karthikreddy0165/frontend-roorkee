@@ -3,10 +3,12 @@ import { IoMdClose } from "react-icons/io";
 import { useRouter } from "next/router";
 import HowToApply from './HowToApply';  
 import { useAuth } from "@/Context/AuthContext";
-
+import { useBookmarkContext } from "@/Context/BookmarkContext";
 import { useScheme } from "@/Context/schemeContext";
 import SavedModal from "@/pages/Modals/savedModal"
 import Toast from "@/components/ComponentsUtils/SavedToast";
+import UnSaveToast from "@/components/ComponentsUtils/UnsaveToast";
+
 
 const ApplyModal = ({
   isOpen,
@@ -26,6 +28,8 @@ const ApplyModal = ({
     description: "",
     report_category: "",
   });
+  const { isBookmarked, toggleBookmark } = useBookmarkContext();
+  const [isSaved, setIsSaved] = useState(false);
   const router = useRouter()
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
@@ -33,14 +37,24 @@ const ApplyModal = ({
   const [isHowToApplyOpen, setIsHowToApplyOpen] = useState(false); 
 
   const [isToastVisible, setIsToastVisible] = useState(false);
+  const [isUnSaveToastVisible, setIsUnSaveToastVisible] = useState(false);
   const {authState} = useAuth()
   const { saveScheme } = useScheme();
+  const { unsaveScheme } = useScheme();
 
   const handleSave = async (scheme_id, authState) => {
-    const success = await saveScheme(scheme_id, authState);
-    if (success) {
+    const success = isBookmarked[scheme_id]
+          ? await unsaveScheme(scheme_id, authState)
+          : await saveScheme(scheme_id, authState);
+    if (success && !isBookmarked[scheme_id]) {
+      toggleBookmark(scheme_id, isBookmarked[scheme_id])
       console.log("Scheme saved successfully!");
       setIsToastVisible(true)
+      setIsSaved(true)
+    }else if (success && isBookmarked[scheme_id]){
+      toggleBookmark(scheme_id, isBookmarked[scheme_id])
+      setIsUnSaveToastVisible(true)
+      setIsSaved(false)
     } else {
       setIsSavedModalOpen(true)
       console.error("Failed to save scheme");
@@ -82,13 +96,21 @@ const ApplyModal = ({
         setError("Invalid scheme data");
       }
     };
-
+    
     fetchData();
+    
   }, [scheme]);
 
 
 
   useEffect(() => {
+    if (isBookmarked[scheme?.id]) {
+      console.log("This scheme is already bookmarked.");
+      setIsSaved(true);
+    } else {
+      console.log("This scheme is not bookmarked.");
+      setIsSaved(false);
+    }
     if (isOpen) {
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
@@ -102,6 +124,7 @@ const ApplyModal = ({
       document.documentElement.style.overflow = "";
     };
   }, [isOpen]);
+
 
   useEffect(() => {
     if (descriptionRef.current) {
@@ -166,9 +189,12 @@ const ApplyModal = ({
 
   return (
     <div className="fixed inset-0 z-50 gap-[10px] ">
-      <div
-        className={`absolute bg-white transition-all w-full h-full sm:w-[40%] sm:right-0 sm:rounded-lg border gap-[10px] border-gray-200 shadow-lg`}
-      >
+<div
+  className={`absolute h-screen sm:h-screen bg-white transition-all w-full sm:w-[80%] md:w-[60%] lg:w-[50%] xl:w-[50%] right-0 top-0 p-4 sm:p-6 rounded-lg border gap-[10px] border-gray-200 shadow-lg z-50`}
+  style={{
+    right: "0",
+  }}
+>
         <button
           className="absolute right-4 p-[20px] text-lg hover:text-red-500"
           onClick={onRequestClose}
@@ -188,7 +214,7 @@ const ApplyModal = ({
 </div> */}
 
 
-<div className="flex flex-col items-start w-full py-[20px] overflow-hidden">
+<div className="flex flex-col  items-start w-full py-[20px] overflow-hidden">
   {/* Title and Report Button */}
   <div className="flex items-center justify-between w-full flex-wrap ">
     <h1 className="text-[20px] font-bold mb-2 w-full sm:w-auto ">{scheme.title}</h1>
@@ -207,7 +233,7 @@ const ApplyModal = ({
 
 {/* Report Button */}
 <button
-  onClick={() => authState.token ? setReportModalOpen(true) : setIsSavedModalOpen(true)}
+  onClick={() => authState.token ? setReportModalOpen(true) : setIsReportModalOpen(true)}
   className="flex items-center px-4 py-2 text-red-500 rounded-lg mt-0"
 >
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
@@ -317,14 +343,9 @@ const ApplyModal = ({
                   <div className="mt-8 flex sm:gap-[50px] gap-[5px] justify-between">
 
                     <div className="flex items-center text-[#3431Bb] font-semibold cursor-pointer" onClick={() => handleSave(scheme.id,authState)}>
-                      Save for Later
+                    {isSaved ? "Unsave Scheme" : "Save for Later"}
                     </div>
-                    {isSavedModalOpen && (
-                      <SavedModal
-                        isOpen= {isSavedModalOpen}
-                        onRequestClose={() => setIsSavedModalOpen(false)}
-                      />
-                    )}
+                    
 
                 {isToastVisible && (
                           <Toast
@@ -332,6 +353,13 @@ const ApplyModal = ({
                             onClose={() => setIsToastVisible(false)}
                           />
                         )}
+
+            {isUnSaveToastVisible && (
+                      <UnSaveToast
+                        message={""}
+                        onClose={() => setIsUnSaveToastVisible(false)}
+                      />
+                    )}
 
                   
                     <div className="flex-shrink-0">
@@ -454,7 +482,7 @@ const ApplyModal = ({
         {isReportModalOpen && (
           <SavedModal
             isOpen={isReportModalOpen}
-            onRequestClose={() => setIsSavedModalOpen(false)}
+            onRequestClose={() => setIsReportModalOpen(false)}
             heading={'Report'}
             tag={'report'}
           />
