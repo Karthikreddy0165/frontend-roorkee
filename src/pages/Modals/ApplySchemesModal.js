@@ -188,9 +188,12 @@ const ApplyModal = ({
 
   return (
     <div className="fixed inset-0 z-50 gap-[10px] ">
-      <div
-        className={`absolute bg-white transition-all w-full h-full sm:w-[40%] sm:right-0 sm:rounded-lg border gap-[10px] border-gray-200 shadow-lg`}
-      >
+<div
+  className={`absolute h-screen sm:h-screen bg-white transition-all w-full sm:w-[80%] md:w-[60%] lg:w-[50%] xl:w-[50%] right-0 top-0 p-4 sm:p-6 rounded-lg border gap-[10px] border-gray-200 shadow-lg z-50`}
+  style={{
+    right: "0",
+  }}
+>
         <button
           className="absolute right-4 p-[20px] text-lg hover:text-red-500"
           onClick={onRequestClose}
@@ -210,7 +213,7 @@ const ApplyModal = ({
 </div> */}
 
 
-<div className="flex flex-col items-start w-full py-[20px] overflow-hidden">
+<div className="flex flex-col  items-start w-full py-[20px] overflow-hidden">
   {/* Title and Report Button */}
   <div className="flex items-center justify-between w-full flex-wrap ">
     <h1 className="text-[20px] font-bold mb-2 w-full sm:w-auto ">{scheme.title}</h1>
