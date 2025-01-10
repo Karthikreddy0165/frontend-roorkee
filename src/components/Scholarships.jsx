@@ -73,13 +73,16 @@ export default function Scholarships() {
     beneficiaries,
   ]);
 
-  // if (dataOfApi.count===0 && (states.length !== 0 || departments.length !== 0)) {
-  //   return (
-  //     <div className="flex justify-center items-center mt-8">
-  //       No scholarship-related schemes found based on your preference
-  //     </div>
-  //   );
-  // }
+  if (
+    dataOfApi.count === 0 &&
+    (states.length !== 0 || departments.length !== 0)
+  ) {
+    return (
+      <div className="flex justify-center text-[14px] sm:text-[18px] items-center mt-[8rem]">
+        No scholarship-related schemes found based on your preference
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white font-sans">

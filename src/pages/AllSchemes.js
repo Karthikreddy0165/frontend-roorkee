@@ -92,12 +92,12 @@ const SchemesAll = () => {
   };
 
   return (
-    <div>
+    <div className="overflow-y-auto">
       <NavBarScheme />
       <SchemeVerifiedStatus />
   
       {/* Banner Image */}
-      <div className="relative max-w-[90%] mx-auto mb-[16px] sm:mb-8 mt-2  sm:block hidden">
+      <div className="relative max-w-[90%] mx-auto mb-[16px] sm:mb-8 mt-[2rem] sm:block hidden">
         <div className="relative w-full">
           <Image
             src={img || bannerImage || backUpBannerImage}
@@ -110,83 +110,81 @@ const SchemesAll = () => {
         </div>
       </div>
   
-      <div className="max-w-[90%] mx-auto flex flex-col md:flex-row py-[20px]">
-      <div className="flex-1 md:max-w-[25%] p-4 md:mr-2 order-2 md:order-1 hidden md:block">
-  <div className="bg-white z-10 top-0">
-    <div className="flex justify-between items-center">
-      <h1 className="m-0 font-semibold">Filters</h1>
-      <button
-        className="text-[#3431BB] font-semibold p-2 hover:bg-[#EEEEFF] hover:rounded-lg m-0 hidden md:block"
-        onClick={clearAllFilters}
-      >
-        Clear all filters
-      </button>
-    </div>
-    <hr />
-  </div>
+      <div className="max-w-[90%] mx-auto flex flex-col md:flex-row ">
+        <div className="flex-1 md:max-w-[25%] p-4 md:mr-2 order-2 md:order-1 hidden md:block">
+          <div className="sticky top-0 bg-white z-10">
+            <div className="flex justify-between items-center">
+              <h1 className="m-0 font-semibold">Filters</h1>
+              <button
+                className="text-[#3431BB] font-semibold hover:rounded-lg m-0"
+                onClick={clearAllFilters}
+              >
+                Clear all filters
+              </button>
+            </div>
+            <hr className="my-4 border-t border-gray-300" />
+          </div>
 
-  {/* Filters Section with Scrollable Content, no scrollbar */}
-  <div className="hidden md:block max-h-[70vh] overflow-y-auto scrollbar-none"> {/* Hide scrollbar */}
-    {/* Sponsored By Dropdown */}
-    <div
-      className="flex justify-between items-center hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2 mt-2"
-      onClick={() => toggleDropdown("sponsoredOpen")}
-    >
-      <span>Sponsored By</span>
-      {dropDownStates.sponsoredOpen ? (
-        <IoIosArrowUp className="text-black" />
-      ) : (
-        <IoIosArrowDown className="text-black" />
-      )}
-    </div>
-    {dropDownStates.sponsoredOpen && <SponsorsDropdownMenu />}
+          {/* Filters Section with Scrollable Content */}
+          <div className="max-h-[70vh] overflow-y-auto scrollbar-none">
+            {/* Sponsored By Dropdown */}
+            <div
+              className="sticky top-0 z-20 flex justify-between items-center hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2 mt-2"
+              onClick={() => toggleDropdown("sponsoredOpen")}
+            >
+              <span>Sponsored By</span>
+              {dropDownStates.sponsoredOpen ? (
+                <IoIosArrowUp className="text-black" />
+              ) : (
+                <IoIosArrowDown className="text-black" />
+              )}
+            </div>
+            {dropDownStates.sponsoredOpen && <SponsorsDropdownMenu />}
 
-    {/* Department Dropdown */}
-    {isDepartmentVisible && (
-      <div
-        className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
-        onClick={() => toggleDropdown("departmentOpen")}
-      >
-        <span>Department</span>
-        {dropDownStates.departmentOpen ? (
-          <IoIosArrowUp className="text-black" />
-        ) : (
-          <IoIosArrowDown className="text-black" />
-        )}
-      </div>
-    )}
-    {isDepartmentVisible && dropDownStates.departmentOpen && <DepartmentDropdownMenu />}
+            {/* Department Dropdown */}
+            {isDepartmentVisible && (
+              <div
+                className="sticky top-12 z-10 flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
+                onClick={() => toggleDropdown("departmentOpen")}
+              >
+                <span>Department</span>
+                {dropDownStates.departmentOpen ? (
+                  <IoIosArrowUp className="text-black" />
+                ) : (
+                  <IoIosArrowDown className="text-black" />
+                )}
+              </div>
+            )}
+            {isDepartmentVisible && dropDownStates.departmentOpen && <DepartmentDropdownMenu />}
 
-    {/* Beneficiaries Dropdown */}
-    {isBeneficiaryVisible && (
-      <div
-        className="flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
-        onClick={() => toggleDropdown("beneficiaryOpen")}
-      >
-        <span>Beneficiaries</span>
-        {dropDownStates.beneficiaryOpen ? (
-          <IoIosArrowUp className="text-black" />
-        ) : (
-          <IoIosArrowDown className="text-black" />
-        )}
-      </div>
-    )}
-    {isBeneficiaryVisible && dropDownStates.beneficiaryOpen && <BeneficiariesDropdown />}
-  </div>
-</div>
+            {/* Beneficiaries Dropdown */}
+            {isBeneficiaryVisible && (
+              <div
+                className="sticky top-24 z-10 flex justify-between items-center mb-4 hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
+                onClick={() => toggleDropdown("beneficiaryOpen")}
+              >
+                <span>Beneficiaries</span>
+                {dropDownStates.beneficiaryOpen ? (
+                  <IoIosArrowUp className="text-black" />
+                ) : (
+                  <IoIosArrowDown className="text-black" />
+                )}
+              </div>
+            )}
+            {isBeneficiaryVisible && dropDownStates.beneficiaryOpen && <BeneficiariesDropdown />}
+          </div>
+        </div>
 
-
-       
-  
         {/* Tabs Section */}
         <div className="flex-1 md:max-w-[75%] order-1 md:order-2">
           <Tabs />
         </div>
       </div>
+
       <div className="mt-[100px]">
-      <Footer/>
+        <Footer />
       </div>
-  
+
       {/* Mobile Filter Button */}
       <div className="md:hidden fixed bottom-4 right-4 z-50">
         <button
@@ -197,7 +195,6 @@ const SchemesAll = () => {
         </button>
       </div>
 
-  
       {/* Filter Modal (Mobile only) */}
       {isFilterModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -271,12 +268,10 @@ const SchemesAll = () => {
               </button>
             </div>
           </div>
-     
         </div>
       )}
     </div>
   );
-  
 };
 
 export default SchemesAll;

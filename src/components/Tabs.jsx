@@ -9,6 +9,7 @@ import SearchInput from "./ComponentsUtils/SearchInput";
 import SelectedFilters from "./SelectedFilters";
 import Saved from "./savedForLoginuser";
 import React from "react";
+import NavBarScheme from "./SchmesNavbar";
 
 export default function Tabs() {
   const router = useRouter();
@@ -33,7 +34,7 @@ export default function Tabs() {
   };
 
   const getButtonClass = (tabName) => {
-    return `flex-grow text-center font-sm p-[12px] rounded-t-[8px] text-semibold text-[14px] cursor-pointer font-sans  ${
+    return `sticky top-0 flex-grow text-center border-b-[2px] font-sm p-[12px] rounded-t-[8px] text-semibold text-[14px] cursor-pointer font-sans  ${
       activeTab === tabName
         ? "bg-[#EEEEFF] border-b-[3px] border-[#3431BB]"
         : "hover:bg-[#EEEEFF] hover:border-b-[3px] hover:border-[#3431BB]"
@@ -42,11 +43,14 @@ export default function Tabs() {
 
   return (
     <div>
+      {/* Fixed Navbar */}
+
       <SearchInput />
+
       <SelectedFilters />
 
       {/* Tabs for Larger Screens */}
-      <div className="hidden sm:flex justify-center items-center gap-[15px] border-b">
+      <div className="sticky top-[180px] z-20 bg-white sm:flex justify-center items-center gap-[5px] sm:block hidden">
         <button
           className={getButtonClass("Schemes")}
           onClick={() => handleTabClick("Schemes")}

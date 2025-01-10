@@ -270,31 +270,16 @@ useEffect(() => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex items-center justify-center   bg-black bg-opacity-50 z-50">
+      
       
       <div
         ref={modalRef}
-        className="bg-white rounded-lg w-[560px] h-[750px] p-6 flex flex-col items-start flex-shrink-0 relative"
+        className="bg-white rounded-lg w-[90%] sm:w-[720px] max-h-[90vh] overflow-y-auto p-6 flex flex-col items-start relative"
       >
-        <div className="w-full mb-4">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Profile Completion</label>
-              <div className="w-full bg-gray-200 rounded-full h-4">
-                <div
-                  className="bg-blue-500 h-4 rounded-full"
-                  style={{ width: `${progress}%` }}
-                ></div>
-              </div>
-              <p className="text-sm font-semibold text-gray-500 mt-1">{progress}% completed</p>
-            </div>
-        {loading ? (
-          <div className="flex items-center justify-center w-full h-full">
-            <div className="w-8 h-8 border-4 border-t-transparent border-blue-500 border-solid rounded-full animate-spin"></div>
-          </div>
-        ) : (
-          <>
-            {/* First Div */}
-            <div className="flex justify-between items-center mb-2 -mt-2 w-full">
-              <h2 className="text-2xl font-semibold text-[#0A0A0A]">Profile</h2>
+
+<div className="flex justify-between items-center mb-2 -mt-2 w-full">
+              <h2 className="text-2xl font-semibold text-[#000000]">Profile</h2>
               <button
                 onClick={onClose}
                 className="text-gray-500 hover:text-gray-700 w-10 h-10 flex items-center justify-center"
@@ -303,35 +288,55 @@ useEffect(() => {
               </button>
             </div>
 
-            <hr className="w-full" />
+            <hr className="w-full inline-block"/>
+
+        <div className="gap-4 w-full mt-[1rem]">
+              <label className="block text-[14px] font-semibold text-[#1E1E1E] mb-2">Profile Completion</label>
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div
+                  className="bg-[#3431BB] h-2 rounded-full"
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
+              <p className="text-sm font-semibold text-gray-500  mt-[1rem]">{progress}% completed</p>
+            </div>
+        {loading ? (
+          <div className="flex items-center justify-center w-full h-full">
+            <div className="w-8 h-8 border-4 border-t-transparent border-[#3431BB] border-solid rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <>
+            {/* First Div */}
+           
+
 
             {/* Second Div */}
             <div
               id="scroll-container"
-              className="space-y-4 mt-4 w-full overflow-y-auto"
+              className="space-y-4 mt-4 w-full overflow-y-auto flex-1"
             >
               <div>
-                <label className="block mb-2 text-[12px] font-semibold text-black">
+                <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                   Full Name
                 </label>
                 <input
                   type="text"
                   name="name"
-                  className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                  className="w-full h-[44px] border border-gray-300 p-2 rounded-lg  text-sm font-semibold text-[#757575]"
                   placeholder="Enter your name"
                   value={profileData.name}
                   onChange={handleChange}
                 />
               </div>
-              <div className="relative">
-                <label className="block mb-2 text-[12px] font-semibold text-black">
+              <div className="gap-4 w-full ">
+                <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                   Email
                 </label>
-                <div className="relative flex items-center space-x-2 w-full">
+                <div className="flex flex-col sm:flex-row gap-4 w-full ">
                   <div className="relative flex-grow">
                     <input
                       type="text"
-                      className="w-full h-[44px] border border-gray-300 p-2 pl-10 rounded-lg bg-gray-100 text-[12px] font-semibold text-black"
+                      className="w-full h-[44px] border border-gray-300 p-2 rounded-lg  text-sm font-semibold text-[#757575] px-[2rem]"
                       value={emailData?.email || ""}
                       onChange={handleChange}
                       readOnly
@@ -339,7 +344,7 @@ useEffect(() => {
                     {emailData?.is_email_verified ? (
                       <MdVerified className="absolute top-3 left-3 text-green-500" />
                     ) : (
-                      <VscUnverified className="absolute top-3 left-3 text-red-500" />
+                      <VscUnverified className="absolute top-3 left-3   text-red-500" />
                     )}
                   </div>
                   {!emailData?.is_email_verified && (
@@ -353,27 +358,27 @@ useEffect(() => {
 
                 </div>
               </div>
-              <div className="flex gap-4 w-full ">
+              <div className="flex flex-col sm:flex-row gap-4 w-full ">
                 <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                  <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     Age
                   </label>
                   <input
                     type="number"
                     name="age"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border border-gray-300 p-2 rounded-lg  text-sm font-semibold text-[#757575]"
                     placeholder="Enter your age"
                     value={profileData.age}
                     onChange={handleChange}
                   />
                 </div>
                 <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                  <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     Gender
                   </label>
                   <select
                     name="gender"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg  text-[14px] font-semibold text-[#757575]"
                     value={profileData.gender}
                     onChange={handleChange}
                   >
@@ -385,14 +390,14 @@ useEffect(() => {
                 </div>
               </div>
 
-              <div className="flex gap-4 w-full">
+              <div className="flex flex-col sm:flex-row gap-4 w-full ">
                 <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                  <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     Category
                   </label>
                   <select
                     name="community"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border border-gray-300 p-2 rounded-lg  text-sm font-semibold text-[#757575]"
                     value={profileData.community}
                     onChange={handleChange}
                   >
@@ -418,12 +423,12 @@ useEffect(() => {
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
                   </select> */}
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                  <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     BPL Card Holder
                   </label>
                   <select
                     name="bpl_card_holder"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border border-gray-300 p-2 rounded-lg  text-sm font-semibold text-[#757575]"
                     value={profileData.bpl_card_holder}
                     onChange={handleChange}
                   >
@@ -435,14 +440,14 @@ useEffect(() => {
                 </div>
               </div>
 
-              <div className="flex gap-4 w-full">
+              <div className="flex flex-col sm:flex-row gap-4 w-full ">
                 <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                  <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     State of Residence
                   </label>
                   <select
                     name="state"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg  text-[14px] font-semibold text-[#757575]"
                     value={profileData.state}
                     onChange={handleChange}
                   >
@@ -455,12 +460,12 @@ useEffect(() => {
                   </select>
                 </div>
                 <div className="flex-1">
-                <label className="block mb-2 text-[12px] font-semibold text-black">
+                <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     Disability
                   </label>
                   <select
                     name="disability"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg  text-[14px] font-semibold text-[#757575]"
                     value={profileData.disability}
                     onChange={handleChange}
                   >
@@ -471,14 +476,14 @@ useEffect(() => {
                 </div>
               </div>
 
-              <div className="flex gap-4 w-full">
+              <div className="flex flex-col sm:flex-row gap-4 w-full ">
                 <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                  <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     Education
                   </label>
                   <select
                     name="education"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border  p-2 rounded-lg bg-gray-10 text-[14px] font-semibold text-[#757575]"
                     value={profileData.education}
                     onChange={handleChange}
                   >
@@ -493,12 +498,12 @@ useEffect(() => {
 
 
                 <div className="flex-1">
-                <label className="block mb-2 text-[12px] font-semibold text-black">
+                <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     Employment
                   </label>
                   <select
                     name="employment_status"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border  p-2 rounded-lg bg-gray-10 text-[14px] font-semibold text-[#757575]"
                     value={profileData.employment_status}
                     onChange={handleChange}
                   >
@@ -512,14 +517,14 @@ useEffect(() => {
 
               </div>
 
-              <div className="flex gap-4 w-full">
+              <div className="flex flex-col sm:flex-row gap-4 w-full ">
                 <div className="flex-1">
-                  <label className="block mb-2 text-[12px] font-semibold text-black">
+                  <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     Occupation
                   </label>
                   <select
                     name="occupation"
-                    className="w-full h-[44px] border border-gray-30 p-2 rounded-lg bg-gray-10 text-[12px] font-semibold text-black"
+                    className="w-full h-[44px] border  p-2 rounded-lg bg-gray-10 text-[14px] font-semibold text-[#757575]"
                     value={profileData.occupation}
                     onChange={handleChange}
                   >
@@ -573,47 +578,48 @@ useEffect(() => {
                 </div>
 
                 <div className="flex-1">
-                <label className="block mb-2 text-[12px] font-semibold text-black">
+                <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                   Annual Income (in lakhs)
                 </label>
-                <input
-                  type="text"
-                  name="income"
-                  className="w-full h-[44px] border border-gray-300 p-2 rounded-lg bg-gray-100 text-[12px] font-semibold text-black"
-                  placeholder="Enter your income"
-                  value={profileData.income}
-                  onChange={handleChange}
-                />
-                <input
-                  type="range"
-                  name="incomeRange"
-                  min="0"
-                  max="20"
-                  step="1"
-                  value={profileData.income}
-                  onChange={handleSliderChange}
-                  className="w-full mt-2 custom-slide"
-                />
+                <select
+                    name="occupation"
+                    className="w-full h-[44px] border  p-2 rounded-lg bg-gray-10 text-[14px] font-semibold text-[#757575]"
+                    value={profileData.occupation}
+                    onChange={handleChange}
+                  >
+                   <option value="">Select Salary Range</option>
+  <option value="100000-200000">1 Lakh - 2 Lakh</option>
+  <option value="200000-300000">2 Lakh - 3 Lakh</option>
+  <option value="300000-400000">3 Lakh - 4 Lakh</option>
+  <option value="400000-500000">4 Lakh - 5 Lakh</option>
+  <option value="500000-600000">5 Lakh - 6 Lakh</option>
+  <option value="600000-700000">6 Lakh - 7 Lakh</option>
+  <option value="700000-800000">7 Lakh - 8 Lakh</option>
+  <option value="800000-900000">8 Lakh - 9 Lakh</option>
+  <option value="900000-1000000">9 Lakh - 10 Lakh</option>
+  <option value="1000000-2000000">10 Lakh - 20 Lakh</option>
+  <option value="2000000-5000000">20 Lakh - 50 Lakh</option>
+                      </select>
                 </div>
               </div>
             </div>
 
-            <hr className="w-full mt-4 mb-2" />
-            {/* Third Div */}
-            <div className="flex justify-end mt-2 gap-4 w-full">
-              <button
-                onClick={onClose}
-                className="px-4 py-2 rounded-lg border border-gray-300 bg-gray-100 text-black"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSave}
-                className="px-4 py-2 rounded-lg border border-transparent bg-[#3431BB] text-white hover:bg-blue-700"
-              >
-                Save
-              </button>
-            </div>
+            <hr className="w-full mt-[2rem] mb-[2rem]" />
+            <div className="flex justify-start mt-2 gap-4 w-full">
+  <button
+    onClick={onClose}
+    className="px-[24px] py-[10px]  text-[14px]  rounded-[12px] border border-gray-300 bg-gray-100 text-black"
+  >
+    Cancel
+  </button>
+  <button
+    onClick={handleSave}
+    className="px-[24px] py-[10px] text-[14px] rounded-[12px] border border-transparent bg-[#3431BB] text-white hover:bg-blue-700"
+  >
+    Save
+  </button>
+</div>
+
           </>
         )}
       </div>

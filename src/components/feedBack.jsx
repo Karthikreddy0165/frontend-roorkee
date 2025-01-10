@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "@/Context/AuthContext";
-
+import SavedModal from "@/pages/Modals/savedModal";
 
 const FeedbackModal = ({ isOpen, onRequestClose }) => {
+
   const [rating, setRating] = useState(0);
   const [reportFormData, setReportFormData] = useState({
     category: "",
@@ -162,6 +163,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
 };
 
 export const FeedbackButtonFooter = () => {
+  const [isSavedModalOpen, setIsSavedModalOpen] = useState(false)
   const [isModalOpen, setModalOpen] = useState(false);
   return (
     <>
@@ -177,37 +179,64 @@ export const FeedbackButtonFooter = () => {
   );
 };
 
-const FeedbackButton = () => {
+const FeedbackButton = ({ className }) => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
+  const { authState } = useAuth();
+
+  const handleFeedbackClick = () => {
+    if (!authState?.token) {
+      setIsSavedModalOpen(true);
+    } else {
+      setModalOpen(true);
+    }
+  };
 
   return (
     <>
       <button
-        className="w-full text-left p-3 text-[14px] hover:bg-[#EEEEFF] hover:border-l-[3px] hover:border-[#3431BB] flex items-center gap-2"
-        onClick={() => setModalOpen(true)}
+        className={
+          className
+            ? className
+            : "w-full text-left p-3 text-[14px] hover:bg-[#EEEEFF] hover:border-l-[3px] hover:border-[#3431BB] flex items-center gap-2"
+        }
+        onClick={handleFeedbackClick}
       >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 22 22"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M11 7V11M11 15H11.01M21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1C16.5228 1 21 5.47715 21 11Z"
-            stroke="black"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        {!className && (
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 22 22"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M11 7V11M11 15H11.01M21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 5.47715 1 11 1C16.5228 1 21 5.47715 21 11Z"
+              stroke="black"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
         Feedback
       </button>
 
+      {/* Feedback Modal */}
       <FeedbackModal
         isOpen={isModalOpen}
         onRequestClose={() => setModalOpen(false)}
       />
+
+      {/* Saved Modal */}
+      {isSavedModalOpen && (
+        <SavedModal
+          isOpen={isSavedModalOpen}
+          onRequestClose={() => setIsSavedModalOpen(false)}
+          heading={"Feedback"}
+          tag={"give feedback"}
+        />
+      )}
     </>
   );
 };

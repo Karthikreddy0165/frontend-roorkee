@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { useMediaQuery } from 'react-responsive';
-import image02 from "../../assets/step2.jpeg"
+
+import step1 from '../../assets/step1.jpeg'
+import step1mobile from '../../assets/step1mobile.jpeg'
+import step2 from '../../assets/step2.jpeg'
+import step3 from '../../assets/step3.jpeg'
 import { MdClose } from "react-icons/md";
-import imageformobile from "../../assets/step1mobile.jpeg"
+
 const HowToApply = ({ closeModal }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
-    console.log(image02)
+
   const steps = [
     {
       title: "Step 1",
@@ -97,12 +101,6 @@ const HowToApply = ({ closeModal }) => {
           >
             Previous
           </button>
-          {/* <button
-            onClick={closeModal}
-            className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
-          >
-            Close
-          </button> */}
           <button
             onClick={nextStep}
             className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"

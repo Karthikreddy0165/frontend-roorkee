@@ -35,8 +35,10 @@ const App = () => {
   }
 
   const handleClickFindrightSchemeForYOu = () => {
-    router.push("/Modals/PreferencesModal");
-  };
+
+    router.push("/Modals/PreferencesModal");}
+
+
 
   const handleSchemesClick = () => {
     setActiveTab("Schemes");
@@ -222,7 +224,7 @@ const App = () => {
 
             <div className="self-stretch flex justify-center mt-8 ">
               <button
-                className="text-center text-white font-inter text-[16px] font-normal leading-normal bg-[#3431BB] pt-[10px] pr-[9px] sm:pr-[44px] pb-[10px] pl-[9px] sm:pl-[44px] rounded-[4px] hover:bg-blue-700"
+                className="text-center text-white font-inter text-[16px] font-normal leading-normal bg-[#3431BB] pt-[10px] pr-[9px] sm:pr-[44px] pb-[10px] pl-[9px] sm:pl-[44px] rounded-[4px] hover:bg-blue-700 sm:mt-[32px] sm:mb-[50px]"
                 onClick={handleClickFindrightSchemeForYOu}
               >
                 Find the Right scheme for me
@@ -244,7 +246,7 @@ const App = () => {
   }}
 >
               <div className="flex justify-center mt-[16px] sm:mt-[32px]">
-                <h1 className="font-semibold relative sm:text-3xl text-[#000000]  text-center text-[16px]">
+                <h1 className="font-semibold relative sm:text-[32px] text-[#000000]  text-center text-[16px]">
                 One solution for all information for social inclusion
                 </h1>
               </div>
@@ -282,8 +284,9 @@ const App = () => {
 
 
               {/* Mission, Vision, and Values Section */}
+
               
-              <div className="relative flex flex-col lg:flex-row justify-between gap-6 mt-[32px] px-6 sm:mt-[100px] mx-auto">
+              <div className="relative flex flex-col lg:flex-row justify-between gap-[20px] mt-[32px] px-6 sm:mt-[100px] mx-auto ">
                 {/* Mission Section */}
                 <div className=" flex flex-col gap-2 p-6 border-[0.3px] border-[#000000] rounded-lg h-[250px] sm:w-[550px] sm:h-[266px]  relative">
                   <p className="font-semibold text-lg lg:text-left text-[16px] sm:text-[20px]">Mission</p>
@@ -296,7 +299,7 @@ const App = () => {
               </svg>
               </div>
                 </div>
-
+          
                 {/* Vision Section */}
                 <div className="flex flex-col gap-2 p-6 border-[0.3px] border-[#000000] rounded-lg sm:w-[550px] sm:h-[266px]  h-[250px] relative">
                   <p className="font-semibold text-lg lg:text-left text-[16px] sm:text-[20px]">Vision</p>
@@ -313,8 +316,10 @@ const App = () => {
                 </div>
               </div>
 
+         
+
               {/* Values Section - New Row, Full Width */}
-              <div className="mt-8 p-6">
+              <div className="mt-[10px] p-6">
               <div className="flex flex-col gap-2 p-6 border-[0.3px] h-[350px] border-[#000000] rounded-lg w-full sm:w-[550px] lg:w-[1130px]  sm:h-[250px] relative">
                 <p className="font-semibold text-[16px] text-[20px]">Our Values</p>
                 <p className="text-[#616161] text-[14px] sm:text-[16px]">1. Commitment to the Ideology.</p>
@@ -338,8 +343,7 @@ const App = () => {
              
                
               </div>
-
-              
+   
 
           </div>
           <div className="sm:px-[200px] mx-auto top-0 px-[40px] ">

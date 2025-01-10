@@ -79,7 +79,7 @@ export default function JobOpenings() {
     (states.length !== 0 || departments.length !== 0)
   ) {
     return (
-      <div className="flex justify-center items-center mt-8">
+      <div className="flex justify-center text-[14px] sm:text-[18px] items-center mt-[8rem]">
         No Job Openings found based on your preference
       </div>
     );
