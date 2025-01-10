@@ -32,6 +32,7 @@ const ApplyModal = ({
   const [isSaved, setIsSaved] = useState(false);
   const router = useRouter()
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const descriptionRef = useRef(null);
   const [isHowToApplyOpen, setIsHowToApplyOpen] = useState(false); 
 
@@ -232,7 +233,7 @@ const ApplyModal = ({
 
 {/* Report Button */}
 <button
-  onClick={() => authState.token ? setReportModalOpen(true) : setIsSavedModalOpen(true)}
+  onClick={() => authState.token ? setReportModalOpen(true) : setIsReportModalOpen(true)}
   className="flex items-center px-4 py-2 text-red-500 rounded-lg mt-0"
 >
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
@@ -474,10 +475,19 @@ const ApplyModal = ({
           <SavedModal
             isOpen={isSavedModalOpen}
             onRequestClose={() => setIsSavedModalOpen(false)}
-            heading={'Login to save'}
+            heading={'Saved'}
             tag={'save'}
           />
         )}
+        {isReportModalOpen && (
+          <SavedModal
+            isOpen={isReportModalOpen}
+            onRequestClose={() => setIsReportModalOpen(false)}
+            heading={'Report'}
+            tag={'report'}
+          />
+        )}
+      
     </div>
   );
 };
