@@ -161,7 +161,7 @@ const ApplyModal = ({
         throw new Error(`Error creating report: ${response.statusText}`);
       }
 
-      alert("Report created successfully!");
+      alert("Scheme successfully reported!");
       setReportFormData({  description: "", report_category: "" });
       setReportModalOpen(false);
     } catch (error) {
