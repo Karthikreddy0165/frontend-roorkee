@@ -95,9 +95,9 @@ function SelectedFilters() {
     newState.length > 0 ||
     newDepartment.length > 0 ||
     beneficiaries.length > 0 ? (
-    <div className="flex justify-between">
+    <div className="flex justify-between  ">
       <div>
-        <p className="text-gray-600 sm:text-sm mb-1 text-[16px]">
+        <p className="text-gray-600 sm:text-sm mb-1 mt-[1rem]  text-[16px]">
           Selected Filters
         </p>
         <div className="mt-0 mb-5 flex gap-2 flex-wrap">
@@ -355,7 +355,7 @@ function SelectedFilters() {
       </div>
     </div>
   ) : (
-    <div className="flex justify-between">
+    <div className="flex justify-between mt-[1rem]">
       <div className="mt-0 mb-5 flex gap-2 flex-wrap">
         <div>
           <p className="text-gray-600 sm:text-sm mb-1 text-[16px]">

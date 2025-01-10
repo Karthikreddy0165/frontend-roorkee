@@ -54,7 +54,7 @@ const VerifiedStatus = () => {
     showMessage && (
       <div className="relative w-full flex items-center justify-between p-4 bg-violet-100 text-black border border-violet-800 rounded mx-auto sm:w-full ">
         <span className="ml-4  text-sm">
-          Email has been sent to your mail, Please Verify
+          Email has been sent to your mail, please verify
         </span>
         <button
           onClick={handleClose}

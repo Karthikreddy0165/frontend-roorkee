@@ -81,7 +81,7 @@ const NavBarScheme = () => {
   return (
     <div>
       {/* Navbar Container */}
-      <div className="flex justify-between items-center py-2 px-6 bg-white shadow-md z-10 relative sm:h-[73px] h-[73px] gap-2 w-full">
+      <div className="flex justify-between items-center py-2 px-6 bg-white border-b-[1px] z-10 relative sm:h-[73px] h-[73px] gap-2 w-full">
         {/* Logo Section */}
         <svg
           width="50"
@@ -176,12 +176,12 @@ const NavBarScheme = () => {
         </div>
 
         {/* Profile or Login Section */}
-        <div className="flex gap-4 items-center ml-auto">
+        <div className="flex gap-4 items-center ml-auto sm:block hidden">
           {authState.token ? (
             <div className="relative">
               {/* Profile Button (Visible on desktop) */}
               <button
-                className="flex items-center px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 hidden md:flex"
+                className="flex items-center px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700  md:flex"
                 onClick={toggleDropdown}
               >
                 Profile <IoIosArrowDown className="ml-2" />

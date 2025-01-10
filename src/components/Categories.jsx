@@ -206,7 +206,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
   if (Object.keys(dataFromApi).length === 0) {
     return (
-      <div className="text-onclick-btnblue mt-[120px] italic flex justify-center items-center text-[18px]">
+      <div className="text-onclick-btnblue mt-[8rem] italic flex justify-center items-center text-[18px]">
         Loading...
       </div>
     );

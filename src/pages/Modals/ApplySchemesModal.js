@@ -3,6 +3,7 @@ import { IoMdClose } from "react-icons/io";
 import { useRouter } from "next/router";
 import HowToApply from './HowToApply';  
 import { useAuth } from "@/Context/AuthContext";
+
 import { useScheme } from "@/Context/schemeContext";
 import SavedModal from "@/pages/Modals/savedModal"
 import Toast from "@/components/ComponentsUtils/SavedToast";
@@ -29,6 +30,7 @@ const ApplyModal = ({
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const descriptionRef = useRef(null);
   const [isHowToApplyOpen, setIsHowToApplyOpen] = useState(false); 
+
   const [isToastVisible, setIsToastVisible] = useState(false);
   const {authState} = useAuth()
   const { saveScheme } = useScheme();
@@ -85,12 +87,15 @@ const ApplyModal = ({
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     }
 
     return () => {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, [isOpen]);
 
@@ -110,6 +115,8 @@ const ApplyModal = ({
       [name]: value,
     }));
   };
+
+  
 
   const handleReportSubmit = async (e) => {
     e.preventDefault();
@@ -145,10 +152,14 @@ const ApplyModal = ({
     setIsHowToApplyOpen(false); 
   };
 
+  
+
   if (!isOpen) return null;
 
+  
+
   return (
-    <div className="fixed inset-0 z-50 gap-[10px]">
+    <div className="fixed inset-0 z-50 gap-[10px] ">
       <div
         className={`absolute bg-white transition-all w-full h-full sm:w-[40%] sm:right-0 sm:rounded-lg border gap-[10px] border-gray-200 shadow-lg`}
       >
@@ -159,7 +170,7 @@ const ApplyModal = ({
           <IoMdClose className="w-[24px] h-[24px]" />
         </button>
 
-        <div className="flex flex-col p-8 h-full overflow-y-auto">
+        <div className="modal-content overflow-y-auto max-h-[90vh] p-8 h-full">
         {/* <div className="flex justify-between items-center w-full mb-4">
   <h1 className="text-[20px] font-bold">{scheme.title}</h1>
   
@@ -171,14 +182,16 @@ const ApplyModal = ({
 </div> */}
 
 
-<div className="flex flex-col items-start w-full py-[20px]">
+<div className="flex flex-col items-start w-full py-[20px] overflow-hidden">
   {/* Title and Report Button */}
-  <div className="flex items-center justify-between w-full flex-wrap">
-    <h1 className="text-[20px] font-bold mb-2 w-full sm:w-auto">{scheme.title}</h1>
+  <div className="flex items-center justify-between w-full flex-wrap ">
+    <h1 className="text-[20px] font-bold mb-2 w-full sm:w-auto ">{scheme.title}</h1>
   </div>
 
   {/* Date and Report Button aligned */}
-  <div className="flex items-center space-between sm:gap-[200px] w-full mt-2">
+
+  <div className="flex items-center space-between sm:gap-[16rem] gap-[2rem] w-full mt-2">
+
     {/* Date */}
     {scheme?.created_at?.split(" ")[0] && (
       <p className="text-[11px]  sm:text-[14px] rounded-[12px] py-1 px-[6px] bg-[#EEF] mr-4 whitespace-nowrap">
@@ -213,7 +226,7 @@ const ApplyModal = ({
              
 
               {scheme.department?.state && (
-                <div className="flex items-start py-[20px] border-b-[1px] mt-4">
+                <div className="flex items-start py-[2rem] border-b-[1px] mt-4">
                   <h2 className="w-28 text-[14px]  font-semibold">State:</h2>
                   <p className="flex-1">{scheme.department.state}</p>
                 </div>
@@ -222,21 +235,21 @@ const ApplyModal = ({
         
 
               {scheme.department?.department_name && (
-                <div className="flex items-start py-[20px] border-t-[1px] border-b-[1px]">
+                <div className="flex items-start py-[2rem] border-t-[1px] border-b-[1px]">
                   <h2 className="w-28 text-[14px] font-semibold">Department:</h2>
                   <p className="flex-1">{scheme.department.department_name}</p>
                 </div>
               )}
 
               {scheme.beneficiaries[0]?.beneficiary_type && (
-                <div className="flex items-start py-[20px]  border-b-[1px] py-[5px]">
+                <div className="flex items-start py-[2rem]  border-b-[1px]">
                   <h2 className="w-28 text-[14px] font-semibold">Beneficiaries:</h2>
                   <p className="flex-1">{scheme.beneficiaries[0].beneficiary_type}</p>
                 </div>
               )}
 
-              {scheme.description && (
-                <div className="mt-4 border-b-[1px] py-[20px] py-[5px]">
+{scheme.description && (
+                <div className="border-b-[1px] py-[2rem]">
                   <h2 className="text-[14px] font-semibold mb-[10px]">Description:</h2>
                   <p
                     ref={descriptionRef}
@@ -259,7 +272,7 @@ const ApplyModal = ({
 
               {/* Updated "Uploaded File" Section */}
               {scheme.pdf_url && (
-                <div className="flex items-start py-[20px] border-b-[1px] py-[5px]">
+                <div className="flex items-start py-[2rem] border-b-[1px]">
                   <h2 className="w-28 text-[14px] font-semibold">Uploaded File:</h2>
                   <div className="flex-1">
                     <a
