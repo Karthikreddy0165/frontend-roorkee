@@ -161,7 +161,7 @@ const ApplyModal = ({
         throw new Error(`Error creating report: ${response.statusText}`);
       }
 
-      alert("Report created successfully!");
+      alert("Scheme successfully reported!");
       setReportFormData({  description: "", report_category: "" });
       setReportModalOpen(false);
     } catch (error) {
@@ -188,9 +188,7 @@ const ApplyModal = ({
   
 
   return (
-<div
-    className={`fixed inset-0 z-50 gap-[10px] ${isHowToApplyOpen ? '' : 'pointer-events-none'}`}
-  >
+
 
     <div
     className={`fixed inset-0 z-50 gap-[10px] ${isHowToApplyOpen || isReportModalOpen || isSavedModalOpen ? '' : 'pointer-events-none'}`}

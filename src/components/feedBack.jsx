@@ -3,7 +3,6 @@ import { useAuth } from "@/Context/AuthContext";
 import SavedModal from "@/pages/Modals/savedModal";
 
 const FeedbackModal = ({ isOpen, onRequestClose }) => {
-
   const [rating, setRating] = useState(0);
   const [reportFormData, setReportFormData] = useState({
     category: "",
@@ -11,7 +10,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const {authState} = useAuth()
+  const { authState } = useAuth();
 
   // Handle form data changes
   const handleReportFormChange = (e) => {
@@ -38,10 +37,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append(
-      "Authorization",
-      `Bearer ${authState.token}`
-    );
+    myHeaders.append("Authorization", `Bearer ${authState.token}`);
 
     const raw = JSON.stringify({
       category,
@@ -67,6 +63,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
 
       // Clear form and close modal on success
       setRating(0);
+      alert("Feedback submitted successfully!");
       setReportFormData({ category: "", description: "" });
       onRequestClose();
     } catch (err) {
@@ -163,7 +160,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
 };
 
 export const FeedbackButtonFooter = () => {
-  const [isSavedModalOpen, setIsSavedModalOpen] = useState(false)
+  const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   return (
     <>
