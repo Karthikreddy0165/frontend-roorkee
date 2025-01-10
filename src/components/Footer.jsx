@@ -4,7 +4,7 @@ import FeedbackButton from "./feedBack";
 const Footer = () => {
   return (
     <>
-      <footer className="text-black  px-4 gap-[5rem]  sm:mt-[10rem] ">
+      <footer className="text-black py-[5rem] px-4 gap-[5rem]  sm:mt-[2rem] ">
         <div className="max-w-screen-xl mx-auto flex flex-wrap justify-between space-y-8 md:space-y-0 gap-8">
           {/* Logo and Description */}
           <div className="flex-1 md:max-w-[40%]">

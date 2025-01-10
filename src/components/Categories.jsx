@@ -14,12 +14,13 @@ import { useTabContext } from "@/Context/TabContext";
 import { Paginator } from "primereact/paginator";
 import ToolTips from "./ComponentsUtils/tooltips.jsx";
 import Footer from "./Footer.jsx";
+import { useBookmarkContext } from "@/Context/BookmarkContext";
 
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const { activeTab, setActiveTab } = useTabContext(); // Accessing context
+  const { isBookmarked, toggleBookmark } = useBookmarkContext();
   const [selectedScheme, setSelectedScheme] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isBookmarked, setBookmarks] = useState({});
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const { authState } = useAuth();
   const [toastMessage, setToastMessage] = useState("");
@@ -37,7 +38,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     statesFromApi,
     setStatesFromApi,
   } = useContext(FilterContext);
-
   // Close the toast after a certain time
   useEffect(() => {
     if (isToastVisible) {
@@ -179,24 +179,21 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     }
   };
 
-  const toggleBookmark = async (e, itemId) => {
+  const handleBookmarkToggle = async (e, itemId) => {
     e.preventDefault();
-
     if (authState.token) {
-      let success;
-      if (isBookmarked[itemId]) {
-        success = await unsaveScheme(itemId);
-      } else {
-        success = await saveScheme(itemId);
-        setIsToastVisible(true); // Show the toast
-      }
+      try {
+        const success = isBookmarked[itemId]
+          ? await unsaveScheme(itemId)
+          : await saveScheme(itemId);
 
-      if (success) {
-        // setIsToastVisible(true); // Show the toast
-        setBookmarks((prevState) => ({
-          ...prevState,
-          [itemId]: !prevState[itemId],
-        }));
+        if (success) {
+          toggleBookmark(itemId, isBookmarked[itemId]);
+          setToastMessage(isBookmarked[itemId] ? "" : "");
+          setIsToastVisible(true);
+        }
+      } catch (error) {
+        console.error("Bookmark toggle failed:", error);
       }
     } else {
       setIsSavedModalOpen(true);
@@ -282,6 +279,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   return (
     <>
       {/* We have found {378} schemes based on your profile */}
+
       <div className="overflow-y-auto max-h-screen">
         {(activeTab !== "Saved"
           ? dataFromApi.results
@@ -351,7 +349,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                 <ToolTips tooltip="Save scheme">
                   <div
                     className="cursor-pointer px-2 py-2 right-[8.25px]"
-                    onClick={(e) => toggleBookmark(e, item.id)}
+                    onClick={(e) => handleBookmarkToggle(e, item.id)}
                   >
                     {isBookmarked[item.id] ? (
                       <GoBookmarkFill className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[20px] text-[#3431BB]" />
