@@ -1,10 +1,10 @@
 import { FeedbackButtonFooter } from "./feedBack";
-import FeedbackButton from "./feedBack"
+import FeedbackButton from "./feedBack";
 
 const Footer = () => {
   return (
     <>
-      <footer className="text-black py-[5rem] px-4 gap-[5rem]  sm:mt-[10rem] ">
+      <footer className="text-black  px-4 gap-[5rem]  sm:mt-[10rem] ">
         <div className="max-w-screen-xl mx-auto flex flex-wrap justify-between space-y-8 md:space-y-0 gap-8">
           {/* Logo and Description */}
           <div className="flex-1 md:max-w-[40%]">
@@ -173,8 +173,8 @@ const Footer = () => {
                   FAQ’s
                 </a>
               </li>
-              <li> 
-                  <FeedbackButton className="text-black"/>
+              <li>
+                <FeedbackButton className="text-black" />
               </li>
               {/* Uncomment the feedback link once you implement the button */}
               {/* <li>
