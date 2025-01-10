@@ -19,7 +19,7 @@ function SchemeCount(dataFromApi) {
 
   if (dataFromApi.dataFromApi.count === 0) {
     return (
-      <p className="text-button-blue text-sm font-bold flex justify-center mt-[100px] font-inter">
+      <p className="text-button-blue text-[14px] sm:text-[18px] font-bold flex justify-center mt-[100px] font-inter">
         Sorry no result is found based on your preference.
       </p>
     );

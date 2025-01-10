@@ -328,7 +328,7 @@ useEffect(() => {
                   onChange={handleChange}
                 />
               </div>
-              <div className="flex flex-col sm:flex-row gap-4 w-full ">
+              <div className="gap-4 w-full ">
                 <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                   Email
                 </label>

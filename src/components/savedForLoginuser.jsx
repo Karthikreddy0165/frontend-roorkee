@@ -103,7 +103,7 @@ export default function Saved() {
 
   if (dataOfApi.count === 0 && sponsoredBy.length !== 0) {
     return (
-      <div className="flex justify-center items-center mt-[8rem] sm:p-[8rem]">
+      <div className="flex justify-center sm:text-lg text-[5px] items-center mt-[8rem] sm:p-[8rem]">
         No saved schemes found based on your preference.
       </div>
     );
