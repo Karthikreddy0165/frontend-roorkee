@@ -101,7 +101,7 @@ const NavBar = () => {
           LAUNCHPAD
         </div>
 
-        <div className="flex gap-4 items-center ml-auto">
+         <div className="flex gap-4 items-center ml-auto">
           {authState.token ? (
             <div className="relative">
               {/* Profile Icon for Mobile */}

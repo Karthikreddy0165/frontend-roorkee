@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useMediaQuery } from 'react-responsive';
 
-
+import step1 from '../../assets/step1.jpeg'
+import step1mobile from '../../assets/step1mobile.jpeg'
+import step2 from '../../assets/step2.jpeg'
+import step3 from '../../assets/step3.jpeg'
 import { MdClose } from "react-icons/md";
 
 const HowToApply = ({ closeModal }) => {

@@ -155,7 +155,7 @@ const ApplyModal = ({
     setIsHowToApplyOpen(false); 
   };
 
-  console.log(scheme, scheme.id)
+
   
   
 

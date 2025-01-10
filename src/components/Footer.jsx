@@ -1,4 +1,5 @@
 import { FeedbackButtonFooter } from "./feedBack";
+import FeedbackButton from "./feedBack"
 
 const Footer = () => {
   return (
@@ -171,6 +172,9 @@ const Footer = () => {
                 <a href="/faqs" className="text-black hover:text-black">
                   FAQ’s
                 </a>
+              </li>
+              <li> 
+                  <FeedbackButton className="text-black"/>
               </li>
               {/* Uncomment the feedback link once you implement the button */}
               {/* <li>
