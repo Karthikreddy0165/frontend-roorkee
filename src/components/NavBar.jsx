@@ -101,23 +101,23 @@ const NavBar = () => {
           LAUNCHPAD
         </div>
 
-        <div className="flex gap-4 items-center ml-auto">
+         <div className="flex gap-4 items-center ml-auto">
           {authState.token ? (
             <div className="relative">
+              {/* Profile Icon for Mobile */}
+              <button
+                className="flex items-center px-4 py-2 text-gray-500 text-[35px] font-semibold rounded-lg sm:hidden"
+                onClick={toggleDropdown}
+              >
+                <CgProfile />
+              </button>
+
               {/* Profile Button for Desktop */}
               <button
-                className="flex items-center px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 hidden md:flex"
+                className="flex items-center px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 md:flex hidden"
                 onClick={toggleDropdown}
               >
                 Profile <IoIosArrowDown className="ml-2" />
-              </button>
-
-              {/* Profile Button for Mobile */}
-              <button
-                className="flex items-center px-4 py-2   text-gray-500 text-[35px] font-semibold rounded-lg  sm:hidden"
-                onClick={toggleDropdown}
-              >
-                <CgProfile />{" "}
               </button>
 
               {/* Dropdown Menu */}
@@ -146,7 +146,15 @@ const NavBar = () => {
             </div>
           ) : (
             <div>
-              {/* Login Button */}
+              {/* Login Button for Mobile */}
+              <button
+                className="px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 sm:hidden"
+                onClick={handleGotologin}
+              >
+                Login
+              </button>
+
+              {/* Login Button for Desktop */}
               <button
                 className="px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 hidden sm:block"
                 onClick={handleGotologin}
