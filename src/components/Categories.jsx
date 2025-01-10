@@ -282,7 +282,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   return (
     <>
       {/* We have found {378} schemes based on your profile */}
-      <div>
+      <div className="overflow-y-auto ,ax-h-screen">
         {(activeTab !== "Saved"
           ? dataFromApi.results
           : dataFromApi.results
@@ -414,8 +414,8 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
           <SavedModal
             isOpen={isSavedModalOpen}
             onRequestClose={() => setIsSavedModalOpen(false)}
-            heading={'Saved'}
-            tag={'save'}
+            heading={"Saved"}
+            tag={"save"}
           />
         )}
       </div>

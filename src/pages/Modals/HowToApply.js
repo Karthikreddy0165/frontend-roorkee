@@ -49,7 +49,8 @@ const HowToApply = ({ closeModal }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-50">
-      <div className="bg-white rounded-lg sm:h-[80%] h-[90%] w-[90%] sm:w-[80%] md:w-[70%] lg:w-[600px] xl:w-[700px] p-6 max-w-full flex flex-col relative">
+     <div className="bg-white rounded-lg h-[80vh] sm:h-[80vh] md:h-[70vh] lg:h-[60vh] xl:h-[50vh] w-[90%] sm:w-[80%] md:w-[70%] lg:w-[600px] xl:w-[700px] p-6 max-w-full flex flex-col relative">
+
       <div className="flex justify-between items-center mb-2 w-full">
         <h2 className="sm:text-2xl text-[20px] font-semibold text-center mb-6 text-[#3431BB]">
           How to Apply for Schemes
