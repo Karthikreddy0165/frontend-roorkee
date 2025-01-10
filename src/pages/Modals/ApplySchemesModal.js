@@ -28,6 +28,7 @@ const ApplyModal = ({
   });
   const router = useRouter()
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const descriptionRef = useRef(null);
   const [isHowToApplyOpen, setIsHowToApplyOpen] = useState(false); 
 
@@ -446,10 +447,19 @@ const ApplyModal = ({
           <SavedModal
             isOpen={isSavedModalOpen}
             onRequestClose={() => setIsSavedModalOpen(false)}
+            heading={'Saved'}
+            tag={'save'}
+          />
+        )}
+        {isReportModalOpen && (
+          <SavedModal
+            isOpen={isReportModalOpen}
+            onRequestClose={() => setIsSavedModalOpen(false)}
             heading={'Report'}
             tag={'report'}
           />
         )}
+      
     </div>
   );
 };
