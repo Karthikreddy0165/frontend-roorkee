@@ -7,7 +7,11 @@ import { MdClose } from "react-icons/md";
 const HowToApply = ({ closeModal }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+<<<<<<< HEAD
 
+=======
+   
+>>>>>>> 04b78cebb02007267cf24971cfd34dba4c6fe1e2
   const steps = [
     {
       title: "Step 1",
