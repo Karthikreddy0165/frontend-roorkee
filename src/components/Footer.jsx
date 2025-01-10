@@ -169,9 +169,7 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2">
               <li>
-                <a href="/faqs" className="text-black hover:text-black">
-                  FAQ’s
-                </a>
+                <a className="text-black hover:text-black">FAQ’s</a>
               </li>
               <li>
                 <FeedbackButton className="text-black" />
@@ -186,18 +184,10 @@ const Footer = () => {
                 </a>
               </li> */}
               <li>
-                <a
-                  href="/privacy-policy"
-                  className="text-black hover:text-black"
-                >
-                  Privacy Policy
-                </a>
+                <a className="text-black hover:text-black">Privacy Policy</a>
               </li>
               <li>
-                <a
-                  href="/terms-conditions"
-                  className="text-black hover:text-black"
-                >
+                <a className="text-black hover:text-black">
                   Terms and Conditions
                 </a>
               </li>
