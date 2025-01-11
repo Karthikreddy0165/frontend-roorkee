@@ -296,13 +296,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                 }}
               >
                 <div onClick={() => handleClick(item.id)}>
-                  {/* <button
-              className="text-center text-[12px] px-[8px] py-[6px] rounded-[4px] gap-[10px]"
-              style={{ color: "#151280", backgroundColor: "#EEEEFF" }}
-            >
-              New update
-            </button> */}
-
                   <div className="gap-[12px] pt-[16px] pd-[16px] w-[200px] md:w-8/12">
                     <p
                       className="font-inter text-[16px] sm:text-[18px] leading-[21.6px] cursor-pointer font-semibold mb-[10px] line-clamp-2 w-8/12 text-gray-700"
@@ -369,21 +362,34 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
             rows={rows}
             totalRecords={totalPages * rows}
             onPageChange={(e) => {
-              // setFirst(e.first);
               setCurrentPage(e.page + 1);
             }}
-            template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+            template="PrevPageLink PageLinks NextPageLink"
             className="custom-paginator gap-8 hover:cursor-pointer
-          [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
-          [&_.p-paginator-page.p-highlight]:text-white 
-          [&_.p-paginator-page]:transition-colors 
-          [&_.p-paginator-page]:duration-200
-          [&_.p-paginator-page]:mx-1 
-          [&_.p-paginator-page]:px-3 
-          [&_.p-paginator-page]:py-1 
-          [&_.p-paginator-page]:rounded-full mt-20 mb-20"
+      [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
+      [&_.p-paginator-page.p-highlight]:text-white 
+      [&_.p-paginator-page]:transition-colors 
+      [&_.p-paginator-page]:duration-200
+      [&_.p-paginator-page]:mx-1 
+      [&_.p-paginator-page]:px-3 
+      [&_.p-paginator-page]:py-1 
+      [&_.p-paginator-page]:rounded-full mt-20 mb-20
+
+      /* For mobile: Show only Prev and Next buttons */
+      sm:flex sm:justify-between sm:items-center sm:gap-4 
+      sm:[&_.p-paginator-page]:hidden  /* Hide page links on mobile */
+      
+      /* For larger screens: Display pagination in a row */
+      md:flex md:justify-between md:gap-8 md:[&_.p-paginator-page]:inline-block
+      md:[&_.p-paginator-page]:mx-2  /* Ensure page numbers are in a row on larger screens */
+      md:[&_.p-paginator-page]:text-sm
+      md:[&_.p-paginator-page]:px-3
+      md:[&_.p-paginator-page]:py-1
+      md:[&_.p-paginator-page]:rounded-lg
+    "
           />
         )}
+
         {isToastVisible && (
           <Toast
             message={toastMessage}

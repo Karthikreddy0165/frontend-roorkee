@@ -208,15 +208,7 @@ const ApplyModal = ({
         </button>
 
         <div className="modal-content overflow-y-auto max-h-[90vh] p-8 h-full">
-        {/* <div className="flex justify-between items-center w-full mb-4">
-  <h1 className="text-[20px] font-bold">{scheme.title}</h1>
-  
-  {scheme?.created_at?.split(" ")[0] && (
-    <p className="text-sm rounded-[12px] py-1 px-4 bg-[#EEF] inline-block">
-      {`Last updated on ${scheme.created_at.split(" ")[0]}`}
-    </p>
-  )}
-</div> */}
+     
 
 
 <div className="flex flex-col  items-start w-full py-[20px] overflow-hidden">
@@ -401,21 +393,30 @@ const ApplyModal = ({
            {/* Report Modal */}
       {reportModalOpen && (
         <div className="fixed inset-0 z-60 bg-gray-700 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-8 rounded-lg w-[80%] sm:w-[60%] lg:w-[40%]">
-         
-           
-          <h2 className="text-xl font-bold flex items-center justify-center mb-4 text-[#3330BA] text-center">
-  Help Us Improve
-</h2>
-            <form onSubmit={handleReportSubmit} className="space-y-4">
-            <div>
-                <label className="block text-sm font-semibold mb-2">Category</label>
+        
+  
+
+        <div className="relative bg-white p-8 rounded-lg w-[80%] sm:w-[60%] lg:w-[40%]">
+  <button
+    type="button"  
+    onClick={() => setReportModalOpen(false)}  
+    className="absolute top-1 right-1 flex-shrink-0 px-4 py-2 rounded-lg border border-transparent  text-gray-500 text-[12px] sm:text-sm"
+  >
+    <IoMdClose className="w-[24px] h-[24px]" />
+  </button>
+
+  <h2 className="text-xl font-bold flex items-center justify-center  text-[#3330BA] p-[1rem] text-center">
+    Help Us Correct Scheme Information
+  </h2>
+            <form onSubmit={handleReportSubmit} className="space-y-4 ">
+            <div className="pt-[1rem] pb-[1rem]">
+                <label className="block text-[13px] font-semibold mb-2">Select the category</label>
                 <select
                   name="report_category"
                   value={reportFormData.category}
                   onChange={handleReportFormChange}
                   required
-                  className="w-full p-2 border text-sm rounded-md"
+                  className="w-full p-2 border text-sm rounded-md text-[#000000]"
                 >
                   <option value="">Select Category</option>
                   <option value="incorrect_info">Incorrect information</option>
@@ -425,20 +426,21 @@ const ApplyModal = ({
               </div>
              
               <div>
-                <label className="block text-sm font-semibold mb-2">Description</label>
+                <label className="block text-[13px] font-semibold mb-2">Please write your issue in detail</label>
                 <textarea
                   name="description"
                   value={reportFormData.description}
                   onChange={handleReportFormChange}
                   required
                   rows="4"
-                  className="w-full p-2 border rounded-md"
+                  placeholder="Here is your answer..."
+                  className="w-full p-2 border rounded-md text-[#000000]"
                 />
               </div>
 
              
 
-              <div className="flex justify-end mt-4 space-x-4">
+              <div className="flex justify-center mt-4 space-x-4">
               <button
                 type="submit"
                 className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
@@ -446,13 +448,7 @@ const ApplyModal = ({
                 Submit Report
               </button>
 
-              <button
-                type="button"  
-                onClick={() => setReportModalOpen(false)}  
-                className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-gray-500 text-white hover:bg-blue-700 text-[12px] sm:text-sm"
-              >
-                Cancel
-              </button>
+             
             </div>
 
             </form>

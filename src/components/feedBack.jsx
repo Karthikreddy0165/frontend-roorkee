@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/Context/AuthContext";
 import SavedModal from "@/pages/Modals/savedModal";
+import { IoMdClose } from "react-icons/io";
 
 const FeedbackModal = ({ isOpen, onRequestClose }) => {
   const [rating, setRating] = useState(0);
@@ -80,21 +81,26 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-8 rounded-lg w-[80%] max-w-md">
-        <h2 className="text-xl text-[#3330BA] font-bold mb-4 text-center">
+      <div className="relative bg-white p-8 rounded-lg w-[80%] max-w-md">
+        <button
+          className="absolute top-0 right-0 p-[18px] text-lg hover:text-red-500"
+          onClick={onRequestClose}
+        >
+          <IoMdClose className="w-[24px] h-[24px]" />
+        </button>
+        <h2 className="text-[20px] text-[#3330BA] font-bold mb-4 text-center mt-[1rem]">
           Feedback Form
         </h2>
-
         {error && (
           <div className="text-red-500 text-center text-sm mb-4">{error}</div>
         )}
 
         {/* Star Rating */}
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center p-[1rem] mb-4">
           {[1, 2, 3, 4, 5].map((star) => (
             <svg
               key={star}
-              className={`w-6 h-6 cursor-pointer ${
+              className={`w-[40px] h-[40px] cursor-pointer ${
                 star <= rating ? "text-yellow-500" : "text-gray-300"
               }`}
               xmlns="http://www.w3.org/2000/svg"
@@ -108,14 +114,16 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
         </div>
 
         {/* Feedback Form */}
-        <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2">Category</label>
+        <div className="mb-4 pt-[1rem] pb-[1rem]">
+          <label className="block text-[13px] text-[#000000] font-semibold mb-2">
+            Select the category
+          </label>
           <select
             name="category"
             value={reportFormData.category}
             onChange={handleReportFormChange}
             required
-            className="w-full p-2 border text-sm rounded-md"
+            className="w-full p-2 border text-sm rounded-md text-[#000000]"
           >
             <option value="">Select Category</option>
             <option value="bug">Bug</option>
@@ -125,8 +133,8 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2">
-            Description
+          <label className="block text-[13px] text-[#000000] font-semibold mb-2">
+            Please write your feedback below. 
           </label>
           <textarea
             name="description"
@@ -134,24 +142,19 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
             onChange={handleReportFormChange}
             required
             rows="4"
-            className="w-full p-2 border rounded-md"
+            placeholder="Here is your answer..."
+            className="w-full p-2 border rounded-md text-[#000000]"
           />
         </div>
 
         {/* Submit and Cancel Buttons */}
-        <div className="flex justify-between">
+        <div className="flex justify-center items-centre h-full">
           <button
             onClick={handleSubmitFeedback}
-            className="px-2 py-2 rounded-lg bg-[#3330BA] text-white hover:bg-blue-700"
+            className=" px-4 py-2 rounded-lg text-[13px] bg-[#3330BA] text-white hover:bg-blue-700"
             disabled={loading}
           >
             {loading ? "Submitting..." : "Submit Feedback"}
-          </button>
-          <button
-            onClick={onRequestClose}
-            className="px-2 py-2 rounded-lg bg-gray-500 text-white hover:bg-gray-600"
-          >
-            Cancel
           </button>
         </div>
       </div>
