@@ -1,35 +1,41 @@
-# Use ARM64-compatible base image
-FROM --platform=linux/arm64 node:18-alpine3.16 as builder
+# Build stage
+FROM --platform=linux/arm64 node:18-alpine AS builder
 
-# Set the working directory
 WORKDIR /App
 
-# Copy package.json and package-lock.json
+# Only copy package files first to leverage Docker cache
 COPY package*.json ./
+RUN npm ci
 
-# Install dependencies
-RUN npm install
-
-# Install pm2 locally instead of globally
-RUN npm install pm2
-
-# Copy the rest of the application code
+# Copy application source code (this will only trigger rebuild if source code changes)
 COPY . .
 
-# Build your application (if needed, replace with the correct build command)
-# RUN npm run build
+# Run build command to generate production build
+RUN npm run build
 
-# Stage 2: Use a clean image for production
-FROM --platform=linux/arm64 node:18-alpine3.16 as stage-1
+# Production stage
+FROM --platform=linux/arm64 node:18-alpine
 
-# Set the working directory for the production stage
 WORKDIR /App
 
-# Copy dependencies from the builder stage
-COPY --from=builder /App /App
+# Copy package.json and package-lock.json from builder (from cache)
+COPY --from=builder /App/package*.json ./
 
-# Expose the app's port (adjust as per your app's configuration)
-EXPOSE 3000
+# Copy the build output, public folder, node_modules, and ecosystem.config.js from builder
+COPY --from=builder /App/.next ./.next
+COPY --from=builder /App/public ./public
+COPY --from=builder /App/node_modules ./node_modules
+COPY --from=builder /App/ecosystem.config.js ./  # Copy the ecosystem.config.js file
 
-# Use pm2-runtime to run the app (adjust to your app's entry point)
-CMD ["./node_modules/.bin/pm2-runtime", "start", "ecosystem.config.js"]
+# Set environment variables
+ENV ENVIRONMENT=${ENVIRONMENT}
+ENV NEXT_PUBLIC_API_BASE_URL=http://43.204.236.103:8000
+
+# Install PM2 globally
+RUN npm install -g pm2
+
+# Expose port 80
+EXPOSE 80
+
+# Start the app using PM2
+CMD ["pm2-runtime", "ecosystem.config.js"]
