@@ -10,12 +10,12 @@ ARG NEXT_PUBLIC_API_BASE_URL
 ENV ENVIRONMENT=${ENVIRONMENT}
 ENV NEXT_PUBLIC_API_BASE_URL=http://43.204.236.103:8000
 
-# Install PM2 globally
-RUN npm install -g pm2
+# Install PM2 globally with --unsafe-perm flag
+RUN npm install -g pm2 --unsafe-perm=true
 
-# Copy package files and install dependencies
+# Copy package files and install dependencies using npm ci for consistency
 COPY package*.json ./
-RUN npm install --only=production
+RUN npm ci --only=production
 
 # Copy the application source code
 COPY . .
