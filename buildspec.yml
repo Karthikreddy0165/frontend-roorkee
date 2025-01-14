@@ -15,12 +15,13 @@ phases:
       - apt-get update
       - apt-get install -y qemu-user-static
       - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+      - docker buildx create --name mybuilder --driver docker-container --use
+      - docker buildx inspect --bootstrap
 
   build:
     commands:
       - echo "Building Docker image..."
-      - docker build --platform linux/arm64 -t "$IMAGE_REPO_NAME:latest" .
-      - docker tag "$IMAGE_REPO_NAME:latest" "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest"
+      - docker buildx build --platform linux/arm64 -t "$IMAGE_REPO_NAME:latest" -t "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:latest" --load .
 
   post_build:
     commands:
