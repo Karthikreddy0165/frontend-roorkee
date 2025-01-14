@@ -64,7 +64,9 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
 
       // Clear form and close modal on success
       setRating(0);
+
       alert("Feedback submitted successfully!");
+
       setReportFormData({ category: "", description: "" });
       onRequestClose();
     } catch (err) {
