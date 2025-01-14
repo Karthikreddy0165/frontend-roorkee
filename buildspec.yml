@@ -8,9 +8,6 @@ env:
 phases:
   pre_build:
     commands:
-      - echo "Checking environment variables..."
-      - echo "ENVIRONMENT: $ENVIRONMENT"
-      - echo "NEXT_PUBLIC_API_BASE_URL: $NEXT_PUBLIC_API_BASE_URL"
       - echo "Logging in to Docker registry..."
       - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
       - echo "Logging in to Amazon ECR..."
