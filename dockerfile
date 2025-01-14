@@ -1,41 +1,48 @@
 # Build stage
-FROM --platform=linux/arm64 node:18-alpine AS builder
+FROM --platform=linux/arm64 node:18-slim AS builder
 
 WORKDIR /App
 
-# Only copy package files first to leverage Docker cache
+# ARG variables for build time configuration
+ARG ENVIRONMENT
+ARG NEXT_PUBLIC_API_BASE_URL
+
+# Set runtime environment variables
+ENV ENVIRONMENT=${ENVIRONMENT}
+ENV NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
+
+# Install PM2 globally
+RUN npm install -g pm2
+
+# Copy package.json and package-lock.json and install dependencies
 COPY package*.json ./
 RUN npm ci
 
-# Copy application source code (this will only trigger rebuild if source code changes)
+# Copy the rest of the application files
 COPY . .
 
-# Run build command to generate production build
+# Build the Next.js application
 RUN npm run build
 
 # Production stage
-FROM --platform=linux/arm64 node:18-alpine
+FROM --platform=linux/arm64 node:18-slim
 
 WORKDIR /App
 
-# Copy package.json and package-lock.json from builder (from cache)
+# Copy the built app and node_modules from the builder stage
 COPY --from=builder /App/package*.json ./
-
-# Copy the build output, public folder, node_modules, and ecosystem.config.js from builder
 COPY --from=builder /App/.next ./.next
-COPY --from=builder /App/public ./public
 COPY --from=builder /App/node_modules ./node_modules
-COPY --from=builder /App/ecosystem.config.js ./  # Copy the ecosystem.config.js file
 
-# Set environment variables
+# Set runtime environment variables
 ENV ENVIRONMENT=${ENVIRONMENT}
-ENV NEXT_PUBLIC_API_BASE_URL=http://43.204.236.103:8000
+ENV NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
 
-# Install PM2 globally
+# Install PM2 globally for the production container
 RUN npm install -g pm2
 
 # Expose port 80
 EXPOSE 80
 
-# Start the app using PM2
+# Run the app using PM2
 CMD ["pm2-runtime", "ecosystem.config.js"]
