@@ -1,29 +1,35 @@
-# Stage 1: Build for ARM64
+# Use ARM64-compatible base image
 FROM --platform=linux/arm64 node:18-alpine3.16 as builder
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /App
 
-# Copy the application files into the container
-COPY . .
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Install the necessary dependencies globally (for ARM64 platform)
-RUN npm install -g pm2
-
-# Install the app dependencies
+# Install dependencies
 RUN npm install
 
-# Stage 2: Final ARM64-compatible image
-FROM --platform=linux/arm64 node:18-alpine3.16
+# Install pm2 locally instead of globally
+RUN npm install pm2
 
-# Set the working directory inside the container
+# Copy the rest of the application code
+COPY . .
+
+# Build your application (if needed, replace with the correct build command)
+# RUN npm run build
+
+# Stage 2: Use a clean image for production
+FROM --platform=linux/arm64 node:18-alpine3.16 as stage-1
+
+# Set the working directory for the production stage
 WORKDIR /App
 
-# Copy the app and dependencies from the builder stage
+# Copy dependencies from the builder stage
 COPY --from=builder /App /App
 
-# Expose the port your app will run on (optional)
+# Expose the app's port (adjust as per your app's configuration)
 EXPOSE 3000
 
-# Command to run your application (adjust as necessary)
-CMD ["pm2-runtime", "start", "ecosystem.config.js"]
+# Use pm2-runtime to run the app (adjust to your app's entry point)
+CMD ["./node_modules/.bin/pm2-runtime", "start", "ecosystem.config.js"]
