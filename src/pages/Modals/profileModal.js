@@ -352,7 +352,7 @@ useEffect(() => {
     className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431BB] text-white hover:bg-blue-700 text-sm" 
     onClick={resendEmail}
   >
-    {sentEmailText ? "sending..." : "resend email"}
+    {sentEmailText ? "sending..." : "Resend verification email"}
   </button>
 )}
 
@@ -605,7 +605,7 @@ useEffect(() => {
             </div>
 
             <hr className="w-full mt-[2rem] mb-[2rem]" />
-            <div className="flex justify-start mt-2 gap-4 w-full">
+            <div className="flex justify-end mt-2 gap-4 w-full">
   <button
     onClick={onClose}
     className="px-[24px] py-[10px]  text-[14px]  rounded-[12px] border border-gray-300 bg-gray-100 text-black"

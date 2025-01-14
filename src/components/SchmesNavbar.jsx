@@ -404,6 +404,8 @@ const NavBarScheme = () => {
           </button>
 
           <hr className="bg-[#B3B3B3] border-[1px] w-[200px] mt-5 mb-5" />
+
+          <FeedbackButton />
           {authState.token ? (
             <>
               <button

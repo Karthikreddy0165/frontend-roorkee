@@ -279,7 +279,7 @@ const login = () => {
             )}
           </Formik>
         </div>
-               <div className="w-1/2 bg-[#FEF6F0] relative flex items-center justify-center hidden lg:block sm:hidden md:hidden">
+               <div className="w-1/2 bg-[#FEF6F0] relative flex items-center justify-center hidden lg:block sm:hidden md:block min-w-[767px]">
                <div className="absolute top-0 text-[#000] mt-20 ml-8 mr-8">
                  <h1 className="text-purple-400 font-inter italic font-bold text-3xl mb-4 w-[500px]">
                    “For the Indians by the Indians”
@@ -295,8 +295,6 @@ const login = () => {
                  <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 rounded-[55px] bg-[rgba(223,131,23,0.2)] ml-[230px] mt-[300px] z-0"></div>
      
                  <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 opacity-5 bg-[#DF8317] rounded-[55px] ml-[-340px] mt-[500px] z-0"></div>
-     
-                 {/* <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 rounded-[55px] bg-[#DF8317]  ml-[-340px] mt-[500px] z-0"></div> */}
      
      
      

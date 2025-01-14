@@ -356,39 +356,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
         )}
 
         {/* for pagination */}
-        {totalPages !== 0 && (
-          <Paginator
-            first={(currentPage - 1) * 10}
-            rows={rows}
-            totalRecords={totalPages * rows}
-            onPageChange={(e) => {
-              setCurrentPage(e.page + 1);
-            }}
-            template="PrevPageLink PageLinks NextPageLink"
-            className="custom-paginator gap-8 hover:cursor-pointer
-      [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
-      [&_.p-paginator-page.p-highlight]:text-white 
-      [&_.p-paginator-page]:transition-colors 
-      [&_.p-paginator-page]:duration-200
-      [&_.p-paginator-page]:mx-1 
-      [&_.p-paginator-page]:px-3 
-      [&_.p-paginator-page]:py-1 
-      [&_.p-paginator-page]:rounded-full mt-20 mb-20
-
-      /* For mobile: Show only Prev and Next buttons */
-      sm:flex sm:justify-between sm:items-center sm:gap-4 
-      sm:[&_.p-paginator-page]:hidden  /* Hide page links on mobile */
-      
-      /* For larger screens: Display pagination in a row */
-      md:flex md:justify-between md:gap-8 md:[&_.p-paginator-page]:inline-block
-      md:[&_.p-paginator-page]:mx-2  /* Ensure page numbers are in a row on larger screens */
-      md:[&_.p-paginator-page]:text-sm
-      md:[&_.p-paginator-page]:px-3
-      md:[&_.p-paginator-page]:py-1
-      md:[&_.p-paginator-page]:rounded-lg
-    "
-          />
-        )}
 
         {isToastVisible && (
           <Toast
@@ -423,6 +390,51 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
           />
         )}
       </div>
+      {/* For pagination (Page numbers for larger screens) */}
+      {totalPages !== 0 && (
+        <Paginator
+          first={(currentPage - 1) * 10}
+          rows={rows}
+          totalRecords={totalPages * rows}
+          onPageChange={(e) => {
+            setCurrentPage(e.page + 1);
+          }}
+          template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+          className="custom-paginator gap-8 hover:cursor-pointer
+      [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
+      [&_.p-paginator-page.p-highlight]:text-white 
+      [&_.p-paginator-page]:transition-colors 
+      [&_.p-paginator-page]:duration-200
+      [&_.p-paginator-page]:mx-2
+      [&_.p-paginator-page]:px-5
+      [&_.p-paginator-page]:py-1 
+      [&_.p-paginator-page]:rounded-full mt-20 mb-20 ml-80
+      md:block hidden"
+        />
+      )}
+
+      {/* For mobile view (Only Prev/Next buttons) */}
+      {totalPages !== 0 && (
+        <Paginator
+          first={(currentPage - 1) * 10}
+          rows={rows}
+          totalRecords={totalPages * rows}
+          onPageChange={(e) => {
+            setCurrentPage(e.page + 1);
+          }}
+          template="PrevPageLink PageLinks NextPageLink "
+          className="custom-paginator gap-8 hover:cursor-pointer 
+      [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
+      [&_.p-paginator-page.p-highlight]:text-white 
+      [&_.p-paginator-page]:transition-colors 
+      [&_.p-paginator-page]:duration-200
+      [&_.p-paginator-page]:mx-1 
+      [&_.p-paginator-page]:px-3 
+      [&_.p-paginator-page]:py-1 
+      [&_.p-paginator-page]:rounded-full mt-20 mb-20
+      lg:hidden"
+        />
+      )}
     </>
   );
 }
