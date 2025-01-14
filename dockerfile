@@ -1,5 +1,5 @@
-# Stage 1: Build for the correct architecture (e.g., x86_64)
-FROM node:18-alpine as builder
+# Stage 1: Build for ARM64
+FROM --platform=linux/arm64 node:18-alpine3.16 as builder
 
 # Set the working directory inside the container
 WORKDIR /App
@@ -7,14 +7,14 @@ WORKDIR /App
 # Copy the application files into the container
 COPY . .
 
-# Install the necessary dependencies globally
+# Install the necessary dependencies globally (for ARM64 platform)
 RUN npm install -g pm2
 
 # Install the app dependencies
 RUN npm install
 
 # Stage 2: Final ARM64-compatible image
-FROM node:18-alpine3.16
+FROM --platform=linux/arm64 node:18-alpine3.16
 
 # Set the working directory inside the container
 WORKDIR /App
