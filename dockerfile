@@ -16,7 +16,6 @@ WORKDIR /App
 
 COPY --from=builder /App/package*.json ./
 COPY --from=builder /App/.next ./.next
-COPY --from=builder /App/public ./public
 COPY --from=builder /App/node_modules ./node_modules
 
 ENV ENVIRONMENT=${ENVIRONMENT}
