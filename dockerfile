@@ -1,5 +1,5 @@
 # Build stage
-FROM --platform=linux/arm64 node:18-slim AS builder
+FROM --platform=linux/arm64 node:18-alpine AS builder
 
 WORKDIR /App
 
@@ -11,8 +11,8 @@ ARG NEXT_PUBLIC_API_BASE_URL
 ENV ENVIRONMENT=${ENVIRONMENT}
 ENV NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
 
-# Install PM2 globally
-RUN npm install -g pm2
+# Install PM2 locally
+RUN npm install pm2 --save
 
 # Copy package.json and package-lock.json and install dependencies
 COPY package*.json ./
@@ -25,7 +25,7 @@ COPY . .
 RUN npm run build
 
 # Production stage
-FROM --platform=linux/arm64 node:18-slim
+FROM --platform=linux/arm64 node:18-alpine
 
 WORKDIR /App
 
@@ -38,11 +38,5 @@ COPY --from=builder /App/node_modules ./node_modules
 ENV ENVIRONMENT=${ENVIRONMENT}
 ENV NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
 
-# Install PM2 globally for the production container
-RUN npm install -g pm2
-
-# Expose port 80
-EXPOSE 80
-
-# Run the app using PM2
-CMD ["pm2-runtime", "ecosystem.config.js"]
+# Use PM2 locally via npx
+CMD ["npx", "pm2-runtime", "ecosystem.config.js"]
