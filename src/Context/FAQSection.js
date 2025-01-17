@@ -28,6 +28,8 @@ const FAQSection = () => {
         activeIndex={activeIndex}
         onTabChange={handleTabChange}
       >
+
+       
         <AccordionTab header={renderHeader("What is the product name?", activeIndex === 0)}>
           <div className=" p-4 sm:p-6 p-[20px]">
             <p className="mx-auto sm:w-[200px]">
@@ -35,6 +37,7 @@ const FAQSection = () => {
             </p>
           </div>
         </AccordionTab>
+
         <AccordionTab header={renderHeader("How will this help me?", activeIndex === 1)}>
           <div className="  p-4 sm:p-6">
             <p className="mx-auto sm:w-[200px]">
@@ -42,6 +45,7 @@ const FAQSection = () => {
             </p>
           </div>
         </AccordionTab>
+
         <AccordionTab header={renderHeader("Can I get all information regarding Govt and State?", activeIndex === 2)}>
           <div className=" p-4 sm:p-6">
             <p className="mx-auto sm:w-[200px]">
@@ -49,6 +53,7 @@ const FAQSection = () => {
             </p>
           </div>
         </AccordionTab>
+        
         <AccordionTab header={renderHeader("How can I apply for schemes, jobs, or scholarships?", activeIndex === 3)}>
           <div className="  p-4 sm:p-6">
             <p className="mx-auto sm:w-[200px]">

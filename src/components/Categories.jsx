@@ -296,13 +296,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                 }}
               >
                 <div onClick={() => handleClick(item.id)}>
-                  {/* <button
-              className="text-center text-[12px] px-[8px] py-[6px] rounded-[4px] gap-[10px]"
-              style={{ color: "#151280", backgroundColor: "#EEEEFF" }}
-            >
-              New update
-            </button> */}
-
                   <div className="gap-[12px] pt-[16px] pd-[16px] w-[200px] md:w-8/12">
                     <p
                       className="font-inter text-[16px] sm:text-[18px] leading-[21.6px] cursor-pointer font-semibold mb-[10px] line-clamp-2 w-8/12 text-gray-700"
@@ -363,27 +356,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
         )}
 
         {/* for pagination */}
-        {totalPages !== 0 && (
-          <Paginator
-            first={(currentPage - 1) * 10}
-            rows={rows}
-            totalRecords={totalPages * rows}
-            onPageChange={(e) => {
-              // setFirst(e.first);
-              setCurrentPage(e.page + 1);
-            }}
-            template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
-            className="custom-paginator gap-8 hover:cursor-pointer
-          [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
-          [&_.p-paginator-page.p-highlight]:text-white 
-          [&_.p-paginator-page]:transition-colors 
-          [&_.p-paginator-page]:duration-200
-          [&_.p-paginator-page]:mx-1 
-          [&_.p-paginator-page]:px-3 
-          [&_.p-paginator-page]:py-1 
-          [&_.p-paginator-page]:rounded-full mt-20 mb-20"
-          />
-        )}
+
         {isToastVisible && (
           <Toast
             message={toastMessage}
@@ -417,6 +390,51 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
           />
         )}
       </div>
+      {/* For pagination (Page numbers for larger screens) */}
+      {totalPages !== 0 && (
+        <Paginator
+          first={(currentPage - 1) * 10}
+          rows={rows}
+          totalRecords={totalPages * rows}
+          onPageChange={(e) => {
+            setCurrentPage(e.page + 1);
+          }}
+          template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+          className="custom-paginator gap-8 hover:cursor-pointer
+      [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
+      [&_.p-paginator-page.p-highlight]:text-white 
+      [&_.p-paginator-page]:transition-colors 
+      [&_.p-paginator-page]:duration-200
+      [&_.p-paginator-page]:mx-2
+      [&_.p-paginator-page]:px-5
+      [&_.p-paginator-page]:py-1 
+      [&_.p-paginator-page]:rounded-full mt-20 mb-20 ml-80
+      md:block hidden"
+        />
+      )}
+
+      {/* For mobile view (Only Prev/Next buttons) */}
+      {totalPages !== 0 && (
+        <Paginator
+          first={(currentPage - 1) * 10}
+          rows={rows}
+          totalRecords={totalPages * rows}
+          onPageChange={(e) => {
+            setCurrentPage(e.page + 1);
+          }}
+          template="PrevPageLink PageLinks NextPageLink "
+          className="custom-paginator gap-8 hover:cursor-pointer 
+      [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
+      [&_.p-paginator-page.p-highlight]:text-white 
+      [&_.p-paginator-page]:transition-colors 
+      [&_.p-paginator-page]:duration-200
+      [&_.p-paginator-page]:mx-1 
+      [&_.p-paginator-page]:px-3 
+      [&_.p-paginator-page]:py-1 
+      [&_.p-paginator-page]:rounded-full mt-20 mb-20
+      lg:hidden"
+        />
+      )}
     </>
   );
 }
