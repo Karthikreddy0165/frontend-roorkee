@@ -188,6 +188,7 @@ const ProfileModal = ({ onClose }) => {
 
 useEffect(() => {
     const filledFields = Object.values(profileData).filter((value) =>typeof value === 'string' && value.trim() !== "").length;
+    console.log(profileData)
 
     const percentage = Math.round((filledFields / fieldsCount) * 100);
     setProgress(percentage);
@@ -370,6 +371,7 @@ useEffect(() => {
                     placeholder="Enter your age"
                     value={profileData.age}
                     onChange={handleChange}
+                    min="1"
                   />
                 </div>
                 <div className="flex-1">
@@ -404,7 +406,9 @@ useEffect(() => {
                     <option value="">Select category</option>
                     <option value="General">General</option>
                     <option value="OBC">OBC</option>
-                    <option value="SC">SC/ST</option>
+                    <option value="SC">SC</option>
+                    <option value="ST">ST</option>
+                    <option value="EWS">EWS</option>
                     {/* <option value="ST">ST</option> */}
                   </select>
                 </div>
@@ -588,6 +592,7 @@ useEffect(() => {
                     onChange={handleChange}
                   >
                    <option value="">Select Salary Range</option>
+                   <option value="0-100000">Less than 1 Lakh</option>
   <option value="100000-200000">1 Lakh - 2 Lakh</option>
   <option value="200000-300000">2 Lakh - 3 Lakh</option>
   <option value="300000-400000">3 Lakh - 4 Lakh</option>
@@ -599,6 +604,7 @@ useEffect(() => {
   <option value="900000-1000000">9 Lakh - 10 Lakh</option>
   <option value="1000000-2000000">10 Lakh - 20 Lakh</option>
   <option value="2000000-5000000">20 Lakh - 50 Lakh</option>
+  <option value="5000000+">More than 50 Lakh</option>
                       </select>
                 </div>
               </div>

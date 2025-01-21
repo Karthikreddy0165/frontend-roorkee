@@ -36,6 +36,7 @@
     "react-responsive": "^10.0.0",
     "react-router-dom": "^6.26.0",
     "react-share": "^5.1.0",
+    "react-spinners": "^0.15.0",
     "shadcn": "^2.1.8",
     "sharp": "^0.33.4",
     "tailwind-merge": "^2.6.0",

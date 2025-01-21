@@ -88,7 +88,9 @@ const DropdownMenu = ({
         <div className="dropdown-menu text-[#616161] bg-[rgb(255,255,255)] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px]">
             <ul className="flex flex-col font-sans list-none p-0 m-0 gap-0">
                 {options.map((item, index) => {
+                    
                     const isChecked = contextState[0]?.includes(item.value);
+           
 
                     return (
                         <li
