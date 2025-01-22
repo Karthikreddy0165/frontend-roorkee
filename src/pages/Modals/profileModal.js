@@ -38,6 +38,7 @@ const ProfileModal = ({ onClose }) => {
   const [sentEmailText, setSentEmailText] = useState(false);
   const modalRef = useRef(null);
   const [progress, setProgress] = useState(0);
+  const [fields, setFields] = useState([])
   
 
   const fieldsCount = Object.keys(profileData).length;
@@ -194,6 +195,22 @@ useEffect(() => {
     setProgress(percentage);
   }, [profileData]);
 
+  useEffect(() => {
+    const fetchProfileFields = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/dynamic-fields/");
+        if (!response.ok) {
+          throw new Error(`Failed to fetch fields: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setFields(data.profile_fields);
+      } catch (error) {
+        console.error("Failed to fetch profile fields", error);
+      }
+    };
+
+    fetchProfileFields();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -268,6 +285,102 @@ useEffect(() => {
       ...prevData,
       income: value,
     }));
+  };
+
+
+  const renderField = (field) => {
+    switch (field.type) {
+      case "choice":
+        return (
+          <div key={field.id} className="flex-1">
+            <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
+              {field.name}
+            </label>
+            <select
+              name={field.name.toLowerCase().replace(" ", "_")}
+              className="w-full h-[44px] border border-gray-300 p-2 rounded-lg text-[14px] font-semibold text-[#757575]"
+              value={profileData[field.name.toLowerCase().replace(" ", "_")] || ""}
+              onChange={(e) => handleChange(e, field)}
+            >
+              <option value="">Select {field.name}</option>
+              {field.choices.map((choice) => (
+                <option key={choice} value={choice}>
+                  {choice}
+                </option>
+              ))}
+            </select>
+          </div>
+        );
+      case "integer":
+        return (
+          <div key={field.id} className="flex-1">
+            <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
+              {field.name}
+            </label>
+            <input
+              type="number"
+              name={field.name.toLowerCase().replace(" ", "_")}
+              className="w-full h-[44px] border border-gray-300 p-2 rounded-lg text-sm font-semibold text-[#757575]"
+              placeholder={field.placeholder || `Enter your ${field.name}`}
+              value={profileData[field.name.toLowerCase().replace(" ", "_")] || ""}
+              onChange={(e) => handleChange(e, field)}
+              min={field.min_value}
+              max={field.max_value}
+            />
+          </div>
+        );
+      case "char":
+        return (
+          <div key={field.id} className="flex-1">
+            <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
+              {field.name}
+            </label>
+            <input
+              type="text"
+              name={field.name.toLowerCase().replace(" ", "_")}
+              className="w-full h-[44px] border border-gray-300 p-2 rounded-lg text-sm font-semibold text-[#757575]"
+              placeholder={field.placeholder || `Enter your ${field.name}`}
+              value={profileData[field.name.toLowerCase().replace(" ", "_")] || ""}
+              onChange={(e) => handleChange(e, field)}
+            />
+          </div>
+        );
+      case "boolean":
+        return (
+          <div key={field.id} className="flex-1">
+            <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
+              {field.name}
+            </label>
+            <select
+              name={field.name.toLowerCase().replace(" ", "_")}
+              className="w-full h-[44px] border border-gray-300 p-2 rounded-lg text-[14px] font-semibold text-[#757575]"
+              value={profileData[field.name.toLowerCase().replace(" ", "_")] || ""}
+              onChange={(e) => handleChange(e, field)}
+            >
+              <option value="">Select {field.name}</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+        );
+      case "date":
+        return (
+          <div key={field.id} className="flex-1">
+            <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
+              {field.name}
+            </label>
+            <input
+              type="date"
+              name={field.name.toLowerCase().replace(" ", "_")}
+              className="w-full h-[44px] border border-gray-300 p-2 rounded-lg text-sm font-semibold text-[#757575]"
+              value={profileData[field.name.toLowerCase().replace(" ", "_")] || ""}
+              onChange={(e) => handleChange(e, field)}
+            />
+          </div>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
@@ -359,8 +472,13 @@ useEffect(() => {
 
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row gap-4 w-full ">
-                <div className="flex-1">
+
+              <div id="scroll-container" className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 w-full overflow-y-auto flex-1">
+                {fields.map((field) => renderField(field))}
+              </div>
+              {/* <div className="flex flex-col sm:flex-row gap-4 w-full "> */}
+
+                {/* <div className="flex-1">
                   <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     Age
                   </label>
@@ -373,8 +491,8 @@ useEffect(() => {
                     onChange={handleChange}
                     min="1"
                   />
-                </div>
-                <div className="flex-1">
+                </div> */}
+                {/* <div className="flex-1">
                   <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     Gender
                   </label>
@@ -389,10 +507,10 @@ useEffect(() => {
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>
                   </select>
-                </div>
-              </div>
+                </div> */}
+              {/* </div> */}
 
-              <div className="flex flex-col sm:flex-row gap-4 w-full ">
+              {/* <div className="flex flex-col sm:flex-row gap-4 w-full ">
                 <div className="flex-1">
                   <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     Category
@@ -410,10 +528,10 @@ useEffect(() => {
                     <option value="ST">ST</option>
                     <option value="EWS">EWS</option>
                     {/* <option value="ST">ST</option> */}
-                  </select>
-                </div>
+                  {/* </select>
+                </div> */}
 
-                <div className="flex-1">
+                {/* <div className="flex-1"> */}
                   {/* <label className="block mb-2 text-[12px] font-semibold text-black">
                     Minority
                   </label>
@@ -427,7 +545,7 @@ useEffect(() => {
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
                   </select> */}
-                  <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
+                  {/* <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     BPL Card Holder
                   </label>
                   <select
@@ -442,9 +560,9 @@ useEffect(() => {
                     <option value="Maybe">Maybe</option>
                   </select>
                 </div>
-              </div>
+              </div> */} 
 
-              <div className="flex flex-col sm:flex-row gap-4 w-full ">
+              {/* <div className="flex flex-col sm:flex-row gap-4 w-full ">
                 <div className="flex-1">
                   <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     State of Residence
@@ -478,9 +596,9 @@ useEffect(() => {
                     <option value="No">No</option>
                   </select>
                 </div>
-              </div>
+              </div> */}
 
-              <div className="flex flex-col sm:flex-row gap-4 w-full ">
+              {/* <div className="flex flex-col sm:flex-row gap-4 w-full ">
                 <div className="flex-1">
                   <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     Education
@@ -498,10 +616,10 @@ useEffect(() => {
                       </option>
                     ))}
                   </select>
-                </div>
+                </div> */}
 
 
-                <div className="flex-1">
+                {/* <div className="flex-1">
                 <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     Employment
                   </label>
@@ -516,12 +634,12 @@ useEffect(() => {
                     <option value="Self-employed">Self-employed / Business</option>
                     <option value="Unemployed">Unemployed</option>
                   </select>
-                </div>
+                </div> */}
 
 
-              </div>
+              {/* </div> */}
 
-              <div className="flex flex-col sm:flex-row gap-4 w-full ">
+              {/* <div className="flex flex-col sm:flex-row gap-4 w-full ">
                 <div className="flex-1">
                   <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                     Occupation
@@ -579,9 +697,9 @@ useEffect(() => {
                       Environment & Natural Resources
                     </option>
                   </select>
-                </div>
+                </div> */}
 
-                <div className="flex-1">
+                {/* <div className="flex-1">
                 <label className="block mb-2 text-[14px] font-semibold text-[#000000]">
                   Annual Income (in lakhs)
                 </label>
@@ -592,23 +710,21 @@ useEffect(() => {
                     onChange={handleChange}
                   >
                    <option value="">Select Salary Range</option>
-                   <option value="0-100000">Less than 1 Lakh</option>
-  <option value="100000-200000">1 Lakh - 2 Lakh</option>
-  <option value="200000-300000">2 Lakh - 3 Lakh</option>
-  <option value="300000-400000">3 Lakh - 4 Lakh</option>
-  <option value="400000-500000">4 Lakh - 5 Lakh</option>
-  <option value="500000-600000">5 Lakh - 6 Lakh</option>
-  <option value="600000-700000">6 Lakh - 7 Lakh</option>
-  <option value="700000-800000">7 Lakh - 8 Lakh</option>
-  <option value="800000-900000">8 Lakh - 9 Lakh</option>
-  <option value="900000-1000000">9 Lakh - 10 Lakh</option>
-  <option value="1000000-2000000">10 Lakh - 20 Lakh</option>
-  <option value="2000000-5000000">20 Lakh - 50 Lakh</option>
-  <option value="5000000+">More than 50 Lakh</option>
+                      <option value="100000-200000">1 Lakh - 2 Lakh</option>
+                      <option value="200000-300000">2 Lakh - 3 Lakh</option>
+                      <option value="300000-400000">3 Lakh - 4 Lakh</option>
+                      <option value="400000-500000">4 Lakh - 5 Lakh</option>
+                      <option value="500000-600000">5 Lakh - 6 Lakh</option>
+                      <option value="600000-700000">6 Lakh - 7 Lakh</option>
+                      <option value="700000-800000">7 Lakh - 8 Lakh</option>
+                      <option value="800000-900000">8 Lakh - 9 Lakh</option>
+                      <option value="900000-1000000">9 Lakh - 10 Lakh</option>
+                      <option value="1000000-2000000">10 Lakh - 20 Lakh</option>
+                      <option value="2000000-5000000">20 Lakh - 50 Lakh</option>
                       </select>
-                </div>
-              </div>
-            </div>
+                </div>*/}
+              {/* </div> */}
+            </div> 
 
             <hr className="w-full mt-[2rem] mb-[2rem]" />
             <div className="flex justify-end mt-2 gap-4 w-full">
