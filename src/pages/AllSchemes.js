@@ -76,12 +76,8 @@ const SchemesAll = () => {
     });
   };
 
-  const isDepartmentVisible =
-    sponsoredBy.length > 0 &&
-    (states.length > 0 || sponsoredBy[0][0] === 2);
-  const isBeneficiaryVisible =
-    sponsoredBy.length > 0 &&
-    (states.length > 0 || sponsoredBy[0][0] === 2);
+  const isDepartmentVisible = (states.length > 0 && states[0].length > 0 )  || (sponsoredBy[0]?.[0] === 2 );
+  const isBeneficiaryVisible = (states.length > 0 && states[0].length > 0 ) || sponsoredBy[0]?.[0] === 2;
 
   const handleFilterButtonClick = () => {
     setIsFilterModalOpen(true);
