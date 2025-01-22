@@ -35,12 +35,8 @@ const HowToApply = ({ closeModal, schemeId }) => {
       image: isMobile 
         ? "/_next/static/media/step2.64e5a384.jpeg"
         : "/_next/static/media/step2.64e5a384.jpeg", 
-    },
-    {
-      title: "Procedures",
-      content: "Here are the procedures for applying for the scheme.",
-      image: null, // No image for the procedures step
     }
+   
   ];
 
   // Fetch procedures based on schemeId
@@ -84,7 +80,8 @@ const HowToApply = ({ closeModal, schemeId }) => {
   }, [schemeId, authState.token]); 
 
   const nextStep = () => {
-    if (currentStep < steps.length) {
+    const totalSteps = steps.length + (procedures.length > 0 ? 1 : 0);
+    if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -95,12 +92,12 @@ const HowToApply = ({ closeModal, schemeId }) => {
     }
   };
 
-  console.log("steps", steps);
+  console.log("steps", steps.content);
   console.log("procedures", procedures);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-50">
-      <div className="bg-white rounded-lg h-[80vh] sm:h-[80vh] md:h-[70vh] lg:h-[60vh] xl:h-[50vh] w-[90%] sm:w-[80%] md:w-[70%] lg:w-[600px] xl:w-[700px] p-6 max-w-full flex flex-col relative">
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-50 ">
+<div className="bg-white rounded-lg h-[80vh] sm:h-[90vh] md:h-[60%] lg:h-[60%] xl:h-[60%] w-[90%] sm:w-[80%] md:w-[70%] lg:w-[600px] xl:w-[700px] p-6 max-w-full flex flex-col relative">
         <div className="flex justify-between items-center mb-2 w-full">
           <h2 className="sm:text-2xl text-[20px] font-semibold text-center mb-6 text-[#3431BB]">
             How to Apply for Schemes
@@ -113,61 +110,66 @@ const HowToApply = ({ closeModal, schemeId }) => {
           </button>
         </div>
 
-        <div className="flex-grow space-y-6 overflow-y-auto">
+         {/* Steps Content */}
+         <div className="flex-grow space-y-6 overflow-y-auto h-[200px]">
           <div className="flex flex-col items-center justify-center space-y-4">
-            {/* Step Sections */}
-            <div className="border border-[#3431BB] rounded-[6px] p-6 w-full">
-              <h3 className="text-[16px] font-semibold text-center">
-                {steps[currentStep - 1].title}
-              </h3>
-              <p className="text-[14px] text-center mt-2">
-                {steps[currentStep - 1].content}
-              </p>
-            </div>
-
-            {/* Procedures Section (Only displayed when the Procedures step is active) */}
-            {currentStep === steps.length && procedures.length > 0 && (
-  <div className="mt-4 border border-[#3431BB] rounded-[6px] p-6 w-full overflow-y-auto">
-    <ul className="list-disc pl-5 max-h-40 ">
-   
-      {procedures.map((procedure, index) => (
-      
-        <li key={index}>{procedure.step_description}</li>
-      ))}
-    </ul>
-  </div>
-)}
-
-
-            {/* Image for current step */}
-            {steps[currentStep - 1].image && (
-              <div className="mt-4">
-                <img
-                  src={steps[currentStep - 1].image}
-                  alt={`Step ${currentStep}`}
-                  className="w-full h-[80%] object-contain rounded-md shadow-md border-[#3431BB] rounded "
-                />
+            {currentStep <= steps.length ? (
+              <>
+                <div className="border border-[#3431BB] rounded-[6px] p-6 w-full">
+                  <h3 className="text-[16px] font-semibold text-center">
+                    {steps[currentStep - 1].title}
+                  </h3>
+                  <p className="text-[15px] text-center mt-2">
+                    {steps[currentStep - 1].content}
+                  </p>
+                </div>
+                {steps[currentStep - 1].image && (
+                  <div className="mt-4">
+                    <img
+                      src={steps[currentStep - 1].image}
+                      alt={`Step ${currentStep}`}
+                      className="w-full h-[80%] object-contain rounded-md shadow-md border-[#3431BB] rounded"
+                    />
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="mt-4 border border-[#3431BB] rounded-[6px] p-6 w-full  overflow-y-auto">
+                 <h3 className="text-[16px] font-semibold text-center">
+                    Step 4
+                  </h3>
+                <ul className=" list-disc text-[15px]  mt-2">
+                  {procedures.map((procedure, index) => (
+                    <li key={index}>{procedure.step_description}</li>
+                  ))}
+                </ul>
               </div>
             )}
           </div>
         </div>
+        
 
         <div className="absolute bottom-0 left-0 right-0 p-6 bg-white border-t flex justify-between">
-          <button
-            onClick={prevStep}
-            className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
-            disabled={currentStep === 1}
-          >
-            Previous
-          </button>
-          <button
-            onClick={nextStep}
-            className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
-            disabled={currentStep === steps.length}
-          >
-            Next
-          </button>
-        </div>
+  <button
+    onClick={prevStep}
+    className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
+    disabled={currentStep === 1}
+  >
+    Previous
+  </button>
+  <button
+    onClick={nextStep}
+    className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
+    disabled={
+      (procedures.length > 0 && currentStep === steps.length + 1) || 
+      (procedures.length === 0 && currentStep === steps.length)
+    }
+  >
+    Next
+  </button>
+</div>
+
+
       </div>
     </div>
   );
