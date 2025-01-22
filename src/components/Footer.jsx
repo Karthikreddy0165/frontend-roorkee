@@ -4,7 +4,7 @@ import FeedbackButton from "./feedBack";
 const Footer = () => {
   return (
     <>
-      <footer className="text-black py-[5rem] px-4 gap-[5rem]  sm:mt-[2rem] ">
+      <footer className="text-black sm:pt-[5rem] pb-[1rem] px-4 gap-[5rem]  sm:mt-[2rem] ">
         <h1 className="text-[32px] block sm:hidden font-semibold mb-4 text-[#3F3BE1]">
           LaunchPad
         </h1>
@@ -119,9 +119,6 @@ const Footer = () => {
                 </svg>
               </a>
             </div>
-            <p className="flex  text-sm text-black font-bold py-[2rem]">
-              &copy; {new Date().getFullYear()} LaunchPad. All Rights Reserved.
-            </p>
           </div>
 
           {/* Navigation Links */}
@@ -327,11 +324,12 @@ const Footer = () => {
                 </svg>
               </a>
             </div>
-            <p className="flex  text-sm text-black font-bold py-[2rem]">
-              &copy; {new Date().getFullYear()} LaunchPad. All Rights Reserved.
-            </p>
           </div>
         </div>
+
+        <p className="flex justify-center font-semibold mt-[1rem] items-center  border-t-[1px] text-sm text-black  py-[1rem]">
+          &copy; {new Date().getFullYear()} LaunchPad. All Rights Reserved.
+        </p>
       </footer>
     </>
   );

@@ -23,7 +23,7 @@ function SelectedFilters() {
     setSponsoredBy,
     setFundingBy,
   } = useContext(FilterContext);
-  console.log(states);
+  // console.log(states);
   const { authState } = useAuth();
   const [newSponser, setNewSponser] = useState([]);
   const [newState, setNewState] = useState([]);
@@ -90,7 +90,7 @@ function SelectedFilters() {
       setStates([]);
     }
   };
-  console.log("states", newState);
+  // console.log("states", newState);
   return newSponser.length > 0 ||
     newState.length > 0 ||
     newDepartment.length > 0 ||

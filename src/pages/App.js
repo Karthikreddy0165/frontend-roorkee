@@ -354,8 +354,10 @@ const App = () => {
 
    
 
-
+          <div className="mt-[5rem]">
           <Footer/>
+          </div>
+       
           
 
           </div>

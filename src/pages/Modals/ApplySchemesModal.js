@@ -373,7 +373,7 @@ const ApplyModal = ({
 
 
                   <div className="mt-8">
-                    {scheme.pdf_url && scheme.pdf_url.startsWith('https://launchpad-pdf.s3.amazonaws.com') ? (
+                    {scheme.pdf_url  ? (
                       <div className="flex justify-center">
                         <embed
                           src={scheme.pdf_url}
@@ -445,7 +445,7 @@ const ApplyModal = ({
                 type="submit"
                 className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
               >
-                Submit Report
+                Submit
               </button>
 
              
@@ -456,21 +456,21 @@ const ApplyModal = ({
         </div>
       )}
 
-          <div>
+          <div className="py-[1rem]">
             Not sure how to apply?{" "}
             <span
-              className="text-[#3431Bb] cursor-pointer"
+              className="text-[#3431Bb] cursor-pointer "
               onClick={handleHowToApply} 
             >
               click here
             </span>{" "}
-            to know how to apply
+            to know how to apply for this scheme.
           </div>
         </div>
       </div>
 
       {isHowToApplyOpen && (
-        <HowToApply closeModal={handleCloseHowToApply} /> 
+        <HowToApply closeModal={handleCloseHowToApply} schemeId={scheme.id} /> 
       )}
       {isSavedModalOpen && (
           <SavedModal

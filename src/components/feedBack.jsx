@@ -3,6 +3,7 @@ import { useAuth } from "@/Context/AuthContext";
 import SavedModal from "@/pages/Modals/savedModal";
 import { IoMdClose } from "react-icons/io";
 import { FiAlertCircle } from "react-icons/fi";
+
 const FeedbackModal = ({ isOpen, onRequestClose }) => {
   const [rating, setRating] = useState(0);
   const [reportFormData, setReportFormData] = useState({
@@ -128,7 +129,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
             className="w-full p-2 border text-sm rounded-md text-[#000000]"
           >
             <option value="">Select Category</option>
-            <option value="bug">Bug</option>
+            <option value="bug">Issue</option>
             <option value="improvement">Improvement</option>
             <option value="general">General</option>
           </select>
@@ -156,7 +157,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
             className=" px-4 py-2 rounded-lg text-[13px] bg-[#3330BA] text-white hover:bg-blue-700"
             disabled={loading}
           >
-            {loading ? "Submitting..." : "Submit Feedback"}
+            {loading ? "Submitting..." : "Submit"}
           </button>
         </div>
       </div>
