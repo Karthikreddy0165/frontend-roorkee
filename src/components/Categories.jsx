@@ -424,22 +424,30 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
           onPageChange={(e) => {
             setCurrentPage(e.page + 1);
           }}
-          template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
-          className="custom-paginator gap-8 hover:cursor-pointer
+          template="FirstPageLink PrevPageLink PageLinks NextPageLink   LastPageLink"
+          className="custom-paginator gap-4 px-4 py-2 hover:cursor-pointer
       [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
       [&_.p-paginator-page.p-highlight]:text-white 
       [&_.p-paginator-page]:transition-colors 
       [&_.p-paginator-page]:duration-200
-      [&_.p-paginator-page]:mx-1
-      [&_.p-paginator-page]:px-5
-      [&_.p-paginator-page]:py-1 
+
+      [&_.p-paginator-page]:mx-2
+      [&_.p-paginator-page]:px-4
+      [&_.p-paginator-page]:py-1
+      [&_.p-paginator-page]:rounded-full
+      [&_.p-paginator-first]:mr-4
+      [&_.p-paginator-prev]:ml-4 
+      [&_.p-paginator-next]:mr-4
+      [&_.p-paginator-last]:ml-4 
+
       [&_.p-paginator-page]:rounded-full mt-20 mb-20 ml-80
       md:block hidden"
         />
       )}
 
+
       {/* For mobile view (Only Prev/Next buttons) */}
-      {totalPages !== 0 && (
+       {totalPages !== 0 && (
         <Paginator
           first={(currentPage - 1) * 10}
           rows={rows}
@@ -454,8 +462,12 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       [&_.p-paginator-page]:transition-colors 
       [&_.p-paginator-page]:duration-200
       [&_.p-paginator-page]:mx-1 
-      [&_.p-paginator-page]:px-3 
+      [&_.p-paginator-page]:px-2
       [&_.p-paginator-page]:py-1 
+      [&_.p-paginator-next]:mr-3 
+      [&_.p-paginator-last]:pl-1 
+      [&_.p-paginator-first]:mr-2
+      [&_.p-paginator-prev]:pl-1 
       [&_.p-paginator-page]:rounded-full mt-20 mb-20
       lg:hidden"
         />
