@@ -19,8 +19,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const { activeTab, setActiveTab } = useTabContext(); // Accessing context
-  const { isBookmarked, setIsBookmarked, toggleBookmark } =
-    useBookmarkContext();
+  const { isBookmarked, toggleBookmark, setIsBookmarked } = useBookmarkContext();
   const [selectedScheme, setSelectedScheme] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
