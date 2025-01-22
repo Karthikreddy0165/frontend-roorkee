@@ -3,7 +3,7 @@ import FilterContext from '@/Context/FilterContext';
 import PageContext from '@/Context/PageContext';
 
 const DropdownMenu = ({
-    apiEndpoint, // API URL to fetch options
+    apiEndpoint = null, // API URL to fetch options
     staticOptions = [], // Static options if API is not provided
     labelKey = 'label', // Key for the display label in the dropdown
     valueKey = 'value', // Key for the unique value of each item
@@ -47,7 +47,7 @@ const DropdownMenu = ({
         setCurrentPage(1); // Reset pagination to the first page
 
         setContextState((prev = [[], []]) => {
-            const [selectedValues, selectedLabels] = prev;
+            const [selectedValues = [], selectedLabels=[]] = prev;
             const isSelected = selectedValues.includes(item.value);
 
             if (isSelected) {

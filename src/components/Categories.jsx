@@ -129,7 +129,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       );
       if (response.ok) {
         const result = await response.json();
-        console.log(result);
+
         return true;
       } else {
         console.error("Failed to save scheme");
@@ -455,7 +455,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       [&_.p-paginator-page]:transition-colors 
       [&_.p-paginator-page]:duration-200
       [&_.p-paginator-page]:mx-1 
-      [&_.p-paginator-page]:px-2
+      [&_.p-paginator-page]:px-3
       [&_.p-paginator-page]:py-1 
       [&_.p-paginator-next]:mr-3 
       [&_.p-paginator-last]:pl-1 
