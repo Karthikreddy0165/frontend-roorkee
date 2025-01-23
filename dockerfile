@@ -1,40 +1,22 @@
-# Build stage
-FROM --platform=linux/amd64 node:18-buster AS builder
+FROM node:22-alpine3.19
 
 WORKDIR /App
 
-# Set environment variables
 ARG ENVIRONMENT
 ARG NEXT_PUBLIC_API_BASE_URL
 ENV ENVIRONMENT=${ENVIRONMENT}
-ENV NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
 
-# Install PM2 locally
-RUN npm install pm2 --save
+ENV NEXT_PUBLIC_API_BASE_URL=http://43.204.236.103:8000
 
-# Copy package.json and install dependencies
+RUN npm install -g pm2
+
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 
-# Copy the rest of the application files
 COPY . .
 
-# Build the Next.js application
-RUN npm run build
+RUN npm run build 
 
-# Production stage
-FROM --platform=linux/amd64 node:18-buster
+EXPOSE 80
 
-WORKDIR /App
-
-# Copy the build and node_modules from the builder stage
-COPY --from=builder /App/package*.json ./
-COPY --from=builder /App/.next ./.next
-COPY --from=builder /App/node_modules ./node_modules
-
-# Set runtime environment variables
-ENV ENVIRONMENT=${ENVIRONMENT}
-ENV NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
-
-# Use PM2 locally via npx
-CMD ["npx", "pm2-runtime", "ecosystem.config.js"]
+CMD ["pm2-runtime", "ecosystem.config.js"]
