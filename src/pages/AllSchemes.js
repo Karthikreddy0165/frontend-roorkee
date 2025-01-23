@@ -96,7 +96,7 @@ const SchemesAll = () => {
     setIsFilterModalOpen(false);
   };
 
-  console.log("new state added", states);
+  // console.log("new state added", sponsoredBy);
 
   return (
     <div className="overflow-y-auto">
