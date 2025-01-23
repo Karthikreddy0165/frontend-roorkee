@@ -193,7 +193,7 @@ useEffect(() => {
   useEffect(() => {
     const fetchProfileFields = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/dynamic-fields/");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/dynamic-fields/`);
         if (!response.ok) {
           throw new Error(`Failed to fetch fields: ${response.statusText}`);
         }
