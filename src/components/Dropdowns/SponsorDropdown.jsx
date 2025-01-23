@@ -27,7 +27,7 @@ const SponsorDropdownMenu = () => {
     }
   };
 
-  console.log(states);
+  // console.log(states);
 
   return (
     <div className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0">

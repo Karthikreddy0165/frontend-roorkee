@@ -153,7 +153,7 @@ const SchemesAll = () => {
             {/* Department Dropdown */}
             {isDepartmentVisible && (
               <div
-                className="flex justify-between items-center hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue py-[1rem] pl-[0.3rem] pr-[0.3rem]"
+                className="flex justify-between items-center hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
                 onClick={() => toggleDropdown("departmentOpen")}
               >
                 <span>Department</span>
