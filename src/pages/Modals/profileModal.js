@@ -84,19 +84,14 @@ const ProfileModal = ({ onClose }) => {
           console.log(pData, "fetching Saved data")
 
           setProfileData({
+            ...profileData,
             name: pData.name || "",
-            age: pData.age || "",
-            gender: pData.gender || "",
-            community: pData.category || "",
-            minority: pData.minority === true ? "Yes" : "No",
-            state: pData.state_of_residence || "",
-            bpl_card_holder: pData.bpl_card_holder || "",
-            education: pData.education || "",
-            disability: pData.disability === true ? "Yes" : "No",
-            occupation: pData.occupation || "",
-            income: pData.income || "",
-            employment_status: pData.employment_status || ""
-          })
+            ...Object.entries(pData.dynamic_fields || {}).reduce((acc, [key, value]) => {
+              acc[key.toLowerCase().replace(" ", "_")] = value;
+              return acc;
+            }, {}),
+          });
+          
         } catch (error) {
           console.error("Error fetching profile data:", error);
         } finally {
@@ -173,7 +168,7 @@ const ProfileModal = ({ onClose }) => {
 
         try {
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/me/`,
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/profile/`,
             requestOptions
           );
           const data = await response.json();
@@ -224,60 +219,56 @@ useEffect(() => {
 
   const handleSave = async () => {
     if (authState.token) {
+      const dynamicFields = fields.reduce((acc, field) => {
+        const key = field.name;
+        const value = profileData[key.toLowerCase().replace(" ", "_")];
+        if (value) acc[key] = value;
+        return acc;
+      }, {});
+  
       const requestOptions = {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${authState.token}`,
         },
+        body: JSON.stringify({
+          name: profileData.name,
+          dynamic_fields: dynamicFields, // Add dynamic fields here
+        }),
       };
-
+  
       try {
-        await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/profile/`, {
-          ...requestOptions,
-          body: JSON.stringify({
-            name: profileData.name,
-
-            gender: profileData.gender,
-            age: profileData.age || 0,
-
-            category: profileData.community,
-            state_of_residence: profileData.state,
-            minority: profileData.minority === "Yes",
-            disability: profileData.disability === "Yes",
-            bpl_card_holder: profileData.bpl_card_holder,
-            education: profileData.education,
-            occupation: profileData.occupation,
-            income: profileData.income,
-            employment_status: profileData.employment_status
-          })
-        });
-
-        localStorage.setItem("profiledata",JSON.stringify(profileData))
-        console.log(profileData,"putting profile data")
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/profile/`,
+          requestOptions
+        );
+  
+        if (!response.ok) {
+          throw new Error("Failed to save profile data.");
+        }
+  
         const selectedValue = profileData.state;
-
-      
         const selectedState = statesFromApi.find(
           (it) => it.state_name === selectedValue
         );
-    
+  
         if (selectedState) {
           setStates([[selectedState.id], [selectedState.state_name]]);
         }
-      if (profileData.community){
-        setBeneficiaries([profileData.community])
-      }
-
-
-
-        setIsSaved(true)
+  
+        if (profileData.community) {
+          setBeneficiaries([profileData.community]);
+        }
+  
+        setIsSaved(true);
         onClose();
       } catch (error) {
         console.error("Error saving profile data:", error);
       }
     }
-  };
+  };  
+  
 
   const handleSliderChange = (e) => {
     const { value } = e.target;
