@@ -136,7 +136,7 @@ const SchemesAll = () => {
           <div className="flex space-between ml-1 hidden md:block max-h-[70vh] overflow-y-auto scrollbar-none">
             {/* Sponsored By Dropdown */}
             <div
-              className="flex justify-between items-center hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pb-2"
+              className="flex justify-between items-center hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pb-2 pr-2"
               onClick={() => toggleDropdown("sponsoredOpen")}
             >
               <span>Sponsored By</span>

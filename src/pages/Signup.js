@@ -31,7 +31,7 @@ const CreateAcc01 = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      router.push("/App");
+      router.push("/");
     }
   }, [router]);
 

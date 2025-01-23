@@ -32,7 +32,7 @@ const login = () => {
   useEffect (() =>{
     const token = localStorage.getItem("token");
     if (token){
-      router.push("/App");
+      router.push("/");
     }
   },[])
 

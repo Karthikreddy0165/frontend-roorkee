@@ -31,7 +31,7 @@ const NavBarScheme = () => {
   };
 
   const handleClickLogo = () => {
-    router.push("/App");
+    router.push("/");
   };
 
   const toggleDropdown = () => {
