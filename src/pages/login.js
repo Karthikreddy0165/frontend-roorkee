@@ -71,9 +71,9 @@ const login = () => {
         const user = { token: result.access, email: values.email };
         localStorage.setItem("token", result.access);
         login(result.access, user); // Save token and user information to the context
-        router.push("/LoginSuccess");
+        router.replace("/LoginSuccess");
         setTimeout(() => {
-          router.push("/AllSchemes");
+          router.replace("/AllSchemes");
         }, 2000);
       } else {
         setErrorMessage("Email or password is invalid");
