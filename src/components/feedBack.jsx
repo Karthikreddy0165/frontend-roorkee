@@ -57,7 +57,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/pi/feedback/website-feedback/`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/feedback/website-feedback/`,
         requestOptions
       );
 
