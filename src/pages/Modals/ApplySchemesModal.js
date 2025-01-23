@@ -8,7 +8,8 @@ import { useScheme } from "@/Context/schemeContext";
 import SavedModal from "@/pages/Modals/savedModal"
 import Toast from "@/components/ComponentsUtils/SavedToast";
 import UnSaveToast from "@/components/ComponentsUtils/UnsaveToast";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ApplyModal = ({
   isOpen,
@@ -145,30 +146,39 @@ const ApplyModal = ({
 
   
 
-  const handleReportSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/feedback/scheme-reports/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${authState.token}`
-        },
-        body: JSON.stringify(reportFormData),
-      });
 
-      if (!response.ok) {
-        throw new Error(`Error creating report: ${response.statusText}`);
-      }
 
-      alert("Scheme successfully reported!");
-      setReportFormData({  description: "", report_category: "" });
-      setReportModalOpen(false);
-    } catch (error) {
-      console.error("Error submitting report:", error);
-      alert("Failed to create report. Please try again later.");
+const handleReportSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/feedback/scheme-reports/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authState.token}`,
+      },
+      body: JSON.stringify(reportFormData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error creating report: ${response.statusText}`);
     }
-  };
+
+    // Success toast notification
+    toast.success("Scheme successfully reported!", { position: "top-right", autoClose: 3000 });
+
+    // Reset form and close modal
+    setReportFormData({ description: "", report_category: "" });
+    setReportModalOpen(false);
+  } catch (error) {
+    console.error("Error submitting report:", error);
+
+    // Error toast notification
+    toast.error("Failed to create report. Please try again later.", { position: "top-right", autoClose: 3000 });
+  }
+};
+
 
 
   const handleHowToApply = () => {

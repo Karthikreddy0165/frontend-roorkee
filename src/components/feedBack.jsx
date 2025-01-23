@@ -3,6 +3,8 @@ import { useAuth } from "@/Context/AuthContext";
 import SavedModal from "@/pages/Modals/savedModal";
 import { IoMdClose } from "react-icons/io";
 import { FiAlertCircle } from "react-icons/fi";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const FeedbackModal = ({ isOpen, onRequestClose }) => {
   const [rating, setRating] = useState(0);
@@ -66,13 +68,15 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
       // Clear form and close modal on success
       setRating(0);
 
-      alert("Feedback submitted successfully!");
+      // Success toast notification
+      toast.success("Feedback recieved successfully", { position: "top-right", autoClose: 3000 });
 
       setReportFormData({ category: "", description: "" });
       onRequestClose();
     } catch (err) {
-      setError(err.message);
-      console.log(err.message);
+          // Error toast notification
+    toast.error("Failed to give feedback. Please try again later.", { position: "top-right", autoClose: 3000 });
+    onRequestClose();
     } finally {
       setLoading(false);
     }

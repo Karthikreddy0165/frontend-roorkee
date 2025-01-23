@@ -31,7 +31,7 @@ function SelectedFilters() {
   const [profileData, setProfileData] = useState([]);
 
   useEffect(() => {
-    setNewSponser(sponsoredBy[1] ? sponsoredBy[1] : []);
+    setNewSponser(sponsoredBy[1] && sponsoredBy[1]?.[0] !=='State'  ? sponsoredBy[1] : []);
     setNewState(states[1] ? states[1] : []);
     setNewDepartment(Object.keys(departments) ? Object.keys(departments) : []);
   }, [sponsoredBy, states, departments]);
