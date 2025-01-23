@@ -278,15 +278,15 @@ const NavBarScheme = () => {
                 <path
                   d="M3.125 12.64C3.125 11.1389 3.125 10.3883 3.44277 9.73862C3.76053 9.0889 4.35298 8.62811 5.53788 7.70652L8.66287 5.27598C10.5062 3.84232 11.4278 3.12549 12.5 3.12549C13.5722 3.12549 14.4938 3.84232 16.3371 5.27597L19.4621 7.70652C20.647 8.62811 21.2395 9.0889 21.5572 9.73862C21.875 10.3883 21.875 11.1389 21.875 12.64V15.6249C21.875 18.5712 21.875 20.0443 20.9597 20.9596C20.0444 21.8749 18.5713 21.8749 15.625 21.8749H9.375C6.42872 21.8749 4.95558 21.8749 4.04029 20.9596C3.125 20.0443 3.125 18.5712 3.125 15.6249V12.64Z"
                   stroke="black"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M14.75 21V16.25C14.75 14.7312 13.5188 13.5 12 13.5C10.4812 13.5 9.25 14.7312 9.25 16.25V21"
                   stroke="black"
-                  stroke-width="2"
-                  stroke-linecap="square"
+                  strokeWidth="2"
+                  strokeLinecap="square"
                 />
               </svg>
               Home
@@ -395,9 +395,9 @@ const NavBarScheme = () => {
               <path
                 d="M19 21L12 16L5 21V5C5 4.46957 5.21071 3.96086 5.58579 3.58579C5.96086 3.21071 6.46957 3 7 3H17C17.5304 3 18.0391 3.21071 18.4142 3.58579C18.7893 3.96086 19 4.46957 19 5V21Z"
                 stroke="black"
-                stroke-width="2.1"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2.1"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
             Saved
