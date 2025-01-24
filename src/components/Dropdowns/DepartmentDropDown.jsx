@@ -77,7 +77,7 @@ const DepartmentDropdownMenu = () => {
             <div className="w-[16.5] h-[16.5]">
               <input
                 type="checkbox"
-                value={item}
+                value={item.sort}
                 checked={departments.hasOwnProperty(item)}
                 className="ml-10 custom-checkbox pointer-events-none w-full h-full"
               />

@@ -23,9 +23,7 @@ const DropdownMenu = ({
                 try {
                     setLoading(true);
                     const res = await fetch(apiEndpoint);
-                    if (!res.ok) {
-                        throw new Error(`HTTP error! status: ${res.status}`);
-                    }
+                    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                     const data = await res.json();
                     const formattedOptions = data.map((item) => ({
                         label: item[labelKey],
@@ -43,24 +41,26 @@ const DropdownMenu = ({
         }
     }, [apiEndpoint, labelKey, valueKey]);
 
+    const sortedOptions = [...options].sort((a, b) => a.label.localeCompare(b.label));
+
     const handleItemClick = (item) => {
         setCurrentPage(1); // Reset pagination to the first page
 
-        setContextState((prev) => {
-            const prevState = prev?.length === 2 ? prev : [[], []]; // Fallback to default
-            const isSelected = prevState[0].includes(item.value);
+        setContextState((prev = [[], []]) => {
+            const [selectedValues = [], selectedLabels=[]] = prev;
+            const isSelected = selectedValues.includes(item.value);
 
             if (isSelected) {
                 // Remove the item if it's already selected
                 return [
-                    prevState[0].filter((id) => id !== item.value),
-                    prevState[1].filter((label) => label !== item.label),
+                    selectedValues.filter((id) => id !== item.value),
+                    selectedLabels.filter((label) => label !== item.label),
                 ];
             } else {
                 // Add the item to the selection
                 return [
-                    allowMultipleSelection ? [...prevState[0], item.value] : [item.value],
-                    allowMultipleSelection ? [...prevState[1], item.label] : [item.label],
+                    allowMultipleSelection ? [...selectedValues, item.value] : [item.value],
+                    allowMultipleSelection ? [...selectedLabels, item.label] : [item.label],
                 ];
             }
         });
@@ -76,7 +76,7 @@ const DropdownMenu = ({
         );
     }
 
-    if (options.length === 0) {
+    if (sortedOptions.length === 0) {
         return (
             <div className="text-onclick-btnblue text-[16px] mt-[-15px] mb-[7px]">
                 No options available
@@ -87,14 +87,12 @@ const DropdownMenu = ({
     return (
         <div className="dropdown-menu text-[#616161] bg-[rgb(255,255,255)] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px]">
             <ul className="flex flex-col font-sans list-none p-0 m-0 gap-0">
-                {options.map((item, index) => {
-                    
+                {sortedOptions.map((item) => {
                     const isChecked = contextState[0]?.includes(item.value);
-           
 
                     return (
                         <li
-                            key={item.value || index}
+                            key={item.value}
                             className="flex items-center justify-between hover:bg-gray-100 p-[8px] cursor-pointer hover:rounded-[8px]"
                             onClick={() => handleItemClick(item)}
                         >

@@ -19,8 +19,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const { activeTab, setActiveTab } = useTabContext(); // Accessing context
-  const { isBookmarked, setIsBookmarked, toggleBookmark } =
-    useBookmarkContext();
+  const { isBookmarked, toggleBookmark, setIsBookmarked } = useBookmarkContext();
   const [selectedScheme, setSelectedScheme] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
@@ -129,7 +128,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       );
       if (response.ok) {
         const result = await response.json();
-      
+
         return true;
       } else {
         console.error("Failed to save scheme");
@@ -287,7 +286,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     <>
       {/* We have found {378} schemes based on your profile */}
 
-      <div className="overflow-y-auto max-h-screen">
+      <div className="overflow-y-auto overflow-hidden max-h-screen">
         {(activeTab !== "Saved"
           ? dataFromApi.results
           : dataFromApi.results
@@ -421,33 +420,26 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
           first={(currentPage - 1) * 10}
           rows={rows}
           totalRecords={totalPages * rows}
-          onPageChange={(e) => {
-            setCurrentPage(e.page + 1);
-          }}
-          template="FirstPageLink PrevPageLink PageLinks NextPageLink   LastPageLink"
-          className="custom-paginator gap-4 px-4 py-2 hover:cursor-pointer
-      [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
-      [&_.p-paginator-page.p-highlight]:text-white 
-      [&_.p-paginator-page]:transition-colors 
-      [&_.p-paginator-page]:duration-200
-
-      [&_.p-paginator-page]:mx-2
-      [&_.p-paginator-page]:px-4
-      [&_.p-paginator-page]:py-1
-      [&_.p-paginator-page]:rounded-full
-      [&_.p-paginator-first]:mr-4
-      [&_.p-paginator-prev]:ml-4 
-      [&_.p-paginator-next]:mr-4
-      [&_.p-paginator-last]:ml-4 
-
-      [&_.p-paginator-page]:rounded-full mt-20 mb-20 ml-80
-      md:block hidden"
+          onPageChange={(e) => setCurrentPage(e.page + 1)}
+          template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+          className="custom-paginator hidden md:flex justify-center gap-4 px-4 py-2 mt-10 mb-10
+    [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
+    [&_.p-paginator-page.p-highlight]:text-white 
+    [&_.p-paginator-page]:transition-colors 
+    [&_.p-paginator-page]:duration-200
+    [&_.p-paginator-page]:mx-2
+    [&_.p-paginator-page]:px-3
+    [&_.p-paginator-page]:py-1
+    [&_.p-paginator-page]:rounded-full
+    [&_.p-paginator-first]:mr-2
+    [&_.p-paginator-prev]:ml-2 
+    [&_.p-paginator-next]:mr-2
+    [&_.p-paginator-last]:ml-2"
         />
       )}
 
-
       {/* For mobile view (Only Prev/Next buttons) */}
-       {totalPages !== 0 && (
+      {totalPages !== 0 && (
         <Paginator
           first={(currentPage - 1) * 10}
           rows={rows}
@@ -462,14 +454,14 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       [&_.p-paginator-page]:transition-colors 
       [&_.p-paginator-page]:duration-200
       [&_.p-paginator-page]:mx-1 
-      [&_.p-paginator-page]:px-2
+      [&_.p-paginator-page]:px-3
       [&_.p-paginator-page]:py-1 
       [&_.p-paginator-next]:mr-3 
       [&_.p-paginator-last]:pl-1 
       [&_.p-paginator-first]:mr-2
       [&_.p-paginator-prev]:pl-1 
       [&_.p-paginator-page]:rounded-full mt-20 mb-20
-      lg:hidden"
+      lg:hidden md:hidden "
         />
       )}
     </>
