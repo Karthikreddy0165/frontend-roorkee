@@ -6,7 +6,7 @@ import { CiBookmark } from "react-icons/ci";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 
 import {FaAngleRight,FaArrowLeftLong} from "react-icons/fa6"
-
+import LoginSuccess from "@/utils/LoginSuccess";
 import { useAuth } from "@/Context/AuthContext";
 import loginperson from "../assets/image.png";
 
@@ -16,6 +16,7 @@ const login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false); // State to control success screen
   const { login } = useAuth();
 
 
@@ -71,8 +72,9 @@ const login = () => {
         const user = { token: result.access, email: values.email };
         localStorage.setItem("token", result.access);
         login(result.access, user); // Save token and user information to the context
-        router.replace("/LoginSuccess");
+        setShowSuccess(true);
         setTimeout(() => {
+          setShowSuccess(false);
           router.replace("/AllSchemes");
         }, 2000);
       } else {
@@ -85,6 +87,9 @@ const login = () => {
       setLoading(false);
     }
   };
+  if (showSuccess) {
+    return <LoginSuccess />;
+  }
 
   return (
 
