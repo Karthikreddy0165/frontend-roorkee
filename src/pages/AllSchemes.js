@@ -96,7 +96,7 @@ const SchemesAll = () => {
     setIsFilterModalOpen(false);
   };
 
-  console.log("new state added", states);
+  // console.log("new state added", sponsoredBy);
 
   return (
     <div className="overflow-y-auto">
@@ -136,7 +136,7 @@ const SchemesAll = () => {
           <div className="flex space-between ml-1 hidden md:block max-h-[70vh] overflow-y-auto scrollbar-none">
             {/* Sponsored By Dropdown */}
             <div
-              className="flex justify-between items-center hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pb-2"
+              className="flex justify-between items-center hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pb-2 pr-2"
               onClick={() => toggleDropdown("sponsoredOpen")}
             >
               <span>Sponsored By</span>
@@ -153,7 +153,7 @@ const SchemesAll = () => {
             {/* Department Dropdown */}
             {isDepartmentVisible && (
               <div
-                className="flex justify-between items-center hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue py-[1rem] pl-[0.3rem] pr-[0.3rem]"
+                className="flex justify-between items-center hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
                 onClick={() => toggleDropdown("departmentOpen")}
               >
                 <span>Department</span>
