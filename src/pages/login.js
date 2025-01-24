@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
-
+import App from "./index";
 import {FaAngleRight,FaArrowLeftLong} from "react-icons/fa6"
 import LoginSuccess from "@/utils/LoginSuccess";
 import { useAuth } from "@/Context/AuthContext";
@@ -17,9 +17,7 @@ const login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false); // State to control success screen
-  const { login } = useAuth();
-
-
+  const { login, authState } = useAuth();
 
   const handleCreate01Click = () => {
     router.push("/Signup",);
@@ -29,13 +27,6 @@ const login = () => {
     router.push('/ResetEmailPassword');
   }
 
-
-  useEffect (() =>{
-    const token = localStorage.getItem("token");
-    if (token){
-      router.push("/");
-    }
-  },[])
 
   const handleAfterLogin = async (values) => {
     try {
@@ -87,8 +78,13 @@ const login = () => {
       setLoading(false);
     }
   };
+
   if (showSuccess) {
     return <LoginSuccess />;
+  }
+  if(authState.token){
+    router.replace('/')
+    return <App/>
   }
 
   return (
