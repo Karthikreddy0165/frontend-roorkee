@@ -14,13 +14,11 @@ import { SchemeProvider } from "@/Context/schemeContext";
 import { BookmarkProvider } from "@/Context/BookmarkContext";
 import { PreferenceProvider } from "@/Context/preferenceContext";
 import RedirectHandler from "@/components/ComponentsUtils/RedirectHandler";
-<<<<<<< HEAD
-import { ClipLoader } from 'react-spinners'; // Import your loader component
-=======
+
 import { ClipLoader } from 'react-spinners';  // Import your loader component
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
->>>>>>> 79eb643a62eddf289f162165fc728049f2404781
+
 
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false); // Loading state for page transitions
@@ -56,16 +54,16 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
-<<<<<<< HEAD
+
       {/* Add a Head tag for global metadata */}
       <Head>
         <title>launchpad.com</title>
         <link rel="icon" href="/_next/static/media/favicon.e9847d9a.ico" type="image/x-icon" /> {/* Add favicon */}
       </Head>
 
-=======
+
      <ToastContainer />
->>>>>>> 79eb643a62eddf289f162165fc728049f2404781
+
       {loading && (
         <div className="loader-overlay">
           {/* You can replace ClipLoader with any other loader/spinner */}
