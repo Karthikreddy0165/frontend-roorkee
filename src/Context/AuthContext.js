@@ -7,73 +7,33 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = useState({
     token: null,
-    refreshToken: null,
     user: null,
   });
 
-  const login = (token, refreshToken, user) => {
-    setAuthState({ token, refreshToken, user });
-    localStorage.setItem("token", token); 
-    localStorage.setItem("refreshToken", refreshToken); 
+  const login = (token, user) => {
+    setAuthState({ token, user });
+    localStorage.setItem("token", token);
   };
 
   const logout = () => {
-    setAuthState({ token: null, refreshToken: null, user: null });
+    setAuthState({ token: null, user: null });
     localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
   };
 
-  const refreshToken = async () => {
-    const storedRefreshToken = localStorage.getItem("refreshToken");
-    if (!storedRefreshToken) return;
-
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/refresh-token`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ refreshToken: storedRefreshToken }),
-      });
-      const data = await response.json();
-
-      if (data.token) {
-        setAuthState(prevState => ({
-          ...prevState,
-          token: data.token,
-        }));
-        localStorage.setItem("token", data.token); // Update login token in localStorage
-        return data.token;
-      } else {
-        logout(); // If refresh fails, log out the user
-        return null;
-      }
-    } catch (error) {
-      console.error("Failed to refresh token", error);
-      logout();
-      return null;
-    }
-  };
-
-  // Function to make an authenticated request with retry on token refresh
+  // Function to make an authenticated request
   const makeRequest = async (url, options = {}) => {
     const token = localStorage.getItem("token");
     if (token) {
       options.headers = {
         ...options.headers,
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       };
     }
 
     try {
       const response = await fetch(url, options);
-      if (response.status === 401) { // Unauthorized
-        const newToken = await refreshToken();
-        if (newToken) {
-          // Retry the request with the new token
-          options.headers["Authorization"] = `Bearer ${newToken}`;
-          return fetch(url, options);
-        }
+      if (response.status === 401) {
+        logout(); // Log out if the token is invalid
       }
       return response;
     } catch (error) {
@@ -82,56 +42,31 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Check if user is authenticated on component mount and set up interval to refresh token
+  // Restore token on component mount
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    const storedRefreshToken = localStorage.getItem("refreshToken");
-    
+
     if (storedToken) {
-      // Check token validity and refresh if needed
-      const checkTokenValidity = async () => {
-        try {
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/check-token`, {
-            headers: {
-              "Authorization": `Bearer ${storedToken}`,
-            },
-          });
-          // console.log(response);
-
-          if (response.status === 401) { // Unauthorized
-            await refreshToken();
-          } else {
-            setAuthState({
-              token: storedToken,
-              refreshToken: storedRefreshToken,
-              user: null, // Optionally, fetch user data here
-            });
-          }
-        } catch (error) {
-          console.error("Failed to check token", error);
-          logout();
-        }
-      };
-
-      checkTokenValidity();
+      setAuthState({ token: storedToken, user: null });
     }
-
-    const noOfDays = 5;
-    
-    // Set up interval to refresh token every 5 minutes
-    const intervalId = setInterval(() => {
-      refreshToken();
-    }, noOfDays**24*60*60*1000);
-
-    return () => clearInterval(intervalId); // Clean up the interval on component unmount
   }, []);
-  
 
   const [resetPasswordToken, setResetPasswordToken] = useState("");
-  const [UID,setUID] = useState("");
-  // Provide authState, login, logout, and makeRequest functions to the context
+  const [UID, setUID] = useState("");
+
   return (
-    <AuthContext.Provider value={{ authState, login, logout, makeRequest, resetPasswordToken, setResetPasswordToken, UID,setUID}}>
+    <AuthContext.Provider
+      value={{
+        authState,
+        login,
+        logout,
+        makeRequest,
+        resetPasswordToken,
+        setResetPasswordToken,
+        UID,
+        setUID,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
