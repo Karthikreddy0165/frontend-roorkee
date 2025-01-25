@@ -3,6 +3,9 @@ import { useAuth } from "@/Context/AuthContext";
 import SavedModal from "@/pages/Modals/savedModal";
 import { IoMdClose } from "react-icons/io";
 import { FiAlertCircle } from "react-icons/fi";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const FeedbackModal = ({ isOpen, onRequestClose }) => {
   const [rating, setRating] = useState(0);
   const [reportFormData, setReportFormData] = useState({
@@ -65,13 +68,15 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
       // Clear form and close modal on success
       setRating(0);
 
-      alert("Feedback submitted successfully!");
+      // Success toast notification
+      toast.success("Feedback recieved successfully", { position: "top-right", autoClose: 3000 });
 
       setReportFormData({ category: "", description: "" });
       onRequestClose();
     } catch (err) {
-      setError(err.message);
-      console.log(err.message);
+          // Error toast notification
+    toast.error("Failed to give feedback. Please try again later.", { position: "top-right", autoClose: 3000 });
+    onRequestClose();
     } finally {
       setLoading(false);
     }
@@ -128,7 +133,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
             className="w-full p-2 border text-sm rounded-md text-[#000000]"
           >
             <option value="">Select Category</option>
-            <option value="bug">Bug</option>
+            <option value="bug">Issue</option>
             <option value="improvement">Improvement</option>
             <option value="general">General</option>
           </select>
@@ -156,7 +161,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
             className=" px-4 py-2 rounded-lg text-[13px] bg-[#3330BA] text-white hover:bg-blue-700"
             disabled={loading}
           >
-            {loading ? "Submitting..." : "Submit Feedback"}
+            {loading ? "Submitting..." : "Submit"}
           </button>
         </div>
       </div>

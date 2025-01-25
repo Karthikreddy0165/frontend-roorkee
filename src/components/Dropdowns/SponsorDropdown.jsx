@@ -27,6 +27,8 @@ const SponsorDropdownMenu = () => {
     }
   };
 
+  // console.log(states);
+
   return (
     <div className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0">
       <ul className="flex flex-col font-sans list-none p-0 m-0 gap-0 pb-[18px]">
@@ -39,8 +41,9 @@ const SponsorDropdownMenu = () => {
             <div>
               <p className="flex leading-5 overflow-hidden overflow-ellipsis line-clamp-2 max-h-10 text-black">
                 {item[1]}
-                {console.log(states, "states")}
-                {item[1] === "State" && states.length > 0 && states[1]?.[0]?.length > 0? (
+                {item[1] === "State" &&
+                states.length > 0 &&
+                states[1]?.[0]?.length > 0 ? (
                   <span className="w-5 h-5 bg-[#EEEEFF] text-onclick-btnblue text-[12px] font-semibold rounded-full flex items-center justify-center ml-2">
                     {states[1].length}
                   </span>

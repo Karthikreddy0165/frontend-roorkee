@@ -15,10 +15,11 @@ import { Paginator } from "primereact/paginator";
 import ToolTips from "./ComponentsUtils/tooltips.jsx";
 import Footer from "./Footer.jsx";
 import { useBookmarkContext } from "@/Context/BookmarkContext";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const { activeTab, setActiveTab } = useTabContext(); // Accessing context
-  const { isBookmarked, toggleBookmark } = useBookmarkContext();
+  const { isBookmarked, toggleBookmark, setIsBookmarked } = useBookmarkContext();
   const [selectedScheme, setSelectedScheme] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
@@ -85,7 +86,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
             acc[id] = true;
             return acc;
           }, {});
-          setBookmarks(bookmarks);
+          setIsBookmarked(bookmarks);
         } catch (error) {
           console.error("Failed to fetch saved schemes:", error);
         }
@@ -97,8 +98,8 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   const handleClick = (scheme_id) => {
     const scheme = dataFromApi.results.find((item) => item.id === scheme_id);
     if (scheme) {
-      setSelectedScheme(scheme); // Set the selected scheme
-      setIsModalOpen(true); // Open the modal
+      setSelectedScheme(scheme);
+      setIsModalOpen(true);
       setSidePannelSelected(scheme_id);
     }
   };
@@ -127,7 +128,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       );
       if (response.ok) {
         const result = await response.json();
-        // console.log(result);
+
         return true;
       } else {
         console.error("Failed to save scheme");
@@ -209,10 +210,15 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     );
   }
 
-  // if (Object.keys(dataFromApi).length == 0 && (states.length == 0 || beneficiaries.length == 0)) {
+  // if (
+  //   Object.keys(dataFromApi).length == 0 &&
+  //   (states.length == 0 || beneficiaries.length == 0)
+  // ) {
   //   return (
   //     <div className="flex flex-col items-center justify-center gap-[8px] mt-[120px]">
-  //       <p className="text-button-text text-[14px] text-button-blue">Sorry no result is found based on your preference.</p>
+  //       <p className="text-button-text text-[14px] text-button-blue">
+  //         Sorry no result is found based on your preference.
+  //       </p>
   //     </div>
   //   );
   // }
@@ -280,7 +286,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     <>
       {/* We have found {378} schemes based on your profile */}
 
-      <div className="overflow-y-auto max-h-screen">
+      <div className="overflow-y-auto overflow-hidden max-h-screen">
         {(activeTab !== "Saved"
           ? dataFromApi.results
           : dataFromApi.results
@@ -296,9 +302,9 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                 }}
               >
                 <div onClick={() => handleClick(item.id)}>
-                  <div className="gap-[12px] pt-[16px] pd-[16px] w-[200px] md:w-8/12">
+                  <div className="gap-[12px] pt-[16px] pd-[16px] w-[200px] md:w-full">
                     <p
-                      className="font-inter text-[16px] sm:text-[18px] leading-[21.6px] cursor-pointer font-semibold mb-[10px] line-clamp-2 w-8/12 text-gray-700"
+                      className="font-inter text-[16px] sm:text-[18px] leading-[21.6px] cursor-pointer font-semibold mb-[10px] line-clamp-2 text-gray-700"
                       role="button"
                       tabIndex="0"
                     >
@@ -310,9 +316,27 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                       role="button"
                       tabIndex="0"
                     >
-                      <span className="font-semibold ">Description: </span>
-                      {item.description}
+                      <span className="font-semibold">
+                        {item.description ? "Description: " : "Preview PDF: "}
+                      </span>
+                      {item.description ? (
+                        item.description
+                      ) : (
+                        <a
+                          href={item.pdf_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#3431Bb] font-bold"
+                        >
+                          Click here for preview
+                          <FontAwesomeIcon
+                            icon={faArrowUpRightFromSquare}
+                            className="px-2"
+                          />
+                        </a>
+                      )}
                     </p>
+
                     <p className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[26px] line-clamp-2 text-decoration-line: underline ">
                       {item.department.department_name}
                     </p>
@@ -347,7 +371,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                     {isBookmarked[item.id] ? (
                       <GoBookmarkFill className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[20px] text-[#3431BB]" />
                     ) : (
-                      <CiBookmark className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[20px]" />
+                      <CiBookmark className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[20px] " />
                     )}
                   </div>
                 </ToolTips>
@@ -396,20 +420,21 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
           first={(currentPage - 1) * 10}
           rows={rows}
           totalRecords={totalPages * rows}
-          onPageChange={(e) => {
-            setCurrentPage(e.page + 1);
-          }}
+          onPageChange={(e) => setCurrentPage(e.page + 1)}
           template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
-          className="custom-paginator gap-8 hover:cursor-pointer
-      [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
-      [&_.p-paginator-page.p-highlight]:text-white 
-      [&_.p-paginator-page]:transition-colors 
-      [&_.p-paginator-page]:duration-200
-      [&_.p-paginator-page]:mx-2
-      [&_.p-paginator-page]:px-5
-      [&_.p-paginator-page]:py-1 
-      [&_.p-paginator-page]:rounded-full mt-20 mb-20 ml-80
-      md:block hidden"
+          className="custom-paginator hidden md:flex justify-center gap-4 px-4 py-2 mt-10 mb-10
+    [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
+    [&_.p-paginator-page.p-highlight]:text-white 
+    [&_.p-paginator-page]:transition-colors 
+    [&_.p-paginator-page]:duration-200
+    [&_.p-paginator-page]:mx-2
+    [&_.p-paginator-page]:px-3
+    [&_.p-paginator-page]:py-1
+    [&_.p-paginator-page]:rounded-full
+    [&_.p-paginator-first]:mr-2
+    [&_.p-paginator-prev]:ml-2 
+    [&_.p-paginator-next]:mr-2
+    [&_.p-paginator-last]:ml-2"
         />
       )}
 
@@ -422,17 +447,21 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
           onPageChange={(e) => {
             setCurrentPage(e.page + 1);
           }}
-          template="PrevPageLink PageLinks NextPageLink "
-          className="custom-paginator gap-8 hover:cursor-pointer 
+          template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+          className="custom-paginator gap-1 hover:cursor-pointer 
       [&_.p-paginator-page.p-highlight]:bg-[#3431BB] 
       [&_.p-paginator-page.p-highlight]:text-white 
       [&_.p-paginator-page]:transition-colors 
       [&_.p-paginator-page]:duration-200
       [&_.p-paginator-page]:mx-1 
-      [&_.p-paginator-page]:px-3 
+      [&_.p-paginator-page]:px-3
       [&_.p-paginator-page]:py-1 
+      [&_.p-paginator-next]:mr-3 
+      [&_.p-paginator-last]:pl-1 
+      [&_.p-paginator-first]:mr-2
+      [&_.p-paginator-prev]:pl-1 
       [&_.p-paginator-page]:rounded-full mt-20 mb-20
-      lg:hidden"
+      lg:hidden md:hidden "
         />
       )}
     </>

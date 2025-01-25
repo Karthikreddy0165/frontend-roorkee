@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { CiBookmark } from "react-icons/ci";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
-
+import App from "./index";
 import {FaAngleRight,FaArrowLeftLong} from "react-icons/fa6"
-
+import LoginSuccess from "@/utils/LoginSuccess";
 import { useAuth } from "@/Context/AuthContext";
 import loginperson from "../assets/image.png";
 
@@ -16,9 +16,8 @@ const login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const { login } = useAuth();
-
-
+  const [showSuccess, setShowSuccess] = useState(false); // State to control success screen
+  const { login, authState } = useAuth();
 
   const handleCreate01Click = () => {
     router.push("/Signup",);
@@ -28,13 +27,6 @@ const login = () => {
     router.push('/ResetEmailPassword');
   }
 
-
-  useEffect (() =>{
-    const token = localStorage.getItem("token");
-    if (token){
-      router.push("/App");
-    }
-  },[])
 
   const handleAfterLogin = async (values) => {
     try {
@@ -71,9 +63,10 @@ const login = () => {
         const user = { token: result.access, email: values.email };
         localStorage.setItem("token", result.access);
         login(result.access, user); // Save token and user information to the context
-        router.push("/LoginSuccess");
+        setShowSuccess(true);
         setTimeout(() => {
-          router.push("/AllSchemes");
+          setShowSuccess(false);
+          router.replace("/AllSchemes");
         }, 2000);
       } else {
         setErrorMessage("Email or password is invalid");
@@ -85,6 +78,14 @@ const login = () => {
       setLoading(false);
     }
   };
+
+  if (showSuccess) {
+    return <LoginSuccess />;
+  }
+  if(authState.token){
+    router.replace('/')
+    return <App/>
+  }
 
   return (
 

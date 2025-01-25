@@ -29,12 +29,12 @@ function ScholarshipCount(dataFromApi) {
       beneficiaries.length > 0 ||
       sponsoredBy.length > 0 ? (
       <p className="text-button-blue text-sm font-bold mt-[24px] mb-[24px] font-inter">
-        We have found {dataFromApi.dataFromApi.count} schemes based on your
+        We have found {dataFromApi.dataFromApi.count} Scholarships based on your
         preference
       </p>
     ) : (
       <p className="text-button-blue text-sm font-bold mt-[24px] mb-[24px] font-inter">
-        {dataFromApi.dataFromApi.count} Schemes available
+        {dataFromApi.dataFromApi.count} Scholarships available
       </p>
     );
   }

@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import { FaArrowLeftLong } from "react-icons/fa6";
-// import App from "../App";
+
 const BackButton = () => {
   const router = useRouter();
 
   const handleGoBack = () => {
-    router.push('/App');
+    router.push('/');
   };
 
   return (

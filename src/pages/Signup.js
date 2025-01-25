@@ -7,15 +7,16 @@ import { CiBookmark } from "react-icons/ci";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import * as Yup from "yup";
-
+import App from "./index";
 import { useFormData } from "@/Context/FormContext";
 import loginperson from "../assets/image.png";
 import AccCreatSucc from "@/utils/AccountCreated";
 
+
 const CreateAcc01 = () => {
   const router = useRouter();
   const { updateFormData } = useFormData();
-  const { login } = useAuth();
+  const { login, authState } = useAuth();
   const [apiErrors, setApiErrors] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -28,12 +29,7 @@ const CreateAcc01 = () => {
       .required("Password is required"),
   });
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      router.push("/App");
-    }
-  }, [router]);
+
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -90,6 +86,10 @@ const CreateAcc01 = () => {
 
   if (showSuccess) {
     return <AccCreatSucc />;
+  }
+  if(authState.token){
+    router.replace('/')
+    return <App/>
   }
 
   return (

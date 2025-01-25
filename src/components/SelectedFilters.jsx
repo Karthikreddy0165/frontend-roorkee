@@ -23,7 +23,7 @@ function SelectedFilters() {
     setSponsoredBy,
     setFundingBy,
   } = useContext(FilterContext);
-  console.log(states);
+  // console.log(states);
   const { authState } = useAuth();
   const [newSponser, setNewSponser] = useState([]);
   const [newState, setNewState] = useState([]);
@@ -31,7 +31,7 @@ function SelectedFilters() {
   const [profileData, setProfileData] = useState([]);
 
   useEffect(() => {
-    setNewSponser(sponsoredBy[1] ? sponsoredBy[1] : []);
+    setNewSponser(sponsoredBy[1] && sponsoredBy[1]?.[0] !=='State'  ? sponsoredBy[1] : []);
     setNewState(states[1] ? states[1] : []);
     setNewDepartment(Object.keys(departments) ? Object.keys(departments) : []);
   }, [sponsoredBy, states, departments]);
@@ -90,7 +90,7 @@ function SelectedFilters() {
       setStates([]);
     }
   };
-  console.log("states", newState);
+  // console.log("states", newState);
   return newSponser.length > 0 ||
     newState.length > 0 ||
     newDepartment.length > 0 ||
