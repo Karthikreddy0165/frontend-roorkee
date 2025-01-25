@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head'; // Import Head for managing document metadata
 import { FormProvider } from "@/Context/FormContext";
 import { TabProvider } from "@/Context/TabContext";
 import "@/styles/globals.css";
+import icon from "../assets/favicon.ico"
 
 import { PrimeReactProvider } from "primereact/api";
 import { AuthProvider } from "@/Context/AuthContext";
@@ -12,9 +14,11 @@ import { SchemeProvider } from "@/Context/schemeContext";
 import { BookmarkProvider } from "@/Context/BookmarkContext";
 import { PreferenceProvider } from "@/Context/preferenceContext";
 import RedirectHandler from "@/components/ComponentsUtils/RedirectHandler";
+
 import { ClipLoader } from 'react-spinners';  // Import your loader component
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false); // Loading state for page transitions
@@ -46,9 +50,20 @@ export default function App({ Component, pageProps }) {
     };
   }, [router, isFirstLoad]);
 
+  console.log(icon)
+
   return (
     <>
+
+      {/* Add a Head tag for global metadata */}
+      <Head>
+        <title>launchpad.com</title>
+        <link rel="icon" href="/_next/static/media/favicon.e9847d9a.ico" type="image/x-icon" /> {/* Add favicon */}
+      </Head>
+
+
      <ToastContainer />
+
       {loading && (
         <div className="loader-overlay">
           {/* You can replace ClipLoader with any other loader/spinner */}
