@@ -97,7 +97,7 @@ const DropdownMenu = ({
                             onClick={() => handleItemClick(item)}
                         >
                             <div>
-                                <p className="leading-5 overflow-hidden overflow-ellipsis line-clamp-2 max-w-[115px] max-h-10">
+                                <p className="leading-5 overflow-hidden overflow-ellipsis line-clamp-2  max-h-10">
                                     {item.label}
                                 </p>
                             </div>
