@@ -181,7 +181,7 @@ const NavBarScheme = () => {
             <div className="relative">
               {/* Profile Button (Visible on desktop) */}
               <button
-                className="flex items-center px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700  md:flex"
+                className="flex items-center px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 md:flex"
                 onClick={toggleDropdown}
               >
                 Profile <IoIosArrowDown className="ml-2" />
