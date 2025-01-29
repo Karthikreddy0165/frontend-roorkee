@@ -50,7 +50,7 @@ export default function App({ Component, pageProps }) {
     };
   }, [router, isFirstLoad]);
 
-  console.log(icon)
+
 
   return (
     <>
