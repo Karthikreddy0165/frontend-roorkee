@@ -15,8 +15,11 @@ import { BookmarkProvider } from "@/Context/BookmarkContext";
 import { PreferenceProvider } from "@/Context/preferenceContext";
 import RedirectHandler from "@/components/ComponentsUtils/RedirectHandler";
 
+
+import { ClipLoader } from 'react-spinners';  // Import your loader component
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false); // Loading state for page transitions
@@ -50,13 +53,16 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
+
       {/* Add a Head tag for global metadata */}
       <Head>
         <title>launchpad.com</title>
         <link rel="icon" href="/_next/static/media/favicon.e9847d9a.ico" type="image/x-icon" /> {/* Add favicon */}
       </Head>
 
-      <ToastContainer />
+
+     <ToastContainer />
+
 
       {loading && (
         <div className="fixed inset-0 bg-white flex flex-col items-center justify-center z-50">
