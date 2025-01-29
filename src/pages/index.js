@@ -99,7 +99,7 @@ const App = () => {
                 </div>
 
                 <div className="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4">
-                  100+ job post
+                  100+ job postings
                 </div>
 
                 <div className="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold pb-4 sm:pb-0">
