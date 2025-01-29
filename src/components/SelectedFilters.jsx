@@ -9,6 +9,7 @@ function SelectedFilters() {
   const { profileData, setProfileData } = useProfile();
   const { state, beneficiarie } = useContext(PreferenceContext);
   const router = useRouter();
+  const [preferencesApplied, setPreferencesApplied] = useState(false)
 
   // console.log(state, "state");
   // console.log(beneficiarie, "beneficiaries");
@@ -62,26 +63,25 @@ function SelectedFilters() {
       router.push("/login");
       return;
     }
-    setDepartments({});
-    setFundingBy([]);
-    setSponsoredBy([]);
-    setNewSponser([]);
-    setNewDepartment([]);
-    setNewState([]);
-    setBeneficiaries([]);
-    const preferenceData = profileData;
-    console.log("ye preference data",preferenceData);
-    // Set the new default state values
-    if (preferenceData?.community) {
-      setBeneficiaries([preferenceData?.community]);
-    } else {
+    if (preferencesApplied) {
+      setStates([]);
+      setDepartments({});
+      setFundingBy([]);
+      setSponsoredBy([]);
+      setNewSponser([]);
+      setNewDepartment([]);
+      setNewState([]);
       setBeneficiaries([]);
-    }
-
-    console.log(statesFromApi);
+    } else {
+      const preferenceData = profileData;
+      if (preferenceData?.community) {
+        setBeneficiaries([preferenceData.community]);
+      } else {
+        setBeneficiaries([]);
+      }
+      
 
     const selectedValue = preferenceData?.state;
-    // console.log(statesFromApi, "select");
     const selectedState = statesFromApi.find(
       (it) => it.state_name === selectedValue
     );
@@ -91,6 +91,8 @@ function SelectedFilters() {
     } else {
       setStates([]);
     }
+  }
+    setPreferencesApplied(!preferencesApplied);
   };
   // console.log("states", newState);
   return newSponser.length > 0 ||
