@@ -346,7 +346,7 @@ function SelectedFilters() {
           )}
         </div>
       </div>
-      <div className="p-4">
+      <div className="pt-4">
         {/* Tooltip applied to the button */}
         <ToolTips tooltip="Set Your Preferences Here">
           <button
