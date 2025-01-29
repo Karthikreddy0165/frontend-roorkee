@@ -117,8 +117,17 @@ const login = () => {
                     onSubmit={formik.handleSubmit}
                 >
 
-                  <div className="flex gap-2 items-center justify-center max-w-lg mx-auto ">
-                   <svg
+<button
+                      type="button"
+                      className="flex justify-end text-lg sm:text-xl"
+                      onClick={() => router.back()}
+                  >
+                    <FaArrowLeftLong className="mt-1"/>
+                   
+                  </button>
+                  <div className="absolute flex justify-center items-center gap-2 top-2 left-1/2 transform -translate-x-1/2 ">
+
+<svg
           width="50"
           height="50"
           viewBox="0 0 50 50"
@@ -164,18 +173,17 @@ const login = () => {
         >
           LAUNCHPAD
         </div>
+
+
+        </div>
+
+                  <div className="flex gap-2 items-center justify-center max-w-lg mx-auto ">
+                 
         </div>
 
       
 
-                  <button
-                      type="button"
-                      className="flex gap-[8px] mb-[16px] text-lg sm:text-xl"
-                      onClick={() => router.back()}
-                  >
-                    <FaArrowLeftLong className="mt-1"/>
-                    Back
-                  </button>
+                  
                   <h1 className="block text-gray-700 text-sm sm:text-base font-bold mb-2">
                     Login into your existing account
                   </h1>

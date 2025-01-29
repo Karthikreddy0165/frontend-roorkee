@@ -31,7 +31,9 @@ function SelectedFilters() {
   const [profileData, setProfileData] = useState([]);
 
   useEffect(() => {
-    setNewSponser(sponsoredBy[1] && sponsoredBy[1]?.[0] !=='State'  ? sponsoredBy[1] : []);
+    setNewSponser(
+      sponsoredBy[1] && sponsoredBy[1]?.[0] !== "State" ? sponsoredBy[1] : []
+    );
     setNewState(states[1] ? states[1] : []);
     setNewDepartment(Object.keys(departments) ? Object.keys(departments) : []);
   }, [sponsoredBy, states, departments]);
@@ -45,6 +47,58 @@ function SelectedFilters() {
 
     fetchEmailData();
   }, []);
+
+  const handleSave = async () => {
+    if (authState.token) {
+      const dynamicFields = fields.reduce((acc, field) => {
+        const key = field.name;
+        const value = profileData[key.toLowerCase().replace(" ", "_")];
+        if (value) acc[key] = value;
+        return acc;
+      }, {});
+
+      const requestOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authState.token}`,
+        },
+        body: JSON.stringify({
+          name: profileData.name,
+          dynamic_fields: dynamicFields, // Add dynamic fields here
+        }),
+      };
+
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/profile/`,
+          requestOptions
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to save profile data.");
+        }
+
+        const selectedValue = profileData.state;
+        const selectedState = statesFromApi.find(
+          (it) => it.state_name === selectedValue
+        );
+
+        if (selectedState) {
+          setStates([[selectedState.id], [selectedState.state_name]]);
+        }
+
+        if (profileData.community) {
+          setBeneficiaries([profileData.community]);
+        }
+
+        setIsSaved(true);
+        onClose();
+      } catch (error) {
+        console.error("Error saving profile data:", error);
+      }
+    }
+  };
 
   const clearAllFilters = () => {
     setStates([]);
@@ -342,16 +396,9 @@ function SelectedFilters() {
           )}
         </div>
       </div>
-      <div className="p-4">
+      <div className="mt-4">
         {/* Tooltip applied to the button */}
-        <ToolTips tooltip="Set Your Preferences Here">
-          <button
-            className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
-            onClick={handleDefaultFilter}
-          >
-            My Preference
-          </button>
-        </ToolTips>
+        <ToolTips tooltip="Set Your Preferences Here"></ToolTips>
       </div>
     </div>
   ) : (

@@ -96,7 +96,7 @@ const HowToApply = ({ closeModal, schemeId }) => {
   console.log("procedures", procedures.length);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-50 ">
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-50  ">
 <div className="bg-white rounded-lg h-[80vh] sm:h-[90vh] md:h-[60%] lg:h-[60%] xl:h-[60%] w-[90%] sm:w-[80%] md:w-[70%] lg:w-[600px] xl:w-[700px] p-6 max-w-full flex flex-col relative">
         <div className="flex justify-center items-center mb-2 w-full">
           <h2 className="sm:text-2xl text-[20px] font-semibold text-center mb-6 text-[#3431BB]">
@@ -135,13 +135,13 @@ const HowToApply = ({ closeModal, schemeId }) => {
                 )}
               </>
             ) : (
-              <div className="mt-4 border border-[#3431BB] rounded-[6px] p-6 w-full  overflow-y-auto">
+              <div className="mt-4 border border-[#3431BB] rounded-[6px] p-6 w-full  ">
                  <h3 className="text-[16px] font-bold text-center">
                     STEP - 4
                   </h3>
 
-                  <p className="font-semibold flex justify-center py-2">Here are the procedures for applying for the scheme.</p>
-                <ul className=" list-disc text-[16px]  mt-2">
+       
+                <ul className=" list-disc text-[16px]  mt-2 ">
                   {procedures.map((procedure, index) => (
                     <li key={index}>{procedure.step_description}</li>
                   ))}
