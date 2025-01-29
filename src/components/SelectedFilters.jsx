@@ -346,15 +346,11 @@ function SelectedFilters() {
           )}
         </div>
       </div>
+
       <div className="pt-4">
         {/* Tooltip applied to the button */}
         <ToolTips tooltip="Set Your Preferences Here">
-          <button
-            className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
-            onClick={handleDefaultFilter}
-          >
-            My Preference
-          </button>
+          
         </ToolTips>
       </div>
     </div>
