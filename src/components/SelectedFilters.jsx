@@ -4,7 +4,9 @@ import { useAuth } from "@/Context/AuthContext";
 import ToolTips from "./ComponentsUtils/tooltips";
 import PreferenceContext from "@/Context/preferenceContext";
 import { useRouter } from "next/router";
+import { useProfile } from "@/Context/ProfileContext"; 
 function SelectedFilters() {
+  const { profileData, setProfileData } = useProfile();
   const { state, beneficiarie } = useContext(PreferenceContext);
   const router = useRouter();
 
@@ -28,7 +30,7 @@ function SelectedFilters() {
   const [newSponser, setNewSponser] = useState([]);
   const [newState, setNewState] = useState([]);
   const [newDepartment, setNewDepartment] = useState([]);
-  const [profileData, setProfileData] = useState([]);
+  // const [profileData, setProfileData] = useState([]);
 
   useEffect(() => {
     setNewSponser(sponsoredBy[1] && sponsoredBy[1]?.[0] !=='State'  ? sponsoredBy[1] : []);
@@ -67,8 +69,8 @@ function SelectedFilters() {
     setNewDepartment([]);
     setNewState([]);
     setBeneficiaries([]);
-    const preferenceData = JSON.parse(localStorage.getItem("profiledata"));
-    console.log(preferenceData);
+    const preferenceData = profileData;
+    console.log("ye preference data",preferenceData);
     // Set the new default state values
     if (preferenceData?.community) {
       setBeneficiaries([preferenceData?.community]);
