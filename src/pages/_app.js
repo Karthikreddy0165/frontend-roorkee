@@ -15,11 +15,8 @@ import { BookmarkProvider } from "@/Context/BookmarkContext";
 import { PreferenceProvider } from "@/Context/preferenceContext";
 import RedirectHandler from "@/components/ComponentsUtils/RedirectHandler";
 
-
-import { ClipLoader } from 'react-spinners';  // Import your loader component
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false); // Loading state for page transitions
@@ -53,21 +50,17 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
-
       {/* Add a Head tag for global metadata */}
       <Head>
         <title>launchpad.com</title>
         <link rel="icon" href="/_next/static/media/favicon.e9847d9a.ico" type="image/x-icon" /> {/* Add favicon */}
       </Head>
 
-
-     <ToastContainer />
-
+      <ToastContainer />
 
       {loading && (
         <div className="fixed inset-0 bg-white flex flex-col items-center justify-center z-50">
           {/* Logo */}
-
           <svg
           width="50"
           height="50"
@@ -106,9 +99,8 @@ export default function App({ Component, pageProps }) {
             />
           </defs>
         </svg>
-
           {/* Loading Dots */}
-          <div className="flex space-x-2 mt-2">
+          <div className="flex space-x-2">
             <div className="w-3 h-3 bg-blue-800 rounded-full animate-bounce" style={{ animationDelay: '0s' }}></div>
             <div className="w-3 h-3 bg-blue-800 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
             <div className="w-3 h-3 bg-blue-800 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
