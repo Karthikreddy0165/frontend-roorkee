@@ -48,58 +48,6 @@ function SelectedFilters() {
     fetchEmailData();
   }, []);
 
-  const handleSave = async () => {
-    if (authState.token) {
-      const dynamicFields = fields.reduce((acc, field) => {
-        const key = field.name;
-        const value = profileData[key.toLowerCase().replace(" ", "_")];
-        if (value) acc[key] = value;
-        return acc;
-      }, {});
-
-      const requestOptions = {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authState.token}`,
-        },
-        body: JSON.stringify({
-          name: profileData.name,
-          dynamic_fields: dynamicFields, // Add dynamic fields here
-        }),
-      };
-
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/profile/`,
-          requestOptions
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to save profile data.");
-        }
-
-        const selectedValue = profileData.state;
-        const selectedState = statesFromApi.find(
-          (it) => it.state_name === selectedValue
-        );
-
-        if (selectedState) {
-          setStates([[selectedState.id], [selectedState.state_name]]);
-        }
-
-        if (profileData.community) {
-          setBeneficiaries([profileData.community]);
-        }
-
-        setIsSaved(true);
-        onClose();
-      } catch (error) {
-        console.error("Error saving profile data:", error);
-      }
-    }
-  };
-
   const clearAllFilters = () => {
     setStates([]);
     setDepartments({});
@@ -109,34 +57,34 @@ function SelectedFilters() {
   };
 
   const handleDefaultFilter = () => {
-    // Clear existing states
     if (!authState.token) {
       router.push("/login");
       return;
     }
-    setDepartments({});
-    setFundingBy([]);
-    setSponsoredBy([]);
-    setNewSponser([]);
-    setNewDepartment([]);
-    setNewState([]);
-    setBeneficiaries([]);
+
     const preferenceData = JSON.parse(localStorage.getItem("profiledata"));
-    console.log(preferenceData);
-    // Set the new default state values
-    if (preferenceData?.community) {
-      setBeneficiaries([preferenceData?.community]);
-    } else {
-      setBeneficiaries([]);
+    if (!preferenceData) {
+      return;
     }
 
-    console.log(statesFromApi);
+    // Apply user preferences
+    if (preferenceData?.community) {
+      setBeneficiaries([preferenceData.community]);
+    }
 
     const selectedValue = preferenceData?.state;
-    // console.log(statesFromApi, "select");
     const selectedState = statesFromApi.find(
       (it) => it.state_name === selectedValue
     );
+
+    if (selectedState) {
+      setStates([[selectedState.id], [selectedState.state_name]]);
+    }
+
+    setNewSponser(sponsoredBy[1] ? sponsoredBy[1] : []);
+    setNewDepartment(Object.keys(departments) ? Object.keys(departments) : []);
+
+    console.log(statesFromApi);
 
     if (selectedState) {
       setStates([[selectedState.id], [selectedState.state_name]]);
@@ -398,7 +346,14 @@ function SelectedFilters() {
       </div>
       <div className="mt-4">
         {/* Tooltip applied to the button */}
-        <ToolTips tooltip="Set Your Preferences Here"></ToolTips>
+        <ToolTips tooltip="Set Your Preferences Here">
+          <button
+            className="flex-shrink-0 px-4 py-2 rounded-lg  border border-gray-400  bg-[#3330BA] text-white font-inter text-[12px] font-medium  sm:text-sm"
+            onClick={handleDefaultFilter}
+          >
+            My Preference
+          </button>
+        </ToolTips>
       </div>
     </div>
   ) : (

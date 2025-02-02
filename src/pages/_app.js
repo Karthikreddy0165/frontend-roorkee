@@ -18,6 +18,9 @@ import RedirectHandler from "@/components/ComponentsUtils/RedirectHandler";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { ProfileProvider } from "@/Context/ProfileContext";
+
+
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false); // Loading state for page transitions
   const [isFirstLoad, setIsFirstLoad] = useState(true); // To manage first load logic
@@ -53,8 +56,7 @@ export default function App({ Component, pageProps }) {
       {/* Add a Head tag for global metadata */}
       <Head>
         <title>launchpad.com</title>
-        <link rel="icon" href="/_next/static/media/favicon.e9847d9a.ico" type="image/x-icon" /> {/* Add favicon */}
-      </Head>
+<link rel="icon" href="/_next/static/media/favicon.e9847d9a.ico" type="image/x-icon" />      </Head>
 
       <ToastContainer />
 
@@ -117,6 +119,7 @@ export default function App({ Component, pageProps }) {
                   <FormProvider>
                     <PrimeReactProvider>
                       <BookmarkProvider>
+                        <ProfileProvider>
                         <div className="flex flex-col min-h-screen">
                           {/* Main Content */}
                           <div className="flex-grow">
@@ -124,6 +127,7 @@ export default function App({ Component, pageProps }) {
                             <Component {...pageProps} />
                           </div>
                         </div>
+                        </ProfileProvider>
                       </BookmarkProvider>
                     </PrimeReactProvider>
                   </FormProvider>

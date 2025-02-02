@@ -85,7 +85,7 @@ const DropdownMenu = ({
     }
 
     return (
-        <div className="dropdown-menu text-[#616161] bg-[rgb(255,255,255)] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px]">
+        <div className="dropdown-menu text-[#616161] bg-[rgb(255,255,255)] max-w-[600px] flex flex-col whitespace-wrap z-0 text-[14px]">
             <ul className="flex flex-col font-sans list-none p-0 m-0 gap-0">
                 {sortedOptions.map((item) => {
                     const isChecked = contextState[0]?.includes(item.value);
@@ -97,7 +97,7 @@ const DropdownMenu = ({
                             onClick={() => handleItemClick(item)}
                         >
                             <div>
-                                <p className="leading-5 overflow-hidden overflow-ellipsis line-clamp-2 max-w-[115px] max-h-10">
+                                <p className="leading-5 overflow-hidden overflow-ellipsis line-clamp-2  max-h-10">
                                     {item.label}
                                 </p>
                             </div>

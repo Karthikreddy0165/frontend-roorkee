@@ -81,7 +81,7 @@ const NavBarScheme = () => {
   return (
     <div>
       {/* Navbar Container */}
-      <div className="flex justify-between items-center py-2  bg-white border-b-[1px] z-10 relative sm:h-[73px] h-[73px] gap-2 w-full px-10">
+      <div className="flex justify-between items-center py-2 px-6 bg-white border-b-[1px] z-10 relative sm:h-[73px] h-[73px] gap-2 w-full">
         {/* Logo Section */}
         <svg
           width="50"
@@ -181,7 +181,7 @@ const NavBarScheme = () => {
             <div className="relative">
               {/* Profile Button (Visible on desktop) */}
               <button
-                className="flex items-center px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700  md:flex"
+                className="flex items-center px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 md:flex"
                 onClick={toggleDropdown}
               >
                 Profile <IoIosArrowDown className="ml-2" />
@@ -236,12 +236,7 @@ const NavBarScheme = () => {
       {/* Sidebar Menu for Mobile */}
 
       {isSidebarOpen && (
-        <div
-          className="sm:hidden fixed top-0 left-0 h-full w-64 bg-[#FFFFFF] z-50 shadow-lg flex flex-col justify-center items-center px-[50px] mb-[30px] transform transition-all ease-in-out"
-          style={{
-            transform: isSidebarOpen ? "translateX(0%)" : "translateX(100%)",
-          }}
-        >
+        <div className="sm:hidden fixed left-0 top-0 h-full w-64 bg-gray-100 z-50 shadow-lg flex flex-col justify-center items-center px-[50px] mb-[30px]">
           <div className="fixed top-5 left-5 z-50">
             <svg
               width="20"

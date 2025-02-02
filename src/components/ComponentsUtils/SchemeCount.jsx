@@ -29,7 +29,7 @@ function SchemeCount(dataFromApi) {
       beneficiaries.length > 0 ||
       sponsoredBy.length > 0 ? (
       <p className="text-button-blue text-sm font-bold mt-[24px] mb-[24px] font-inter sm:block hidden">
-        We have found {dataFromApi.dataFromApi.count} schemes based on your
+        We have found {dataFromApi.dataFromApi.count} Schemes based on your
         preference
       </p>
     ) : (
