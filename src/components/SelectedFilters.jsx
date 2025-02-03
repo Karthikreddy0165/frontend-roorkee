@@ -4,9 +4,12 @@ import { useAuth } from "@/Context/AuthContext";
 import ToolTips from "./ComponentsUtils/tooltips";
 import PreferenceContext from "@/Context/preferenceContext";
 import { useRouter } from "next/router";
+import { useProfile } from "@/Context/ProfileContext"; 
 function SelectedFilters() {
+  const { profileData, setProfileData } = useProfile();
   const { state, beneficiarie } = useContext(PreferenceContext);
   const router = useRouter();
+  const [preferencesApplied, setPreferencesApplied] = useState(false)
 
   // console.log(state, "state");
   // console.log(beneficiarie, "beneficiaries");
@@ -28,7 +31,7 @@ function SelectedFilters() {
   const [newSponser, setNewSponser] = useState([]);
   const [newState, setNewState] = useState([]);
   const [newDepartment, setNewDepartment] = useState([]);
-  const [profileData, setProfileData] = useState([]);
+  // const [profileData, setProfileData] = useState([]);
 
   useEffect(() => {
     setNewSponser(sponsoredBy[1] && sponsoredBy[1]?.[0] !=='State'  ? sponsoredBy[1] : []);
@@ -60,26 +63,25 @@ function SelectedFilters() {
       router.push("/login");
       return;
     }
-    setDepartments({});
-    setFundingBy([]);
-    setSponsoredBy([]);
-    setNewSponser([]);
-    setNewDepartment([]);
-    setNewState([]);
-    setBeneficiaries([]);
-    const preferenceData = JSON.parse(localStorage.getItem("profiledata"));
-    console.log(preferenceData);
-    // Set the new default state values
-    if (preferenceData?.community) {
-      setBeneficiaries([preferenceData?.community]);
-    } else {
+    if (preferencesApplied) {
+      setStates([]);
+      setDepartments({});
+      setFundingBy([]);
+      setSponsoredBy([]);
+      setNewSponser([]);
+      setNewDepartment([]);
+      setNewState([]);
       setBeneficiaries([]);
-    }
-
-    console.log(statesFromApi);
+    } else {
+      const preferenceData = profileData;
+      if (preferenceData?.community) {
+        setBeneficiaries([preferenceData.community]);
+      } else {
+        setBeneficiaries([]);
+      }
+      
 
     const selectedValue = preferenceData?.state;
-    // console.log(statesFromApi, "select");
     const selectedState = statesFromApi.find(
       (it) => it.state_name === selectedValue
     );
@@ -89,6 +91,8 @@ function SelectedFilters() {
     } else {
       setStates([]);
     }
+  }
+    setPreferencesApplied(!preferencesApplied);
   };
   // console.log("states", newState);
   return newSponser.length > 0 ||
@@ -342,15 +346,11 @@ function SelectedFilters() {
           )}
         </div>
       </div>
-      <div className="p-4">
+
+      <div className="pt-4">
         {/* Tooltip applied to the button */}
         <ToolTips tooltip="Set Your Preferences Here">
-          <button
-            className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
-            onClick={handleDefaultFilter}
-          >
-            My Preference
-          </button>
+          
         </ToolTips>
       </div>
     </div>

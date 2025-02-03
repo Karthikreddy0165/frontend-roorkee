@@ -18,7 +18,7 @@ import RedirectHandler from "@/components/ComponentsUtils/RedirectHandler";
 import { ClipLoader } from 'react-spinners';  // Import your loader component
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { ProfileProvider } from "@/Context/ProfileContext";
 
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false); // Loading state for page transitions
@@ -80,6 +80,7 @@ export default function App({ Component, pageProps }) {
                   <FormProvider>
                     <PrimeReactProvider>
                       <BookmarkProvider>
+                        <ProfileProvider>
                         <div className="flex flex-col min-h-screen">
                           {/* Main Content */}
                           <div className="flex-grow">
@@ -87,6 +88,7 @@ export default function App({ Component, pageProps }) {
                             <Component {...pageProps} />
                           </div>
                         </div>
+                        </ProfileProvider>
                       </BookmarkProvider>
                     </PrimeReactProvider>
                   </FormProvider>

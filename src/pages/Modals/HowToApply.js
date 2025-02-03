@@ -139,8 +139,6 @@ const HowToApply = ({ closeModal, schemeId }) => {
                  <h3 className="text-[16px] font-bold text-center">
                     STEP - 4
                   </h3>
-
-                  <p className="font-semibold flex justify-center py-2">Here are the procedures for applying for the scheme.</p>
                 <ul className=" list-disc text-[16px]  mt-2">
                   {procedures.map((procedure, index) => (
                     <li key={index}>{procedure.step_description}</li>
