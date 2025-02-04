@@ -53,7 +53,7 @@ const SchemeVerifiedStatus = () => {
     showMessage && (
       <div className="relative  flex items-center justify-between p-4 bg-violet-100 text-black border border-violet-800 rounded mx-auto  ">
         <span className="ml-4  text-sm">
-          Email has been sent to your mail, Please Verify
+          Email has been sent to your mail, please verify
         </span>
         <button
           onClick={handleClose}

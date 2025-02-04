@@ -52,6 +52,12 @@ export default function Tabs() {
       {/* Tabs for Larger Screens */}
       <div className="sticky top-[180px] z-20 bg-white sm:flex justify-center items-center gap-[5px] sm:block hidden">
         <button
+          className={getButtonClass("Scholarships")}
+          onClick={() => handleTabClick("Scholarships")}
+        >
+          Scholarships
+        </button>
+        <button
           className={getButtonClass("Schemes")}
           onClick={() => handleTabClick("Schemes")}
         >
@@ -63,12 +69,7 @@ export default function Tabs() {
         >
           Job Openings
         </button>
-        <button
-          className={getButtonClass("Scholarships")}
-          onClick={() => handleTabClick("Scholarships")}
-        >
-          Scholarships
-        </button>
+
         <button
           className={getButtonClass("Saved")}
           onClick={() => handleTabClick("Saved")}
@@ -80,9 +81,10 @@ export default function Tabs() {
       <hr className="sm:hidden" />
 
       {/* Render the Corresponding Component Based on activeTab */}
+      {activeTab === "Scholarships" && <Scholarships />}
       {activeTab === "Schemes" && <Schemes />}
       {activeTab === "Job Openings" && <JobOpenings />}
-      {activeTab === "Scholarships" && <Scholarships />}
+
       {activeTab === "Saved" && <Saved />}
     </div>
   );

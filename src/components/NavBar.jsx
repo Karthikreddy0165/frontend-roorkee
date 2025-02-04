@@ -11,7 +11,6 @@ import { IoIosPerson } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import ProfileModal from "@/pages/Modals/profileModal";
 
-
 const NavBar = () => {
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -53,15 +52,15 @@ const NavBar = () => {
   return (
     <div>
       {/* Navbar Container */}
-      <div className="flex justify-between items-center py-2 px-6 bg-white border-b-[2px] z-10 relative sm:h-[73px] h-[73px] gap-2 w-full">
+      <div className="flex justify-between items-center py-2  bg-white border-b-[2px] z-10 relative sm:h-[73px] h-[73px] gap-2 w-full px-6">
         <svg
-          width="40"
-          height="40"
-          viewBox="0 0 40 40"
+          width="50"
+          height="50"
+          viewBox="0 0 50 50"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <rect width="40" height="40" fill="url(#pattern0_924_1236)" />
+          <rect width="50" height="50" fill="url(#pattern0_924_1236)" />
           <defs>
             <pattern
               id="pattern0_924_1236"

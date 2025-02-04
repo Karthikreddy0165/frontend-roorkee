@@ -4,12 +4,9 @@ import { useAuth } from "@/Context/AuthContext";
 import ToolTips from "./ComponentsUtils/tooltips";
 import PreferenceContext from "@/Context/preferenceContext";
 import { useRouter } from "next/router";
-import { useProfile } from "@/Context/ProfileContext"; 
 function SelectedFilters() {
-  const { profileData, setProfileData } = useProfile();
   const { state, beneficiarie } = useContext(PreferenceContext);
   const router = useRouter();
-  const [preferencesApplied, setPreferencesApplied] = useState(false)
 
   // console.log(state, "state");
   // console.log(beneficiarie, "beneficiaries");
@@ -31,10 +28,12 @@ function SelectedFilters() {
   const [newSponser, setNewSponser] = useState([]);
   const [newState, setNewState] = useState([]);
   const [newDepartment, setNewDepartment] = useState([]);
-  // const [profileData, setProfileData] = useState([]);
+  const [profileData, setProfileData] = useState([]);
 
   useEffect(() => {
-    setNewSponser(sponsoredBy[1] && sponsoredBy[1]?.[0] !=='State'  ? sponsoredBy[1] : []);
+    setNewSponser(
+      sponsoredBy[1] && sponsoredBy[1]?.[0] !== "State" ? sponsoredBy[1] : []
+    );
     setNewState(states[1] ? states[1] : []);
     setNewDepartment(Object.keys(departments) ? Object.keys(departments) : []);
   }, [sponsoredBy, states, departments]);
@@ -58,28 +57,20 @@ function SelectedFilters() {
   };
 
   const handleDefaultFilter = () => {
-    // Clear existing states
     if (!authState.token) {
       router.push("/login");
       return;
     }
-    if (preferencesApplied) {
-      setStates([]);
-      setDepartments({});
-      setFundingBy([]);
-      setSponsoredBy([]);
-      setNewSponser([]);
-      setNewDepartment([]);
-      setNewState([]);
-      setBeneficiaries([]);
-    } else {
-      const preferenceData = profileData;
-      if (preferenceData?.community) {
-        setBeneficiaries([preferenceData.community]);
-      } else {
-        setBeneficiaries([]);
-      }
-      
+
+    const preferenceData = JSON.parse(localStorage.getItem("profiledata"));
+    if (!preferenceData) {
+      return;
+    }
+
+    // Apply user preferences
+    if (preferenceData?.community) {
+      setBeneficiaries([preferenceData.community]);
+    }
 
     const selectedValue = preferenceData?.state;
     const selectedState = statesFromApi.find(
@@ -88,11 +79,18 @@ function SelectedFilters() {
 
     if (selectedState) {
       setStates([[selectedState.id], [selectedState.state_name]]);
+    }
+
+    setNewSponser(sponsoredBy[1] ? sponsoredBy[1] : []);
+    setNewDepartment(Object.keys(departments) ? Object.keys(departments) : []);
+
+    console.log(statesFromApi);
+
+    if (selectedState) {
+      setStates([[selectedState.id], [selectedState.state_name]]);
     } else {
       setStates([]);
     }
-  }
-    setPreferencesApplied(!preferencesApplied);
   };
   // console.log("states", newState);
   return newSponser.length > 0 ||
@@ -346,11 +344,15 @@ function SelectedFilters() {
           )}
         </div>
       </div>
-
-      <div className="pt-4">
+      <div className="mt-4">
         {/* Tooltip applied to the button */}
         <ToolTips tooltip="Set Your Preferences Here">
-          
+          <button
+            className="flex-shrink-0 px-4 py-2 rounded-lg  border border-gray-400  bg-[#3330BA] text-white font-inter text-[12px] font-medium  sm:text-sm"
+            onClick={handleDefaultFilter}
+          >
+            My Preference
+          </button>
         </ToolTips>
       </div>
     </div>
