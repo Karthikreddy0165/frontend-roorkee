@@ -3,6 +3,10 @@ import { useMediaQuery } from 'react-responsive';
 import { MdClose } from "react-icons/md";
 import { useAuth } from "@/Context/AuthContext";
 
+import step1 from '../../assets/step1.jpeg';
+import step1mobile from '../../assets/step1mobile.jpeg';
+import step2 from '../../assets/step2.jpeg';
+import step3 from '../../assets/step3.jpeg';
 
 const HowToApply = ({ closeModal, schemeId }) => {
   const [currentStep, setCurrentStep] = useState(1);

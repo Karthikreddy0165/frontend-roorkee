@@ -6,7 +6,7 @@ const ToolTips = ({ children, tooltip }) => {
       {children}
       {tooltip && (
         <span
-          className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition bg-gray-100 text-[12px] p-2 rounded text-sm absolute left-1/2 transform -translate-x-1/2 top-full mt-2 z-40 border rounded"
+          className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition bg-gray-100 text-[12px] p-2 rounded text-sm absolute left-1/2 transform -translate-x-1/2 top-full mt-2 z-20 border rounded"
           style={{
             whiteSpace: "nowrap",
             overflow: "hidden",
