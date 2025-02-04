@@ -25,13 +25,13 @@ export default function Tabs() {
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/layout-items/`
         );
         const data = await response.json();
-        console.log(data);
+
         if (Array.isArray(data)) {
           const sortedTabs = data.sort((a, b) => a.order - b.order);
           setTabs(sortedTabs);
 
           const { tab } = router.query;
-          console.log(tab);
+    
           if (!tab && sortedTabs.length > 0) {
             setActiveTab(sortedTabs[0].column_name);
             router.replace(
@@ -79,8 +79,7 @@ export default function Tabs() {
     }`;
   };
 
-  console.log(activeTab);
-  console.log("tabs", tabs);
+ 
 
   const renderTabContent = () => {
     switch (activeTab) {
