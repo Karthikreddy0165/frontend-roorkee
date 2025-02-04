@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import PageContext from "@/Context/PageContext";
 import { useTabContext } from "@/Context/TabContext";
 import JobOpenings from "./ComponentsUtils/JobOpenings";
@@ -9,83 +9,120 @@ import SearchInput from "./ComponentsUtils/SearchInput";
 import SelectedFilters from "./SelectedFilters";
 import Saved from "./savedForLoginuser";
 import React from "react";
-import NavBarScheme from "./SchmesNavbar";
 
 export default function Tabs() {
   const router = useRouter();
   const { activeTab, setActiveTab } = useTabContext();
   const { currentPage, setCurrentPage } = useContext(PageContext);
+  const [tabs, setTabs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Sync activeTab with query params on route change
-  React.useEffect(() => {
-    const { tab } = router.query;
-    if (tab) {
-      setActiveTab(tab);
+  // Fetch tabs from API and maintain order
+  useEffect(() => {
+    async function fetchTabs() {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/layout-items/`
+        );
+        const data = await response.json();
+
+        if (Array.isArray(data)) {
+          const sortedTabs = data.sort((a, b) => a.order - b.order);
+          setTabs(sortedTabs);
+
+          const { tab } = router.query;
+    
+          if (!tab && sortedTabs.length > 0) {
+            setActiveTab(sortedTabs[0].column_name);
+            router.replace(
+              {
+                pathname: router.pathname,
+                query: { tab: sortedTabs[0].column_name },
+              },
+              undefined,
+              { shallow: true }
+            );
+          } else if (tab) {
+            setActiveTab(tab);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching tab data:", error);
+      } finally {
+        setLoading(false);
+      }
     }
+
+    fetchTabs();
   }, [router.query, setActiveTab]);
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
-    setCurrentPage(1);
-    router.push({
-      pathname: router.pathname,
-      query: { tab },
-    });
+  const handleTabClick = (tabName) => {
+    if (activeTab !== tabName) {
+      setActiveTab(tabName);
+      setCurrentPage(1);
+      router.push(
+        {
+          pathname: router.pathname,
+          query: { tab: tabName },
+        },
+        undefined,
+        { shallow: true }
+      );
+    }
   };
 
   const getButtonClass = (tabName) => {
-    return `sticky top-0 flex-grow text-center border-b-[2px] font-sm p-[12px] rounded-t-[8px] text-semibold text-[14px] cursor-pointer font-sans  ${
+    return `sticky top-0 flex-grow text-center border-b-[2px] font-sm p-[12px] rounded-t-[8px] text-semibold text-[14px] cursor-pointer font-sans ${
       activeTab === tabName
         ? "bg-[#EEEEFF] border-b-[3px] border-[#3431BB]"
         : "hover:bg-[#EEEEFF] hover:border-b-[3px] hover:border-[#3431BB]"
     }`;
   };
 
+ 
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "Scholarships":
+        return <Scholarships />;
+      case "Schemes":
+        return <Schemes />;
+      case "Jobs":
+        return <JobOpenings />;
+      case "Saved":
+        return <Saved />;
+      default:
+        return null;
+    }
+  };
+
+  tabs.push({
+    column_name: "Saved",
+    order: Math.max(...tabs.map((tab) => tab.order), 0) + 1,
+  });
+
   return (
     <div>
-      {/* Fixed Navbar */}
-
       <SearchInput />
-
       <SelectedFilters />
 
       {/* Tabs for Larger Screens */}
       <div className="sticky top-[180px] z-20 bg-white sm:flex justify-center items-center gap-[5px] sm:block hidden">
-        <button
-          className={getButtonClass("Scholarships")}
-          onClick={() => handleTabClick("Scholarships")}
-        >
-          Scholarships
-        </button>
-        <button
-          className={getButtonClass("Schemes")}
-          onClick={() => handleTabClick("Schemes")}
-        >
-          Schemes
-        </button>
-        <button
-          className={getButtonClass("Job Openings")}
-          onClick={() => handleTabClick("Job Openings")}
-        >
-          Job Openings
-        </button>
-
-        <button
-          className={getButtonClass("Saved")}
-          onClick={() => handleTabClick("Saved")}
-        >
-          Saved
-        </button>
+        {!loading &&
+          tabs.map((tab) => (
+            <button
+              key={tab.column_name}
+              className={getButtonClass(tab.column_name)}
+              onClick={() => handleTabClick(tab.column_name)}
+            >
+              {tab.column_name}
+            </button>
+          ))}
       </div>
 
       <hr className="sm:hidden" />
 
-      {/* Render the Corresponding Component Based on activeTab */}
-      {activeTab === "Scholarships" && <Scholarships />}
-      {activeTab === "Schemes" && <Schemes />}
-      {activeTab === "Job Openings" && <JobOpenings />}
-
-      {activeTab === "Saved" && <Saved />}
+      {renderTabContent()}
     </div>
   );
 }
