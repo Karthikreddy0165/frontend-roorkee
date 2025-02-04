@@ -96,10 +96,12 @@ export default function Tabs() {
     }
   };
 
-  tabs.push({
-    column_name: "Saved",
-    order: Math.max(...tabs.map((tab) => tab.order), 0) + 1,
-  });
+ if (tabs.length < 4) {
+    tabs.push({
+      column_name: "Saved",
+      order: Math.max(...tabs.map((tab) => tab.order), 1) + 1,
+    });
+  }
 
   return (
     <div>
