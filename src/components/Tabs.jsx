@@ -83,11 +83,11 @@ export default function Tabs() {
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case "Scholarships":
+      case "scholarships":
         return <Scholarships />;
-      case "Schemes":
+      case "schemes":
         return <Schemes />;
-      case "Jobs":
+      case "jobs":
         return <JobOpenings />;
       case "Saved":
         return <Saved />;
@@ -118,7 +118,8 @@ if (!tabs.some(tab => tab.column_name === "Saved")) {
               className={getButtonClass(tab.column_name)}
               onClick={() => handleTabClick(tab.column_name)}
             >
-              {tab.column_name}
+              {tab.column_name.charAt(0).toUpperCase() +
+                tab.column_name.slice(1)}
             </button>
           ))}
       </div>
