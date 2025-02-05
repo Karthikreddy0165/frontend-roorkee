@@ -211,20 +211,20 @@ const handleReportSubmit = async (e) => {
   }}
 >
         <button
-          className="absolute right-4 p-[20px] text-lg hover:text-red-500"
+          className="absolute right-4 sm:p-[20px] text-lg hover:text-red-500"
           onClick={onRequestClose}
         >
           <IoMdClose className="w-[24px] h-[24px]" />
         </button>
 
-        <div className="modal-content overflow-y-auto max-h-[90vh] p-8 h-full">
+        <div className="modal-content overflow-y-auto mt-[10px] max-h-[90vh] sm:p-8 h-full">
      
 
 
 <div className="flex flex-col  items-start w-full py-[20px] overflow-hidden">
   {/* Title and Report Button */}
   <div className="flex items-center justify-between w-full flex-wrap ">
-    <h1 className="text-[20px] font-bold mb-2 w-full sm:w-auto ">{scheme.title}</h1>
+    <h1 className="text-[18px] sm:text-[20px] font-bold mb-2 w-full sm:w-auto ">{scheme.title}</h1>
   </div>
 
   {/* Date and Report Button aligned */}
@@ -266,30 +266,30 @@ const handleReportSubmit = async (e) => {
              
 
               {scheme.department?.state && (
-                <div className="flex items-start py-[2rem] border-b-[1px] mt-4">
+                <div className="flex items-start sm:py-[2rem] py-[1rem] border-b-[1px] mt-4">
                   <h2 className="w-28 text-[14px]  font-semibold">State:</h2>
-                  <p className="flex-1">{scheme.department.state}</p>
+                  <p className="flex-1 text-[16px]">{scheme.department.state}</p>
                 </div>
               )}
 
         
 
               {scheme.department?.department_name && (
-                <div className="flex items-start py-[2rem] border-t-[1px] border-b-[1px]">
+                <div className="flex items-start sm:py-[2rem] py-[1rem] border-t-[1px] border-b-[1px]">
                   <h2 className="w-28 text-[14px] font-semibold">Department:</h2>
-                  <p className="flex-1">{scheme.department.department_name}</p>
+                  <p className="flex-1 text-[16px]">{scheme.department.department_name}</p>
                 </div>
               )}
 
               {scheme.beneficiaries[0]?.beneficiary_type && (
-                <div className="flex items-start py-[2rem]  border-b-[1px]">
+                <div className="flex items-start sm:py-[2rem] py-[1rem]  border-b-[1px]">
                   <h2 className="w-28 text-[14px] font-semibold">Beneficiaries:</h2>
-                  <p className="flex-1">{scheme.beneficiaries[0].beneficiary_type}</p>
+                  <p className="flex-1 text-[16px]">{scheme.beneficiaries[0].beneficiary_type}</p>
                 </div>
               )}
 
 {scheme.criteria?.state && (
-                <div className="flex items-start py-[2rem] border-b-[1px] mt-4">
+                <div className="flex items-start sm:py-[2rem] py-[1rem] border-b-[1px] mt-4">
                   <h2 className="w-28 text-[14px]  font-semibold">Eligibility:
 </h2>
                   <p className="flex-1">{scheme.department.criteria}</p>
@@ -297,7 +297,7 @@ const handleReportSubmit = async (e) => {
               )}
 
 {scheme.description && (
-                <div className="border-b-[1px] py-[2rem]">
+                <div className="border-b-[1px] sm:py-[2rem] py-[1rem]">
                   <h2 className="text-[14px] font-semibold mb-[10px]">Description:</h2>
                   <p
                     ref={descriptionRef}
@@ -320,7 +320,7 @@ const handleReportSubmit = async (e) => {
 
               {/* Updated "Uploaded File" Section */}
               {scheme.pdf_url && (
-                <div className="flex items-start py-[2rem] border-b-[1px]">
+                <div className="flex items-start sm:py-[2rem] py-[1rem] border-b-[1px]">
                   <h2 className="w-28 text-[14px] font-semibold">Uploaded File:</h2>
                   <div className="flex-1">
                     <a
@@ -466,7 +466,7 @@ const handleReportSubmit = async (e) => {
         </div>
       )}
 
-          <div className="py-[1rem]">
+          <div className="py-[1rem] text-[16px]">
             Not sure how to apply?{" "}
             <span
               className="text-[#3431Bb] cursor-pointer "

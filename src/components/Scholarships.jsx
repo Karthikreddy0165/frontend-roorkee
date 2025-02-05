@@ -20,6 +20,7 @@ export default function Scholarships() {
       try {
         setDataOfApi({});
         let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
+        console.log("scholarhsip", url);
         // const cachedData = localStorage.getItem(url);
 
         // if (cachedData) {
@@ -40,6 +41,7 @@ export default function Scholarships() {
           beneficiary_keywords: beneficiaries,
           search_query: searchQuery,
           tag: "scholarship",
+          is_active: true,
         });
 
         const requestOptions = {
