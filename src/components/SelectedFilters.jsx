@@ -4,7 +4,9 @@ import { useAuth } from "@/Context/AuthContext";
 import ToolTips from "./ComponentsUtils/tooltips";
 import PreferenceContext from "@/Context/preferenceContext";
 import { useRouter } from "next/router";
+import { useProfile } from "@/Context/ProfileContext"; 
 function SelectedFilters() {
+  const { profileData, setProfileData } = useProfile();
   const { state, beneficiarie } = useContext(PreferenceContext);
   const router = useRouter();
 
@@ -28,7 +30,6 @@ function SelectedFilters() {
   const [newSponser, setNewSponser] = useState([]);
   const [newState, setNewState] = useState([]);
   const [newDepartment, setNewDepartment] = useState([]);
-  const [profileData, setProfileData] = useState([]);
 
   useEffect(() => {
     setNewSponser(
@@ -62,7 +63,7 @@ function SelectedFilters() {
       return;
     }
 
-    const preferenceData = JSON.parse(localStorage.getItem("profiledata"));
+    const preferenceData = profileData;
     if (!preferenceData) {
       return;
     }
