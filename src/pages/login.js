@@ -51,9 +51,8 @@ const login = () => {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          result.message || `HTTP error! status: ${response.status}`
-        );
+        setErrorMessage("Email or password is invalid");
+        return;
       }
 
       // console.log("Login successful. Token received:", result.access);
@@ -231,7 +230,7 @@ const login = () => {
               </div>
 
               {errorMessage && (
-                <div className="mb-4 mt-4">
+                <div className="mb-4 mt-4" data-test-id="login-error">
                   <button
                     className="bg-red-100 text-red-700 py-2 px-4 rounded w-full"
                     type="submit"

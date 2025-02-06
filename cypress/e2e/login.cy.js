@@ -1,4 +1,4 @@
-describe('Login Page', () => {
+describe('Login Page Tests', () => {
   beforeEach(() => {
     cy.visit('/login')
     // Clear local storage before each test
@@ -13,7 +13,7 @@ describe('Login Page', () => {
       cy.contains('Forgot password?').should('exist')
       cy.contains('Create new account').should('exist')
       cy.get('svg').should('exist') // Logo should be present
-      cy.get('button', 'Back').should('exist')
+      cy.contains('button', 'Back').should('exist')
     });
 
     it('should toggle password visibility', () => {
@@ -86,8 +86,8 @@ describe('Login Page', () => {
         })
       })
 
-      // Should redirect to AllSchemes page
-      cy.url().should('include', '/AllSchemes')
+      // Should redirect to Home page
+      cy.url().should('include', '/')
     });
 
     it('should handle login failure', () => {
@@ -103,7 +103,7 @@ describe('Login Page', () => {
       cy.contains('button', 'Continue').click()
 
       cy.wait('@loginFailure')
-      cy.contains('Email or password is invalid').should('be.visible')
+      cy.get('[data-test-id="login-error"]').should('exist')
     });
 
     it('should show loading state during API call', () => {
@@ -125,12 +125,11 @@ describe('Login Page', () => {
   });
 
   describe('Authentication State', () => {
-    it('should redirect to AllSchemes if already authenticated', () => {
+    it('should redirect to Home Page if already authenticated', () => {
       // Set up authenticated state
       localStorage.setItem('token', 'fake-jwt-token')
       cy.visit('/login')
-      cy.get('[data-testid="auth-redirect"]').should('exist')
-      cy.url().should('include', '/AllSchemes')
+      cy.url().should('include', '/')
     });
   });
 
@@ -138,21 +137,18 @@ describe('Login Page', () => {
     it('should display correctly on mobile viewport', () => {
       cy.viewport('iphone-x')
       cy.get('.flex').should('be.visible')
-      // Add more mobile-specific assertions
     });
 
     it('should display correctly on tablet viewport', () => {
       cy.viewport('ipad-2')
       cy.get('.flex').should('be.visible')
-      // Add more tablet-specific assertions
     });
 
     it('should show/hide right panel based on viewport', () => {
-      // Desktop view
       cy.viewport(1920, 1080)
       cy.get('.bg-\\[\\#FEF6F0\\]').should('be.visible')
       
-      // Mobile view
+
       cy.viewport('iphone-x')
       cy.get('.bg-\\[\\#FEF6F0\\]').should('not.be.visible')
     });

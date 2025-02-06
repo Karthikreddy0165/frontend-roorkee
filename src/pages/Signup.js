@@ -241,7 +241,9 @@ const CreateAcc01 = () => {
                     onBlur={formik.handleBlur}
                     value={formik.values.password}
                   />
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-4" onClick={togglePasswordVisibility}>
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-4"
+                  data-testid="toggle-password-visibility" 
+                  onClick={togglePasswordVisibility}>
                     {showPassword ? <FaEye /> : <FaEyeSlash />}
                   </div>
                 </div>
