@@ -190,7 +190,7 @@ const login = () => {
                   value={formik.values.email.toLowerCase()}
                 />
                 {formik.touched.email && formik.errors.email ? (
-          <p className="text-red-500 text-xs">{formik.errors.email}</p>
+          <p className="text-red-500 text-xs" data-testid="email-error">{formik.errors.email}</p>
         ) : null}
               </div>
               <div className="mt-[24px] relative">
@@ -210,10 +210,11 @@ const login = () => {
                   value={formik.values.password}
                 />
                  {formik.touched.password && formik.errors.password ? (
-          <p className="text-red-500 text-xs">{formik.errors.password}</p>
+          <p className="text-red-500 text-xs" data-testid="password-error">{formik.errors.password}</p>
         ) : null}
                 <div
                   className="absolute inset-y-0 right-0 pr-3 mt-4 flex items-center cursor-pointer "
+                  data-testid="toggle-password-visibility"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <FaEye /> : <FaEyeSlash />}

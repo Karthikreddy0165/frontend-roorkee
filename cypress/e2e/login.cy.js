@@ -13,6 +13,7 @@ describe('Login Page', () => {
       cy.contains('Forgot password?').should('exist')
       cy.contains('Create new account').should('exist')
       cy.get('svg').should('exist') // Logo should be present
+      cy.get('button', 'Back').should('exist')
     });
 
     it('should toggle password visibility', () => {
@@ -45,21 +46,27 @@ describe('Login Page', () => {
     it('should show validation for empty fields', () => {
       cy.contains('button', 'Continue').click()
       cy.get('form').should('exist')
+      cy.get('[data-testid="email-error"]').should('exist')
+      cy.get('[data-testid="password-error"]').should('exist')
       // Verify no POST request was made
-      cy.intercept('POST', '/api/login').as('loginRequest');
-      cy.wait('@loginRequest').should('not.exist'); // Confirm no request was sent
+      cy.intercept('POST', `${Cypress.env('apiUrl')}/api/login`).as('loginRequest');
+      cy.wait(2000); 
+      cy.get('@loginRequest.all').should('have.length', 0); 
+      
     });
 
     it('should validate email format', () => {
       cy.get('input[type="email"]').type('invalid-email')
       cy.contains('button', 'Continue').click()
+      cy.get('[data-testid="email-error"]').should('exist')
     });
+     
   });
 
   describe('API Integration', () => {
     it('should successfully log in with valid credentials', () => {
       const validEmail = 'test@example.com'
-      const validPassword = 'password123'
+      const validPassword = 'password1231'
 
       cy.intercept('POST', `${Cypress.env('apiUrl')}/api/login/`, {
         statusCode: 200,
