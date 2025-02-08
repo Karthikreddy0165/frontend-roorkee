@@ -79,16 +79,13 @@ export default function Tabs() {
     }`;
   };
 
-  console.log(activeTab);
-  console.log("tabs", tabs);
-
   const renderTabContent = () => {
     switch (activeTab) {
-      case "Scholarships":
+      case "scholarships":
         return <Scholarships />;
-      case "Schemes":
+      case "schemes":
         return <Schemes />;
-      case "Jobs":
+      case "jobs":
         return <JobOpenings />;
       case "Saved":
         return <Saved />;
@@ -97,10 +94,12 @@ export default function Tabs() {
     }
   };
 
-  tabs.push({
-    column_name: "Saved",
-    order: Math.max(...tabs.map((tab) => tab.order), 0) + 1,
-  });
+  if (!tabs.some((tab) => tab.column_name === "Saved")) {
+    tabs.push({
+      column_name: "Saved",
+      order: Math.max(...tabs.map((tab) => tab.order), 1) + 1,
+    });
+  }
 
   return (
     <div>
@@ -116,7 +115,8 @@ export default function Tabs() {
               className={getButtonClass(tab.column_name)}
               onClick={() => handleTabClick(tab.column_name)}
             >
-              {tab.column_name}
+              {tab.column_name.charAt(0).toUpperCase() +
+                tab.column_name.slice(1)}
             </button>
           ))}
       </div>
