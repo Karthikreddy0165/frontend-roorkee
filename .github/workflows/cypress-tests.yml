@@ -21,13 +21,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Start the Next.js server
-        run: npm run dev &
-        env:
-          NEXT_PUBLIC_API_URL: "http://localhost:3000"  # If needed
+      - name: Start the server
+        run: npm run dev &  # Change this if your start command is different
 
-      - name: Wait for server to be ready
-        run: npx wait-on http://localhost:3000
+      - name: Wait for the server to be ready
+        run: npx wait-on tcp:3000 http://localhost:3000
 
       - name: Run Cypress tests
         run: npx cypress run
