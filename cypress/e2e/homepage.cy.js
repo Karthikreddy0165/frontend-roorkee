@@ -137,9 +137,7 @@ describe('Home Page Tests', () => {
     describe('Responsive Design', () => {
       it('should display mobile layout on small screens', () => {
         cy.viewport('iphone-6');
-        cy.get('button')
-          .contains('Get Started')
-          .should('be.visible');
+        cy.contains('button', 'Get Started').filter(':visible').should('exist');
       });
   
       it('should display desktop layout on large screens', () => {
@@ -149,3 +147,83 @@ describe('Home Page Tests', () => {
       });
     });
   });
+  
+    // NavBar Tests
+    describe('NavBar Component', () => {
+      it('should display the logo and brand name', () => {
+        cy.get('svg').should('be.visible');
+        cy.contains('LAUNCHPAD').should('be.visible');
+      });
+  
+      describe('When not logged in', () => {
+        it('should show login button and handle click', () => {
+          cy.viewport('iphone-6');
+          cy.contains('button', 'Login').should('be.visible').click();
+          cy.url().should('include', '/login');
+  
+          cy.viewport('macbook-15');
+          cy.contains('button', 'Login').should('be.visible').click();
+          cy.url().should('include', '/login');
+        });
+      });
+  
+      describe('When logged in', () => {
+        beforeEach(() => {
+          cy.window().then(win => win.localStorage.setItem('token', 'fake-token'));
+          cy.reload();
+        });
+  
+        it('should show profile dropdown on desktop', () => {
+          cy.viewport('macbook-15');
+          cy.contains('button', 'Profile').should('be.visible').click();
+          cy.contains('My Profile').should('be.visible');
+          cy.contains('Log Out').should('be.visible');
+        });
+  
+        it('should handle logout correctly', () => {
+          cy.contains('Profile').click();
+          cy.contains('Log Out').click();
+          cy.url().should('include', '/login');
+          cy.window().then(win => expect(win.localStorage.getItem('token')).to.be.null);
+        });
+      });
+    });
+  
+    // FAQ Tests
+    describe('FAQ Section', () => {
+      it('should display FAQ section title and all questions', () => {
+        cy.contains('Frequently Asked Questions').should('be.visible');
+        ['What is the product name?', 'How will this help me?', 'Can I get all information regarding Govt and State?', 'How can I apply for schemes, jobs, or scholarships?']
+          .forEach(question => cy.contains(question).should('be.visible'));
+      });
+    });
+  
+    // Footer Tests
+    describe('Footer Component', () => {
+      it('should display logo, brand name, and links', () => {
+        cy.contains('LaunchPad').should('be.visible');
+        ['Home', 'Schemes', 'Job openings', 'Scholarships', 'Saved'].forEach(link => cy.contains(link).should('be.visible'));
+        ["FAQ's", "Privacy Policy", "Terms and Conditions", "About us", "Resources"].forEach(link => cy.contains(link).should('be.visible'));
+      });
+    });
+  
+    // Verified Status Tests
+    describe('VerifiedStatus Component', () => {
+      describe('When user is logged in but email not verified', () => {
+        beforeEach(() => {
+          cy.window().then(win => win.localStorage.setItem('token', 'fake-token'));
+          cy.intercept('GET', `${Cypress.env('NEXT_PUBLIC_API_BASE_URL')}/api/user/me/`, {
+            statusCode: 200,
+            body: { is_email_verified: false }
+          }).as('checkEmailVerification');
+          cy.reload();
+        });
+  
+        it('should display verification message and allow closing it', () => {
+          cy.wait('@checkEmailVerification');
+          cy.contains('Email has been sent to your mail, please verify').should('be.visible');
+          cy.get('button').contains('×').click();
+          cy.contains('Email has been sent to your mail').should('not.exist');
+        });
+      });
+    });
