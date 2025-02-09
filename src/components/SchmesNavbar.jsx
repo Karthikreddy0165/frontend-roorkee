@@ -13,10 +13,10 @@ import ProfileModal from "../pages/Modals/profileModal";
 import scholarshipicon from "../assets/scholarship.svg";
 import schemesicon from "../assets/schemes.svg";
 import jobsicon from "../assets/jobs.svg";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 import { useTabContext } from "@/Context/TabContext"; // Import useTabContext
 
-import { FaArrowLeftLong } from "react-icons/fa6";
 import BackButton from "./ComponentsUtils/BackButton";
 import ToolTips from "./ComponentsUtils/tooltips";
 import FeedbackButton from "./feedBack";
@@ -38,7 +38,7 @@ const NavBarScheme = () => {
       icon: schemesicon,
     },
     {
-      id: "job_openings",
+      id: "jobs",
       label: "Job Openings",
       icon: jobsicon,
     },
@@ -277,35 +277,37 @@ const NavBarScheme = () => {
 
       {isSidebarOpen && (
         <div className="sm:hidden fixed left-0 top-0 h-full w-64 bg-gray-100 z-50 shadow-lg flex flex-col justify-center items-center px-[50px] mb-[30px]">
-          {/* <div className="fixed top-5 left-5 z-50">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 25 25"
+          {/* Back Button */}
+          <div
+            className="fixed top-5 left-5 z-50 cursor-pointer"
+            onClick={toggleSidebar}
+          >
+            {/* <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              onClick={() => handleSidebarOptionClick("Schemes")}
             >
               <path
-                d="M6.41113 13.9585L14.5778 22.1252L12.4997 24.1668L0.833008 12.5002L12.4997 0.833496L14.5778 2.87516L6.41113 11.0418H24.1663V13.9585H6.41113Z"
-                fill="#1D1B20"
+                d="M15 19L8 12L15 5"
+                stroke="#1D1B20"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
-            </svg>
-          </div> */}
-          <div className="flex justify-centre items-center p-4 ">
-            <div className="text-lg font-bold"></div>
-            <button
-              onClick={toggleSidebar}
-              className="text-gray-600 hover:text-gray-900"
-            >
-              {/* Close Button */}
-              {/* <IoMdClose size={24} /> */}
-            </button>
+            </svg> */}
+            <FaArrowLeftLong className="mt-1" />
           </div>
-          {/* Home  */}
-          <div className="flex justify-centre items-center w-full">
+
+          <div className="flex justify-center items-center p-4 ">
+            <div className="text-lg font-bold"></div>
+          </div>
+
+          {/* Home Button */}
+          <div className="flex justify-center items-center w-full">
             <button
-              className="w-full text-left p-3 text-[14px] hover:bg-[#EEEEFF] hover:border-l-[3px] hover:border-[#3431BB] flex justify-centre items-center gap-2"
+              className="w-full text-left p-3 text-[14px] hover:bg-[#EEEEFF] hover:border-l-[3px] hover:border-[#3431BB] flex items-center gap-2"
               onClick={handleClickLogo}
             >
               <svg
@@ -335,13 +337,11 @@ const NavBarScheme = () => {
 
           <hr className="bg-[#B3B3B3] border-[1px] w-[200px] mt-5 mb-5" />
 
-          {/* Menu items */}
+          {/* Menu Items */}
           {tabs.map((tab) => {
-            // Find the matching button from JSON data
             const matchedButton = buttons.find(
               (btn) => btn.id === tab.column_name
             );
-
             return (
               <button
                 key={tab.id}
@@ -363,99 +363,9 @@ const NavBarScheme = () => {
             );
           })}
 
-          <button
-            className="w-full text-left p-3 text-[14px]  flex items-center gap-2"
-            onClick={() => handleSidebarOptionClick("Saved")}
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="text-gray-600 hover:text-gray-900"
-            >
-              <path
-                d="M19 21L12 16L5 21V5C5 4.46957 5.21071 3.96086 5.58579 3.58579C5.96086 3.21071 6.46957 3 7 3H17C17.5304 3 18.0391 3.21071 18.4142 3.58579C18.7893 3.96086 19 4.46957 19 5V21Z"
-                stroke="black"
-                strokeWidth="2.1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            Saved
-          </button>
-
           <hr className="bg-[#B3B3B3] border-[1px] w-[200px] mt-5 mb-5" />
 
           <FeedbackButton />
-          {authState.token ? (
-            <>
-              <button
-                className="w-full text-left p-3 text-[14px] hover:bg-[#EEEEFF] hover:border-l-[3px] hover:border-[#3431BB] flex items-center gap-2"
-                onClick={() => handleOptionClick("MyProfile")}
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-gray-600 hover:text-gray-900"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M11.9997 4C9.79053 4 7.99967 5.79086 7.99967 8C7.99967 10.2091 9.79053 12 11.9997 12C14.2088 12 15.9997 10.2091 15.9997 8C15.9997 5.79086 14.2088 4 11.9997 4ZM15.6407 12.7694C17.0747 11.673 17.9997 9.94452 17.9997 8C17.9997 4.68629 15.3134 2 11.9997 2C8.68596 2 5.99967 4.68629 5.99967 8C5.99967 9.94452 6.92468 11.673 8.35868 12.7694C7.3532 13.2142 6.42817 13.8436 5.63571 14.636C5.02378 15.248 4.50901 15.939 4.10144 16.6851C3.34932 18.0619 3.65605 19.4657 4.50306 20.4584C5.31847 21.414 6.62469 22 7.99967 22H15.9997C17.3746 22 18.6809 21.414 19.4963 20.4584C20.3433 19.4657 20.65 18.0619 19.8979 16.6851C19.4903 15.939 18.9756 15.248 18.3636 14.636C17.5712 13.8436 16.6461 13.2142 15.6407 12.7694ZM11.9997 14C10.1432 14 8.36267 14.7375 7.04992 16.0503C6.57392 16.5263 6.1736 17.0637 5.85662 17.6439C5.54966 18.2058 5.64868 18.7198 6.02447 19.1602C6.43187 19.6376 7.1655 20 7.99967 20H15.9997C16.8338 20 17.5675 19.6376 17.9749 19.1602C18.3507 18.7198 18.4497 18.2058 18.1427 17.6439C17.8257 17.0637 17.4254 16.5263 16.9494 16.0503C15.6367 14.7375 13.8562 14 11.9997 14Z"
-                    fill="black"
-                  />
-                </svg>
-                Profile
-              </button>
-
-              <button
-                className="w-full text-left p-3 text-[14px]   hover:border-[#3431BB] flex items-center gap-2"
-                onClick={() => handleOptionClick("Logout")}
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-gray-600 hover:text-gray-900"
-                >
-                  <path
-                    d="M14 16L15.41 14.59L12.83 12H21V10H12.83L15.41 7.41L14 6L9 11L14 16ZM5 3H12V5H5V19H12V21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3Z"
-                    fill="black"
-                  />
-                </svg>
-                Logout
-              </button>
-            </>
-          ) : (
-            <button
-              className="w-full text-left p-3 text-[14px] hover:bg-[#EEEEFF]  hover:border-[#3431BB] flex items-center gap-2"
-              onClick={() => handleOptionClick("Logout")}
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-gray-600 hover:text-gray-900"
-              >
-                <path
-                  d="M10 16L8.59 14.59L11.17 12H3V10H11.17L8.59 7.41L10 6L15 11L10 16ZM19 3H12V5H19V19H12V21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3Z"
-                  fill="black"
-                />
-              </svg>
-              Login
-            </button>
-          )}
-
-          {/* Modal (Popup) for feedback */}
         </div>
       )}
 

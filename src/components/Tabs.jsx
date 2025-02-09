@@ -31,7 +31,7 @@ export default function Tabs() {
           setTabs(sortedTabs);
 
           const { tab } = router.query;
-    
+
           if (!tab && sortedTabs.length > 0) {
             setActiveTab(sortedTabs[0].column_name);
             router.replace(
@@ -79,11 +79,6 @@ export default function Tabs() {
     }`;
   };
 
-<<<<<<< HEAD
-=======
- 
-
->>>>>>> 875e5a9dc1e425e79c1f1f4a09d049f8986f1188
   const renderTabContent = () => {
     switch (activeTab) {
       case "scholarships":
