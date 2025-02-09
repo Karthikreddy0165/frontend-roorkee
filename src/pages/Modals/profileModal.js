@@ -5,10 +5,11 @@ import { MdVerified } from "react-icons/md";
 import { VscUnverified } from "react-icons/vsc";
 import FilterContext from "@/Context/FilterContext";
 import { values } from "lodash";
-
+import { useProfile } from "@/Context/ProfileContext"; 
 
 
 const ProfileModal = ({ onClose }) => {
+  const { profileData, setProfileData } = useProfile();
   const {
     setStates,
     setBeneficiaries,
@@ -19,20 +20,6 @@ const ProfileModal = ({ onClose }) => {
   const [isSaved, setIsSaved] = useState(false);
   const [stateOptions, setStateOptions] = useState([]);
   const [educationOptions, setEducationOptions] = useState([]);
-  const [profileData, setProfileData] = useState({
-    name: "",
-    age: "",
-    gender: "",
-    community: "",
-    minority: "",
-    state: "",
-    bpl_card_holder: "",
-    education: "",
-    disability: "",
-    occupation: "",
-    income: "",
-    employment_status: "",
-  });
   const [loading, setLoading] = useState(true);
   const [emailData, setEmailData] = useState(null);
   const [sentEmailText, setSentEmailText] = useState(false);
@@ -120,37 +107,6 @@ const ProfileModal = ({ onClose }) => {
     return () => {
       document.body.classList.remove("overflow-hidden");
     };
-  }, []);
-
-  useEffect(() => {
-    const fetchStateOptions = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/choices/state/`
-        );
-        const data = await response.json();
-        const formattedData = data.map((item) => item[0]);
-        setStateOptions(formattedData);
-      } catch (error) {
-        console.error("Error fetching state options:", error);
-      }
-    };
-
-    const fetchEducationOptions = async () => {
-      try {
-        const response = await fetch(
-         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/choices/education/`
-        );
-        const data = await response.json();
-        const formattedData = data.map((item) => item[0]);
-        setEducationOptions(formattedData);
-      } catch (error) {
-        console.error("Error fetching education options:", error);
-      }
-    };
-
-    fetchStateOptions();
-    fetchEducationOptions();
   }, []);
 
   useEffect(() => {
@@ -260,18 +216,6 @@ useEffect(() => {
           throw new Error("Failed to save profile data.");
         }
   
-        const selectedValue = profileData.state;
-        const selectedState = statesFromApi.find(
-          (it) => it.state_name === selectedValue
-        );
-  
-        if (selectedState) {
-          setStates([[selectedState.id], [selectedState.state_name]]);
-        }
-  
-        if (profileData.community) {
-          setBeneficiaries([profileData.community]);
-        }
   
         setIsSaved(true);
         onClose();

@@ -94,6 +94,7 @@ export default function Tabs() {
     }
   };
 
+
   if (!tabs.some((tab) => tab.column_name === "Saved")) {
     tabs.push({
       column_name: "Saved",
@@ -101,13 +102,14 @@ export default function Tabs() {
     });
   }
 
+
   return (
     <div>
       <SearchInput />
       <SelectedFilters />
 
       {/* Tabs for Larger Screens */}
-      <div className="sticky top-[180px] z-20 bg-white sm:flex justify-center items-center gap-[5px] sm:block hidden">
+      <div className="sticky top-[180px] z-0 bg-white sm:flex justify-center items-center gap-[5px] sm:block hidden">
         {!loading &&
           tabs.map((tab) => (
             <button
