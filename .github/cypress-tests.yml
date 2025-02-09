@@ -3,7 +3,7 @@ name: Cypress Tests on PR
 on:
   pull_request:
     branches:
-      - main  # Adjust to your primary branch
+      - main
 
 jobs:
   cypress-run:
@@ -16,10 +16,18 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18  # Adjust if needed
+          node-version: 18
 
       - name: Install dependencies
         run: npm install
+
+      - name: Start the Next.js server
+        run: npm run dev &
+        env:
+          NEXT_PUBLIC_API_URL: "http://localhost:3000"  # If needed
+
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:3000
 
       - name: Run Cypress tests
         run: npx cypress run
