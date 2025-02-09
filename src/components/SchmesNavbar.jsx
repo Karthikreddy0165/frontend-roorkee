@@ -39,7 +39,7 @@ const NavBarScheme = () => {
   };
 
   const handleOptionClick = (option) => {
-    if (option === "MyProfile") {
+    if (option=== "MyProfile") {
       setIsProfileModalOpen(true);
     } else if (option === "Logout") {
       logout();
