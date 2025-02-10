@@ -33,4 +33,4 @@ jobs:
         run: sleep 10  # Wait 10 seconds for server to boot
 
       - name: Run Cypress Tests
-        run: npx cypress run
+        run: npx cypress run --browser chrome
