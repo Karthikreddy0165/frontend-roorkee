@@ -33,7 +33,7 @@ const SchemesAll = () => {
     sponsoredOpen: false,
   });
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-  const [selectedStates, setSelectedStates] = useState([]);
+  const [selectedStates, setSelectedStates] =useState([]);
 
   const handleStatesChange = (states) => {
     setSelectedStates(states);
