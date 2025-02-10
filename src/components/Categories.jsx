@@ -17,9 +17,11 @@ import Footer from "./Footer.jsx";
 import { useBookmarkContext } from "@/Context/BookmarkContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const { activeTab, setActiveTab } = useTabContext(); // Accessing context
-  const { isBookmarked, toggleBookmark, setIsBookmarked } = useBookmarkContext();
+  const { isBookmarked, toggleBookmark, setIsBookmarked } =
+    useBookmarkContext();
   const [selectedScheme, setSelectedScheme] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
@@ -316,24 +318,29 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                       role="button"
                       tabIndex="0"
                     >
-                      <span className="font-semibold">
-                        {item.description ? "Description: " : "Preview PDF: "}
-                      </span>
-                      {item.description ? (
-                        item.description
-                      ) : (
-                        <a
-                          href={item.pdf_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[#3431Bb] font-bold"
-                        >
-                          Click here for preview
-                          <FontAwesomeIcon
-                            icon={faArrowUpRightFromSquare}
-                            className="px-2"
-                          />
-                        </a>
+                      {item.description && (
+                        <span className="font-semibold">Description: </span>
+                      )}
+                      {item.description && item.description}
+
+                      {item.pdf_url && (
+                        <>
+                          {item.description && <br />}{" "}
+                          {/* Line break if both exist */}
+                          <span className="font-semibold">Preview PDF: </span>
+                          <a
+                            href={item.pdf_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#3431Bb] font-bold"
+                          >
+                            Click here for preview
+                            <FontAwesomeIcon
+                              icon={faArrowUpRightFromSquare}
+                              className="px-2"
+                            />
+                          </a>
+                        </>
                       )}
                     </p>
 

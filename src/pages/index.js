@@ -44,17 +44,17 @@ const App = () => {
 
   const handleSchemesClick = () => {
     setActiveTab("Schemes");
-    router.push("/AllSchemes?tab=Schemes");
+    router.push("/AllSchemes?tab=schemes");
   };
 
   const handleJobsClick = () => {
     setActiveTab("Job Openings");
-    router.push("/AllSchemes?tab=Job Openings");
+    router.push("/AllSchemes?tab=jobs");
   };
 
   const handleScholarshipsClick = () => {
     setActiveTab("Scholarships");
-    router.push("/AllSchemes?tab=Scholarships");
+    router.push("/AllSchemes?tab=scholarships");
   };
 
   return (
