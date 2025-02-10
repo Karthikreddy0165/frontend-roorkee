@@ -1,31 +1,36 @@
-name: Cypress Tests on PR
+name: Cypress Tests
 
 on:
   pull_request:
     branches:
-      - main
+      - main  # Runs when a PR is opened to main
 
 jobs:
-  cypress-run:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 18  # Use the Node.js version your project needs
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm install
 
-      - name: Start the server
-        run: npm run dev &  # Change this if your start command is different
+      - name: Build the Project (for Next.js or React apps)
+        run: npm run build  # Required for Next.js, ignore for pure React
 
-      - name: Wait for the server to be ready
-        run: npx wait-on tcp:3000 http://localhost:3000
+      - name: Start the Server
+        run: npm start &  # Start server in the background
+        env:
+          PORT: 3000  # Ensure your app runs on the expected port
 
-      - name: Run Cypress tests
+      - name: Wait for Server to Start
+        run: sleep 10  # Wait 10 seconds for server to boot
+
+      - name: Run Cypress Tests
         run: npx cypress run
