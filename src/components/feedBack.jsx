@@ -73,7 +73,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
 
       setReportFormData({ category: "", description: "" });
       onRequestClose();
-    } catch (err) {
+    } catch (err){
           // Error toast notification
     toast.error("Failed to give feedback. Please try again later.", { position: "top-right", autoClose: 3000 });
     onRequestClose();
