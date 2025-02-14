@@ -61,7 +61,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
         requestOptions
       );
 
-      if (!response.ok) {
+      if (!response.ok){
         throw new Error("Failed to submit feedback.");
       }
 
