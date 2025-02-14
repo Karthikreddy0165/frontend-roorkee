@@ -25,7 +25,7 @@ jobs:
         run: npm run build  # Required for Next.js, ignore for pure React
 
       - name: Start Frontend Server
-        run: npm run dev &  # Run frontend in background
+        run: npm start &  # Run frontend in background
         env:
           PORT: 3000  # Ensures the frontend runs on the expected port
 
