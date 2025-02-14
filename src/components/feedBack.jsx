@@ -77,7 +77,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
           // Error toast notification
     toast.error("Failed to give feedback. Please try again later.", { position: "top-right", autoClose: 3000 });
     onRequestClose();
-    } finally {
+    } finally{
       setLoading(false);
     }
   };
