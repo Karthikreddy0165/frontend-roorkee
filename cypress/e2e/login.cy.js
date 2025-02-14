@@ -39,7 +39,7 @@ describe('Login Page Tests', () => {
     it('should navigate back when clicking back button', () => {
       cy.contains('button', 'Back').click()
       cy.url().should('not.include', '/login')
-    });
+    }); 
   });
 
   describe('Form Validation', () => {
