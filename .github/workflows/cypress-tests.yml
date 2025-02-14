@@ -16,21 +16,27 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18  # Use the Node.js version your project needs
+          node-version: 18  # Adjust based on project needs
 
       - name: Install Dependencies
         run: npm install
 
-      - name: Build the Project (for Next.js or React apps)
+      - name: Build the Project (if using Next.js)
         run: npm run build  # Required for Next.js, ignore for pure React
 
-      - name: Start the Server
-        run: npm start &  # Start server in the background
+      - name: Start Frontend Server
+        run: npm start &  # Run frontend in background
         env:
-          PORT: 3000  # Ensure your app runs on the expected port
+          PORT: 3000  # Ensures the frontend runs on the expected port
 
-      - name: Wait for Server to Start
-        run: sleep 10  # Wait 10 seconds for server to boot
+      - name: Wait for Frontend to Start
+        run: npx wait-on http://localhost:3000 --timeout 30000  # Wait up to 30s
+
+      - name: Check API Accessibility
+        run: curl -I http://43.204.236.103:8000 || echo "API unreachable"
 
       - name: Run Cypress Tests
         run: npx cypress run --browser chrome
+        env:
+          CYPRESS_baseUrl: "http://localhost:3000"
+          CYPRESS_apiUrl: "http://43.204.236.103:8000"
