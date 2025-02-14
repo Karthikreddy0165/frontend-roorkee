@@ -40,3 +40,10 @@ jobs:
         env:
           CYPRESS_baseUrl: "http://localhost:3000"
           CYPRESS_apiUrl: "http://43.204.236.103:8000"
+
+      - name: Upload Cypress Screenshots
+        if: failure()  # Only upload if tests fail
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
