@@ -36,7 +36,7 @@ jobs:
         run: curl -I http://43.204.236.103:8000 || echo "API unreachable"
 
       - name: Run Cypress Tests
-        run: npx cypress run --headed --browser chrome  # Runs tests with a visible browser window
+        run: npx cypress run
         env:
           CYPRESS_baseUrl: "http://localhost:3000"
           CYPRESS_apiUrl: "http://43.204.236.103:8000"
