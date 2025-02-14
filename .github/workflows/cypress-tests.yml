@@ -29,8 +29,8 @@ jobs:
         env:
           PORT: 3000  # Ensures the frontend runs on the expected port
 
-      - name: Wait for Frontend to Start
-        run: npx wait-on http://localhost:3000 --timeout 30000  # Wait up to 30s
+      - name: Wait for Server to Start
+        run: sleep 10  # Wait 10 seconds for server to boot
 
       - name: Check API Accessibility
         run: curl -I http://43.204.236.103:8000 || echo "API unreachable"
