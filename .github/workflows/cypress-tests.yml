@@ -25,7 +25,7 @@ jobs:
         run: npm run build  # Required for Next.js, ignore for pure React
 
       - name: Start Frontend Server
-        run: npm start &  # Run frontend in background
+        run: npm run dev &  # Run frontend in background
         env:
           PORT: 3000  # Ensures the frontend runs on the expected port
 
@@ -36,7 +36,7 @@ jobs:
         run: curl -I http://43.204.236.103:8000 || echo "API unreachable"
 
       - name: Run Cypress Tests
-        run: npx cypress run --browser chrome
+        run: npx cypress run --headed --browser chrome  # Runs tests with a visible browser window
         env:
           CYPRESS_baseUrl: "http://localhost:3000"
           CYPRESS_apiUrl: "http://43.204.236.103:8000"
