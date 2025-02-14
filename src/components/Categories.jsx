@@ -316,7 +316,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                       role="button"
                       tabIndex="0"
                     >
-                      <span className="font-semibold">
+                      <span className ="font-semibold">
                         {item.description ? "Description: " : "Preview PDF: "}
                       </span>
                       {item.description ? (
