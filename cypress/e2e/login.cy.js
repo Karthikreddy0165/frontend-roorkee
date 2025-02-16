@@ -149,7 +149,7 @@ describe('Login Page Tests', () => {
       cy.get('.bg-\\[\\#FEF6F0\\]').should('be.visible')
       
 
-      cy.viewport('iphone-x')
+      cy.viewport('iphone-x') 
       cy.get('.bg-\\[\\#FEF6F0\\]').should('not.be.visible')
     });
   });
