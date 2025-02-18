@@ -100,6 +100,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   const handleClick = (scheme_id) => {
     const scheme = dataFromApi.results.find((item) => item.id === scheme_id);
     if (scheme) {
+      viewscheme(scheme_id);
       setSelectedScheme(scheme);
       setIsModalOpen(true);
       setSidePannelSelected(scheme_id);
@@ -181,6 +182,78 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       return false;
     }
   };
+  // save scheme for recommendation model
+  const save = async (scheme_id) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${authState.token}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      scheme_id: scheme_id,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/{scheme_id}/save/`,
+        requestOptions
+      );
+      const result = await response.json();
+      // console.log("Unsave response:", result); // Log the response
+      if (response.ok) {
+        console.log("Scheme saved successfully!");
+      } else {
+        console.error("Failed to save scheme");
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
+  // view scheme for recommendation model
+
+  const viewscheme = async (scheme_id) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${authState.token}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      scheme_id: scheme_id,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/{scheme_id}/view/`,
+        requestOptions
+      );
+      const result = await response.json();
+      // console.log("Unsave response:", result); // Log the response
+      if (response.ok) {
+        console.log("Scheme viewed successfully!");
+      } else {
+        console.error("Failed to view scheme");
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
 
   const handleBookmarkToggle = async (e, itemId) => {
     e.preventDefault();
@@ -194,6 +267,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
           toggleBookmark(itemId, isBookmarked[itemId]);
           setToastMessage(isBookmarked[itemId] ? "" : "");
           setIsToastVisible(true);
+          save(itemId);
         }
       } catch (error) {
         console.error("Bookmark toggle failed:", error);
@@ -211,19 +285,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       </div>
     );
   }
-
-  // if (
-  //   Object.keys(dataFromApi).length == 0 &&
-  //   (states.length == 0 || beneficiaries.length == 0)
-  // ) {
-  //   return (
-  //     <div className="flex flex-col items-center justify-center gap-[8px] mt-[120px]">
-  //       <p className="text-button-text text-[14px] text-button-blue">
-  //         Sorry no result is found based on your preference.
-  //       </p>
-  //     </div>
-  //   );
-  // }
 
   const handleStateTag = (event) => {
     event.stopPropagation();
@@ -267,22 +328,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     )
       setBeneficiaries((prev) => [...prev, "SC"]);
   };
-  // const handleBeneficiaryTag = (event) => {
-  //   event.stopPropagation();
-  //   var beneficiary = event.target.innerText
-  //   if(!beneficiary.includes("OBC") && !beneficiary.includes("SC")) return;
-  //   if(beneficiaries.includes("SC")) return;
-  //   if(beneficiaries.includes("OBC")) return;
-  //   if(beneficiary.includes("SC")) {
-  //     setBeneficiaries(prev => [...prev, "SC"]);
-  //   }
-  //   else if(beneficiary.includes("OBC")) {
-  //     setBeneficiaries(prev => [...prev, "OBC"]);
-  //   }
-  // }
-  // console.log(dataFromApi.results,"resultes")
-
-  // const totalSchemes = (activeTab != "Saved" ? dataFromApi.results: dataFromApi)
 
   return (
     <>
