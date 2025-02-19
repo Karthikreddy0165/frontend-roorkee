@@ -132,6 +132,7 @@ const CreateAcc01 = () => {
                 if (result.user) {
                   setApiErrors({ email: "", password: "" });
                   updateFormData(values);
+
                   handleAfterLogin(values); // Call handleAfterLogin with the form values
                 } else {
                   console.error(result);
