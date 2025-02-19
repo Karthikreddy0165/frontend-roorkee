@@ -132,6 +132,8 @@ const App = () => {
     }
   };
 
+  console.log("displayText", displayText)
+
   return (
     <div>
       <NavBar />
@@ -176,7 +178,7 @@ const App = () => {
 >
   {displayText.includes("schemes") && (
     <div
-      className={`text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold ${
+      className={`class="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4" ${
         displayText.includes("jobs") || displayText.includes("scholarships") ? "border-r border-[#808080] pr-4 pb-4 sm:pb-0" : ""
       }`}
     >
@@ -186,7 +188,7 @@ const App = () => {
 
   {displayText.includes("jobs") && (
     <div
-      className={`text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold ${
+      className={`class="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4" ${
         displayText.includes("scholarships") ? "border-r border-[#808080] pr-4 pb-4 sm:pb-0" : ""
       }`}
     >
@@ -196,7 +198,7 @@ const App = () => {
 
   {displayText.includes("scholarships") && (
  <div
- className={`text-center sm:text-left text-[#000000]  text-[14px] sm:text-[16px] font-bold ${
+ className={`class="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold  border-[#808080] pb-4 sm:pb-0 pr-4" ${
    displayText.includes("scholarships") ? " border-[#808080] pr-4 pb-4 sm:pb-0" : ""
  }`}
 >      Multiple scholarships
@@ -382,65 +384,68 @@ const App = () => {
       ))}
     </div> */}
 <div
-  className={`grid ${
-    displayText === "scholarships" ? "grid-cols-1" : "grid-cols-3"
-  } gap-4 items-center justify-center mt-10 sm:flex sm:flex-wrap sm:flex-nowrap sm:gap-4 font-semibold hover:text-white`}
+  className={`grid gap-4 items-center justify-center mt-10
+    ${
+      displayText.length === 1
+        ? "grid-cols-1"
+        : displayText.length === 2
+        ? "grid-cols-2" 
+        : displayText.length === 3
+        ? "grid-cols-3"
+        : "grid-cols-2"
+    } 
+    sm:flex sm:flex-wrap sm:gap-4 font-semibold`}
+  
 >
-            {/* SCHEMES */}
-          {displayText.includes("schemes") &&  ( <div
-              className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:bg-[#3431BB] hover:text-white hover:cursor-pointer flex flex-col justify-center items-center"
-              onClick={handleSchemesClick}
-            >
-              <p className="text-xs sm:text-base text-center hover:text-white">
-                SCHEMES
-              </p>
-              <PiNotepadBold className="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
-            </div>)}
+  {/* SCHEMES */}
+  {displayText.includes("schemes") && (
+    <div
+      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:bg-[#3431BB] hover:text-white hover:cursor-pointer flex flex-col justify-center items-center"
+      onClick={handleSchemesClick}
+    >
+      <p className="text-xs sm:text-base text-center">SCHEMES</p>
+      <PiNotepadBold className="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
+    </div>
+  )}
 
-            {/* JOBS */}
-            {displayText.includes("jobs") && (<div
-              className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
-              onClick={handleJobsClick}
-            >
-              <p className="text-xs sm:text-base text-center hover:text-white">
-                JOBS
-              </p>
-              <FaBriefcase className="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
-            </div>)}
+  {/* JOBS */}
+  {displayText.includes("jobs") && (
+    <div
+      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
+      onClick={handleJobsClick}
+    >
+      <p className="text-xs sm:text-base text-center">JOBS</p>
+      <FaBriefcase className="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
+    </div>
+  )}
 
-            {/* SCHOLARSHIPS */}
-           {displayText.includes("scholarships") &&  displayText !== "scholarships" && ( <div
-              className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
-              onClick={handleScholarshipsClick}
-            >
-              <p className="text-xs sm:text-base text-center  hover:text-white">
-                SCHOLARSHIPS
-              </p>
-              <FaGraduationCap className="opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
-            </div>)}
+  {/* SCHOLARSHIPS (Compact Box) */}
+  {displayText.includes("scholarships") && displayText !== "scholarships" && (
+    <div
+      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
+      onClick={handleScholarshipsClick}
+    >
+      <p className="text-xs sm:text-base text-center">SCHOLARSHIPS</p>
+      <FaGraduationCap className="opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
+    </div>
+  )}
 
-            {/* when only scholarships should show  */}
-            {displayText === "scholarships" && (
-              <div
-                className="group w-[70vw] sm:w-[35vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-6 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex items-center gap-4 sm:gap-[2vw]"
-                onClick={handleScholarshipsClick}
-              >
-                <FaGraduationCap className="opacity-[20%] h-[70px] sm:h-[8vw] w-[70px] sm:w-[8vw] group-hover:text-[#FFFFFF]" />
-                
-                <div className="flex flex-col">
-                  <p className="text-xs  sm:text-[24px] text-left mb-2 sm:mb-4 hover:text-white font-semibold">
-                    SCHOLARSHIPS
-                  </p>
-                  <p className="text-xs sm:text-base text-left hover:text-white">
-                    Click here to view more scholarships
-                  </p>
-                </div>
-              </div>
-)}
-
-
-
-          </div>
+  {/* SCHOLARSHIPS (Full Width View for One Box) */}
+  {displayText === "scholarships" && (
+    <div
+      className="group w-[80vw] sm:w-[35vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-6 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex items-center gap-4 sm:gap-[2vw] justify-center mx-auto"
+      onClick={handleScholarshipsClick}
+    >
+      <FaGraduationCap className="opacity-[20%] h-[50px] sm:h-[8vw] w-[50px] sm:w-[8vw] group-hover:text-[#FFFFFF]" />
+      <div className="flex flex-col">
+        <p className="text-xs sm:text-[24px] text-left mb-2 sm:mb-4 font-semibold">
+          SCHOLARSHIPS
+        </p>
+        <p className="text-xs sm:text-base text-left">Click here to view more</p>
+      </div>
+    </div>
+  )}
+</div>
 
 
           {/* Mission, Vision, and Values Section */}

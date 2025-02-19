@@ -97,13 +97,72 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     fetchSavedSchemes();
   }, [authState.token]);
 
+  const logUserEvent = async (eventType, schemeId = null, details = {}) => {
+    const eventBody = {
+      event_type: eventType,
+      ...(schemeId && { scheme_id: schemeId }),
+      details: details,
+    };
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/log_event/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authState.token}`,
+          },
+          body: JSON.stringify(eventBody),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to log event");
+      }
+
+      const data = await response.json();
+      console.log("Event logged successfully:", data);
+    } catch (error) {
+      console.error("Error logging event:", error);
+    }
+  };
+
   const handleClick = (scheme_id) => {
     const scheme = dataFromApi.results.find((item) => item.id === scheme_id);
     if (scheme) {
+      const startTime = Date.now();
+
       viewscheme(scheme_id);
       setSelectedScheme(scheme);
       setIsModalOpen(true);
       setSidePannelSelected(scheme_id);
+
+      // Track time when modal closes
+      const interval = setInterval(() => {
+        const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+
+        // Log the event every 5 seconds
+        if (elapsedTime % 5 === 0) {
+          logUserEvent("view", scheme_id, {
+            watch_time: elapsedTime + " seconds",
+          });
+        }
+      }, 5000);
+
+      // Stop tracking when modal closes
+      const stopTracking = () => {
+        clearInterval(interval);
+        const totalTime = Math.floor((Date.now() - startTime) / 1000);
+        logUserEvent("view", scheme_id, { watch_time: totalTime + " seconds" });
+      };
+
+      // Listen for modal close event
+      document.addEventListener("click", (event) => {
+        if (event.target.classList.contains("modal-close")) {
+          stopTracking();
+        }
+      });
     }
   };
 

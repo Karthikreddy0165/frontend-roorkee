@@ -10,8 +10,8 @@ export default function PrivacyPolicy() {
   return (
     <>
       <NavBar />
-      <div className="min-h-screen bg-[#EEEEFF]  flex items-center justify-center">
-      <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg transform -translate-y-12">
+      <div className="min-h-screen bg-[#EEEEFF]  flex items-center justify-center sm:px-6 lg:px-8 ">
+      <div className="max-w-4xl mx-auto px-6 py-9 bg-white shadow-lg rounded-lg sm:transform sm:-translate-y-12">
   <div className="flex items-center justify-center relative">
     <div className="absolute left-0">
       <BackButton />
