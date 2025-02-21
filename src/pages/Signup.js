@@ -77,6 +77,7 @@ const CreateAcc01 = () => {
         setTimeout(() => {
           setShowSuccess(false);
           router.push("/AllSchemes");
+
         }, 1500);
       }
     } catch (error) {
@@ -84,12 +85,14 @@ const CreateAcc01 = () => {
     }
   };
 
-  if (showSuccess) {
-    return <AccCreatSucc />;
-  }
   if(authState.token){
     router.replace('/')
     return <App/>
+  }
+
+
+  if (showSuccess.current || authState.token) {
+    return <AccCreatSucc />;
   }
 
   return (
@@ -129,7 +132,7 @@ const CreateAcc01 = () => {
                 if (result.user) {
                   setApiErrors({ email: "", password: "" });
                   updateFormData(values);
-                  login(result.token, result.user); // Update authState
+
                   handleAfterLogin(values); // Call handleAfterLogin with the form values
                 } else {
                   console.error(result);
@@ -260,6 +263,7 @@ const CreateAcc01 = () => {
                   <button
                     className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-[8px] focus:outline-none focus:shadow-outline w-full mt-[35px]"
                     type="submit"
+                    onClick={formik.handleAfterLogin}
                     disabled={formik.isSubmitting}
                   >
                     {isLoading ? (

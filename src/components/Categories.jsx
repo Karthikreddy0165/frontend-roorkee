@@ -17,9 +17,11 @@ import Footer from "./Footer.jsx";
 import { useBookmarkContext } from "@/Context/BookmarkContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const { activeTab, setActiveTab } = useTabContext(); // Accessing context
-  const { isBookmarked, toggleBookmark, setIsBookmarked } = useBookmarkContext();
+  const { isBookmarked, toggleBookmark, setIsBookmarked } =
+    useBookmarkContext();
   const [selectedScheme, setSelectedScheme] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
@@ -95,12 +97,72 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     fetchSavedSchemes();
   }, [authState.token]);
 
+  const logUserEvent = async (eventType, schemeId = null, details = {}) => {
+    const eventBody = {
+      event_type: eventType,
+      ...(schemeId && { scheme_id: schemeId }),
+      details: details,
+    };
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/log_event/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authState.token}`,
+          },
+          body: JSON.stringify(eventBody),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to log event");
+      }
+
+      const data = await response.json();
+      console.log("Event logged successfully:", data);
+    } catch (error) {
+      console.error("Error logging event:", error);
+    }
+  };
+
   const handleClick = (scheme_id) => {
     const scheme = dataFromApi.results.find((item) => item.id === scheme_id);
     if (scheme) {
+      const startTime = Date.now();
+
+      viewscheme(scheme_id);
       setSelectedScheme(scheme);
       setIsModalOpen(true);
       setSidePannelSelected(scheme_id);
+
+      // Track time when modal closes
+      const interval = setInterval(() => {
+        const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+
+        // Log the event every 5 seconds
+        if (elapsedTime % 5 === 0) {
+          logUserEvent("view", scheme_id, {
+            watch_time: elapsedTime + " seconds",
+          });
+        }
+      }, 5000);
+
+      // Stop tracking when modal closes
+      const stopTracking = () => {
+        clearInterval(interval);
+        const totalTime = Math.floor((Date.now() - startTime) / 1000);
+        logUserEvent("view", scheme_id, { watch_time: totalTime + " seconds" });
+      };
+
+      // Listen for modal close event
+      document.addEventListener("click", (event) => {
+        if (event.target.classList.contains("modal-close")) {
+          stopTracking();
+        }
+      });
     }
   };
 
@@ -179,6 +241,78 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       return false;
     }
   };
+  // save scheme for recommendation model
+  const save = async (scheme_id) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${authState.token}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      scheme_id: scheme_id,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/{scheme_id}/save/`,
+        requestOptions
+      );
+      const result = await response.json();
+      // console.log("Unsave response:", result); // Log the response
+      if (response.ok) {
+        console.log("Scheme saved successfully!");
+      } else {
+        console.error("Failed to save scheme");
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
+  // view scheme for recommendation model
+
+  const viewscheme = async (scheme_id) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${authState.token}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      scheme_id: scheme_id,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/{scheme_id}/view/`,
+        requestOptions
+      );
+      const result = await response.json();
+      // console.log("Unsave response:", result); // Log the response
+      if (response.ok) {
+        console.log("Scheme viewed successfully!");
+      } else {
+        console.error("Failed to view scheme");
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
 
   const handleBookmarkToggle = async (e, itemId) => {
     e.preventDefault();
@@ -192,6 +326,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
           toggleBookmark(itemId, isBookmarked[itemId]);
           setToastMessage(isBookmarked[itemId] ? "" : "");
           setIsToastVisible(true);
+          save(itemId);
         }
       } catch (error) {
         console.error("Bookmark toggle failed:", error);
@@ -209,19 +344,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       </div>
     );
   }
-
-  // if (
-  //   Object.keys(dataFromApi).length == 0 &&
-  //   (states.length == 0 || beneficiaries.length == 0)
-  // ) {
-  //   return (
-  //     <div className="flex flex-col items-center justify-center gap-[8px] mt-[120px]">
-  //       <p className="text-button-text text-[14px] text-button-blue">
-  //         Sorry no result is found based on your preference.
-  //       </p>
-  //     </div>
-  //   );
-  // }
 
   const handleStateTag = (event) => {
     event.stopPropagation();
@@ -265,22 +387,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     )
       setBeneficiaries((prev) => [...prev, "SC"]);
   };
-  // const handleBeneficiaryTag = (event) => {
-  //   event.stopPropagation();
-  //   var beneficiary = event.target.innerText
-  //   if(!beneficiary.includes("OBC") && !beneficiary.includes("SC")) return;
-  //   if(beneficiaries.includes("SC")) return;
-  //   if(beneficiaries.includes("OBC")) return;
-  //   if(beneficiary.includes("SC")) {
-  //     setBeneficiaries(prev => [...prev, "SC"]);
-  //   }
-  //   else if(beneficiary.includes("OBC")) {
-  //     setBeneficiaries(prev => [...prev, "OBC"]);
-  //   }
-  // }
-  // console.log(dataFromApi.results,"resultes")
-
-  // const totalSchemes = (activeTab != "Saved" ? dataFromApi.results: dataFromApi)
 
   return (
     <>
@@ -316,24 +422,29 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                       role="button"
                       tabIndex="0"
                     >
-                      <span className ="font-semibold">
-                        {item.description ? "Description: " : "Preview PDF: "}
-                      </span>
-                      {item.description ? (
-                        item.description
-                      ) : (
-                        <a
-                          href={item.pdf_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[#3431Bb] font-bold"
-                        >
-                          Click here for preview
-                          <FontAwesomeIcon
-                            icon={faArrowUpRightFromSquare}
-                            className="px-2"
-                          />
-                        </a>
+                      {item.description && (
+                        <span className="font-semibold">Description: </span>
+                      )}
+                      {item.description && item.description}
+
+                      {item.pdf_url && (
+                        <>
+                          {item.description && <br />}{" "}
+                          {/* Line break if both exist */}
+                          <span className="font-semibold">Preview PDF: </span>
+                          <a
+                            href={item.pdf_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#3431Bb] font-bold"
+                          >
+                            Click here for preview
+                            <FontAwesomeIcon
+                              icon={faArrowUpRightFromSquare}
+                              className="px-2"
+                            />
+                          </a>
+                        </>
                       )}
                     </p>
 
