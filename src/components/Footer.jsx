@@ -51,7 +51,7 @@ const Footer = () => {
             sortedCategories.map((item) => ({
               name: item.column_name,
               label: item.column_name.toUpperCase(),
-              icon: getCategoryIcon(item.column_name),
+          
             }))
           );
         }
