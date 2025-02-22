@@ -21,8 +21,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Load Environment Variables
-        run: cp .env.example .env  # Ensure .env exists
+      - name: Create .env file
+        run: |
+          echo "NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }}" > .env
 
       - name: Build the Project (for Next.js or React apps)
         run: npm run build  # Required for Next.js, ignore for pure React
