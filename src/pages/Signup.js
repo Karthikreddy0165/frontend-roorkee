@@ -245,7 +245,7 @@ const CreateAcc01 = () => {
                     value={formik.values.password}
                   />
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-4"
-                  data-testid="toggle-password-visibility" 
+                  data-test-id="toggle-password-visibility" 
                   onClick={togglePasswordVisibility}>
                     {showPassword ? <FaEye /> : <FaEyeSlash />}
                   </div>
@@ -253,7 +253,8 @@ const CreateAcc01 = () => {
 
                 {errorMessage && (
                   <div className="mb-4 mt-4">
-                    <div className="bg-[#FFE6E6] text-[#DC0000] py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+                    <div className="bg-[#FFE6E6] text-[#DC0000] py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full "
+                    data-test-id="email-password-error">
                       {errorMessage}
                     </div>
                   </div>

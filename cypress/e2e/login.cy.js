@@ -5,6 +5,7 @@ describe('Login Page Tests', () => {
     cy.clearLocalStorage()
   });
 
+// Tests to check all the UI Elements exists and toggle password visibility
   describe('UI Elements', () => {
     it('should display all required elements', () => {
       cy.get('input[type="email"]').should('exist')
@@ -25,6 +26,7 @@ describe('Login Page Tests', () => {
     });    
   });
 
+//Tests all the Navigation from login page
   describe('Navigation', () => {
     it('should navigate to signup page', () => {
       cy.contains('Create new account').click()
@@ -41,7 +43,7 @@ describe('Login Page Tests', () => {
       cy.url().should('not.include', '/login')
     }); 
   });
-
+//Tests for Validation of empty fields and email format
   describe('Form Validation', () => {
     it('should show validation for empty fields', () => {
       cy.contains('button', 'Continue').click()
@@ -62,7 +64,7 @@ describe('Login Page Tests', () => {
     });
      
   });
-
+// Tests for checking login feature 
   describe('API Integration', () => {
     it('should successfully log in with valid credentials', () => {
       const validEmail = 'test@example.com'
@@ -123,7 +125,7 @@ describe('Login Page Tests', () => {
       cy.get('.animate-spin').should('be.visible')
     });
   });
-
+// Test when loggined user hits login page 
   describe('Authentication State', () => {
     it('should redirect to Home Page if already authenticated', () => {
       // Set up authenticated state
@@ -133,6 +135,7 @@ describe('Login Page Tests', () => {
     });
   });
 
+// Tests responsive design 
   describe('Responsive Design', () => {
     it('should display correctly on mobile viewport', () => {
       cy.viewport('iphone-x')
