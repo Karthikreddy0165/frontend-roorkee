@@ -31,7 +31,7 @@ export default function Tabs() {
           setTabs(sortedTabs);
 
           const { tab } = router.query;
-    
+
           if (!tab && sortedTabs.length > 0) {
             setActiveTab(sortedTabs[0].column_name);
             router.replace(
@@ -79,8 +79,6 @@ export default function Tabs() {
     }`;
   };
 
- 
-
   const renderTabContent = () => {
     switch (activeTab) {
       case "scholarships":
@@ -96,12 +94,13 @@ export default function Tabs() {
     }
   };
 
-if (!tabs.some(tab => tab.column_name === "Saved")) {
-  tabs.push({
-    column_name: "Saved",
-    order: Math.max(...tabs.map((tab) => tab.order), 1) + 1,
-  });
-}
+
+  if (!tabs.some((tab) => tab.column_name === "Saved")) {
+    tabs.push({
+      column_name: "Saved",
+      order: Math.max(...tabs.map((tab) => tab.order), 1) + 1,
+    });
+  }
 
 
   return (

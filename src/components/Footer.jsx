@@ -1,7 +1,62 @@
+import { useRouter } from "next/router";
 import { FeedbackButtonFooter } from "./feedBack";
 import FeedbackButton from "./feedBack";
-
+import { useState, useEffect } from "react";
 const Footer = () => {
+  const router = useRouter();
+  const [displayText, setDisplayText] = useState("");
+  const [categories, setCategories] = useState([]);
+  const handlePrivacyPolicy = () => {
+    router.push("/privacy-policy");
+  };
+
+  const handleTermsConditions = () => {
+    router.push("/Terms-conditions");
+  };
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/layout-items/`
+        );
+        const data = await response.json();
+
+        if (Array.isArray(data)) {
+          const sortedCategories = data.sort((a, b) => a.order - b.order);
+          const availableCategories = sortedCategories.map(
+            (item) => item.column_name
+          );
+
+          setCategories(availableCategories);
+
+          // Determine dynamic text based on available categories
+          const textParts = [];
+          if (availableCategories.includes("schemes"))
+            textParts.push("schemes");
+          if (availableCategories.includes("jobs")) textParts.push("jobs");
+          if (availableCategories.includes("scholarships"))
+            textParts.push("scholarships");
+
+          setDisplayText(
+            textParts.length > 0 ? textParts.join(", ") : "opportunities"
+          );
+
+          setCategories(
+            sortedCategories.map((item) => ({
+              name: item.column_name,
+              label: item.column_name.toUpperCase(),
+          
+            }))
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching category data:", error);
+      }
+    }
+
+    fetchCategories();
+  }, [router.query, setCategories]);
   return (
     <>
       <footer className="text-black sm:pt-[5rem] pb-[1rem] px-4 gap-[5rem]  sm:mt-[2rem] ">
@@ -132,27 +187,34 @@ const Footer = () => {
                   Home
                 </a>
               </li>
-              <li>
-                <a href="/AllSchemes" className="text-black ">
-                  Schemes
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/AllSchemes?tab=Job+Openings"
-                  className="text-black hover:text-black"
-                >
-                  Job openings
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/AllSchemes?tab=Scholarships"
-                  className="text-black hover:text-black"
-                >
-                  Scholarships
-                </a>
-              </li>
+
+              {displayText.includes("schemes") && (
+                <li>
+                  <a href="/AllSchemes" className="text-black ">
+                    Schemes
+                  </a>
+                </li>
+              )}
+              {displayText.includes("jobs") && (
+                <li>
+                  <a
+                    href="/AllSchemes?tab=Job+Openings"
+                    className="text-black hover:text-black"
+                  >
+                    Job openings
+                  </a>
+                </li>
+              )}
+              {displayText.includes("scholarships") && (
+                <li>
+                  <a
+                    href="/AllSchemes?tab=Scholarships"
+                    className="text-black hover:text-black"
+                  >
+                    Scholarships
+                  </a>
+                </li>
+              )}
               <li>
                 <a
                   href="/AllSchemes?tab=Saved"
@@ -186,10 +248,22 @@ const Footer = () => {
                 </a>
               </li> */}
               <li>
-                <a className="text-black hover:text-black">Privacy Policy</a>
+                {/* <a
+                  href="/pages/PrivacyPolicy"
+                  onClick={handlePrivacyPolicy}
+                  className="text-black hover:text-black"
+                >
+                  Privacy Policy
+                </a> */}
+                <button onClick={handlePrivacyPolicy}>privacy policy</button>
               </li>
+
               <li>
-                <a className="text-black hover:text-black">
+                <a
+                  href="#"
+                  onClick={handleTermsConditions}
+                  className="text-black hover:text-black"
+                >
                   Terms and Conditions
                 </a>
               </li>
