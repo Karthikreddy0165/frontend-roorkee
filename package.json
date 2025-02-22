@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "cypress run"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -45,12 +46,12 @@
     "typescript": "^5.4.5",
     "yup": "^1.4.0"
   },
-  "devDependencies": {
-    "@types/node": "20.14.2"
-  },
   "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
   "main": "postcss.config.js",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^14.0.2"
+  }
 }
