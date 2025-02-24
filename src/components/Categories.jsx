@@ -106,7 +106,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/log_event/`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/log/`,
         {
           method: "POST",
           headers: {
@@ -297,7 +297,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/{scheme_id}/view/`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/${scheme_id}/view/`,
         requestOptions
       );
       const result = await response.json();
