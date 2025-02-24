@@ -275,11 +275,10 @@ const Footer = () => {
               <li>
                 <a 
                 href="#"
-                onClick={handleResources}
                 className="text-black hover:text-black">About us</a>
               </li>
-              <li>
-                <a className="text-black hover:text-black">Resources</a>
+              <li onClick={handleResources}>
+                <a className="text-black hover:text-black cursor-pointer">Resources</a>
               </li>
             </ul>
           </div>
