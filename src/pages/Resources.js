@@ -21,11 +21,12 @@ export default function Resources() {
       fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/resources/${selectedState.id}`)
         .then((res) => res.json())
         .then((data) => {
-          const validLinks = data
+          const validLinks = new Set(
+          data
             .map((item) => item.scheme_link)
-            .filter((link) => link && link.trim() !== ""); // Remove null and empty links
-  
-          setStateLinks(validLinks);
+            .filter((link) => link && link.trim() !== "")
+          ) // Remove null and empty links
+          setStateLinks([...validLinks]);
         })
         .catch((err) => {
           console.error("Error fetching state links:", err);
@@ -86,19 +87,19 @@ export default function Resources() {
 
           {/* Display State Links */}
           {selectedState && (
-            <div className="mt-5 p-4 border rounded-lg bg-gray-100 shadow-md w-full">
+            <div className="mt-5  p-4  border rounded-lg bg-gray-100 shadow-md w-full">
               <h2 className="text-xl font-semibold text-[#3330BA] mb-3">Resources Links</h2>
               <div 
               className="max-h-60 overflow-y-auto pr-2"
               ref={linkScrollContainer}
               >
-              <ol className="list-decimal list-inside">
+              <ol className="list-decimal list-item pl-8">
                 {stateLinks.length > 0 ? (
                   stateLinks.map((link, index) => {
                     const formattedLink = link.startsWith("http") ? link : `https://${link}`; // Ensure valid URL
                     return (
                       <li key={index} className="text-black">
-                        <a href={formattedLink} target="_blank" rel="noopener noreferrer" className="text-[#3330BA] p-4 hover:underline">
+                        <a href={formattedLink} target="_blank" rel="noopener noreferrer" className="text-[#3330BA] p-4 hover:underline break-words block">
                           {formattedLink}
                         </a>
                       </li>
