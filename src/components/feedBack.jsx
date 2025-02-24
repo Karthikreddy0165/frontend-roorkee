@@ -61,7 +61,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
         requestOptions
       );
 
-      if (!response.ok) {
+      if (!response.ok){
         throw new Error("Failed to submit feedback.");
       }
 
@@ -73,11 +73,11 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
 
       setReportFormData({ category: "", description: "" });
       onRequestClose();
-    } catch (err) {
+    } catch (err){
           // Error toast notification
     toast.error("Failed to give feedback. Please try again later.", { position: "top-right", autoClose: 3000 });
     onRequestClose();
-    } finally {
+    } finally{
       setLoading(false);
     }
   };
