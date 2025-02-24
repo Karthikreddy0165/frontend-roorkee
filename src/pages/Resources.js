@@ -14,6 +14,7 @@ export default function Resources() {
   const [stateLinks, setStateLinks] = useState([]);
 
   useEffect(() => {
+    //Every time we change the scroll of the links should be at the top
     if(linkScrollContainer.current){
       linkScrollContainer.current.scrollTop = 0;
     }
@@ -25,7 +26,7 @@ export default function Resources() {
           data
             .map((item) => item.scheme_link)
             .filter((link) => link && link.trim() !== "")
-          ) // Remove null and empty links
+          )
           setStateLinks([...validLinks]);
         })
         .catch((err) => {
@@ -42,7 +43,6 @@ export default function Resources() {
       <div className="w-full min-h-screen bg-[#EEEEFF] flex items-center justify-center px-4">
         <div className="w-[95%] max-w-2xl min-h-[600px] sm:min-h-[500px] bg-white shadow-xl rounded-xl flex flex-col p-6 overflow-hidden">
 
-          {/* Back Button */}
           <button
             type="button"
             className="flex items-center gap-2 mb-5 text-lg sm:text-xl font-medium"
@@ -52,12 +52,10 @@ export default function Resources() {
             Back
           </button>
 
-          {/* Title */}
           <h1 className="text-2xl sm:text-3xl text-[#3330BA] font-bold text-center w-full mb-5">
             Resources
           </h1>
 
-          {/* State Selection Dropdown */}
           <div className="relative w-full">
             <button
               className="flex items-center justify-between w-full p-4 border rounded-lg bg-gray-100 shadow-md text-black"
@@ -85,7 +83,6 @@ export default function Resources() {
             )}
           </div>
 
-          {/* Display State Links */}
           {selectedState && (
             <div className="mt-5  p-4  border rounded-lg bg-gray-100 shadow-md w-full">
               <h2 className="text-xl font-semibold text-[#3330BA] mb-3">Resources Links</h2>
@@ -96,7 +93,7 @@ export default function Resources() {
               <ol className="list-decimal list-item pl-8">
                 {stateLinks.length > 0 ? (
                   stateLinks.map((link, index) => {
-                    const formattedLink = link.startsWith("http") ? link : `https://${link}`; // Ensure valid URL
+                    const formattedLink = link.startsWith("http") ? link : `https://${link}`; 
                     return (
                       <li key={index} className="text-black">
                         <a href={formattedLink} target="_blank" rel="noopener noreferrer" className="text-[#3330BA] p-4 hover:underline break-words block">
