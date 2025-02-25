@@ -229,7 +229,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       const result = await response.json();
       // console.log("Unsave response:", result); // Log the response
       if (response.ok) {
-        // console.log(result);
         setIsUnSaveToastVisible(true); // Show the toast
         return true;
       } else {
