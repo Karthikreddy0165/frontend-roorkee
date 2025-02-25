@@ -22,9 +22,28 @@ import { ProfileProvider } from "@/Context/ProfileContext";
 
 
 export default function App({ Component, pageProps }) {
-  const [loading, setLoading] = useState(false); // Loading state for page transitions
-  const [isFirstLoad, setIsFirstLoad] = useState(true); // To manage first load logic
+  const [loading, setLoading] = useState(false); 
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const router = useRouter();
+
+
+  const checkSession = () => {
+    const expiryTime = localStorage.getItem("sessionExpiry");
+
+    if (expiryTime && new Date().getTime() > expiryTime) {
+      localStorage.clear();
+      alert("Session expired! Please log in again.");
+      router.push("/login");
+    }
+  };
+
+  
+  
+  useEffect(() => {
+    checkSession(); 
+    const interval = setInterval(checkSession, 30000); 
+    return () => clearInterval(interval); 
+  }, []);
 
   // Handle page transition events
   useEffect(() => {

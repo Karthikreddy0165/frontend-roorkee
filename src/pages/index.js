@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { FaBriefcase, FaGraduationCap } from "react-icons/fa6";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { PiNotepadBold } from "react-icons/pi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/Context/AuthContext";
 import "../styles/app.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,6 +29,8 @@ const App = () => {
   const { authState, logout } = useAuth();
   const router = useRouter();
   const { activeTab, setActiveTab } = useTabContext();
+  const [displayText, setDisplayText] = useState("");
+  const [categories, setCategories] = useState([]);
 
   const handleClickGetStarted = () => {
     router.push("/login");
@@ -56,6 +58,81 @@ const App = () => {
     setActiveTab("Scholarships");
     router.push("/AllSchemes?tab=scholarships");
   };
+  
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/layout-items/`
+        );
+        const data = await response.json();
+
+        if (Array.isArray(data)) {
+          const sortedCategories = data.sort((a, b) => a.order - b.order);
+          const availableCategories = sortedCategories.map((item) => item.column_name);
+
+          setCategories(availableCategories);
+
+          // Determine dynamic text based on available categories
+          const textParts = [];
+          if (availableCategories.includes("schemes")) textParts.push("schemes");
+          if (availableCategories.includes("jobs")) textParts.push("jobs");
+          if (availableCategories.includes("scholarships")) textParts.push("scholarships");
+
+          setDisplayText(textParts.length > 0 ? textParts.join(", ") : "opportunities");
+          
+          setCategories(sortedCategories.map((item) => ({
+            name: item.column_name,
+            label: item.column_name.toUpperCase(),
+            icon: getCategoryIcon(item.column_name)
+          })));
+     
+        }
+      } catch (error) {
+        console.error("Error fetching category data:", error);
+      }
+    }
+
+    fetchCategories();
+  }, [router.query, setCategories ]);
+
+  const firstCategory = categories.length > 0 ? categories[0]?.name : "opportunity";
+
+  const getCategoryIcon = (category) => {
+
+  
+    switch (category) {
+      case "schemes":
+        return (
+          <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 256 256" class="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M172,124a12,12,0,0,1-12,12H96a12,12,0,0,1,0-24h64A12,12,0,0,1,172,124Zm-12,28H96a12,12,0,0,0,0,24h64a12,12,0,0,0,0-24ZM220,40V200a36,36,0,0,1-36,36H72a36,36,0,0,1-36-36V40A12,12,0,0,1,48,28H72V24a12,12,0,0,1,24,0v4h20V24a12,12,0,0,1,24,0v4h20V24a12,12,0,0,1,24,0v4h24A12,12,0,0,1,220,40ZM196,52H184v4a12,12,0,0,1-24,0V52H140v4a12,12,0,0,1-24,0V52H96v4a12,12,0,0,1-24,0V52H60V200a12,12,0,0,0,12,12H184a12,12,0,0,0,12-12Z"></path></svg>
+        );
+      case "jobs":
+        return (
+          <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M184 48l144 0c4.4 0 8 3.6 8 8l0 40L176 96l0-40c0-4.4 3.6-8 8-8zm-56 8l0 40L64 96C28.7 96 0 124.7 0 160l0 96 192 0 128 0 192 0 0-96c0-35.3-28.7-64-64-64l-64 0 0-40c0-30.9-25.1-56-56-56L184 0c-30.9 0-56 25.1-56 56zM512 288l-192 0 0 32c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32-14.3-32-32l0-32L0 288 0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-128z"></path></svg>
+        );
+      case "scholarships":
+        return (
+          <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512" class="opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9l0 28.1c0 28.4-10.8 57.7-22.3 80.8c-6.5 13-13.9 25.8-22.5 37.6C0 442.7-.9 448.3 .9 453.4s6 8.9 11.2 10.2l64 16c4.2 1.1 8.7 .3 12.4-2s6.3-6.1 7.1-10.4c8.6-42.8 4.3-81.2-2.1-108.7C90.3 344.3 86 329.8 80 316.5l0-24.6c0-30.2 10.2-58.7 27.9-81.5c12.9-15.5 29.6-28 49.2-35.7l157-61.7c8.2-3.2 17.5 .8 20.7 9s-.8 17.5-9 20.7l-157 61.7c-12.4 4.9-23.3 12.4-32.2 21.6l159.6 57.6c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1L624.2 182.6c9.5-3.4 15.8-12.5 15.8-22.6s-6.3-19.1-15.8-22.6L343.7 36.1C336.1 33.4 328.1 32 320 32zM128 408c0 35.3 86 72 192 72s192-36.7 192-72L496.7 262.6 354.5 314c-11.1 4-22.8 6-34.5 6s-23.5-2-34.5-6L143.3 262.6 128 408z"></path></svg>
+        );
+      default:
+        return null;
+    }}
+
+  const handleCategoryClick = (tabName) => {
+    if (activeTab !== tabName) {
+      setActiveTab(tabName);
+      router.push(
+        {
+          pathname: "AllSchemes",
+          query: { tab: tabName },
+        },
+        undefined,
+        { shallow: true }
+      );
+    }
+  };
+
+  console.log("displayText", displayText)
 
   return (
     <div>
@@ -72,17 +149,16 @@ const App = () => {
               <h1 className="text-[#3F3BE1] font-inter text-[20px] lg:text-[40px] font-semibold">
                 Empowering the marginalized community
               </h1>
-              <p className="text-[#000000]  sm:text-[16px] text-[14px] font-start leading-[180%]">
-                Helping all communities across India find personalized schemes,
-                jobs, and scholarships based on eligibility.
-              </p>
+              <p className="text-[#000000] sm:text-[16px] text-[14px] font-start leading-[180%]">
+      Helping all communities across India find personalized {displayText} based on eligibility.
+    </p>
 
               {authState.token ? (
                 <button
                   className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#3431BB] text-white mt-[12px] hover:bg-blue-700 hidden sm:block"
                   onClick={handleClickAfterLogin}
                 >
-                  My Schemes
+                  My {firstCategory}
                 </button>
               ) : (
                 <button
@@ -93,20 +169,43 @@ const App = () => {
                 </button>
               )}
 
-              <div className=" flex flex-row w-full h-auto items-center sm:items-start gap-4 sm:gap-8 p-6 md:p-8 rounded-[16px] justify-between shadow-[0px_3px_8px_rgba(0,0,0,0.1),_0px_-2px_6px_rgba(0,0,0,0.1)]">
-                <div className="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4">
-                  Thousands of schemes
-                </div>
+<div
+  className={`flex flex-row  h-auto items-center sm:items-start p-6 md:p-8 rounded-[16px] shadow-[0px_3px_8px_rgba(0,0,0,0.1),_0px_-2px_6px_rgba(0,0,0,0.1)] ${
+    [displayText.includes("schemes"), displayText.includes("jobs"), displayText.includes("scholarships")].filter(Boolean).length === 1
+      ? "justify-center gap-0 sm:gap-0"
+      : "justify-between gap-4 sm:gap-8"
+  }`}
+>
+  {displayText.includes("schemes") && (
+    <div
+      className={`class="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4" ${
+        displayText.includes("jobs") || displayText.includes("scholarships") ? "border-r border-[#808080] pr-4 pb-4 sm:pb-0" : ""
+      }`}
+    >
+      Thousands of schemes
+    </div>
+  )}
 
-                <div className="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4">
-                  100+ job postings
-                </div>
+  {displayText.includes("jobs") && (
+    <div
+      className={`class="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4" ${
+        displayText.includes("scholarships") ? "border-r border-[#808080] pr-4 pb-4 sm:pb-0" : ""
+      }`}
+    >
+      100+ job postings
+    </div>
+  )}
 
-                <div className="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold pb-4 sm:pb-0">
-                  Multiple scholarships
-                </div>
-              </div>
-            </div>
+  {displayText.includes("scholarships") && (
+ <div
+ className={`class="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold  border-[#808080] pb-4 sm:pb-0 pr-4" ${
+   displayText.includes("scholarships") ? " border-[#808080] pr-4 pb-4 sm:pb-0" : ""
+ }`}
+>      Multiple scholarships
+    </div>
+  )}
+</div>
+</div>
 
             {/* Right Div */}
             <div className="w-[482px] h-[300px] mr-[30px] mb-[20px] sm:block hidden">
@@ -137,7 +236,7 @@ const App = () => {
                 className="flex h-[44px] px-[17px] py-[13px] justify-center items-center text-[16px]  gap-[20px] rounded-[8px] bg-[#3431BB] text-white mt-[12px] hover:bg-blue-700 block sm:hidden"
                 onClick={handleClickAfterLogin}
               >
-                My Schemes
+                My {firstCategory}
               </button>
             ) : (
               <button
@@ -163,7 +262,7 @@ const App = () => {
             </h1>
           </div>
 
-          <div className="steps grid gap-[40px] sm:grid-cols-1 lg:grid-cols-3 items-center mt-[40px]">
+          <div className="steps grid gap-[40px] sm:grid-cols-1 lg:grid-cols-3 items-center mt-[40px]" >
             {/* Step 1 */}
             <div className="flex flex-col gap-4  lg:items-start sm:h-full sm:w-full">
               <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
@@ -245,7 +344,7 @@ const App = () => {
               className="text-center text-white font-inter text-[16px] font-normal leading-normal bg-[#3431BB] pt-[10px] pr-[9px] sm:pr-[44px] pb-[10px] pl-[9px] sm:pl-[44px] rounded-[4px] hover:bg-blue-700 sm:mt-[32px] sm:mb-[50px]"
               onClick={handleClickFindrightSchemeForYOu}
             >
-              Find the Right scheme for me
+              Find the Right {firstCategory} for me
             </button>
           </div>
         </div>
@@ -268,40 +367,86 @@ const App = () => {
             </h1>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 items-center justify-center mt-10 sm:flex sm:flex-wrap sm:flex-nowrap sm:gap-4 font-semibold hover:text-white">
-            {/* SCHEMES */}
-            <div
-              className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:bg-[#3431BB] hover:text-white hover:cursor-pointer flex flex-col justify-center items-center"
-              onClick={handleSchemesClick}
-            >
-              <p className="text-xs sm:text-base text-center hover:text-white">
-                SCHEMES
-              </p>
-              <PiNotepadBold className="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
-            </div>
-
-            {/* JOBS */}
-            <div
-              className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
-              onClick={handleJobsClick}
-            >
-              <p className="text-xs sm:text-base text-center hover:text-white">
-                JOBS
-              </p>
-              <FaBriefcase className="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
-            </div>
-
-            {/* SCHOLARSHIPS */}
-            <div
-              className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
-              onClick={handleScholarshipsClick}
-            >
-              <p className="text-xs sm:text-base text-center  hover:text-white">
-                SCHOLARSHIPS
-              </p>
-              <FaGraduationCap className="opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
-            </div>
+          {/* <div className="grid grid-cols-3 gap-4 items-center justify-center mt-10 sm:flex sm:flex-wrap sm:flex-nowrap sm:gap-4 font-semibold">
+      {categories.map((category) => (
+        <div
+          key={category.column_name}
+          className={`group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:bg-[#3431BB] hover:text-white hover:cursor-pointer flex flex-col justify-center items-center`}
+          onClick={() => handleCategoryClick(category.column_name)}
+        >
+          <div className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center">
+          <p className="text-xs sm:text-base text-center  hover:text-white">{category.label}</p>
+          <div >
+            {category.icon}
           </div>
+          </div>
+        </div>
+      ))}
+    </div> */}
+<div
+  className={`grid gap-4 items-center justify-center mt-10
+    ${
+      displayText.length === 1
+        ? "grid-cols-1"
+        : displayText.length === 2
+        ? "grid-cols-2" 
+        : displayText.length === 3
+        ? "grid-cols-3"
+        : "grid-cols-2"
+    } 
+    sm:flex sm:flex-wrap sm:gap-4 font-semibold`}
+  
+>
+  {/* SCHEMES */}
+  {displayText.includes("schemes") && (
+    <div
+      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:bg-[#3431BB] hover:text-white hover:cursor-pointer flex flex-col justify-center items-center"
+      onClick={handleSchemesClick}
+    >
+      <p className="text-xs sm:text-base text-center">SCHEMES</p>
+      <PiNotepadBold className="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
+    </div>
+  )}
+
+  {/* JOBS */}
+  {displayText.includes("jobs") && (
+    <div
+      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
+      onClick={handleJobsClick}
+    >
+      <p className="text-xs sm:text-base text-center">JOBS</p>
+      <FaBriefcase className="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
+    </div>
+  )}
+
+  {/* SCHOLARSHIPS (Compact Box) */}
+  {displayText.includes("scholarships") && displayText !== "scholarships" && (
+    <div
+      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
+      onClick={handleScholarshipsClick}
+    >
+      <p className="text-xs sm:text-base text-center">SCHOLARSHIPS</p>
+      <FaGraduationCap className="opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
+    </div>
+  )}
+
+  {/* SCHOLARSHIPS (Full Width View for One Box) */}
+  {displayText === "scholarships" && (
+    <div
+      className="group w-[80vw] sm:w-[35vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-6 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex items-center gap-4 sm:gap-[2vw] justify-center mx-auto"
+      onClick={handleScholarshipsClick}
+    >
+      <FaGraduationCap className="opacity-[20%] h-[50px] sm:h-[8vw] w-[50px] sm:w-[8vw] group-hover:text-[#FFFFFF]" />
+      <div className="flex flex-col">
+        <p className="text-xs sm:text-[24px] text-left mb-2 sm:mb-4 font-semibold">
+          SCHOLARSHIPS
+        </p>
+        <p className="text-xs sm:text-base text-left">Click here to view more</p>
+      </div>
+    </div>
+  )}
+</div>
+
 
           {/* Mission, Vision, and Values Section */}
 
