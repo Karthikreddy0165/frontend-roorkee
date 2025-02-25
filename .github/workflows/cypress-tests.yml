@@ -24,13 +24,10 @@ jobs:
       - name: Create .env file with API URL
         run: |
           API_URL="${{ secrets.NEXT_PUBLIC_API_BASE_URL }}"
-          DEFAULT_URL="http://43.204.236.103:8000/"
-          echo "NEXT_PUBLIC_API_BASE_URL=${API_URL:-$DEFAULT_URL}" > .env
-        shell: bash
-
-      - name: Debug API URL (Masked for Security)
-        run: |
-          echo "API URL is set (masked for security)."
+          DEFAULT_URL="http://43.204.236.103:8000"
+          FINAL_URL="${API_URL:-$DEFAULT_URL}"
+          echo "NEXT_PUBLIC_API_BASE_URL=$FINAL_URL" > .env
+          echo "Using API URL: $FINAL_URL"
         shell: bash
 
       - name: Build the Project (for Next.js or React apps)
