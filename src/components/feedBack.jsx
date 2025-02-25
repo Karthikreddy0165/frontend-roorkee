@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/Context/AuthContext";
-import SavedModal from "@/pages/Modals/savedModal";
+import SavedModal from "@/components/Modals/savedModal";
 import { IoMdClose } from "react-icons/io";
 import { FiAlertCircle } from "react-icons/fi";
 import { toast } from "react-toastify";

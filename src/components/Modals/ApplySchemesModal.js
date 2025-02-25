@@ -5,7 +5,7 @@ import HowToApply from './HowToApply';
 import { useAuth } from "@/Context/AuthContext";
 import { useBookmarkContext } from "@/Context/BookmarkContext";
 import { useScheme } from "@/Context/schemeContext";
-import SavedModal from "@/pages/Modals/savedModal"
+import SavedModal from "@/components/Modals/savedModal"
 import Toast from "@/components/ComponentsUtils/SavedToast";
 import UnSaveToast from "@/components/ComponentsUtils/UnsaveToast";
 import { toast } from "react-toastify";

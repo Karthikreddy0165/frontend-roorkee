@@ -76,24 +76,22 @@ const CreateAcc01 = () => {
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
-          router.push("/AllSchemes");
-
+          router.push("/");
         }, 1500);
       }
     } catch (error) {
       console.error("Login failed:", error);
     }
   };
+  if (showSuccess) {
+    return <AccCreatSucc />;
+  }
 
   if(authState.token){
     router.replace('/')
     return <App/>
   }
 
-
-  if (showSuccess.current || authState.token) {
-    return <AccCreatSucc />;
-  }
 
   return (
     <div className="flex h-screen overflow-hidden flex-col md:flex-row">

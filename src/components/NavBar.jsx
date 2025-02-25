@@ -9,7 +9,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "@/Context/AuthContext";
 import { IoIosPerson } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
-import ProfileModal from "@/pages/Modals/profileModal";
+import ProfileModal from "@/components/Modals/profileModal";
 
 const NavBar = () => {
   const router = useRouter();
