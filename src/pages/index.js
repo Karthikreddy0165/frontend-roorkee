@@ -15,7 +15,6 @@ import image01 from "../assets/Image001.png";
 import image02 from "../assets/Image002.png";
 import image03 from "../assets/Image003.png";
 
-// import preferencesModal from "../pages/Modals/PreferencesModal";
 import image04 from "../assets/Image004.png";
 
 import Image from "next/image";

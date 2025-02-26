@@ -265,14 +265,37 @@ useEffect(() => {
               {field.name}
             </label>
             <input
-              type="number"
+              type="text"
+              inputMode="numeric" 
               name={field.name.toLowerCase().replace(" ", "_")}
               className="w-full h-[44px] border border-gray-300 p-2 rounded-lg text-sm font-semibold text-[#757575]"
               placeholder={field.placeholder || `Enter your ${field.name}`}
-              value={profileData[field.name.toLowerCase().replace(" ", "_")] || ""}
-              onChange={(e) => handleChange(e, field)}
-              min={field.min_value}
-              max={field.max_value}
+              value={profileData[field.name.toLowerCase().replace(" ", "_")] ?? ""}
+              onChange={(e) => {
+                let rawValue = e.target.value;
+
+                // Remove non-numeric characters (except "-" for negative numbers)
+                rawValue = rawValue.replace(/[^0-9-]/g, "");
+
+                // Prevent multiple "-" signs or "-" in the wrong place
+                if (rawValue.includes("-") && rawValue.indexOf("-") !== 0) {
+                  rawValue = rawValue.replace("-", "");
+                }
+
+                // Convert to number (ignores empty or invalid values)
+                let value = rawValue === "-" ? rawValue : Number.parseInt(rawValue, 10);
+
+                // Prevent NaN (invalid number)
+                if (isNaN(value)) {
+                  value = "";
+                }
+
+                // Apply min/max limits
+                if (value !== "" && field.min_value !== undefined) value = Math.max(field.min_value, value);
+                if (value !== "" && field.max_value !== undefined) value = Math.min(field.max_value, value);
+
+                handleChange({ target: { name: e.target.name, value } }, field);
+              }}
             />
           </div>
         );
