@@ -20,12 +20,6 @@ export default function Scholarships() {
       try {
         setDataOfApi({});
         let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
-        console.log("scholarhsip", url);
-        // const cachedData = localStorage.getItem(url);
-
-        // if (cachedData) {
-        //   setDataOfApi(JSON.parse(cachedData));
-        // } else {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 

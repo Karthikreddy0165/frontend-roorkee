@@ -15,7 +15,6 @@ import image01 from "../assets/Image001.png";
 import image02 from "../assets/Image002.png";
 import image03 from "../assets/Image003.png";
 
-// import preferencesModal from "../pages/Modals/PreferencesModal";
 import image04 from "../assets/Image004.png";
 
 import Image from "next/image";
@@ -263,7 +262,7 @@ const App = () => {
             </h1>
           </div>
 
-          <div className="steps grid gap-[40px] sm:grid-cols-1 lg:grid-cols-3 items-center mt-[40px]">
+          <div className="steps grid gap-[40px] sm:grid-cols-1 lg:grid-cols-3 items-center mt-[40px]" >
             {/* Step 1 */}
             <div className="flex flex-col gap-4  lg:items-start sm:h-full sm:w-full">
               <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">

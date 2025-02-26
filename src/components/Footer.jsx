@@ -14,6 +14,10 @@ const Footer = () => {
     router.push("/Terms-conditions");
   };
 
+  const handleResources = () => {
+    router.push("/Resources");
+  };
+
   useEffect(() => {
     async function fetchCategories() {
       try {
@@ -267,10 +271,14 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a className="text-black hover:text-black">About us</a>
+                <a href="#" className="text-black hover:text-black">
+                  About us
+                </a>
               </li>
-              <li>
-                <a className="text-black hover:text-black">Resources</a>
+              <li onClick={handleResources}>
+                <a className="text-black hover:text-black cursor-pointer">
+                  Resources
+                </a>
               </li>
             </ul>
           </div>

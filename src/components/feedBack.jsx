@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/Context/AuthContext";
-import SavedModal from "@/pages/Modals/savedModal";
+import SavedModal from "@/components/Modals/savedModal";
 import { IoMdClose } from "react-icons/io";
 import { FiAlertCircle } from "react-icons/fi";
 import { toast } from "react-toastify";
@@ -61,7 +61,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
         requestOptions
       );
 
-      if (!response.ok) {
+      if (!response.ok){
         throw new Error("Failed to submit feedback.");
       }
 
@@ -73,11 +73,11 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
 
       setReportFormData({ category: "", description: "" });
       onRequestClose();
-    } catch (err) {
+    } catch (err){
           // Error toast notification
     toast.error("Failed to give feedback. Please try again later.", { position: "top-right", autoClose: 3000 });
     onRequestClose();
-    } finally {
+    } finally{
       setLoading(false);
     }
   };

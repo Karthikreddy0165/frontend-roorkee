@@ -9,7 +9,7 @@ export default function PrivacyPolicy() {
 
   return (
     <>
-      <NavBar />
+      <NavBar/>
       <div className="min-h-screen bg-[#EEEEFF]  flex items-center justify-center sm:px-6 lg:px-8 ">
       <div className="max-w-4xl mx-auto px-6 py-9 bg-white shadow-lg rounded-lg sm:transform sm:-translate-y-12">
   <div className="flex items-center justify-center relative">

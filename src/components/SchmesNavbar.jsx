@@ -9,7 +9,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faHouse } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "@/Context/AuthContext";
-import ProfileModal from "../pages/Modals/profileModal";
+import ProfileModal from "./Modals/profileModal";
 import scholarshipicon from "../assets/scholarship.svg";
 import schemesicon from "../assets/schemes.svg";
 import jobsicon from "../assets/jobs.svg";
@@ -78,7 +78,7 @@ const NavBarScheme = () => {
   };
 
   const handleOptionClick = (option) => {
-    if (option === "MyProfile") {
+    if (option=== "MyProfile") {
       setIsProfileModalOpen(true);
     } else if (option === "Logout") {
       logout();

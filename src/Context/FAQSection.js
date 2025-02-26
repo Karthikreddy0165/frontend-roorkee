@@ -29,17 +29,17 @@ const FAQSection = () => {
   }, [router.query]);
 
   return (
-    <div className="flex flex-col items-center bg-gradient-to-b sm:p-10 sm:p-12 overflow-hidden">
+    <div className="flex flex-col items-center bg-gradient-to-b  sm:p-12 overflow-hidden">
       <div className="self-stretch flex justify-center">
         <h1 className="text-black text-center font-inter text-[18px] sm:text-2xl font-semibold leading-[150%] mb-6 py-[10px] mt-[20px]">
           Frequently Asked Questions
         </h1>
       </div>
-      <Accordion className="mt-4 w-full sm:w-full mx-auto border-b-1 " activeIndex={activeIndex} onTabChange={handleTabChange}>
+      <Accordion className="mt-4 w-full sm:w-full mx-auto border-b-1 px-4" activeIndex={activeIndex} onTabChange={handleTabChange}>
         {faqs.map((faq, index) => (
-          <AccordionTab key={index} header={faq.question} className="mt-6">
+          <AccordionTab key={index} header={faq.question} className="mb-6">
             <div className="p-4 sm:p-4">
-              <p className="mx-auto sm:w-[200px]">{faq.answer}</p>
+              <p className=" sm:w-[200px]">{faq.answer}</p>
             </div>
           </AccordionTab>
         ))}
