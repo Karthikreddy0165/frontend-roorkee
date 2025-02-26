@@ -15,7 +15,8 @@ const ApplyModal = ({
   isOpen,
   onRequestClose,
   scheme,
-  setSidePannelSelected,
+  
+  activeTab
 }) => {
   const [loading, setLoading] = useState(true);
   const [criteria, setCriteria] = useState([]);
@@ -24,6 +25,7 @@ const ApplyModal = ({
   const [isDescriptionLong, setIsDescriptionLong] = useState(false);
   const [readMore, setReadMore] = useState(false);
   const [reportModalOpen, setReportModalOpen] = useState(false);
+  
   const [reportFormData, setReportFormData] = useState({
     scheme_id: "",
     description: "",
@@ -189,11 +191,33 @@ const handleReportSubmit = async (e) => {
     setIsHowToApplyOpen(false); 
   };
 
-
+  const handleShare = (schemeId) => {
+    const baseUrl = window.location.origin + window.location.pathname;
+    const shareUrl = `${baseUrl}?tab=${activeTab}&scheme_id=${schemeId}&modal_open=${isOpen}`;
+  
+    navigator.clipboard
+      .writeText(shareUrl)
+      .then(() => {
+        toast.success("Link copied to clipboard!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      })
+      .catch((error) => {
+        console.error("Failed to copy link:", error);
+        toast.error("Failed to copy link. Please try again.", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      });
+  };
   
   
 
   if (!isOpen) return null;
+
+ console.log(scheme)
+
 
   
 
@@ -238,6 +262,7 @@ const handleReportSubmit = async (e) => {
   </p>
 )}
 
+
 {/* Report Button */}
 <button
   onClick={() => authState.token ? setReportModalOpen(true) : setIsReportModalOpen(true)}
@@ -281,7 +306,7 @@ const handleReportSubmit = async (e) => {
                 </div>
               )}
 
-              {scheme.beneficiaries[0]?.beneficiary_type && (
+              {scheme.beneficiaries?.beneficiary_type && (
                 <div className="flex items-start sm:py-[2rem] py-[1rem]  border-b-[1px]">
                   <h2 className="w-28 text-[14px] font-semibold">Beneficiaries:</h2>
                   <p className="flex-1 text-[16px]">{scheme.beneficiaries[0].beneficiary_type}</p>
@@ -369,16 +394,24 @@ const handleReportSubmit = async (e) => {
                     )}
 
                   
-                    <div className="flex-shrink-0">
-                      <a
-                        href={scheme.scheme_link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
-                      >
-                        Apply
-                      </a>
-                    </div>
+<div className="flex flex-wrap items-center gap-2 sm:gap-4">
+<button
+    onClick={() => handleShare(scheme.id)}
+    className="flex items-center px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
+  >
+    Share
+  </button>
+  <a
+    href={scheme.scheme_link}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
+  >
+    Apply
+  </a>
+ 
+</div>
+
                   </div>
 
 

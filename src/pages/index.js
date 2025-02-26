@@ -36,6 +36,7 @@ const App = () => {
     router.push("/login");
   };
 
+  
   const handleClickAfterLogin = () => {
     router.push("/AllSchemes");
   };

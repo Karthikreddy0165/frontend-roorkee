@@ -5,6 +5,8 @@ import FilterContext from "@/Context/FilterContext";
 import { useTabContext } from "@/Context/TabContext";
 import SchemeCount from "./ComponentsUtils/SchemeCount";
 import Footer from "./Footer";
+import { data } from "autoprefixer";
+import { useRouter } from "next/router.js";
 
 export default function Schemes() {
   const { searchQuery } = useTabContext();
@@ -15,6 +17,7 @@ export default function Schemes() {
   const [dataOfApi, setDataOfApi] = useState({ count: 0, results: [] });
   const [totalPages, setTotalPages] = useState(0);
   const [error, setError] = useState(null);
+  const router = useRouter();
 
   const departmentIds = useMemo(() => {
     return Object.keys(departments).reduce(
@@ -71,15 +74,15 @@ export default function Schemes() {
     beneficiaries,
   ]);
 
+  console.log(dataOfApi);
+
   if (error) {
     return <div className="text-center text-red-500">{error}</div>;
   }
 
   if (dataOfApi.count === 0 && (states.length || departments.length)) {
     return (
-
       <div className="flex justify-center text-[14px] sm:text-[18px] items-center mt-[8rem] ">
-
         No schemes found based on your preference
       </div>
     );
