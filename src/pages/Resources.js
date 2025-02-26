@@ -19,7 +19,7 @@ export default function Resources() {
       linkScrollContainer.current.scrollTop = 0;
     }
     if (selectedState) {
-      fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/resources/${selectedState.id}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/resources/state/${selectedState.id}`)
         .then((res) => res.json())
         .then((data) => {
           const validLinks = new Set(
