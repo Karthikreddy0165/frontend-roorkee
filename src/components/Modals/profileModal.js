@@ -30,8 +30,6 @@ const ProfileModal = ({ onClose }) => {
 
   const fieldsCount = Object.keys(profileData).length;
 
-
-
   const resendEmail = async () => {
     setSentEmailText(true);
   
