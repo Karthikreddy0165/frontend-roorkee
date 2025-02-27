@@ -1,30 +1,44 @@
 import NavBar from "@/components/NavBar";
 import { useRouter } from "next/router";
 import React, { useContext, useState, useEffect, useRef } from "react";
-import FilterContext from "@/Context/FilterContext";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
 export default function Resources() {
   const router = useRouter();
   const linkScrollContainer = useRef()
-  const { statesFromApi } = useContext(FilterContext);
   const [expandedCategory, setExpandedCategory] = useState(false);
   const [selectedState, setSelectedState] = useState(null);
   const [stateLinks, setStateLinks] = useState([]);
+  const [statesFromApi,setStatesFromApi]  = useState([])
+
+  useEffect(()=>{
+    async function fetchStateResources() {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/resources/`)
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      else{
+        const data = await res.json()
+        setStatesFromApi(data)
+      }
+    }
+    fetchStateResources()
+  },[])
+
 
   useEffect(() => {
-    //Every time we change the scroll of the links should be at the top
+    // Every time we change the scroll of the links should be at the top
     if(linkScrollContainer.current){
       linkScrollContainer.current.scrollTop = 0;
     }
     if (selectedState) {
-      fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/resources/${selectedState.id}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/resources/state/${selectedState.id}`)
         .then((res) => res.json())
         .then((data) => {
           const validLinks = new Set(
           data
-            .map((item) => item.scheme_link)
+            .map((item) => item.resource_link)
             .filter((link) => link && link.trim() !== "")
           )
           setStateLinks([...validLinks]);
