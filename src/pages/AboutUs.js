@@ -1,6 +1,5 @@
 import NavBar from "@/components/NavBar";
-import Image from "next/image";
-import bannerimage from "../assets/bannerImg.png"
+
 import Footer from "@/components/Footer";
 
 const AboutUs = () => {
