@@ -4,13 +4,10 @@ import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { PiNotepadBold } from "react-icons/pi";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/Context/AuthContext";
+
+import scholarshipcap from "../assets/students.webp"
 import "../styles/app.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPeopleRoof,
-  faArrowUpRightDots,
-  faHandsHoldingChild,
-} from "@fortawesome/free-solid-svg-icons";
+import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import image01 from "../assets/Image001.png";
 import image02 from "../assets/Image002.png";
 import image03 from "../assets/Image003.png";
@@ -141,11 +138,12 @@ const App = () => {
 
       <div className="sm:w-full  mx-auto">
         {/* Main Container */}
-        <div className=" p-[40px_0] mx-auto">
+        <div className=" p-[40px_0] mx-auto  ">
           {/* First Row */}
-          <div className="flex flex-col items-center lg:flex-row justify-center gap-8 p-4">
+          <div className="flex flex-col items-center sm:bg-[#EEEEFF] md:h-[500px] sm:h-[500px] sm:w-[70vw] px-4 rounded-[20px]  lg:flex-row justify-center mx-auto ">
             {/* Left Div */}
-            <div className="flex flex-col w-full lg:w-[482px]  items-start gap-[20px] lg:text-left">
+            
+            <div className="flex flex-col w-full lg:w-[482px]   items-start gap-[20px] lg:text-left">
               <h1 className="text-[#3F3BE1] font-inter text-[20px] lg:text-[40px] font-semibold">
                 Empowering the marginalized community
               </h1>
@@ -170,7 +168,7 @@ const App = () => {
               )}
 
 <div
-  className={`flex flex-row  h-auto items-center sm:items-start p-6 md:p-8 rounded-[16px] shadow-[0px_3px_8px_rgba(0,0,0,0.1),_0px_-2px_6px_rgba(0,0,0,0.1)] ${
+  className={`flex flex-row  h-auto bg-white items-center sm:items-start p-3 sm:p-6 md:p-8 rounded-[16px] shadow-[0px_3px_8px_rgba(0,0,0,0.1),_0px_-2px_6px_rgba(0,0,0,0.1)] ${
     [displayText.includes("schemes"), displayText.includes("jobs"), displayText.includes("scholarships")].filter(Boolean).length === 1
       ? "justify-center gap-0 sm:gap-0"
       : "justify-between gap-4 sm:gap-8"
@@ -178,37 +176,37 @@ const App = () => {
 >
   {displayText.includes("schemes") && (
     <div
-      className={`class="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4" ${
+      className={`class="text-center  bg-white sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4" ${
         displayText.includes("jobs") || displayText.includes("scholarships") ? "border-r border-[#808080] pr-4 pb-4 sm:pb-0" : ""
       }`}
     >
-      Thousands of schemes
+      Thousands of <br/> schemes
     </div>
   )}
 
   {displayText.includes("jobs") && (
     <div
-      className={`class="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4" ${
+      className={`class="text-center bg-white sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4" ${
         displayText.includes("scholarships") ? "border-r border-[#808080] pr-4 pb-4 sm:pb-0" : ""
       }`}
     >
-      100+ job postings
+      100+ job <br/> postings
     </div>
   )}
 
   {displayText.includes("scholarships") && (
  <div
- className={`class="text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold  border-[#808080] pb-4 sm:pb-0 pr-4" ${
+ className={`class="text-center bg-white text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold  border-[#808080] pb-4 sm:pb-0 pr-4" ${
    displayText.includes("scholarships") ? " border-[#808080] pr-4 pb-4 sm:pb-0" : ""
  }`}
->      Multiple scholarships
+>       Multiple <br/> scholarships
     </div>
   )}
 </div>
 </div>
 
             {/* Right Div */}
-            <div className="w-[482px] h-[300px] mr-[30px] mb-[20px] sm:block hidden">
+            <div className="w-[482px] h-[300px] mr-[30px] mb-[20px]  sm:block hidden">
               {/* Right Modals here */}
               <Image
                 className="relative h-[334px] w-[258px] rounded-tl-[10rem] -right-[190px] pb-8"
@@ -216,17 +214,17 @@ const App = () => {
                 alt="Image loading..."
               />
               <Image
-                className="relative h-[120.7px] w-[120px] rounded-tl-[10rem] rounded-tr-[10rem] rounded-bl-[10rem] -right-[60px] bottom-[280px]"
+                className="relative  h-[120.7px] w-[120px] rounded-tl-[10rem] rounded-tr-[10rem] rounded-bl-[10rem] -right-[60px] bottom-[280px]"
                 src={image02}
                 alt="Image loading..."
               />
               <Image
-                className="relative bg-white h-[160px] w-[155px] rounded-tl-[4rem] -right-[70px] bottom-[260px] p-2"
+                className="relative  bg-[#EEEEFF]  h-[160px] w-[155px] rounded-tl-[4rem] -right-[70px] bottom-[260px] p-2"
                 src={image03}
                 alt="Image loading..."
               />
               <Image
-                className="relative bg-white h-[120px] w-[112px] rounded-br-[4rem] -right-[380px] bottom-[380px] p-2"
+                className="relative  bg-[#EEEEFF] h-[120px] w-[112px] rounded-br-[4rem] -right-[380px] bottom-[380px] p-2"
                 src={image04}
                 alt="Image loading..."
               />
@@ -247,6 +245,7 @@ const App = () => {
               </button>
             )}
           </div>
+
         </div>
 
         {/* Second Row */}
@@ -392,13 +391,12 @@ const App = () => {
         ? "grid-cols-2" 
         : displayText.length === 3
         ? "grid-cols-3"
-        : "grid-cols-2"
+        : "grid-cols-3"
     } 
     sm:flex sm:flex-wrap sm:gap-4 font-semibold`}
   
 >
-  {/* SCHEMES */}
-  {displayText.includes("schemes") && (
+{displayText.includes("schemes") && (
     <div
       className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:bg-[#3431BB] hover:text-white hover:cursor-pointer flex flex-col justify-center items-center"
       onClick={handleSchemesClick}
@@ -429,11 +427,11 @@ const App = () => {
       <FaGraduationCap className="opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
     </div>
   )}
+  {/* only shcolarship for mobile view  */}
 
-  {/* SCHOLARSHIPS (Full Width View for One Box) */}
-  {displayText === "scholarships" && (
+   {displayText === "scholarships" && (
     <div
-      className="group w-[80vw] sm:w-[35vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-6 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex items-center gap-4 sm:gap-[2vw] justify-center mx-auto"
+      className="group w-[70vw] grid-cols-1 sm:w-[35vw] h-[100px] block sm:hidden md:hidden lg:hidden sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-6 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex items-center gap-4 sm:gap-[2vw] justify-center mx-auto"
       onClick={handleScholarshipsClick}
     >
       <FaGraduationCap className="opacity-[20%] h-[50px] sm:h-[8vw] w-[50px] sm:w-[8vw] group-hover:text-[#FFFFFF]" />
@@ -445,6 +443,44 @@ const App = () => {
       </div>
     </div>
   )}
+
+  {/* SCHOLARSHIPS (Full Width View for One Box) for dekstop view */ }
+  {displayText === "scholarships" && (
+  <div
+    className="group flex flex-wrap hidden sm:block w-[80vw] sm:w-[70vw]  rounded-[8px] bg-[#EEF] p-6 sm:p-[3vw] text-[#3330BA]   hover:cursor-pointer  items-center  justify-center"
+    onClick={handleScholarshipsClick}
+  >
+    <div className="flex items-center  ">
+      {/* <FaGraduationCap className="opacity-[20%] h-[50px] sm:h-[8vw] w-[50px] sm:w-[8vw] group-hover:text-[#FFFFFF]" /> */}
+      <div className="flex flex-col max-w-[500px] sm:max-w-[600px]">
+      <h1 className="flex items-center gap-2 text-xs sm:text-[30px] text-left mb-2 sm:mb-10 font-semibold">
+  <FaGraduationCap className="opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw]  mt-2" />
+  SCHOLARSHIPS
+</h1>
+
+  <p className="text-xs sm:text-base text-left leading-relaxed sm:leading-6 text-wrap sm:w-auto md:w-[70%] lg:w-[60%]">
+    Explore a wide range of scholarships designed to support students from diverse backgrounds. Find financial aid opportunities based on merit, need, and special categories. Click to discover and apply for scholarships that match your eligibility!
+  </p>
+  <p className=" flex mt-12 italic hover:underline cursor-pointer gap-2">Click here to view <ArrowBigRight/></p>
+
+</div>
+
+      <div className="relative h-[300px] mr-[10px] mb-[20px]   sm:block hidden">
+              {/* Right Modals here */}
+            
+              <Image
+                className="relative h-[334px] w-full rounded-bl-[rem]  rounded-tl-[10rem]  rounded-br-[10rem]   rounded-tr-[1 rem] sm:-right-[10px] pb-8"
+                src={scholarshipcap}
+                alt="Image loading..."
+              />
+              
+              
+            </div>
+    </div>
+    
+   
+  </div>
+)}
 </div>
 
 
@@ -542,7 +578,7 @@ const App = () => {
             </div>
           </div>
         </div>
-        <div className="sm:px-[200px] mx-auto top-0 px-[40px] ">
+        <div className="  px-[26px] ">
           <FAQSection />
         </div>
 

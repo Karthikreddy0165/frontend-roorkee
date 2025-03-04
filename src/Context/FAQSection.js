@@ -1,15 +1,11 @@
 import { useState, useEffect } from "react";
-import { Accordion, AccordionTab } from "primereact/accordion";
+import { Disclosure } from "@headlessui/react";
+import { ChevronUpIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
 
 const FAQSection = () => {
-  const [activeIndex, setActiveIndex] = useState(null);
   const [faqs, setFaqs] = useState([]);
   const router = useRouter();
-
-  const handleTabChange = (e) => {
-    setActiveIndex(e.index === activeIndex ? null : e.index);
-  };
 
   useEffect(() => {
     async function fetchFAQs() {
@@ -29,21 +25,31 @@ const FAQSection = () => {
   }, [router.query]);
 
   return (
-    <div className="flex flex-col items-center bg-gradient-to-b  sm:p-12 overflow-hidden">
-      <div className="self-stretch flex justify-center">
-        <h1 className="text-black text-center font-inter text-[18px] sm:text-2xl font-semibold leading-[150%] mb-6 py-[10px] mt-[20px]">
+    <div className="flex flex-col items-center bg-gradient-to-b from-gray-100 to-gray-50 py-8 px-4 sm:px-8 lg:px-16 xl:px-24 overflow-hidden w-full">
+      <div className="w-full max-w-3xl text-center">
+        <h1 className="text-black font-inter text-[16px] sm:text-3xl font-semibold leading-[150%] mb-8 border-b-4 border-gray-300 inline-block px-4">
           Frequently Asked Questions
         </h1>
       </div>
-      <Accordion className="mt-4 w-full sm:w-full mx-auto border-b-1 px-4" activeIndex={activeIndex} onTabChange={handleTabChange}>
+      <div className="w-full max-w-6xl space-y-4">
         {faqs.map((faq, index) => (
-          <AccordionTab key={index} header={faq.question} className="mb-6">
-            <div className="p-4 sm:p-4">
-              <p className=" sm:w-[200px]">{faq.answer}</p>
-            </div>
-          </AccordionTab>
+          <Disclosure key={index}>
+            {({ open }) => (
+              <div className="border border-gray-300 rounded-lg bg-white transition-all duration-300 ">
+                <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-left text-sm sm:text-[16px] sm:w-full  font-semibold text-black rounded-t-lg focus:outline-none hover:bg-gray-200 transition-all duration-300">
+                  {faq.question}
+                  <ChevronUpIcon
+                    className={`w-6 h-6 text-gray-600 transform transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+                  />
+                </Disclosure.Button>
+                <Disclosure.Panel className="overflow-hidden transition-all duration-300 px-5 py-3 bg-gray-50">
+                  <p className="text-gray-700 text-sm sm:text-base p-4">{faq.answer}</p>
+                </Disclosure.Panel>
+              </div>
+            )}
+          </Disclosure>
         ))}
-      </Accordion>
+      </div>
     </div>
   );
 };

@@ -49,6 +49,8 @@ const ProfileModal = ({ onClose }) => {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/resend-verification-email/`,
         requestOptions
       );
+
+    
   
       if (response.ok) {
         setTimeout(() => {
@@ -80,7 +82,7 @@ const ProfileModal = ({ onClose }) => {
             requestOptions
           );
           const pData = await profileResponse.json();
-          console.log(pData, "fetching Saved data")
+          // console.log(pData, "fetching Saved data")
 
           setProfileData({
             ...profileData,
@@ -234,7 +236,9 @@ useEffect(() => {
     }));
   };
 
+  // console.log(sentEmailText)
 
+// console.log(" this is emaildata", emailData)
   const renderField = (field) => {
     switch (field.type) {
       case "choice":
@@ -425,7 +429,7 @@ useEffect(() => {
                       onChange={handleChange}
                       readOnly
                     />
-                    {emailData?.is_email_verified ? (
+                    {sentEmailText ? (
                       <MdVerified className="absolute top-3 left-3 text-green-500" />
                     ) : (
                       <VscUnverified className="absolute top-3 left-3   text-red-500" />

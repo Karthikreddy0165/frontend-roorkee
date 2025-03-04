@@ -62,7 +62,7 @@ const Footer = () => {
   }, [router.query, setCategories]);
   return (
     <>
-      <footer className="text-black sm:pt-[5rem] pb-[1rem] px-4 gap-[5rem]  sm:mt-[2rem] ">
+      <footer className="text-black bg-[#EEEEFF] sm:pt-[5rem] pb-[1rem] px-4 gap-[5rem]  sm:mt-[2rem] ">
         <h1 className="text-[32px] block sm:hidden font-semibold mb-4 text-[#3F3BE1]">
           LaunchPad
         </h1>
