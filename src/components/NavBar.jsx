@@ -130,7 +130,7 @@ const NavBar = () => {
           <div className="mt-1">LAUNCHPAD</div>
         </div>
 
-        <div className="hidden md:flex space-x-10 justify-end sm:ml-[220px] mr-10 text-[16px] font-semibold">
+        <div className="hidden md:flex space-x-10 justify-end sm:ml-[450px] mr-10 text-[16px] font-semibold">
           {/* Home is always present */}
           <a
             href="/"

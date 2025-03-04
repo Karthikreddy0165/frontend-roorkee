@@ -578,7 +578,7 @@ const App = () => {
             </div>
           </div>
         </div>
-        <div className="  px-[26px] ">
+        <div className="sm:w-[1250px] sm:ml-[170px] w-full p-[30px] ">
           <FAQSection />
         </div>
 
