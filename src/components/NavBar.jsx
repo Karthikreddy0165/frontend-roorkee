@@ -10,6 +10,8 @@ import { useAuth } from "@/Context/AuthContext";
 import { IoIosPerson } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import ProfileModal from "@/components/Modals/profileModal";
+import { MdMenu, MdClose } from "react-icons/md"; // Import icons
+
 import Link from "next/link";
 
 const NavBar = () => {
@@ -20,6 +22,12 @@ const NavBar = () => {
   const { authState, logout } = useAuth();
 
   const [categories, setCategories] = useState([]);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Toggle Mobile Menu
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   useEffect(() => {
     async function fetchCategories() {
@@ -130,43 +138,85 @@ const NavBar = () => {
           <div className="mt-1">LAUNCHPAD</div>
         </div>
 
-        <div className="hidden md:flex space-x-10 justify-end sm:ml-[450px] mr-10 text-[16px] font-semibold">
-          {/* Home is always present */}
-          <a
-            href="/"
-            className={`text-[#000000] hover:text-[#3330BA] transition duration-300 ${
-              router.pathname === "/" ? "underline decoration-[#3330BA]" : ""
-            }`}
-          >
-            HOME
-          </a>
-
-          <a
-            href="/AboutUs"
-            className={`text-[#000000] hover:text-[#3330BA] transition duration-300 ${
-              router.pathname === "/AboutUs"
-                ? "underline decoration-[#3330BA]"
-                : ""
-            }`}
-          >
-            ABOUT US
-          </a>
-
-          {/* Dynamically show all available categories */}
-          {categories.map((category, index) => (
+        <div className="flex items-center justify-end w-full sm:px-6 md:px-10">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex space-x-6 text-[16px] font-semibold">
+            {/* Home Link */}
             <a
-              key={index}
-              href={`/AllSchemes?tab=${category.name.toLowerCase()}`}
+              href="/"
               className={`text-[#000000] hover:text-[#3330BA] transition duration-300 ${
-                router.query.tab === category.name.toLowerCase()
+                router.pathname === "/" ? "underline decoration-[#3330BA]" : ""
+              }`}
+            >
+              HOME
+            </a>
+
+            {/* About Us Link */}
+            <a
+              href="/AboutUs"
+              className={`text-[#000000] hover:text-[#3330BA] transition duration-300 ${
+                router.pathname === "/AboutUs"
                   ? "underline decoration-[#3330BA]"
                   : ""
               }`}
             >
-              {category.label}
+              ABOUT US
             </a>
-          ))}
+
+            {/* Dynamic Categories */}
+            {categories.map((category, index) => (
+              <a
+                key={index}
+                href={`/AllSchemes?tab=${category.name.toLowerCase()}`}
+                className={`text-[#000000] hover:text-[#3330BA] transition duration-300 ${
+                  router.query.tab === category.name.toLowerCase()
+                    ? "underline decoration-[#3330BA]"
+                    : ""
+                }`}
+              >
+                {category.label}
+              </a>
+            ))}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button
+              onClick={toggleMobileMenu}
+              className="text-[#000000] focus:outline-none"
+            >
+              <MdMenu className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Mobile Dropdown */}
+          {isMobileMenuOpen && (
+            <div className="absolute top-16 right-6 p-6 w-48 bg-white shadow-lg rounded-lg md:hidden">
+              <a
+                href="/"
+                className="block py-2 text-black hover:text-[#3330BA]"
+              >
+                HOME
+              </a>
+              <a
+                href="/AboutUs"
+                className="block py-2 text-black hover:text-[#3330BA]"
+              >
+                ABOUT US
+              </a>
+              {categories.map((category, index) => (
+                <a
+                  key={index}
+                  href={`/AllSchemes?tab=${category.name.toLowerCase()}`}
+                  className="block py-2 text-black hover:text-[#3330BA]"
+                >
+                  {category.label}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
+
         <div className="flex sm:mr-[220px] ml-auto items-center  ">
           {authState.token ? (
             <div className="relative">
