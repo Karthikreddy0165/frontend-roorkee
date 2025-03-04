@@ -17,7 +17,6 @@ const Footer = () => {
   const handleResources = () => {
     router.push("/Resources");
   };
-  
 
   useEffect(() => {
     async function fetchCategories() {
@@ -51,7 +50,6 @@ const Footer = () => {
             sortedCategories.map((item) => ({
               name: item.column_name,
               label: item.column_name.toUpperCase(),
-          
             }))
           );
         }
@@ -64,7 +62,7 @@ const Footer = () => {
   }, [router.query, setCategories]);
   return (
     <>
-      <footer className="text-black sm:pt-[5rem] pb-[1rem] px-4 gap-[5rem]  sm:mt-[2rem] ">
+      <footer className="text-black bg-[#EEEEFF] sm:pt-[5rem] pb-[1rem] px-4 gap-[5rem]  sm:py-[2rem] ">
         <h1 className="text-[32px] block sm:hidden font-semibold mb-4 text-[#3F3BE1]">
           LaunchPad
         </h1>
@@ -273,12 +271,14 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a 
-                href="#"
-                className="text-black hover:text-black">About us</a>
+                <a href="#" className="text-black hover:text-black">
+                  About us
+                </a>
               </li>
               <li onClick={handleResources}>
-                <a className="text-black hover:text-black cursor-pointer">Resources</a>
+                <a className="text-black hover:text-black cursor-pointer">
+                  Resources
+                </a>
               </li>
             </ul>
           </div>

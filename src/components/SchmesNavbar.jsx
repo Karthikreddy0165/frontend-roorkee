@@ -31,6 +31,36 @@ const NavBarScheme = () => {
 
   const [tabs, setTabs] = useState([]);
 
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/layout-items/`
+        );
+        const data = await response.json();
+
+        if (Array.isArray(data)) {
+          // Sort categories by order
+          const sortedCategories = data.sort((a, b) => a.order - b.order);
+
+          // Extract category names
+          setCategories(
+            sortedCategories.map((item) => ({
+              name: item.column_name,
+              label: item.column_name.toUpperCase(),
+            }))
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching category data:", error);
+      }
+    }
+
+    fetchCategories();
+  }, [router.query]);
+
   const buttons = [
     {
       id: "schemes",
@@ -78,7 +108,7 @@ const NavBarScheme = () => {
   };
 
   const handleOptionClick = (option) => {
-    if (option=== "MyProfile") {
+    if (option === "MyProfile") {
       setIsProfileModalOpen(true);
     } else if (option === "Logout") {
       logout();
@@ -168,6 +198,44 @@ const NavBarScheme = () => {
           onClick={handleClickLogo}
         >
           LAUNCHPAD
+        </div>
+
+        <div className="hidden md:flex space-x-10 justify-end ml-auto -mr-[700px] text-[16px] font-semibold">
+          {/* Home is always present */}
+          <a
+            href="/"
+            className={`text-[#000000] hover:text-[#3330BA] transition duration-300 ${
+              router.pathname === "/" ? "underline decoration-[#3330BA]" : ""
+            }`}
+          >
+            HOME
+          </a>
+
+          <a
+            href="/AboutUs"
+            className={`text-[#000000] hover:text-[#3330BA] transition duration-300 ${
+              router.pathname === "/AboutUs"
+                ? "underline decoration-[#3330BA]"
+                : ""
+            }`}
+          >
+            ABOUT US
+          </a>
+
+          {/* Dynamically show all available categories */}
+          {categories.map((category, index) => (
+            <a
+              key={index}
+              href={`/AllSchemes?tab=${category.name.toLowerCase()}`}
+              className={`text-[#000000] hover:text-[#3330BA] transition duration-300 ${
+                router.query.tab === category.name.toLowerCase()
+                  ? "underline decoration-[#3330BA]"
+                  : ""
+              }`}
+            >
+              {category.label}
+            </a>
+          ))}
         </div>
 
         {/* Search Section (Mobile Only) */}

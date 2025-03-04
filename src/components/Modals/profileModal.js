@@ -47,6 +47,8 @@ const ProfileModal = ({ onClose }) => {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/resend-verification-email/`,
         requestOptions
       );
+
+    
   
       if (response.ok) {
         setTimeout(() => {
@@ -78,7 +80,7 @@ const ProfileModal = ({ onClose }) => {
             requestOptions
           );
           const pData = await profileResponse.json();
-          console.log(pData, "fetching Saved data")
+          // console.log(pData, "fetching Saved data")
 
           setProfileData({
             ...profileData,
@@ -134,7 +136,7 @@ const ProfileModal = ({ onClose }) => {
 
         try {
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/profile/`,
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/me/`,
             requestOptions
           );
           const data = await response.json();
@@ -232,7 +234,9 @@ useEffect(() => {
     }));
   };
 
+  // console.log(sentEmailText)
 
+console.log(" this is emaildata", emailData)
   const renderField = (field) => {
     switch (field.type) {
       case "choice":
@@ -359,8 +363,10 @@ useEffect(() => {
         ref={modalRef}
         className="bg-white rounded-lg w-[90%] sm:w-[720px] max-h-[90vh] overflow-y-auto p-6 flex flex-col items-start relative"
       >
+        
 
 <div className="flex justify-between items-center mb-2 -mt-2 w-full">
+  
               <h2 className="text-2xl font-semibold text-[#000000]">Profile</h2>
               <button
                 onClick={onClose}
@@ -423,10 +429,10 @@ useEffect(() => {
                       onChange={handleChange}
                       readOnly
                     />
-                    {emailData?.is_email_verified ? (
-                      <MdVerified className="absolute top-3 left-3 text-green-500" />
+                    {emailData.is_email_verified ? (
+                      <MdVerified className="absolute top-3.5 left-3 text-green-500" />
                     ) : (
-                      <VscUnverified className="absolute top-3 left-3   text-red-500" />
+                      <VscUnverified className="absolute top-3.5 left-3   text-red-500" />
                     )}
                   </div>
                   {!emailData?.is_email_verified && (
