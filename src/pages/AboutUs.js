@@ -1,6 +1,7 @@
 import NavBar from "@/components/NavBar";
 import Image from "next/image";
 import bannerimage from "../assets/bannerImg.png"
+import Footer from "@/components/Footer";
 
 const AboutUs = () => {
   return (
@@ -10,7 +11,7 @@ const AboutUs = () => {
      
 
       {/* About Us Content */}
-      <div className="max-w-3xl text-center mt-8">
+      <div className="max-w-6xl rounded-[20px] text-center mt-5 bg-[#EEEEFF] p-10">
         <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
           About Us
         </h1>
@@ -75,6 +76,7 @@ const AboutUs = () => {
         </div>
       </div>
     </div>
+    <Footer/>
     </>
   );
 };

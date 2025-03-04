@@ -363,8 +363,10 @@ useEffect(() => {
         ref={modalRef}
         className="bg-white rounded-lg w-[90%] sm:w-[720px] max-h-[90vh] overflow-y-auto p-6 flex flex-col items-start relative"
       >
+        
 
 <div className="flex justify-between items-center mb-2 -mt-2 w-full">
+  
               <h2 className="text-2xl font-semibold text-[#000000]">Profile</h2>
               <button
                 onClick={onClose}
