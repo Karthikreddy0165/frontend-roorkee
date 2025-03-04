@@ -17,12 +17,18 @@ import Footer from "./Footer.jsx";
 import { useBookmarkContext } from "@/Context/BookmarkContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/router.js";
+import { FaShareAlt } from "react-icons/fa";
+import { data } from "autoprefixer";
 
 export default function Categories({ ffff, dataFromApi, totalPages }) {
+  const router = useRouter();
   const { activeTab, setActiveTab } = useTabContext(); // Accessing context
   const { isBookmarked, toggleBookmark, setIsBookmarked } =
     useBookmarkContext();
   const [selectedScheme, setSelectedScheme] = useState(null);
+  const { scheme_id, tab } = router.query;
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const { authState } = useAuth();
@@ -33,6 +39,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   const [first, setFirst] = useState(0);
   const [rows, setRows] = useState(10);
   const [sidePannelSelected, setSidePannelSelected] = useState(null);
+
   const {
     states,
     setStates,
@@ -97,6 +104,28 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     fetchSavedSchemes();
   }, [authState.token]);
 
+  useEffect(() => {
+    console.log("dataFronApi", dataFromApi);
+    const scheme = dataFromApi.results?.find(
+      (item) => item.id === parseInt(scheme_id)
+    );
+    if (scheme) {
+      setSelectedScheme(scheme);
+      setIsModalOpen(true);
+    }
+  }, [scheme_id, dataFromApi?.results]);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const schemeId = queryParams.get("scheme_id");
+    const modalOpen = queryParams.get("modal_open");
+
+    if (modalOpen === "true" && schemeId) {
+      setIsModalOpen(true);
+      setSelectedScheme(schemeId);
+    }
+  }, []);
+
   const logUserEvent = async (eventType, schemeId = null, details = {}) => {
     const eventBody = {
       event_type: eventType,
@@ -127,11 +156,21 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       console.error("Error logging event:", error);
     }
   };
-
   const handleClick = (scheme_id) => {
     const scheme = dataFromApi.results.find((item) => item.id === scheme_id);
     if (scheme) {
       const startTime = Date.now();
+
+      // Log the event only once when the scheme is first viewed
+      logUserEvent("view", scheme_id, { watch_time: "0 seconds" });
+
+      router.push(
+        `/AllSchemes?tab=${activeTab}&scheme_id=${scheme_id}`,
+        undefined,
+        {
+          shallow: true,
+        }
+      );
 
       viewscheme(scheme_id);
       setSelectedScheme(scheme);
@@ -139,20 +178,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       setSidePannelSelected(scheme_id);
 
       // Track time when modal closes
-      const interval = setInterval(() => {
-        const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-
-        // Log the event every 5 seconds
-        if (elapsedTime % 5 === 0) {
-          logUserEvent("view", scheme_id, {
-            watch_time: elapsedTime + " seconds",
-          });
-        }
-      }, 5000);
-
-      // Stop tracking when modal closes
       const stopTracking = () => {
-        clearInterval(interval);
         const totalTime = Math.floor((Date.now() - startTime) / 1000);
         logUserEvent("view", scheme_id, { watch_time: totalTime + " seconds" });
       };
@@ -311,6 +337,26 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       console.error(error);
       return false;
     }
+  };
+
+  const handleShare = () => {
+    const schemeUrl = window.location.href;
+    navigator.clipboard
+      .writeText(schemeUrl)
+      .then(() => {
+        alert("Link copied to clipboard!");
+      })
+      .catch((error) => {
+        console.error("Failed to copy link:", error);
+      });
+  };
+
+  const openModal = (schemeId) => {
+    setIsModalOpen(true);
+    setSelectedScheme(schemeId);
+    const baseUrl = window.location.origin + window.location.pathname;
+    const newUrl = `${baseUrl}?tab=${activeTab}&scheme_id=${schemeId}&modal_open=true`;
+    router.push(newUrl, undefined, { shallow: true });
   };
 
   const handleBookmarkToggle = async (e, itemId) => {
@@ -510,9 +556,16 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
             isOpen={isModalOpen}
             onRequestClose={() => {
               setIsModalOpen(false);
-              setSidePannelSelected(null);
+              router.push(
+                `/AllSchemes?${activeTab}?tab=${activeTab}`,
+                undefined,
+                {
+                  shallow: true,
+                }
+              );
             }}
             scheme={selectedScheme}
+            activeTab={activeTab}
           />
         )}
         {isSavedModalOpen && (
