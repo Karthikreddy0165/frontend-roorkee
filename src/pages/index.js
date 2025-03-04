@@ -40,7 +40,7 @@ const App = () => {
   };
 
   const handleClickFindrightSchemeForYOu = () => {
-    router.push("/Modals/PreferencesModal");
+    router.push("/my-preference");
   };
 
   const handleSchemesClick = () => {

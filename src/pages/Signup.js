@@ -76,8 +76,8 @@ const CreateAcc01 = () => {
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
-          router.push("/");
         }, 1500);
+        router.replace("/my-preference");
       }
     } catch (error) {
       console.error("Login failed:", error);
@@ -88,7 +88,7 @@ const CreateAcc01 = () => {
   }
 
   if(authState.token){
-    router.replace('/')
+    router.replace("/");
     return <App/>
   }
 
