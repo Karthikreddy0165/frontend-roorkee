@@ -136,7 +136,7 @@ const ProfileModal = ({ onClose }) => {
 
         try {
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/profile/`,
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/me/`,
             requestOptions
           );
           const data = await response.json();
@@ -236,7 +236,7 @@ useEffect(() => {
 
   // console.log(sentEmailText)
 
-// console.log(" this is emaildata", emailData)
+console.log(" this is emaildata", emailData)
   const renderField = (field) => {
     switch (field.type) {
       case "choice":
@@ -429,10 +429,10 @@ useEffect(() => {
                       onChange={handleChange}
                       readOnly
                     />
-                    {sentEmailText ? (
-                      <MdVerified className="absolute top-3 left-3 text-green-500" />
+                    {emailData.is_email_verified ? (
+                      <MdVerified className="absolute top-3.5 left-3 text-green-500" />
                     ) : (
-                      <VscUnverified className="absolute top-3 left-3   text-red-500" />
+                      <VscUnverified className="absolute top-3.5 left-3   text-red-500" />
                     )}
                   </div>
                   {!emailData?.is_email_verified && (
