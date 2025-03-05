@@ -13,6 +13,7 @@ import loginperson from "../assets/image.png";
 import AccCreatSucc from "@/utils/AccountCreated";
 import Checkbox from "@/components/Checkbox";
 import TermsAndConditions from "./Terms-conditions";
+import PrivacyPolicy from "./privacy-policy";
 
 const CreateAcc01 = () => {
   const router = useRouter();
@@ -24,13 +25,20 @@ const CreateAcc01 = () => {
   const [showSuccess, setShowSuccess] = useState(false); // State to control success screen
   const [isChecked, setIsChecked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true); 
   };
+  const openPrivacyModal = () => {
+    setIsPrivacyModalOpen(true); 
+  };
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+  const closePrivacyModal = () => {
+    setIsPrivacyModalOpen(false);
   };
 
   const handleCheckboxChange = () => {
@@ -307,7 +315,7 @@ const CreateAcc01 = () => {
                     disabled={formik.isSubmitting}
                   >
                     {isLoading ? (
-                      <div className="flex items-center justify-center mb-3">
+                      <div className="flex items-center justify-center mb-0">
                         <FaSpinner className="animate-spin mr-2" />
                         Loading...
                       </div>
@@ -317,7 +325,7 @@ const CreateAcc01 = () => {
                   </button>
                 <p className=" font-light text-sm ">By continuing, you agree to our <span> </span>
                     <span className=" underline font-medium cursor-pointer" onClick={openModal}>T&C</span> and <span> </span>
-                    <span className=" underline font-medium cursor-pointer">Privacy policy.</span></p>
+                    <span className=" underline font-medium cursor-pointer" onClick={openPrivacyModal}>Privacy policy.</span></p>
                 </div>
               </form>
             );
@@ -414,6 +422,17 @@ const CreateAcc01 = () => {
       >
         <div onClick={(e) => e.stopPropagation()}>
           <TermsAndConditions handleClose={closeModal} />
+        </div>
+      </div>
+    )}
+
+     {isPrivacyModalOpen && (
+      <div 
+        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+        onClick={closePrivacyModal}
+      >
+        <div onClick={(e) => e.stopPropagation()}>
+          <PrivacyPolicy handleClose={closePrivacyModal} />
         </div>
       </div>
     )}
