@@ -18,6 +18,18 @@ const login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false); // State to control success screen
   const { login, authState } = useAuth();
+  const [isRedirecting, setIsRedirecting] = useState(false);
+
+  useEffect(() => {
+    if (authState.token && !showSuccess) {
+      setIsRedirecting(true);
+      router.replace("/").then(() => setIsRedirecting(false)); 
+    }
+  }, [authState.token, router]); 
+  
+  if (isRedirecting) {
+    return null; 
+  }
 
   const handleCreate01Click = () => {
     router.push("/Signup");
@@ -80,10 +92,7 @@ const login = () => {
   if (showSuccess) {
     return <LoginSuccess />;
   }
-  if (authState.token) {
-    router.replace("/");
-    return <App />;
-  }
+
 
   return (
     <div className="flex h-screen overflow-hidden flex-col md:flex-row min-h-screen">

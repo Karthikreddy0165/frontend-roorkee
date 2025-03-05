@@ -22,8 +22,24 @@ const CreateAcc01 = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false); // State to control success screen
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (authState.token && !showSuccess) {
+      setIsRedirecting(true);
+      router.replace("/").then(() => setIsRedirecting(false)); 
+    }
+  }, [authState.token, router]); 
+  
+  if (isRedirecting) {
+    return null; 
+  }
+  if (showSuccess) {
+    return <AccCreatSucc />;
+  }
+  
 
   const openModal = () => {
     setIsModalOpen(true); 
@@ -32,13 +48,6 @@ const CreateAcc01 = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-  };
-
-
-
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -85,21 +94,15 @@ const CreateAcc01 = () => {
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
-          router.push("/");
+          router.replace("/my-preference");          
         }, 1500);
       }
     } catch (error) {
       console.error("Login failed:", error);
     }
   };
-  if (showSuccess) {
-    return <AccCreatSucc />;
-  }
 
-  if(authState.token){
-    router.replace('/')
-    return <App/>
-  }
+
 
 
   return (

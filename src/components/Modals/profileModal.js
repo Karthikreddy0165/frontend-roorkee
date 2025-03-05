@@ -465,7 +465,7 @@ console.log(" this is emaildata", emailData)
                       onChange={handleChange}
                       readOnly
                     />
-                    {emailData.is_email_verified ? (
+                    {emailData?.is_email_verified ? (
                       <MdVerified className="absolute top-3.5 left-3 text-green-500" />
                     ) : (
                       <VscUnverified className="absolute top-3.5 left-3   text-red-500" />
