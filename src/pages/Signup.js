@@ -11,7 +11,8 @@ import App from "./index";
 import { useFormData } from "@/Context/FormContext";
 import loginperson from "../assets/image.png";
 import AccCreatSucc from "@/utils/AccountCreated";
-
+import Checkbox from "@/components/Checkbox";
+import TermsAndConditions from "./Terms-conditions";
 
 const CreateAcc01 = () => {
   const router = useRouter();
@@ -43,6 +44,21 @@ const CreateAcc01 = () => {
       .min(8, "Password must be at least 8 characters")
       .required("Password is required"),
   });
+  const [isChecked, setIsChecked] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true); 
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
 
 
 
@@ -53,7 +69,7 @@ const CreateAcc01 = () => {
   const getErrorMessage = (formikErrors, apiErrors) => {
     const formikErrorMessages = Object.values(formikErrors).filter(Boolean);
     const apiErrorMessages = Object.values(apiErrors).filter(Boolean);
-    return [...formikErrorMessages, ...apiErrorMessages].join(" ");
+    return [...apiErrorMessages].join(" ");
   };
 
   const handleAfterLogin = async (values) => {
@@ -114,8 +130,18 @@ const CreateAcc01 = () => {
           initialValues={{
             email: "",
             password: "",
+            terms: false
           }}
-          validationSchema={validationSchema}
+          validateOnMount={false}  // Prevents validation on first render
+          validateOnBlur={false}     // Validates only when the user leaves a field
+          validateOnChange={true}
+          validationSchema={Yup.object({
+            email: Yup.string().email("Invalid email address").required("Email is Required"),
+            password: Yup.string().min(8, "Password must be at least 8 characters").required("Password is Required"),
+            terms: Yup.boolean()
+              .oneOf([true], "You must accept the Terms & Conditions")
+              .required("You must accept the Terms & Conditions"),
+          })}
           onSubmit={(values, { setSubmitting }) => {
             setIsLoading(true); // Start loading
             const myHeaders = new Headers();
@@ -237,13 +263,16 @@ const CreateAcc01 = () => {
                     onBlur={formik.handleBlur}
                     value={formik.values.email.toLowerCase()}
                   />
+                  {formik.touched.email && formik.errors.email && (
+          <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>
+        )}
                 </div>
                 <div className="relative mt-6">
                   <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                     Password
                   </label>
                   <input
-                    className="shadow appearance-none border rounded-[8px] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    className="shadow appearance-none border rounded-[8px] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
@@ -251,11 +280,31 @@ const CreateAcc01 = () => {
                     onBlur={formik.handleBlur}
                     value={formik.values.password}
                   />
+                  {formik.touched.password && formik.errors.password && (
+          <div className="text-red-500 text-sm mt-1">{formik.errors.password}</div>
+        )}
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-4"
                   data-test-id="toggle-password-visibility" 
                   onClick={togglePasswordVisibility}>
                     {showPassword ? <FaEye /> : <FaEyeSlash />}
                   </div>
+                </div>
+
+                
+
+                <div className="">
+                  {/* <h1 className="text-2xl font-bold mb-4">My Custom Checkbox</h1> */}
+                  <Checkbox
+                    id="terms"
+                    label="Accept Terms & Conditions"
+                    checked={formik.values.terms}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className="mt-4 cursor-pointer"
+                  />
+                  {formik.touched.terms && formik.errors.terms && (
+          <div className="text-red-500 text-sm mt-1">{formik.errors.terms}</div>
+        )}
                 </div>
 
                 {errorMessage && (
@@ -266,16 +315,15 @@ const CreateAcc01 = () => {
                     </div>
                   </div>
                 )}
-
                 <div>
                   <button
-                    className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-[8px] focus:outline-none focus:shadow-outline w-full mt-[35px]"
+                    className="bg-[#3431BB] hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-[8px] focus:outline-none focus:shadow-outline w-full mt-4 mb-3"
                     type="submit"
                     onClick={formik.handleAfterLogin}
                     disabled={formik.isSubmitting}
                   >
                     {isLoading ? (
-                      <div className="flex items-center justify-center">
+                      <div className="flex items-center justify-center mb-3">
                         <FaSpinner className="animate-spin mr-2" />
                         Loading...
                       </div>
@@ -283,6 +331,9 @@ const CreateAcc01 = () => {
                       "Continue"
                     )}
                   </button>
+                <p className=" font-light text-sm ">By continuing, you agree to our <span> </span>
+                    <span className=" underline font-medium cursor-pointer" onClick={openModal}>T&C</span> and <span> </span>
+                    <span className=" underline font-medium cursor-pointer">Privacy policy.</span></p>
                 </div>
               </form>
             );
@@ -372,6 +423,17 @@ const CreateAcc01 = () => {
          />
        </div>
      </div>
+     {isModalOpen && (
+      <div 
+        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+        onClick={closeModal}
+      >
+        <div onClick={(e) => e.stopPropagation()}>
+          <TermsAndConditions handleClose={closeModal} />
+        </div>
+      </div>
+    )}
+    
     </div>
   );
 };
