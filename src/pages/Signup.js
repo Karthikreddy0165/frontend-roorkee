@@ -21,14 +21,18 @@ const CreateAcc01 = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false); // State to control success screen
-
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   useEffect(() => {
     if (authState.token && !showSuccess) {
-      router.replace("/");
+      setIsRedirecting(true);
+      router.replace("/").then(() => setIsRedirecting(false)); 
     }
   }, [authState.token, router]); 
-
+  
+  if (isRedirecting) {
+    return null; 
+  }
   if (showSuccess) {
     return <AccCreatSucc />;
   }
