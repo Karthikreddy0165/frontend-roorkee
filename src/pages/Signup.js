@@ -23,6 +23,8 @@ const CreateAcc01 = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false); // State to control success screen
   const [isRedirecting, setIsRedirecting] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (authState.token && !showSuccess) {
@@ -38,14 +40,6 @@ const CreateAcc01 = () => {
     return <AccCreatSucc />;
   }
   
-  const validationSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email address").required("Email is required"),
-    password: Yup.string()
-      .min(8, "Password must be at least 8 characters")
-      .required("Password is required"),
-  });
-  const [isChecked, setIsChecked] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true); 
@@ -54,13 +48,6 @@ const CreateAcc01 = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-  };
-
-
-
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
