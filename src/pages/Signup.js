@@ -13,6 +13,7 @@ import loginperson from "../assets/image.png";
 import AccCreatSucc from "@/utils/AccountCreated";
 import Checkbox from "@/components/Checkbox";
 import TermsAndConditions from "./Terms-conditions";
+import PrivacyPolicy from "./privacy-policy";
 
 const CreateAcc01 = () => {
   const router = useRouter();
@@ -25,6 +26,7 @@ const CreateAcc01 = () => {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
 
   useEffect(() => {
     if (authState.token && !showSuccess) {
@@ -44,9 +46,15 @@ const CreateAcc01 = () => {
   const openModal = () => {
     setIsModalOpen(true); 
   };
+  const openPrivacyModal = () => {
+    setIsPrivacyModalOpen(true); 
+  };
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+  const closePrivacyModal = () => {
+    setIsPrivacyModalOpen(false);
   };
 
   const togglePasswordVisibility = () => {
@@ -270,7 +278,7 @@ const CreateAcc01 = () => {
                   {formik.touched.password && formik.errors.password && (
           <div className="text-red-500 text-sm mt-1">{formik.errors.password}</div>
         )}
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-4"
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-6"
                   data-test-id="toggle-password-visibility" 
                   onClick={togglePasswordVisibility}>
                     {showPassword ? <FaEye /> : <FaEyeSlash />}
@@ -310,7 +318,7 @@ const CreateAcc01 = () => {
                     disabled={formik.isSubmitting}
                   >
                     {isLoading ? (
-                      <div className="flex items-center justify-center mb-3">
+                      <div className="flex items-center justify-center mb-0">
                         <FaSpinner className="animate-spin mr-2" />
                         Loading...
                       </div>
@@ -320,7 +328,7 @@ const CreateAcc01 = () => {
                   </button>
                 <p className=" font-light text-sm ">By continuing, you agree to our <span> </span>
                     <span className=" underline font-medium cursor-pointer" onClick={openModal}>T&C</span> and <span> </span>
-                    <span className=" underline font-medium cursor-pointer">Privacy policy.</span></p>
+                    <span className=" underline font-medium cursor-pointer" onClick={openPrivacyModal}>Privacy policy.</span></p>
                 </div>
               </form>
             );
@@ -417,6 +425,17 @@ const CreateAcc01 = () => {
       >
         <div onClick={(e) => e.stopPropagation()}>
           <TermsAndConditions handleClose={closeModal} />
+        </div>
+      </div>
+    )}
+
+     {isPrivacyModalOpen && (
+      <div 
+        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+        onClick={closePrivacyModal}
+      >
+        <div onClick={(e) => e.stopPropagation()}>
+          <PrivacyPolicy handleClose={closePrivacyModal} />
         </div>
       </div>
     )}

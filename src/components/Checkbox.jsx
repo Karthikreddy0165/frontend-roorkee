@@ -1,15 +1,18 @@
 import React from "react";
 
 const Checkbox = ({ id, label, checked, onChange, className }) => {
+  const handleToggle = () => {
+    onChange({ target: { name: id, value: !checked } });
+  };
   return (
-    <div className={`flex items-center space-x-2 cursor-pointer ${className}`} onClick = {onChange}>
+    <div className={`flex items-center space-x-2 cursor-pointer ${className}`} onClick={handleToggle}>
       {/* Hidden Checkbox Input */}
       <input
         type="checkbox"
         id={id}
         className="hidden peer"
         checked={checked}
-        onChange={onChange}
+        onChange={handleToggle}
       />
 
       {/* Custom Checkbox UI */}
