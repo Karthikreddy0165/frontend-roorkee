@@ -275,7 +275,7 @@ const CreateAcc01 = () => {
                   {formik.touched.password && formik.errors.password && (
           <div className="text-red-500 text-sm mt-1">{formik.errors.password}</div>
         )}
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-4"
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-6"
                   data-test-id="toggle-password-visibility" 
                   onClick={togglePasswordVisibility}>
                     {showPassword ? <FaEye /> : <FaEyeSlash />}
