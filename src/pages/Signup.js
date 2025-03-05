@@ -22,6 +22,17 @@ const CreateAcc01 = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false); // State to control success screen
 
+
+  useEffect(() => {
+    if (authState.token && !showSuccess) {
+      router.replace("/");
+    }
+  }, [authState.token, router]); 
+
+  if (showSuccess) {
+    return <AccCreatSucc />;
+  }
+  
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email address").required("Email is required"),
     password: Yup.string()
@@ -76,21 +87,15 @@ const CreateAcc01 = () => {
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
+          router.replace("/my-preference");          
         }, 1500);
-        router.replace("/my-preference");
       }
     } catch (error) {
       console.error("Login failed:", error);
     }
   };
-  if (showSuccess) {
-    return <AccCreatSucc />;
-  }
 
-  if(authState.token){
-    router.replace("/");
-    return <App/>
-  }
+
 
 
   return (
