@@ -15,6 +15,7 @@ const ApplyModal = ({
   isOpen,
   onRequestClose,
   scheme,
+
   
   activeTab
 }) => {
@@ -53,6 +54,7 @@ const ApplyModal = ({
       toggleBookmark(scheme_id, isBookmarked[scheme_id])
       console.log("Scheme saved successfully!");
       setIsToastVisible(true)
+      logUserEvent("save", scheme_id)
       setIsSaved(true)
     }else if (success && isBookmarked[scheme_id]){
       toggleBookmark(scheme_id, isBookmarked[scheme_id])
@@ -61,6 +63,37 @@ const ApplyModal = ({
     } else {
       setIsSavedModalOpen(true)
       console.error("Failed to save scheme");
+    }
+  };
+
+  const logUserEvent = async (eventType, schemeId = null, details = {}) => {
+    const eventBody = {
+      event_type: eventType,
+      ...(schemeId && { scheme_id: schemeId }),
+      details: details,
+    };
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/log/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authState.token}`,
+          },
+          body: JSON.stringify(eventBody),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to log event");
+      }
+
+      const data = await response.json();
+      console.log("Event logged successfully:", data);
+    } catch (error) {
+      console.error("Error logging event:", error);
     }
   };
 
@@ -212,6 +245,10 @@ const handleReportSubmit = async (e) => {
       });
   };
   
+
+  if(isSaved){
+    logUserEvent("save", scheme.id)
+  }
   
 
   if (!isOpen) return null;

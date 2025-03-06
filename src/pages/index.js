@@ -140,10 +140,10 @@ const App = () => {
         {/* Main Container */}
         <div className=" p-[40px_0] mx-auto  ">
           {/* First Row */}
-          <div className="flex flex-col items-center sm:bg-[#EEEEFF] md:h-[500px] sm:h-[500px] sm:w-[70vw] px-4 rounded-[20px]  lg:flex-row justify-center mx-auto ">
+          <div className="flex flex-col md:flex md:flex-row items-center sm:bg-[#EEEEFF] md:h-[500px] sm:h-[500px] sm:w-[70vw] px-4 rounded-[20px]  lg:flex-row justify-center mx-auto ">
             {/* Left Div */}
             
-            <div className="flex flex-col w-full lg:w-[482px]   items-start gap-[20px] lg:text-left">
+            <div className="flex flex-col  w-full lg:w-[482px]   items-start gap-[20px] lg:text-left">
               <h1 className="text-[#3F3BE1] font-inter text-[20px] lg:text-[40px] font-semibold">
                 Empowering the marginalized community
               </h1>
@@ -206,7 +206,7 @@ const App = () => {
 </div>
 
             {/* Right Div */}
-            <div className="w-[482px] h-[300px] mr-[30px] mb-[20px]  sm:block hidden">
+            <div className="w-[482px] h-[300px] mr-[30px] mb-[20px] md:hidden lg:block sm:hidden sm:block hidden">
               {/* Right Modals here */}
               <Image
                 className="relative h-[334px] w-[258px] rounded-tl-[10rem] -right-[190px] pb-8"
@@ -469,7 +469,7 @@ const App = () => {
               {/* Right Modals here */}
             
               <Image
-                className="relative h-[334px] w-full rounded-bl-[rem]  rounded-tl-[10rem]  rounded-br-[10rem]   rounded-tr-[1 rem] sm:-right-[10px] pb-8"
+                className="relative h-[334px] md:hidden w-full lg:block rounded-bl-[rem] sm:hidden lg:block  rounded-tl-[10rem]  rounded-br-[10rem]   rounded-tr-[1 rem] sm:-right-[10px] pb-8"
                 src={scholarshipcap}
                 alt="Image loading..."
               />
@@ -578,7 +578,7 @@ const App = () => {
             </div>
           </div>
         </div>
-        <div className="sm:w-[1250px] sm:ml-[170px] w-full p-[30px] ">
+        <div className=" w-full sm:p-0 lg:px-[200px] md:px-[100px] px-[20px]">
           <FAQSection />
         </div>
 

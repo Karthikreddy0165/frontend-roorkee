@@ -94,7 +94,7 @@ const NavBar = () => {
       <div className="flex  items-center border-b-2 sm:border-none py-2  bg-white  px-2 z-10 relative sm:h-[73px] h-[73px] gap-2 w-full sm:px-6">
         {/* Logo Section */}
         <div
-          className="sm:text-[16px] mt-2 font-semibold text-[#3431BB] text-sm hover:text-blue-700 cursor-pointer flex items-center  gap-2 sm:ml-[220px]"
+          className="sm:text-[16px] mt-2 font-semibold text-[#3431BB] text-sm hover:text-blue-700 cursor-pointer flex items-center  gap-2 "
           onClick={handleClickLogo}
         >
           <svg
@@ -217,7 +217,7 @@ const NavBar = () => {
           )}
         </div>
 
-        <div className="flex sm:mr-[220px] ml-auto items-center  ">
+        <div className="flex  ml-auto items-center  ">
           {authState.token ? (
             <div className="relative">
               {/* Profile Icon for Mobile */}
