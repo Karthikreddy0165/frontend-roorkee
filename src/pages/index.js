@@ -343,7 +343,7 @@ const App = () => {
               className="text-center text-white font-inter text-[16px] font-normal leading-normal bg-[#3431BB] pt-[10px] pr-[9px] sm:pr-[44px] pb-[10px] pl-[9px] sm:pl-[44px] rounded-[4px] hover:bg-blue-700 sm:mt-[32px] sm:mb-[50px]"
               onClick={handleClickFindrightSchemeForYOu}
             >
-              Find the Right {firstCategory} for me
+              Find the right {firstCategory} for me
             </button>
           </div>
         </div>
@@ -461,7 +461,12 @@ const App = () => {
   <p className="text-xs sm:text-base text-left leading-relaxed sm:leading-6 text-wrap sm:w-auto md:w-[70%] lg:w-[60%]">
     Explore a wide range of scholarships designed to support students from diverse backgrounds. Find financial aid opportunities based on merit, need, and special categories. Click to discover and apply for scholarships that match your eligibility!
   </p>
-  <p className=" flex mt-12 italic hover:underline cursor-pointer gap-2">Click here to view <ArrowBigRight/></p>
+  <p className="flex mt-12 italic hover:underline cursor-pointer gap-2">
+  Click here to view
+  <svg xmlns="http://www.w3.org/2000/svg" fill="#3330BA" viewBox="0 0 443 512" className="w-4 h-4 mt-1 text-blue-700">
+    <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
+  </svg>
+</p>
 
 </div>
 
