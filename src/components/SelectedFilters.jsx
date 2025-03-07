@@ -4,7 +4,7 @@ import { useAuth } from "@/Context/AuthContext";
 import ToolTips from "./ComponentsUtils/tooltips";
 import PreferenceContext from "@/Context/preferenceContext";
 import { useRouter } from "next/router";
-import { useProfile } from "@/Context/ProfileContext"; 
+import { useProfile } from "@/Context/ProfileContext";
 function SelectedFilters() {
   const { profileData, setProfileData } = useProfile();
   const { state, beneficiarie } = useContext(PreferenceContext);
@@ -83,6 +83,49 @@ function SelectedFilters() {
       setStates([]);
     }
   };
+  const logUserEvent = async (eventType, schemeId = null, details = {}) => {
+    const eventBody = {
+      event_type: eventType,
+      ...(schemeId && { scheme_id: schemeId }),
+      details: details,
+    };
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/log/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authState.token}`,
+          },
+          body: JSON.stringify(eventBody),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to log event");
+      }
+
+      const data = await response.json();
+      console.log("Event logged successfully:", data);
+    } catch (error) {
+      console.error("Error logging event:", error);
+    }
+  };
+  if (
+    newSponser.length > 0 ||
+    newState.length > 0 ||
+    newDepartment.length > 0 ||
+    beneficiaries.length > 0
+  ) {
+    logUserEvent("filter", null, {
+      newSponser,
+      newState,
+      newDepartment,
+      beneficiaries,
+    });
+  }
   // console.log("states", newState);
   return newSponser.length > 0 ||
     newState.length > 0 ||

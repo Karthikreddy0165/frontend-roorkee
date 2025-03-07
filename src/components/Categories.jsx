@@ -20,6 +20,7 @@ import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router.js";
 import { FaShareAlt } from "react-icons/fa";
 import { data } from "autoprefixer";
+import HowToApply from "./Modals/HowToApply.js";
 
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const router = useRouter();
@@ -229,6 +230,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       );
       if (response.ok) {
         const result = await response.json();
+        logUserEvent("save", scheme_id);
 
         return true;
       } else {

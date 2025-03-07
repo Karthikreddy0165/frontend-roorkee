@@ -1,12 +1,52 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTabContext } from "@/Context/TabContext";
 import { IoCloseSharp } from "react-icons/io5";
+import { useAuth } from "@/Context/AuthContext";
 
 function SearchInput() {
   const { searchQuery, setSearchQuery } = useTabContext();
+  const { authState } = useAuth();
+
+  const logUserEvent = async (eventType, schemeId = null, details = {}) => {
+    const eventBody = {
+      event_type: eventType,
+      ...(schemeId && { scheme_id: schemeId }),
+      details: details,
+    };
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/events/log/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authState.token}`,
+          },
+          body: JSON.stringify(eventBody),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to log event");
+      }
+
+      const data = await response.json();
+      console.log("Event logged successfully:", data);
+    } catch (error) {
+      console.error("Error logging event:", error);
+    }
+  };
+
+  // Use useEffect to log search events whenever searchQuery changes
+  useEffect(() => {
+    if (searchQuery.trim() !== "") {
+      logUserEvent("search", null, { searchQuery });
+    }
+  }, [searchQuery]);
 
   return (
-    <div className="sticky top-0 z-20 flex items-center gap-3 h-14 px-3 rounded-lg border border-gray-300 bg-white  hidden sm:flex">
+    <div className="sticky top-0 z-20 flex items-center gap-3 h-14 px-3 rounded-lg border border-gray-300 bg-white hidden sm:flex">
       {/* Search Icon */}
       <svg
         className="w-5 h-5 text-gray-500"
