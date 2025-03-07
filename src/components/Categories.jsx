@@ -28,7 +28,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     useBookmarkContext();
   const [selectedScheme, setSelectedScheme] = useState(null);
   const { scheme_id, tab } = router.query;
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const { authState } = useAuth();
@@ -49,6 +48,15 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     setStatesFromApi,
   } = useContext(FilterContext);
   // Close the toast after a certain time
+
+  const isModalopen = router.isReady && router.query.modal_open === "true";
+
+  useEffect(() => {
+    console.log("Window URL:", window.location.href);
+    console.log("Modal should open:", isModalopen);
+  }, [router.isReady, isModalopen]);
+
+  
   useEffect(() => {
     if (isToastVisible) {
       const timer = setTimeout(() => {
@@ -66,8 +74,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }),
-    [isUnSaveToastVisible];
+  }, [isUnSaveToastVisible]);
 
   // Fetch saved schemes so that we can mark saved schemes as bookmarked
   useEffect(() => {
@@ -105,7 +112,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   }, [authState.token]);
 
   useEffect(() => {
-    console.log("dataFronApi", dataFromApi);
+    console.log("dataFromApi", dataFromApi);
     const scheme = dataFromApi.results?.find(
       (item) => item.id === parseInt(scheme_id)
     );
@@ -115,14 +122,20 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     }
   }, [scheme_id, dataFromApi?.results]);
 
+  
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
     const schemeId = queryParams.get("scheme_id");
     const modalOpen = queryParams.get("modal_open");
 
     if (modalOpen === "true" && schemeId) {
-      setIsModalOpen(true);
-      setSelectedScheme(schemeId);
+      const scheme = dataFromApi.results?.find(
+        (item) => item.id === parseInt(scheme_id)
+      );
+      if(scheme){
+        setSelectedScheme(scheme);
+        setIsModalOpen(true);
+      }
     }
   }, []);
 
@@ -157,7 +170,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     }
   };
   const handleClick = (scheme_id) => {
-    const scheme = dataFromApi.results.find((item) => item.id === scheme_id);
+    const scheme = dataFromApi?.results?.find((item) => item.id === scheme_id);
     if (scheme) {
       const startTime = Date.now();
 
@@ -556,14 +569,15 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
             isOpen={isModalOpen}
             onRequestClose={() => {
               setIsModalOpen(false);
-              router.push(
-                `/AllSchemes?${activeTab}?tab=${activeTab}`,
-                undefined,
-                {
-                  shallow: true,
-                }
-              );
+              setSelectedScheme(null);
+            
+              router.push({
+                pathname: router.pathname,
+                query: { tab: router.query.tab }, 
+              }, undefined, { shallow: true });
             }}
+            
+            
             scheme={selectedScheme}
             activeTab={activeTab}
           />

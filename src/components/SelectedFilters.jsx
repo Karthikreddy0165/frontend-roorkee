@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState,useMemo } from "react";
 import FilterContext from "@/Context/FilterContext";
 import { useAuth } from "@/Context/AuthContext";
 import ToolTips from "./ComponentsUtils/tooltips";
@@ -24,20 +24,19 @@ function SelectedFilters() {
     sponsoredBy,
     setSponsoredBy,
     setFundingBy,
+    handleRemoveFilter
   } = useContext(FilterContext);
   // console.log(states);
   const { authState } = useAuth();
-  const [newSponser, setNewSponser] = useState([]);
-  const [newState, setNewState] = useState([]);
-  const [newDepartment, setNewDepartment] = useState([]);
-
-  useEffect(() => {
-    setNewSponser(
-      sponsoredBy[1] && sponsoredBy[1]?.[0] !== "State" ? sponsoredBy[1] : []
-    );
-    setNewState(states[1] ? states[1] : []);
-    setNewDepartment(Object.keys(departments) ? Object.keys(departments) : []);
-  }, [sponsoredBy, states, departments]);
+  const newSponser = useMemo(
+    () => (sponsoredBy[1] && sponsoredBy[1][0] !== "State" ? sponsoredBy[1] : []),
+    [sponsoredBy]
+  );
+  
+  const newState = useMemo(() => states[1] || [], [states]);
+  
+  const newDepartment = useMemo(() => Object.keys(departments), [departments]);
+  
 
   useEffect(() => {
     const fetchEmailData = async () => {
@@ -80,15 +79,6 @@ function SelectedFilters() {
 
     if (selectedState) {
       setStates([[selectedState.id], [selectedState.state_name]]);
-    }
-
-    setNewSponser(sponsoredBy[1] ? sponsoredBy[1] : []);
-    setNewDepartment(Object.keys(departments) ? Object.keys(departments) : []);
-
-    console.log(statesFromApi);
-
-    if (selectedState) {
-      setStates([[selectedState.id], [selectedState.state_name]]);
     } else {
       setStates([]);
     }
@@ -110,17 +100,37 @@ function SelectedFilters() {
                 className="flex items-center justify-center px-2 py-[5px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newState[0]}
               >
-                {newState[0].length > 30
-                  ? `${newState[1].substring(0, 30)}...`
-                  : newState[0]}
+                <span>
+                  {newState[0].length > 30 ? `${newState[0].substring(0, 30)}...` : newState[0]}
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("state", newState[0]);
+                  }}
+                >
+                  ✕
+                </span>
               </button>
               <button
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newState[1]}
               >
-                {newState[1].length > 30
+              <span>
+              {newState[1].length > 30
                   ? `${newState[1].substring(0, 30)}...`
                   : newState[1]}
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("state", newState[1]);
+                  }}
+                >
+                  ✕
+                </span>
               </button>
             </div>
           ) : (
@@ -132,9 +142,21 @@ function SelectedFilters() {
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newState[0]}
               >
-                {newState[0].length > 30
+              <span>
+              {newState[0].length > 30
                   ? `${newState[0].substring(0, 30)}...`
                   : newState[0]}
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("state", newState[0]); // Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span>                
+
               </button>
             </div>
           ) : (
@@ -146,18 +168,41 @@ function SelectedFilters() {
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newState[0]}
               >
-                {newState[0].length > 30
+              <span>
+              {newState[0].length > 30
                   ? `${newState[0].substring(0, 30)}...`
                   : newState[0]}
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("state", newState[0])// Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
+
               </button>
               <button
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newState[1]}
               >
-                {newState[1].length > 30
+              <span>
+              {newState[1].length > 30
                   ? `${newState[1].substring(0, 30)}...`
                   : newState[1]}{" "}
                 + {newState.length - 2} more
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("state", newState[1]);// Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
               </button>
             </div>
           ) : (
@@ -170,17 +215,39 @@ function SelectedFilters() {
                 className="flex items-center justify-center px-2 py-[5px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newDepartment[0]}
               >
-                {newDepartment[0].length > 30
+              <span>
+              {newDepartment[0].length > 30
                   ? `${newDepartment[0].substring(0, 30)}...`
                   : newDepartment[0]}
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("department",newDepartment[0] ); // Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
               </button>
               <button
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newDepartment[1]}
               >
-                {newDepartment[1].length > 30
+              <span>
+              {newDepartment[1].length > 30
                   ? `${newDepartment[1].substring(0, 30)}...`
                   : newDepartment[1]}
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("department",newDepartment[1]); // Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
               </button>
             </div>
           ) : (
@@ -192,9 +259,20 @@ function SelectedFilters() {
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newDepartment[0]}
               >
-                {newDepartment[0].length > 30
-                  ? `${newDepartment[0].substring(0, 30)}...`
-                  : newDepartment[0]}
+              <span>
+              {newDepartment[0].length > 30
+                ? `${newDepartment[0].substring(0, 30)}...`
+                : newDepartment[0]}
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("department",newDepartment[0]) // Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
               </button>
             </div>
           ) : (
@@ -206,18 +284,40 @@ function SelectedFilters() {
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newDepartment[0]}
               >
-                {newDepartment[0].length > 30
+              <span>
+              {newDepartment[0].length > 30
                   ? `${newDepartment[0].substring(0, 30)}...`
                   : newDepartment[0]}
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("department",newDepartment[0]); // Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
               </button>
               <button
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newDepartment[1]}
               >
-                {newDepartment[1].length > 30
+              <span>
+              {newDepartment[1].length > 30
                   ? `${newDepartment[1].substring(0, 30)}...`
                   : newDepartment[1]}{" "}
                 + {newDepartment.length - 2} more
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("department",newDepartment[1]) // Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
               </button>
             </div>
           ) : (
@@ -230,17 +330,39 @@ function SelectedFilters() {
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={beneficiaries[0]}
               >
-                {beneficiaries[0].length > 30
+              <span>
+              {beneficiaries[0].length > 30
                   ? `${beneficiaries[0].substring(0, 30)}...`
                   : beneficiaries[0]}
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("beneficiaries",beneficiaries[0]) // Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
               </button>
               <button
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={beneficiaries[1]}
               >
-                {beneficiaries[1].length > 30
+              <span>
+              {beneficiaries[1].length > 30
                   ? `${beneficiaries[1].substring(0, 30)}...`
                   : beneficiaries[1]}
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("beneficiaries",beneficiaries[1]) // Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
               </button>
             </div>
           ) : (
@@ -252,9 +374,20 @@ function SelectedFilters() {
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={beneficiaries[0]}
               >
-                {beneficiaries[0].length > 30
+              <span>
+              {beneficiaries[0].length > 30
                   ? `${beneficiaries[0].substring(0, 30)}...`
                   : beneficiaries[0]}
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("beneficiaries",beneficiaries[0]) // Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
               </button>
             </div>
           ) : (
@@ -266,18 +399,40 @@ function SelectedFilters() {
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={beneficiaries[0]}
               >
-                {beneficiaries[0].length > 30
+              <span>
+              {beneficiaries[0].length > 30
                   ? `${beneficiaries[0].substring(0, 30)}...`
                   : beneficiaries[0]}
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("beneficiaries",beneficiaries[0]) // Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
               </button>
               <button
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={beneficiaries[1]}
               >
-                {beneficiaries[1].length > 30
+              <span>
+              {beneficiaries[1].length > 30
                   ? `${beneficiaries[1].substring(0, 30)}...`
                   : beneficiaries[1]}{" "}
                 + {beneficiaries.length - 2} more
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("beneficiaries",beneficiaries[1]); // Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
               </button>
             </div>
           ) : (
@@ -290,17 +445,39 @@ function SelectedFilters() {
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newSponser[0]}
               >
-                {newSponser[0].length > 30
+              <span>
+              {newSponser[0].length > 30
                   ? `${newSponser[0].substring(0, 30)}...`
                   : newSponser[0]}
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("sponsoredBy",newSponser[0]) // Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
               </button>
               <button
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newSponser[1]}
               >
-                {newSponser[1].length > 30
+              <span>
+              {newSponser[1].length > 30
                   ? `${newSponser[1].substring(0, 30)}...`
                   : newSponser[1]}
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("sponsoredBy",newSponser[1])// Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
               </button>
             </div>
           ) : (
@@ -312,9 +489,20 @@ function SelectedFilters() {
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newSponser[0]}
               >
-                {newSponser[0].length > 30
+              <span>
+              {newSponser[0].length > 30
                   ? `${newSponser[0].substring(0, 30)}...`
                   : newSponser[0]}
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("sponsoredBy",newSponser[0]) // Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
               </button>
             </div>
           ) : (
@@ -326,18 +514,41 @@ function SelectedFilters() {
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newSponser[0]}
               >
-                {newSponser[0].length > 30
+              <span>
+              {newSponser[0].length > 30
                   ? `${newSponser[0].substring(0, 30)}...`
                   : newSponser[0]}
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("sponsoredBy",newSponser[0]) // Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
+
               </button>
               <button
                 className="flex items-center justify-center pr-2 pl-2 py-[4px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue"
                 data-full-text={newSponser[1]}
               >
-                {newSponser[1].length > 30
+              <span>
+              {newSponser[1].length > 30
                   ? `${newSponser[1].substring(0, 30)}...`
                   : newSponser[1]}{" "}
                 + {newSponser.length - 2} more
+                </span>
+                <span
+                  className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevents triggering parent button click
+                    handleRemoveFilter("sponsoredBy",newSponser[1]) // Function to remove the filter
+                  }}
+                >
+                  ✕
+                </span> 
               </button>
             </div>
           ) : (
@@ -345,7 +556,7 @@ function SelectedFilters() {
           )}
         </div>
       </div>
-      <div className="mt-4">
+      <div className="mt-4 z-10">
         {/* Tooltip applied to the button */}
         <ToolTips tooltip="Set Your Preferences Here">
           <button
@@ -369,7 +580,7 @@ function SelectedFilters() {
           </button>
         </div>
       </div>
-      <div>
+      <div className ='z-10'>
         <ToolTips tooltip="Apply your preferences">
           <button
             className="flex-shrink-0 px-4 py-2 rounded-lg  border border-gray-400 bg-white text-[#3330BA] font-inter text-[12px] font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue sm:text-sm"
