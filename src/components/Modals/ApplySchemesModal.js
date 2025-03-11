@@ -228,7 +228,7 @@ const handleReportSubmit = async (e) => {
     const baseUrl = window.location.origin + window.location.pathname;
     const shareUrl = `${baseUrl}?tab=${activeTab}&scheme_id=${schemeId}&modal_open=${isOpen}`;
   
-    if (navigator.clipboard && !window.isSecureContext) {
+    if (navigator.clipboard && window.isSecureContext) {
       try {
         await NavigationHistoryEntry.clipboard.writeText(shareUrl);
         toast.success("Link copied to clipboard!");
