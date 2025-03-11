@@ -53,30 +53,32 @@ describe('signup Page Tests', () => {
   });
 
 // Tests for checking signup feature
-  describe('API Integration', () => {
-    it('should successfully log in with valid credentials', () => {
-      const validEmail = 'test@example.com'
-      const validPassword = 'password1231'
+describe('API Integration', () => {
+  it('should successfully log in with valid credentials', () => {
+    const validEmail = `test${Date.now()}@example.com`; // Unique email for each test
+    const validPassword = 'password123111';
 
-      cy.intercept('POST', `${Cypress.env('apiUrl')}/api/login/`, {
-        statusCode: 200,
-        body: {
-          access: 'fake-jwt-token'
-        }
-      }).as('loginRequest')
+    cy.intercept('POST', `${Cypress.env('apiUrl')}/api/login/`, {
+      statusCode: 200,
+      body: {
+        access: 'fake-jwt-token'
+      }
+    }).as('loginRequest')
 
-      cy.get('input[type="email"]').type(validEmail)
-      cy.get('input[type="password"]').type(validPassword)
-      cy.get('input[id="terms"]').check({force: true}).should('be.checked');
-      cy.contains('button', 'Continue').click({force:true})
+    cy.get('input[type="email"]').type(validEmail)
+    cy.get('input[type="password"]').type(validPassword)
+    cy.get('input[id="terms"]').check({force: true}).should('be.checked');
+    cy.contains('button', 'Continue').click()
 
-      cy.wait('@loginRequest').then((interception) => {
-        expect(interception.request.body).to.deep.equal({
-          email: validEmail.toLowerCase(),
-          password: validPassword
-        })
+    cy.wait('@loginRequest').then((interception) => {
+      expect(interception.request.body).to.deep.equal({
+        email: validEmail.toLowerCase(),
+        password: validPassword
       })
-    });
+    })
+    // Should redirect to Home page
+    cy.url().should('include', '/')
+  });
 
     it('should handle signup failure', () => {
       cy.intercept('POST', `${Cypress.env('apiUrl')}/api/register/`, {

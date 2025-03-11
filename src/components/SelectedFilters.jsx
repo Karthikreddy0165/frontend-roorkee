@@ -5,6 +5,7 @@ import ToolTips from "./ComponentsUtils/tooltips";
 import PreferenceContext from "@/Context/preferenceContext";
 import { useRouter } from "next/router";
 import { useProfile } from "@/Context/ProfileContext";
+
 function SelectedFilters() {
   const [showAllFilters, setShowAllFilters] = useState(false);
   const MAX_VISIBLE_FILTERS = 3; 
@@ -182,14 +183,16 @@ const renderFilterButton = (filterValue, filterType) => {
               <>
                 {filtersToDisplay.map(filter => renderFilterButton(filter.value, filter.type))}
                 
-                {totalFilters > MAX_VISIBLE_FILTERS && (
-                  <button
-                    onClick={() => setShowAllFilters(!showAllFilters)}
-                      className="flex items-center justify-center px-4 py-2 rounded-full bg-gray-100 text-sm text-onclick-btnblue font-medium transition-all duration-200 hover:bg-gray-200"
-                  >
-                    {showAllFilters ? `Show Less Filters` : `Show All (${totalFilters - MAX_VISIBLE_FILTERS}) Filters`}
-                  </button>
-                )}
+                <div className="block w-full">
+  {totalFilters > MAX_VISIBLE_FILTERS && (
+    <button
+      onClick={() => setShowAllFilters(!showAllFilters)}
+      className="text-[12px] text-gray-600 px-1 py-0 font-medium translate-y-1"
+    >
+      {showAllFilters ? `Show Less` : `Show All (${totalFilters - MAX_VISIBLE_FILTERS})`}
+    </button>
+  )}
+</div>
               </>
             );
           })()}

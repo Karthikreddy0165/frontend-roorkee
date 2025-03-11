@@ -18,9 +18,10 @@ import { useBookmarkContext } from "@/Context/BookmarkContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router.js";
-import { FaShareAlt } from "react-icons/fa";
+import { PiTelegramLogoThin } from "react-icons/pi";
 import { data } from "autoprefixer";
 import HowToApply from "./Modals/HowToApply.js";
+import { toast } from "react-toastify";
 
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const router = useRouter();
@@ -340,15 +341,24 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     }
   };
 
-  const handleShare = () => {
-    const schemeUrl = window.location.href;
+  const handleShare = (schemeId) => {
+    const baseUrl = window.location.origin + window.location.pathname;
+    const shareUrl = `${baseUrl}?tab=${activeTab}&scheme_id=${schemeId}&modal_open=true`;
+  
     navigator.clipboard
-      .writeText(schemeUrl)
+      .writeText(shareUrl)
       .then(() => {
-        alert("Link copied to clipboard!");
+        toast.success("Link copied to clipboard!", {
+          position: "top-right",
+          autoClose: 2000,
+        });
       })
       .catch((error) => {
         console.error("Failed to copy link:", error);
+        toast.error("Failed to copy link. Please try again.", {
+          position: "top-right",
+          autoClose: 2000,
+        });
       });
   };
 
@@ -446,7 +456,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
           (item) =>
             item.title && (
               <div
-                className="flex items-start justify-between self-stretch relative border-[1px] border-gray-300 rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
+                className="flex items-start justify-between self-stretch relative border-[1px] border-gray-300 rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px] pr-8"
                 key={item.id}
                 style={{
                   backgroundColor:
@@ -454,7 +464,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                 }}
               >
                 <div onClick={() => handleClick(item.id)}>
-                  <div className="gap-[12px] pt-[16px] pd-[16px] w-[200px] md:w-full">
+                  <div className="gap-[12px] pt-[16px] pd-[16px] w-[140px] md:w-full">
                     <p
                       className="font-inter text-[16px] sm:text-[18px] leading-[21.6px] cursor-pointer font-semibold mb-[10px] line-clamp-2 text-gray-700"
                       role="button"
@@ -520,6 +530,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                     </div>
                   </div>
                 </div>
+                <div className="flex items-center gap-4">
                 <ToolTips tooltip="Save scheme">
                   <div
                     className="cursor-pointer px-2 py-2 right-[8.25px]"
@@ -532,6 +543,16 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                     )}
                   </div>
                 </ToolTips>
+
+                <ToolTips tooltip="Share scheme">
+                <div
+                  className="cursor-pointer px-2 py-2 right-[8.25px]"
+                  onClick={() => handleShare(item.id)}
+                >
+                  <PiTelegramLogoThin className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[22px] text-gray-600 hover:text-[#3431BB]" />
+                </div>
+</ToolTips>
+              </div>
               </div>
             )
         )}

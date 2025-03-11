@@ -47,13 +47,15 @@ describe('Home Page Tests', () => {
     });
 
     it('should show "Get Started" button when not logged in', () => {
-      cy.contains(/get started/i)
+      cy.get('button')
+        .contains('Get Started')
         .should('be.visible');
     });
 
     it('should navigate to login page when clicking Get Started', () => {
-      cy.contains(/get started/i)
-        .click({ force: true });
+      cy.get('button')
+        .contains('Get Started')
+        .click();
       cy.url().should('include', '/login');
     });
   });
@@ -117,9 +119,9 @@ describe('Home Page Tests', () => {
     });
   });
 
-  // Resource Categories Tests
-  describe('Resource Categories', () => {
-    it('should display available resource categories', () => {
+  //Categories Tests
+  describe('Categories', () => {
+    it('should display available categories', () => {
       const availableCategories = Cypress.env('availableCategories');
       
       // Check each category for visibility based on availability
