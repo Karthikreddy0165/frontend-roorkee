@@ -39,6 +39,6 @@ jobs:
 
       - name: Run Cypress Tests (Only login & signup)
         run: |
-          npx cypress run --browser chrome --spec "cypress/e2e/login.cy.js"
+          npx cypress run --browser chrome 
         env:
           NEXT_PUBLIC_API_BASE_URL: http://43.204.236.103:8000
