@@ -200,7 +200,7 @@ const NavBarScheme = () => {
           LAUNCHPAD
         </div>
 
-        <div className="hidden md:flex space-x-10 justify-end ml-auto -mr-[700px] text-[16px] font-semibold">
+        <div className="hidden md:flex space-x-10 justify-end ml-auto -mr-[500px] text-[16px] font-semibold">
           {/* Home is always present */}
           <a
             href="/"
@@ -209,17 +209,6 @@ const NavBarScheme = () => {
             }`}
           >
             HOME
-          </a>
-
-          <a
-            href="/AboutUs"
-            className={`text-[#000000] hover:text-[#3330BA] transition duration-300 ${
-              router.pathname === "/AboutUs"
-                ? "underline decoration-[#3330BA]"
-                : ""
-            }`}
-          >
-            ABOUT US
           </a>
 
           {/* Dynamically show all available categories */}
@@ -236,6 +225,17 @@ const NavBarScheme = () => {
               {category.label}
             </a>
           ))}
+
+            <a
+            href="/AboutUs"
+            className={`text-[#000000] hover:text-[#3330BA] transition duration-300 ${
+              router.pathname === "/AboutUs"
+                ? "underline decoration-[#3330BA]"
+                : ""
+            }`}
+          >
+            ABOUT US
+          </a>
         </div>
 
         {/* Search Section (Mobile Only) */}

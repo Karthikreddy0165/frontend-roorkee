@@ -259,7 +259,7 @@ const CreateAcc01 = () => {
                     value={formik.values.email.toLowerCase()}
                   />
                   {formik.touched.email && formik.errors.email && (
-          <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>
+          <div className="text-red-500 text-sm mt-1" data-test-id="email-password-error">{formik.errors.email}</div>
         )}
                 </div>
                 <div className="relative mt-6">
@@ -276,7 +276,7 @@ const CreateAcc01 = () => {
                     value={formik.values.password}
                   />
                   {formik.touched.password && formik.errors.password && (
-          <div className="text-red-500 text-sm mt-1">{formik.errors.password}</div>
+          <div className="text-red-500 text-sm mt-1" data-test-id="email-password-error">{formik.errors.password}</div>
         )}
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-6"
                   data-test-id="toggle-password-visibility" 
@@ -298,7 +298,7 @@ const CreateAcc01 = () => {
                     className="mt-4 cursor-pointer"
                   />
                   {formik.touched.terms && formik.errors.terms && (
-          <div className="text-red-500 text-sm mt-1">{formik.errors.terms}</div>
+          <div className="text-red-500 text-sm mt-1" data-test-id="email-password-error">{formik.errors.terms}</div>
         )}
                 </div>
 
@@ -327,8 +327,8 @@ const CreateAcc01 = () => {
                     )}
                   </button>
                 <p className=" font-light text-sm ">By continuing, you agree to our <span> </span>
-                    <span className=" underline font-medium cursor-pointer" onClick={openModal}>T&C</span> and <span> </span>
-                    <span className=" underline font-medium cursor-pointer" onClick={openPrivacyModal}>Privacy policy.</span></p>
+                    <span className=" underline font-medium cursor-pointer" data-testid="terms-link" onClick={openModal}>T&C</span> and <span> </span>
+                    <span className=" underline font-medium cursor-pointer" data-testid="privacy-link"  onClick={openPrivacyModal}>Privacy policy.</span></p>
                 </div>
               </form>
             );
@@ -422,8 +422,11 @@ const CreateAcc01 = () => {
       <div 
         className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
         onClick={closeModal}
+        data-testid="terms-modal-overlay"
       >
-        <div onClick={(e) => e.stopPropagation()}>
+        <div 
+        data-testid="terms-modal-content"
+        onClick={(e) => e.stopPropagation()}>
           <TermsAndConditions handleClose={closeModal} />
         </div>
       </div>
@@ -431,10 +434,13 @@ const CreateAcc01 = () => {
 
      {isPrivacyModalOpen && (
       <div 
+        data-testid="privacy-modal-overlay"
         className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
         onClick={closePrivacyModal}
       >
-        <div onClick={(e) => e.stopPropagation()}>
+        <div 
+        onClick={(e) => e.stopPropagation()} 
+        data-testid="privacy-modal-content">
           <PrivacyPolicy handleClose={closePrivacyModal} />
         </div>
       </div>

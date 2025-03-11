@@ -113,6 +113,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   }, [authState.token]);
 
   useEffect(() => {
+    if (!router.isReady) return;
     console.log("dataFromApi", dataFromApi);
     const scheme = dataFromApi.results?.find(
       (item) => item.id === parseInt(scheme_id)
@@ -123,22 +124,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     }
   }, [scheme_id, dataFromApi?.results]);
 
-  
-  useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.search);
-    const schemeId = queryParams.get("scheme_id");
-    const modalOpen = queryParams.get("modal_open");
 
-    if (modalOpen === "true" && schemeId) {
-      const scheme = dataFromApi.results?.find(
-        (item) => item.id === parseInt(scheme_id)
-      );
-      if(scheme){
-        setSelectedScheme(scheme);
-        setIsModalOpen(true);
-      }
-    }
-  }, []);
 
   const logUserEvent = async (eventType, schemeId = null, details = {}) => {
     const eventBody = {
