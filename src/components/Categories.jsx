@@ -162,8 +162,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     if (scheme) {
       const startTime = Date.now();
 
-      // Log the event only once when the scheme is first viewed
-      logUserEvent("view", scheme_id, { watch_time: "0 seconds" });
+   
 
       router.push(
         `/AllSchemes?tab=${activeTab}&scheme_id=${scheme_id}`,
@@ -180,16 +179,19 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
       // Track time when modal closes
       const stopTracking = () => {
-        const totalTime = Math.floor((Date.now() - startTime) / 1000);
-        logUserEvent("view", scheme_id, { watch_time: totalTime + " seconds" });
+        const totalTime = Math.floor((Date.now() - startTime));
+        logUserEvent("view", scheme_id, { watch_time: totalTime / 1000 + " seconds" });
       };
 
       // Listen for modal close event
-      document.addEventListener("click", (event) => {
-        if (event.target.classList.contains("modal-close")) {
+      const observer = new MutationObserver(() => {
+        if (!isModalOpen) {
           stopTracking();
+          observer.disconnect();
         }
       });
+
+      observer.observe(document.body, { childList: true, subtree: true });
     }
   };
 

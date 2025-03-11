@@ -443,6 +443,7 @@ const handleReportSubmit = async (e) => {
     target="_blank"
     rel="noopener noreferrer"
     className="px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
+       onClick={() => logUserEvent("apply", scheme.id)} 
   >
     Apply
   </a>
