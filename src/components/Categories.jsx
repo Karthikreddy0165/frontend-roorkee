@@ -162,7 +162,8 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     if (scheme) {
       const startTime = Date.now();
 
-   
+      // Log the event only once when the scheme is first viewed
+      logUserEvent("view", scheme_id, { watch_time: "0 seconds" });
 
       router.push(
         `/AllSchemes?tab=${activeTab}&scheme_id=${scheme_id}`,
@@ -179,19 +180,16 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
       // Track time when modal closes
       const stopTracking = () => {
-        const totalTime = Math.floor((Date.now() - startTime));
-        logUserEvent("view", scheme_id, { watch_time: totalTime / 1000 + " seconds" });
+        const totalTime = Math.floor((Date.now() - startTime) / 1000);
+        logUserEvent("view", scheme_id, { watch_time: totalTime + " seconds" });
       };
 
       // Listen for modal close event
-      const observer = new MutationObserver(() => {
-        if (!isModalOpen) {
+      document.addEventListener("click", (event) => {
+        if (event.target.classList.contains("modal-close")) {
           stopTracking();
-          observer.disconnect();
         }
       });
-
-      observer.observe(document.body, { childList: true, subtree: true });
     }
   };
 
@@ -343,26 +341,32 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     }
   };
 
-  const handleShare = (schemeId) => {
+  const handleShare = async (schemeId) => {
     const baseUrl = window.location.origin + window.location.pathname;
     const shareUrl = `${baseUrl}?tab=${activeTab}&scheme_id=${schemeId}&modal_open=true`;
   
-    navigator.clipboard
-      .writeText(shareUrl)
-      .then(() => {
-        toast.success("Link copied to clipboard!", {
-          position: "top-right",
-          autoClose: 2000,
-        });
-      })
-      .catch((error) => {
-        console.error("Failed to copy link:", error);
-        toast.error("Failed to copy link. Please try again.", {
-          position: "top-right",
-          autoClose: 2000,
-        });
-      });
+    if (navigator.clipboard && !window.isSecureContext) {
+      try {
+        await NavigationHistoryEntry.clipboard.writeText(shareUrl);
+        toast.success("Link copied to clipboard!");
+      } catch (err) {
+        fallbackCopy(shareUrl);
+      }
+    } else {
+      fallbackCopy(shareUrl);
+    }
   };
+  
+  const fallbackCopy = (text) => {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+    toast.success("Link copied to clipboard!");
+  };
+  
 
   const openModal = (schemeId) => {
     setIsModalOpen(true);

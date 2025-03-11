@@ -224,36 +224,35 @@ const handleReportSubmit = async (e) => {
     setIsHowToApplyOpen(false); 
   };
 
-  const handleShare = (schemeId) => {
+  const handleShare = async (schemeId) => {
     const baseUrl = window.location.origin + window.location.pathname;
     const shareUrl = `${baseUrl}?tab=${activeTab}&scheme_id=${schemeId}&modal_open=${isOpen}`;
   
-    navigator.clipboard
-      .writeText(shareUrl)
-      .then(() => {
-        toast.success("Link copied to clipboard!", {
-          position: "top-right",
-          autoClose: 3000,
-        });
-      })
-      .catch((error) => {
-        console.error("Failed to copy link:", error);
-        toast.error("Failed to copy link. Please try again.", {
-          position: "top-right",
-          autoClose: 3000,
-        });
-      });
+    if (navigator.clipboard && !window.isSecureContext) {
+      try {
+        await NavigationHistoryEntry.clipboard.writeText(shareUrl);
+        toast.success("Link copied to clipboard!");
+      } catch (err) {
+        fallbackCopy(shareUrl);
+      }
+    } else {
+      fallbackCopy(shareUrl);
+    }
   };
   
-
-  if(isSaved){
-    logUserEvent("save", scheme.id)
-  }
+  const fallbackCopy = (text) => {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+    toast.success("Link copied to clipboard!");
+  };
   
 
   if (!isOpen) return null;
 
- console.log(scheme)
 
 
   
