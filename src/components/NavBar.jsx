@@ -151,18 +151,6 @@ const NavBar = () => {
               HOME
             </a>
 
-            {/* About Us Link */}
-            <a
-              href="/AboutUs"
-              className={`text-[#000000] hover:text-[#3330BA] transition duration-300 ${
-                router.pathname === "/AboutUs"
-                  ? "underline decoration-[#3330BA]"
-                  : ""
-              }`}
-            >
-              ABOUT US
-            </a>
-
             {/* Dynamic Categories */}
             {categories.map((category, index) => (
               <a
@@ -177,6 +165,18 @@ const NavBar = () => {
                 {category.label}
               </a>
             ))}
+
+            {/* About Us Link */}
+            <a
+              href="/AboutUs"
+              className={`text-[#000000] hover:text-[#3330BA] transition duration-300 ${
+                router.pathname === "/AboutUs"
+                  ? "underline decoration-[#3330BA]"
+                  : ""
+              }`}
+            >
+              ABOUT US
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -198,12 +198,6 @@ const NavBar = () => {
               >
                 HOME
               </a>
-              <a
-                href="/AboutUs"
-                className="block py-2 text-black hover:text-[#3330BA]"
-              >
-                ABOUT US
-              </a>
               {categories.map((category, index) => (
                 <a
                   key={index}
@@ -213,6 +207,12 @@ const NavBar = () => {
                   {category.label}
                 </a>
               ))}
+              <a
+                href="/AboutUs"
+                className="block py-2 text-black hover:text-[#3330BA]"
+              >
+                ABOUT US
+              </a>
             </div>
           )}
         </div>

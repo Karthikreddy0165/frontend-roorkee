@@ -1,8 +1,9 @@
 import FilterContext from "@/Context/FilterContext";
 import Router from "next/router";
 import { useContext, useState, useEffect, useRef } from "react";
-import { MdClose } from "react-icons/md";
 import { useAuth } from "../Context/AuthContext";
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment } from "react";
 import logo from "../assets/changedlogo.svg"
 
 const PreferencesModal = () => {
@@ -11,10 +12,20 @@ const { authState } = useAuth();
 const [profileData, setProfileData] = useState({});
 const [loading, setLoading] = useState(true);
 const [fields, setFields] = useState([]);
+const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 const modalRef = useRef(null);
 
 const handleOnClickApplyPreferences = () => {
     handleSave();
+    Router.push("/AllSchemes");
+};
+
+const handleSkip = () => {
+    setShowConfirmDialog(true);
+};
+
+const handleConfirmSkip = () => {
+    setShowConfirmDialog(false);
     Router.push("/AllSchemes");
 };
 
@@ -323,12 +334,7 @@ return (
     {/* Center Section: Profile */}
   
 
-    {/* Right Section: Close Button */}
-    <button 
-    onClick={() =>Router.push('/')} 
-    className="text-black hover:text-gray-500">
-      <MdClose className="w-6 h-6" />
-    </button>
+    <div></div>
   </div>
 
   {/* Modal Content */}
@@ -363,18 +369,85 @@ return (
                 "Sign in to save your preferences for future visits."}
             </div>
 
-            {/* Apply Button */}
-            <div className="flex mt-4 gap-4 w-full p-4 pt-0">
+            {/* Apply and Skip Buttons */}
+            <div className="flex justify-between mt-4 gap-4 w-full p-4 pt-0">
             <button
                 onClick={handleOnClickApplyPreferences}
                 className="w-full sm:w-auto px-6 py-2 rounded-lg bg-[#3431BB] text-white font-semibold hover:bg-blue-700 transition-all"
             >
                 Apply preferences
             </button>
+            <button
+                onClick={handleSkip}
+                className="w-full sm:w-auto px-6 py-2 rounded-lg border border-gray-300 text-gray-700 font-semibold hover:bg-gray-100 transition-all"
+            >
+                Skip
+            </button>
             </div>
         </>
         )}
     </div>
+    {/* Confirmation Dialog */}
+<Transition appear show={showConfirmDialog} as={Fragment}>
+  <Dialog as="div" className="relative z-[60]" onClose={() => setShowConfirmDialog(false)}>
+    <Transition.Child
+      as={Fragment}
+      enter="ease-out duration-300"
+      enterFrom="opacity-0"
+      enterTo="opacity-100"
+      leave="ease-in duration-200"
+      leaveFrom="opacity-100"
+      leaveTo="opacity-0"
+    >
+      <div className="fixed inset-0 bg-black bg-opacity-25" />
+    </Transition.Child>
+
+    <div className="fixed inset-0 overflow-y-auto">
+      <div className="flex min-h-full items-center justify-center p-4 text-center">
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0 scale-95"
+          enterTo="opacity-100 scale-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100 scale-100"
+          leaveTo="opacity-0 scale-95"
+        >
+          <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all">
+            <Dialog.Title
+              as="h3"
+              className="text-lg font-medium leading-6 text-gray-900"
+            >
+              Warning
+            </Dialog.Title>
+            <div className="mt-2">
+              <p className="text-sm text-gray-500">
+              Your preferences won’t be saved, which may affect your recommendations. Do you want to continue?
+              </p>
+            </div>
+
+            <div className="mt-4 flex justify-end space-x-3">
+              <button
+                type="button"
+                className="inline-flex justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 focus:outline-none"
+                onClick={() => setShowConfirmDialog(false)}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none"
+                onClick={handleConfirmSkip}
+              >
+                Continue
+              </button>
+            </div>
+          </Dialog.Panel>
+        </Transition.Child>
+      </div>
+    </div>
+  </Dialog>
+</Transition>
     </div>
 );
 };
