@@ -422,7 +422,7 @@ return (
             </Dialog.Title>
             <div className="mt-2">
               <p className="text-sm text-gray-500">
-              Your preferences won’t be saved, which may affect your recommendations. Do you want to continue?
+              Your preferences won’t be saved, which may affect your recommendations. Do you want to Skip now?
               </p>
             </div>
 
@@ -439,7 +439,7 @@ return (
                 className="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none"
                 onClick={handleConfirmSkip}
               >
-                Continue
+                Skip now
               </button>
             </div>
           </Dialog.Panel>
