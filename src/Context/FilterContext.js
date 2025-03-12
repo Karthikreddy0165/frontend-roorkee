@@ -6,6 +6,7 @@ function FilterProvider({ children }) {
     const [states, setStates] = useState([]);
     const [departments, setDepartments] = useState({});
     const [beneficiaries, setBeneficiaries] = useState([]);
+    const [profileFieldData, setProfileFieldData] = useState({});
     const [fundingBy, setFundingBy] = useState([]);
     const [sponsoredBy, setSponsoredBy] = useState([]);
     const [statesFromApi, setStatesFromApi] = useState([]);
@@ -97,6 +98,7 @@ function FilterProvider({ children }) {
             fundingBy, setFundingBy,
             sponsoredBy, setSponsoredBy,
             statesFromApi, setStatesFromApi,
+            profileFieldData, setProfileFieldData,
             handleRemoveFilter 
         }}>
             {children}

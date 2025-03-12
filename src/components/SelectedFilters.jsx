@@ -8,6 +8,7 @@ import { useProfile } from "@/Context/ProfileContext";
 
 function SelectedFilters() {
   const [showAllFilters, setShowAllFilters] = useState(false);
+  const [isPreferenceApplied, setIsPreferenceApplied] = useState(false)
   const MAX_VISIBLE_FILTERS = 3; 
   
   // Helper function to render a filter button
@@ -50,7 +51,8 @@ const renderFilterButton = (filterValue, filterType) => {
     sponsoredBy,
     setSponsoredBy,
     setFundingBy,
-    handleRemoveFilter
+    handleRemoveFilter,
+    setProfileFieldData
   } = useContext(FilterContext);
   // console.log(states);
   const { authState } = useAuth();
@@ -88,9 +90,20 @@ const renderFilterButton = (filterValue, filterType) => {
       return;
     }
 
+    if (isPreferenceApplied){
+      setIsPreferenceApplied(false)
+      setProfileFieldData({})
+      setBeneficiaries([])
+      setStates([])
+      return;
+    }
+    setIsPreferenceApplied(true)
     const preferenceData = profileData;
     if (!preferenceData) {
       return;
+    }
+    if (preferenceData){
+      setProfileFieldData(preferenceData)
     }
 
     // Apply user preferences
@@ -225,9 +238,11 @@ const renderFilterButton = (filterValue, filterType) => {
       </div>
     </div>
     <div className="flex-shrink-0 w-[140px] z-10">
-      <ToolTips tooltip="Apply your preferences">
+      <ToolTips tooltip={`${isPreferenceApplied ? "Clear your preferences" : "Apply your preference"}`}>
         <button
-          className="w-full px-4 py-2 rounded-lg border border-gray-400 bg-white text-[#3330BA] font-inter text-[12px] font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue sm:text-sm"
+          className={`w-full px-4 py-2 font-inter text-[12px] font-medium sm:text-sm rounded-lg
+          ${isPreferenceApplied ? 'bg-[#3330BA] text-white border-gray-400 hover:border-onclick-btnblue hover:bg-[#3330BA]'
+        : 'border border-gray-400 bg-white text-[#3330BA]'}`}
           onClick={handleDefaultFilter}
         >
           My Preference
