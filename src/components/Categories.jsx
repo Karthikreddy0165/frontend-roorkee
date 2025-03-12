@@ -18,7 +18,7 @@ import { useBookmarkContext } from "@/Context/BookmarkContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router.js";
-import { PiTelegramLogoThin } from "react-icons/pi";
+import { FaShareAlt } from "react-icons/fa";
 import { data } from "autoprefixer";
 import HowToApply from "./Modals/HowToApply.js";
 import { toast } from "react-toastify";
@@ -554,7 +554,7 @@ const observer = new MutationObserver(() => {
                   className="cursor-pointer px-2 py-2 right-[8.25px]"
                   onClick={() => handleShare(item.id)}
                 >
-                  <PiTelegramLogoThin className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[22px] text-gray-600 hover:text-[#3431BB]" />
+                  <FaShareAlt className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[22px] text-gray-600 hover:text-[#3431BB]" />
                 </div>
 </ToolTips>
               </div>
