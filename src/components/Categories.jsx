@@ -162,8 +162,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     if (scheme) {
       const startTime = Date.now();
 
-   
-
       router.push(
         `/AllSchemes?tab=${activeTab}&scheme_id=${scheme_id}`,
         undefined,
@@ -184,7 +182,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       };
 
       // Listen for modal close event
-      const observer = new MutationObserver(() => {
+const observer = new MutationObserver(() => {
         if (!isModalOpen) {
           stopTracking();
           observer.disconnect();
@@ -193,8 +191,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
       observer.observe(document.body, { childList: true, subtree: true });
     }
-  };
-
+  }
   // To save scheme
   const saveScheme = async (scheme_id) => {
     const myHeaders = new Headers();
@@ -343,26 +340,32 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     }
   };
 
-  const handleShare = (schemeId) => {
+  const handleShare = async (schemeId) => {
     const baseUrl = window.location.origin + window.location.pathname;
     const shareUrl = `${baseUrl}?tab=${activeTab}&scheme_id=${schemeId}&modal_open=true`;
   
-    navigator.clipboard
-      .writeText(shareUrl)
-      .then(() => {
-        toast.success("Link copied to clipboard!", {
-          position: "top-right",
-          autoClose: 2000,
-        });
-      })
-      .catch((error) => {
-        console.error("Failed to copy link:", error);
-        toast.error("Failed to copy link. Please try again.", {
-          position: "top-right",
-          autoClose: 2000,
-        });
-      });
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
+        await NavigationHistoryEntry.clipboard.writeText(shareUrl);
+        toast.success("Link copied to clipboard!");
+      } catch (err) {
+        fallbackCopy(shareUrl);
+      }
+    } else {
+      fallbackCopy(shareUrl);
+    }
   };
+  
+  const fallbackCopy = (text) => {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+    toast.success("Link copied to clipboard!");
+  };
+  
 
   const openModal = (schemeId) => {
     setIsModalOpen(true);

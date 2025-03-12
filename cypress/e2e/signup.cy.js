@@ -76,7 +76,7 @@ describe('API Integration', () => {
         password: validPassword
       })
     })
-    // Should redirect to Home page
+    // Should redirect to Home page 
     cy.url().should('include', '/')
   });
 
