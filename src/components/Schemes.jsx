@@ -41,7 +41,7 @@ export default function Schemes() {
           sponsor_ids:
             sponsoredBy.length && sponsoredBy[0][0] === 2 ? sponsoredBy[0] : [],
           beneficiary_keywords: beneficiaries,
-          // search_query: searchQuery,
+          search_query: searchQuery,
         });
 
         const response = await fetch(url, {
