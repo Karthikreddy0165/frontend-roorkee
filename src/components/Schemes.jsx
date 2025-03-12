@@ -10,7 +10,7 @@ import { useRouter } from "next/router.js";
 
 export default function Schemes() {
   const { searchQuery } = useTabContext();
-  const { states, departments, beneficiaries, sponsoredBy } =
+  const { states, departments, beneficiaries, sponsoredBy, profileFieldData } =
     useContext(FilterContext);
   const { currentPage } = useContext(PageContext);
 
@@ -42,6 +42,7 @@ export default function Schemes() {
             sponsoredBy.length && sponsoredBy[0][0] === 2 ? sponsoredBy[0] : [],
           beneficiary_keywords: beneficiaries,
           search_query: searchQuery,
+          user_profile: profileFieldData
         });
 
         const response = await fetch(url, {
