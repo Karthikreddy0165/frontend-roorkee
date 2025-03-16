@@ -206,7 +206,7 @@ const Footer = () => {
               {displayText.includes("jobs") && (
                 <li>
                   <a
-                    href="/AllSchemes?tab=Job+Openings"
+                    href="/AllSchemes?tab=jobs"
                     className="text-black hover:text-black"
                   >
                     Job openings
@@ -216,7 +216,7 @@ const Footer = () => {
               {displayText.includes("scholarships") && (
                 <li>
                   <a
-                    href="/AllSchemes?tab=Scholarships"
+                    href="/AllSchemes?tab=scholarships"
                     className="text-black hover:text-black"
                   >
                     Scholarships
