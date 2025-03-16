@@ -14,6 +14,7 @@ import AccCreatSucc from "@/utils/AccountCreated";
 import Checkbox from "@/components/Checkbox";
 import TermsAndConditions from "./Terms-conditions";
 import PrivacyPolicy from "./privacy-policy";
+import SchemeCarousel from "@/components/schemeCarousel";
 
 const CreateAcc01 = () => {
   const router = useRouter();
@@ -114,11 +115,9 @@ const CreateAcc01 = () => {
 
 
   return (
-    <div className="flex h-screen overflow-hidden flex-col md:flex-row">
+    <div className="flex h-screen overflow-hidden flex-col lg:flex-row">
       
-
-
-      <div className="relative w-full h-screen md:w-1/2 flex items-center justify-center bg-white px-4 sm:px-8">
+      <div className="relative w-full h-screen lg:w-1/2 flex items-center justify-center bg-white px-4 sm:px-8">
 
         
         <Formik
@@ -367,35 +366,7 @@ const CreateAcc01 = () => {
          </div>
        </div>
 
-       <div className="absolute w-[326px] p-[10.802px] items-center gap-[8.102px] rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] top-[450px] mr-[295px] ">
-         <div className="flex ">
-           <p className=" text-[10.584px] mb-[10px] font-semibold mr-12">
-             Adi Dravidar and Tribal Welfare Department
-           </p>
-           <CiBookmark/>
-         </div>
-         <p className="self-stretch text-[#616161] font-inter text-[8.274px] font-semibold leading-normal opacity-60 mb-[9.93px] line-clamp-2">
-           <span className="font-bold">Description:</span> Free education up to
-           12th Std. to all i.e. tuition fee will not be collected and the
-           amount will be reimbursed by the government
-         </p>
-         <p className="self-stretch text-[#616161] font-inter text-[8.274px] font-normal leading-normal opacity-60 mb-[10px] line-clamp-2 underline">
-           Welfare Department
-         </p>
-
-         <div className="flex mt-[-7px]">
-           <div className="flex items-center justify-center pr-2 pl-2 py-[5px] ml-[-15px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium scale-[.6]">
-             TamilNadu
-           </div>
-
-           <div className="flex items-center justify-center pr-2 pl-2 py-[5px] ml-[-20px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium scale-[.6]">
-             Student
-           </div>
-           <div className="flex items-center justify-center pr-2 pl-2 py-[5px] ml-[-15px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium scale-[.6]">
-             SC/ ST
-           </div>
-         </div>
-       </div>
+       <SchemeCarousel/>
 
        <div className="absolute w-[266px] p-[7.919px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] bottom-[175px] mr-[270px] scale-[.8]">
          <p className="self-stretch text-[#000] font-inter text-[8.929px] font-semibold leading-normal mb-[5.939px]">

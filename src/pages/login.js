@@ -10,6 +10,9 @@ import { FaAngleRight, FaArrowLeftLong } from "react-icons/fa6";
 import LoginSuccess from "@/utils/LoginSuccess";
 import { useAuth } from "@/Context/AuthContext";
 import loginperson from "../assets/image.png";
+import newloginperson from '../assets/newImage.png'
+import { Carousel } from "primereact/carousel";
+import SchemeCarousel from "@/components/schemeCarousel";
 
 const login = () => {
   const router = useRouter();
@@ -93,10 +96,10 @@ const login = () => {
     return <LoginSuccess />;
   }
 
-
+  
   return (
-    <div className="flex h-screen overflow-hidden flex-col md:flex-row min-h-screen">
-      <div className="relative w-full h-screen md:w-1/2 flex items-center justify-center bg-white px-4 sm:px-8">
+    <div className="flex h-screen overflow-hidden flex-col lg:flex-row">
+      <div className="relative w-full h-screen lg:w-1/2 flex items-center justify-center bg-white px-4 sm:px-8">
         <Formik
           initialValues={{
             email: "", // Change username to email
@@ -289,17 +292,13 @@ const login = () => {
         </Formik>
       </div>
       <div
-        className={` w-1/2 bg-[#FEF6F0] relative flex items-center justify-center hidden lg:block sm:hidden md:block min-w-[767px] ${
-          typeof window !== "undefined" && window.innerWidth <= 1000
-            ? "lg:hidden"
-            : ""
-        }`}
+        className="w-1/2 bg-[#FEF6F0] relative flex items-center justify-center hidden lg:block sm:hidden md:hidden"
       >
-        <div className="absolute top-0 text-[#000] mt-20 ml-8 mr-8">
-          <h1 className="text-purple-400 font-inter italic font-bold text-3xl mb-4 w-[500px]">
+        <div className="absolute top-0  mt-28 ml-8 mr-8">
+          <h1 className="text-[#3431BB] font-inter italic  text-3xl mb-4 w-[100%]">
             “For the Indians by the Indians”
           </h1>
-          <p className="text-[#000] font-inter text-[22px] text-base font-medium w-[500px] opacity-0.4">
+          <p className="text-[#939292] font-inter text-[22px] text-base font-medium w-3/4 opacity-0.4">
             Find all the details about government schemes, scholarships, and job
             openings for all states in one place.
           </p>
@@ -311,7 +310,7 @@ const login = () => {
 
           <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 opacity-5 bg-[#DF8317] rounded-[55px] ml-[-340px] mt-[500px] z-0"></div>
 
-          <div className="absolute w-[266px] h-auto p-[10.8px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] top-[305px] ml-[35px] ">
+<div className="absolute w-[90%] lg:w-1/2 h-auto p-3 lg:p-[10.8px] items-center rounded-lg border border-[#EEF] bg-[#FFF] shadow-md top-[250px] left-1/4 transform -translate-x-1/2 hidden sm:block">
             <p className="self-stretch text-[#000] mb-[5px] font-inter text-[9.452px] font-semibold leading-normal">
               Opening for bank staff
             </p>
@@ -320,38 +319,8 @@ const login = () => {
             </p>
           </div>
         </div>
-
-        <div className="absolute w-[326px] p-[10.802px] items-center gap-[8.102px] rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] top-[450px] mr-[295px] ">
-          <div className="flex ">
-            <p className=" text-[10.584px] mb-[10px] font-semibold mr-12">
-              Adi Dravidar and Tribal Welfare Department
-            </p>
-            <CiBookmark />
-          </div>
-          <p className="self-stretch text-[#616161] font-inter text-[8.274px] font-semibold leading-normal opacity-60 mb-[9.93px] line-clamp-2">
-            <span className="font-bold">Description:</span> Free education up to
-            12th Std. to all i.e. tuition fee will not be collected and the
-            amount will be reimbursed by the government
-          </p>
-          <p className="self-stretch text-[#616161] font-inter text-[8.274px] font-normal leading-normal opacity-60 mb-[10px] line-clamp-2 underline">
-            Welfare Department
-          </p>
-
-          <div className="flex mt-[-7px]">
-            <div className="flex items-center justify-center pr-2 pl-2 py-[5px] ml-[-15px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium scale-[.6]">
-              TamilNadu
-            </div>
-
-            <div className="flex items-center justify-center pr-2 pl-2 py-[5px] ml-[-20px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium scale-[.6]">
-              Student
-            </div>
-            <div className="flex items-center justify-center pr-2 pl-2 py-[5px] ml-[-15px] border border-onclick-btnblue rounded bg-white text-onclick-btnblue font-inter text-xs font-medium scale-[.6]">
-              SC/ ST
-            </div>
-          </div>
-        </div>
-
-        <div className="absolute w-[266px] p-[7.919px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] bottom-[175px] mr-[270px] scale-[.8]">
+        <SchemeCarousel/>
+        <div className="absolute w-2/5 p-[7.919px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] bottom-[170px] mr-[270px] scale-[.8]">
           <p className="self-stretch text-[#000] font-inter text-[8.929px] font-semibold leading-normal mb-[5.939px]">
             Scholarships for female student
           </p>
@@ -362,13 +331,20 @@ const login = () => {
           </p>
         </div>
 
-        <div className="absolute bottom-0 right-4 ">
+        <div className="absolute bottom-0 right-44 ">
           <Image
             className="z-10 image-opacity transform -scale-x-100 sm:block hidden"
             src={loginperson}
             alt="Login Person Image"
-            // width={360}
-            height={477}
+            height={360}
+          />
+        </div>
+        <div className="absolute bottom-0 right-4 ">
+          <Image
+            className="z-10 image-opacity transform -scale-x-100 sm:block hidden"
+            src={newloginperson}
+            alt="Login Person Image"
+            height={364}
           />
         </div>
       </div>
