@@ -19,7 +19,7 @@ const schemes = [
 ];
 
 const schemeTemplate = (scheme) => (
-  <div className="p-[10.802px] w-[326px] border rounded-[8.102px] bg-white shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] border-[#EEF]">
+  <div className="p-[10.802px] w-3/4 border rounded-[8.102px] bg-white shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] border-[#EEF]">
     <div className="flex justify-between items-center p-2 pt-0 pl-0">
       <p className="text-[10.584px] font-semibold">{scheme.title}</p>
       <CiBookmark />
@@ -48,7 +48,7 @@ const schemeTemplate = (scheme) => (
 
 const SchemeCarousel = () => {
   return (
-    <div className="absolute top-[450px]  w-[400px]">
+    <div className="w-4/6">
       <Carousel
         value={schemes}
         itemTemplate={schemeTemplate}

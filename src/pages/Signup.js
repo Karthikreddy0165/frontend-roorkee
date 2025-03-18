@@ -7,6 +7,7 @@ import { CiBookmark } from "react-icons/ci";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import * as Yup from "yup";
+import rightSide from "@/assets/rightSide.png"; 
 import App from "./index";
 import { useFormData } from "@/Context/FormContext";
 import loginperson from "../assets/image.png";
@@ -334,61 +335,21 @@ const CreateAcc01 = () => {
           }}
         </Formik>
       </div>
-       <div className="w-1/2 bg-[#FEF6F0] relative flex items-center justify-center hidden lg:block sm:hidden md:hidden">
-       <div className="absolute top-0 text-[#000] mt-20 ml-8 mr-8">
-         <h1 className="text-purple-400 font-inter italic font-bold text-3xl mb-4 w-[500px]">
-           “For the Indians by the Indians”
-         </h1>
-         <p className="text-[#000] font-inter text-[22px] text-base font-medium w-[500px] opacity-0.4">
-           Find all the details about government schemes, scholarships, and job
-           openings for all states in one place.
-         </p>
-
-         {/* bg div images */}
-         <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 opacity-5 bg-[#DF8317] ml-[530px] mt-[-150px] z-0"></div>
-
-         <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 rounded-[55px] bg-[rgba(223,131,23,0.2)] ml-[230px] mt-[300px] z-0"></div>
-
-         <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 opacity-5 bg-[#DF8317] rounded-[55px] ml-[-340px] mt-[500px] z-0"></div>
-
-         {/* <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 rounded-[55px] bg-[#DF8317]  ml-[-340px] mt-[500px] z-0"></div> */}
-
-
-
-
-         <div className="absolute w-[266px] h-auto p-[10.8px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] top-[305px] ml-[35px] ">
-           <p className="self-stretch text-[#000] mb-[5px] font-inter text-[9.452px] font-semibold leading-normal">
-             Opening for bank staff
-           </p>
-           <p className="self-stretch text-[#616161] font-inter text-[6.751px]  font-normal leading-normal underline">
-             Welfare Department
-           </p>
+         <div className="relative w-full lg:w-1/2 min-w-[300px] h-full min-h-screen flex items-center justify-center hidden lg:block">
+         {/* Background Image */}
+           <Image
+             src={rightSide}
+             alt="Design Background"
+             className="absolute inset-0 w-full h-full object-fit"
+           />
+       
+       
+           <div className="relative w-full flex justify-center z-20 top-[64%] right-[16%]"
+           >
+           <SchemeCarousel />
+           </div>
          </div>
-       </div>
-
-       <SchemeCarousel/>
-
-       <div className="absolute w-[266px] p-[7.919px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] bottom-[175px] mr-[270px] scale-[.8]">
-         <p className="self-stretch text-[#000] font-inter text-[8.929px] font-semibold leading-normal mb-[5.939px]">
-           Scholarships for female student
-         </p>
-         <p className="self-stretch text-[#616161] font-inter text-[6.649px] font-semibold leading-normal opacity-60 line-clamp-2">
-           <span className="font-bold">Description:</span> Free education upto
-           12th Std. to all i.e. tution fee will not be collected and the
-           amount will be reimbursed by government
-         </p>
-       </div>
-
-       <div className="absolute bottom-0 right-4 ">
-         <Image
-             className="z-10 image-opacity transform -scale-x-100"
-             src={loginperson}
-             alt="Login Person Image"
-             // width={360}
-             height={477}
-         />
-       </div>
-     </div>
+       
      {isModalOpen && (
       <div 
         className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
