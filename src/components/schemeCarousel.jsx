@@ -3,11 +3,16 @@ import { CiBookmark } from "react-icons/ci";
 
 const schemes = [
   {
-    title: "Adi Dravidar and Tribal Welfare Department",
+    title: "National Means Cum Merit Scholarship (NMMS)",
     description:
-      "Free education up to 12th Std. to all i.e. tuition fee will not be collected and the amount will be reimbursed by the government",
-    department: "Welfare Department",
-    tags: ["TamilNadu", "Student", "SC/ ST"],
+      "MHRD’s aim is: i)To provide Scholarship to meritorious students belonging to the economically weaker sections of the society ii)Arrest drop-out rates at Class VIII and encourage them to continue their studies at Secondary Stage",
+    tags: ["Meghalaya", "Students"],
+  },
+  {
+    title: "Social Welfare Schemes for Differently Abled and Blind in Nagaland",
+    description:
+      "The Ministry of Social Justice and Empowerment, and the Nagaland Department of Social Welfare, offer several schemes for the differently abled, blind, and other marginalized sections. Among them, the Indira Gandhi National Disability Pension Scheme (IGNDPS) provides monthly pensions to 1276 differently abled persons. A scholarship scheme supports 208 differently abled students from Class-A to Class-VIII. Financial assistance is also given to 1625 blind individuals. The department further facilitates loans for differently abled persons to pursue various trades and provides Grant-in-Aid to several NGOs working for the welfare of differently abled. A District Disability Rehabilitation Centre (DDRC) in Dimapur offers comprehensive rehabilitation services.",
+    tags: ["Nagaland", "Blind"],
   },
   {
     title: "Scholarships for Female Students",
@@ -16,6 +21,18 @@ const schemes = [
     department: "Education Department",
     tags: ["Scholarship", "Girls", "Education"],
   },
+  {
+    title: "Assistance for Purchase of Agriculture Inputs",
+    description:
+      "To provide financial boost to ST farmers for taking up agriculture for their economic upliftment and encourage youths from the communities for self employment. To build up the confidence among the ST farmers against price inflation of inputs and to motivate farmers to use recommended Package of Practices.",
+    tags: ["Goa", "Scheduled Tribe Farmers"],
+  },
+  {
+    title: "Free education scholarship for Professional Courses (Engineering, Medical, Agriculture, Veterinary and Law)",
+    description:
+      "Tuition fee, Special fee and other non-refundable compulsory fees are paid as prescribed by Government and Examination fee in full.",
+    tags: ["Tamilnadu", "BC/MBC"],
+  }
 ];
 
 const schemeTemplate = (scheme) => (
