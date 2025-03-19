@@ -2,13 +2,18 @@ import { useRouter } from "next/router";
 import { FeedbackButtonFooter } from "./feedBack";
 import FeedbackButton from "./feedBack";
 import { useState, useEffect } from "react";
+import TermsAndConditions from "@/pages/Terms-conditions";
 const Footer = () => {
   const router = useRouter();
   const [displayText, setDisplayText] = useState("");
   const [categories, setCategories] = useState([]);
+  const [isTermsModalOpen, setIsTermsModalOpen] = useState(false)
   const handlePrivacyPolicy = () => {
     router.push("/privacy-policy");
   };
+  const closeModal = ()=>{
+    setIsTermsModalOpen(false)
+  }
 
   const handleTermsConditions = () => {
     router.push("/Terms-conditions");
@@ -202,7 +207,9 @@ const Footer = () => {
                 <li>
                   <a
                     href="/AllSchemes?tab=jobs"
+
                     className="text-black text-[#FFFFFF]"
+
                   >
                     Job openings
                   </a>
@@ -211,8 +218,11 @@ const Footer = () => {
               {displayText.includes("scholarships") && (
                 <li>
                   <a
-                    href="/AllSchemes?tab=Scholarships"
-                    className="text-black text-[#FFFFFF]"
+
+
+                    href="/AllSchemes?tab=scholarships"
+                    className="text-black hover:text-black"
+
                   >
                     Scholarships
                   </a>
@@ -264,8 +274,10 @@ const Footer = () => {
               <li>
                 <a
                   href="#"
+
                   onClick={handleTermsConditions}
                   className="text-black text-[#FFFFFF]"
+
                 >
                   Terms and Conditions
                 </a>
@@ -409,6 +421,16 @@ const Footer = () => {
         <p className="flex justify-center font-semibold mt-[1rem] items-center  border-t-[1px] text-sm text-[#FFFFFF]  py-[1rem]">
           &copy; {new Date().getFullYear()} LaunchPad. All Rights Reserved.
         </p>
+        {isTermsModalOpen && (
+      <div 
+        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+        onClick={(closeModal)}
+      >
+        <div onClick={(e) => e.stopPropagation()}>
+          <TermsAndConditions handleClose={closeModal} />
+        </div>
+      </div>
+    )}
       </footer>
     </>
   );

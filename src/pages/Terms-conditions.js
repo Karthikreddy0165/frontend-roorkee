@@ -1,18 +1,18 @@
 import NavBar from "@/components/NavBar";
 import { useRouter } from "next/router";
-import BackButton from "@/components/ComponentsUtils/BackButton";
+import { IoClose } from "react-icons/io5";
 
-export default function TermsAndConditions() {
+export default function TermsAndConditions({handleClose}) {
   const router = useRouter();
 
   return (
     <>
-      <NavBar />
-      <div className=" w-full  min-h-screen bg-[#EEEEFF]  flex items-center justify-center   sm:px-6 lg:px-8">
+      {/* <NavBar /> */}
+      <div className=" ">
         <div className="w-full max-w-4xl  p-6 bg-white shadow-lg rounded-lg sm:transform sm:-translate-y-12">
           <div className="flex items-center justify-center relative mb-4">
-            <div className="absolute left-0 ">
-              <BackButton />
+            <div className="absolute left-0 cursor-pointer" onClick={handleClose}>
+              <IoClose size={25}/>
             </div>
             <h1 className="text-xl sm:text-2xl text-[#3330BA] font-bold text-center w-full">
               TERMS AND CONDITIONS
@@ -51,7 +51,7 @@ export default function TermsAndConditions() {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
+          {/* <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
             <button
               className="w-full sm:w-auto bg-[#3330BA] text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition-all"
               onClick={() => router.push("/")}
@@ -64,7 +64,7 @@ export default function TermsAndConditions() {
             >
               ACCEPT THE TERMS
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

@@ -14,7 +14,7 @@ export const TabProvider = ({ children }) => {
     if(tab){
       setActiveTab(tab);
     }
-  },[activeTab])
+  },[])
   // const setTab = (tab) => {
   //   setActiveTab(tab);
   // };

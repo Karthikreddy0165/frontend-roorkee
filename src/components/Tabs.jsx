@@ -19,31 +19,33 @@ export default function Tabs() {
 
   // Fetch tabs from API and maintain order
   useEffect(() => {
+    if (!router.isReady) return;
     async function fetchTabs() {
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/layout-items/`
         );
         const data = await response.json();
-
+  
         if (Array.isArray(data)) {
           const sortedTabs = data.sort((a, b) => a.order - b.order);
           setTabs(sortedTabs);
-
+  
           const { tab } = router.query;
-
-          if (!tab && sortedTabs.length > 0) {
-            setActiveTab(sortedTabs[0].column_name);
+          if (tab && sortedTabs.some(t => t.column_name === tab)) {
+            setActiveTab(tab);
+          }
+          else if (!tab) {
+            const defaultTab = sortedTabs[0]?.column_name;
+            setActiveTab(defaultTab);
             router.replace(
               {
                 pathname: router.pathname,
-                query: { tab: sortedTabs[0].column_name },
+                query: { ...router.query, tab: defaultTab },
               },
               undefined,
               { shallow: true }
             );
-          } else if (tab) {
-            setActiveTab(tab);
           }
         }
       } catch (error) {
@@ -52,9 +54,9 @@ export default function Tabs() {
         setLoading(false);
       }
     }
-
+  
     fetchTabs();
-  }, [router.query, setActiveTab]);
+  }, [router.pathname,router.query]); 
 
   const handleTabClick = (tabName) => {
     if (activeTab !== tabName) {

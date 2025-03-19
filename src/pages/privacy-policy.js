@@ -2,19 +2,29 @@ import BackButton from "@/components/ComponentsUtils/BackButton";
 import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
 import { useState } from "react";
+import { IoClose } from "react-icons/io5";
 
-export default function PrivacyPolicy() {
-  const [infoUsage, setInfoUsage] = useState(false);
-  const [infoSharing, setInfoSharing] = useState(false);
+export default function PrivacyPolicy({handleClose}) {
+  const [infoUsage, setInfoUsage] = useState(true);
+  const [infoSharing, setInfoSharing] = useState(true);
 
+  const handleAllowAll = () => {
+    setInfoUsage(true);
+    setInfoSharing(true);
+  };
+
+  const handleRejectAll = () => {
+    setInfoUsage(false);
+    setInfoSharing(false);
+  };
   return (
     <>
-      <NavBar/>
-      <div className="min-h-screen bg-[#EEEEFF]  flex items-center justify-center sm:px-6 lg:px-8 ">
+      {/* <NavBar/> */}
+
       <div className="max-w-4xl mx-auto px-6 py-9 bg-white shadow-lg rounded-lg sm:transform sm:-translate-y-12">
   <div className="flex items-center justify-center relative">
-    <div className="absolute left-0">
-      <BackButton />
+    <div className="absolute left-0 cursor-pointer" onClick={handleClose}>
+    <IoClose size={25}/>
     </div>
     <h1 className="text-2xl text-[#3330BA] font-bold text-center w-full">
       Privacy Policy
@@ -31,7 +41,7 @@ export default function PrivacyPolicy() {
 
 
           <div>
-            <button className="bg-[#3330BA] text-white px-4 py-2 rounded-lg hover:bg-gray-500">
+            <button className="bg-[#3330BA] text-white px-4 py-2 rounded-lg hover:bg-gray-500" onClick={handleAllowAll}>
               Allow all
             </button>
           </div>
@@ -53,7 +63,8 @@ export default function PrivacyPolicy() {
                 Cookies and Tracking Technologies
               </span>
               <label className="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" className="sr-only peer" />
+                <input type="checkbox" className="sr-only peer" checked={infoUsage}
+                  onChange={() => setInfoUsage(!infoUsage)}/>
                 <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#3330BA] rounded-full peer-checked:bg-[#3330BA] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
               </label>
             </div>
@@ -86,15 +97,14 @@ export default function PrivacyPolicy() {
           </div>
 
           <div className="flex gap-[16px] mt-6">
-            <button className="bg-[#3330BA] text-white px-4 py-2 rounded-lg hover:bg-purple-700">
+            <button className="bg-[#3330BA] text-white px-4 py-2 rounded-lg hover:bg-purple-700" onClick={handleRejectAll}>
                Reject all
             </button>
-            <button className="bg-[#3330BA] text-white px-4 py-2 rounded-lg hover:bg-purple-700">
+            <button className="bg-[#3330BA] text-white px-4 py-2 rounded-lg hover:bg-purple-700" onClick={handleClose}>
             Submit My Choices
             </button>
           </div>
         </div>
-      </div>
      
     </>
   );

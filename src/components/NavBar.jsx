@@ -113,17 +113,6 @@ const NavBar = () => {
               HOME
             </a>
 
-            {/* About Us Link */}
-            <a
-              href="/AboutUs"
-              className={`text-white hover:text-[#3330BA] transition duration-300 ${
-                router.pathname === "/AboutUs"
-                  ? "underline decoration-[#3330BA]"
-                  : ""
-              }`}
-            >
-              ABOUT US
-            </a>
 
             {/* Dynamic Categories */}
             {categories.map((category, index) => (
@@ -139,6 +128,18 @@ const NavBar = () => {
                 {category.label}
               </a>
             ))}
+
+            {/* About Us Link */}
+            <a
+              href="/AboutUs"
+              className={`text-white hover:text-[#3330BA] transition duration-300 ${
+                router.pathname === "/AboutUs"
+                  ? "underline decoration-[#3330BA]"
+                  : ""
+              }`}
+            >
+              ABOUT US
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -160,12 +161,6 @@ const NavBar = () => {
               >
                 HOME
               </a>
-              <a
-                href="/AboutUs"
-                className="block py-2 text-black hover:text-[#3330BA]"
-              >
-                ABOUT US
-              </a>
               {categories.map((category, index) => (
                 <a
                   key={index}
@@ -175,6 +170,12 @@ const NavBar = () => {
                   {category.label}
                 </a>
               ))}
+              <a
+                href="/AboutUs"
+                className="block py-2 text-black hover:text-[#3330BA]"
+              >
+                ABOUT US
+              </a>
             </div>
           )}
         </div>
@@ -200,11 +201,11 @@ const NavBar = () => {
 
               {/* Dropdown Menu */}
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                <div className="absolute right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10 w-24">
                   <ul>
                     <li>
                       <button
-                        className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left hover:rounded-t-lg"
+                        className="px-1 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-100 w-full text-left hover:rounded-t-lg flex justify-center"
                         onClick={() => handleOptionClick("MyProfile")}
                       >
                         My Profile
@@ -212,7 +213,7 @@ const NavBar = () => {
                     </li>
                     <li>
                       <button
-                        className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left hover:rounded-b-lg"
+                        className="px-1 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-100 w-full text-left hover:rounded-b-lg flex justify-center"
                         onClick={() => handleOptionClick("Logout")}
                       >
                         Log Out

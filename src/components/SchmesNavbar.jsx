@@ -162,7 +162,7 @@ const NavBarScheme = () => {
           Empower Hub
         </div>
 
-        <div className="hidden md:flex space-x-10 justify-end ml-auto -mr-[700px] text-[16px] font-semibold">
+        <div className="hidden md:flex space-x-10 justify-end ml-auto -mr-[500px] text-[16px] font-semibold">
           {/* Home is always present */}
           <a
             href="/"
@@ -172,6 +172,7 @@ const NavBarScheme = () => {
           >
             HOME
           </a>
+
 
           <a
             href="/AboutUs"
@@ -183,6 +184,7 @@ const NavBarScheme = () => {
           >
             ABOUT US
           </a>
+
 
           {/* Dynamically show all available categories */}
           {categories.map((category, index) => (
@@ -198,6 +200,8 @@ const NavBarScheme = () => {
               {category.label}
             </a>
           ))}
+
+         
         </div>
 
         {/* Search Section (Mobile Only) */}
@@ -259,11 +263,12 @@ const NavBarScheme = () => {
 
               {/* Dropdown Menu */}
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                <div className="absolute right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10 w-24">
+                  
                   <ul>
                     <li>
                       <button
-                        className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left hover:rounded-t-lg"
+                        className="px-1 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-100 w-full text-left hover:rounded-t-lg flex justify-center"
                         onClick={() => handleOptionClick("MyProfile")}
                       >
                         My Profile
@@ -271,7 +276,8 @@ const NavBarScheme = () => {
                     </li>
                     <li>
                       <button
-                        className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left hover:rounded-b-lg"
+                        className="px-1 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-100 w-full text-left hover:rounded-b-lg flex justify-center"
+                        
                         onClick={() => handleOptionClick("Logout")}
                       >
                         Log Out
