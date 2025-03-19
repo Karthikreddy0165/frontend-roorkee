@@ -21,6 +21,8 @@ import { useRouter } from "next/router.js";
 import { FaShareAlt } from "react-icons/fa";
 import { data } from "autoprefixer";
 import HowToApply from "./Modals/HowToApply.js";
+import { toast } from "react-toastify";
+import { CiShare2 } from "react-icons/ci";
 
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const router = useRouter();
@@ -29,7 +31,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     useBookmarkContext();
   const [selectedScheme, setSelectedScheme] = useState(null);
   const { scheme_id, tab } = router.query;
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const { authState } = useAuth();
@@ -50,6 +51,14 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     setStatesFromApi,
   } = useContext(FilterContext);
   // Close the toast after a certain time
+
+  const isModalopen = router.isReady && router.query.modal_open === "true";
+
+  useEffect(() => {
+    console.log("Window URL:", window.location.href);
+    console.log("Modal should open:", isModalopen);
+  }, [router.isReady, isModalopen]);
+
   useEffect(() => {
     if (isToastVisible) {
       const timer = setTimeout(() => {
@@ -67,8 +76,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }),
-    [isUnSaveToastVisible];
+  }, [isUnSaveToastVisible]);
 
   // Fetch saved schemes so that we can mark saved schemes as bookmarked
   useEffect(() => {
@@ -106,7 +114,8 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   }, [authState.token]);
 
   useEffect(() => {
-    console.log("dataFronApi", dataFromApi);
+    if (!router.isReady) return;
+    console.log("dataFromApi", dataFromApi);
     const scheme = dataFromApi.results?.find(
       (item) => item.id === parseInt(scheme_id)
     );
@@ -115,17 +124,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       setIsModalOpen(true);
     }
   }, [scheme_id, dataFromApi?.results]);
-
-  useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.search);
-    const schemeId = queryParams.get("scheme_id");
-    const modalOpen = queryParams.get("modal_open");
-
-    if (modalOpen === "true" && schemeId) {
-      setIsModalOpen(true);
-      setSelectedScheme(schemeId);
-    }
-  }, []);
 
   const logUserEvent = async (eventType, schemeId = null, details = {}) => {
     const eventBody = {
@@ -158,12 +156,9 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     }
   };
   const handleClick = (scheme_id) => {
-    const scheme = dataFromApi.results.find((item) => item.id === scheme_id);
+    const scheme = dataFromApi?.results?.find((item) => item.id === scheme_id);
     if (scheme) {
       const startTime = Date.now();
-
-      // Log the event only once when the scheme is first viewed
-      logUserEvent("view", scheme_id, { watch_time: "0 seconds" });
 
       router.push(
         `/AllSchemes?tab=${activeTab}&scheme_id=${scheme_id}`,
@@ -180,19 +175,23 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
       // Track time when modal closes
       const stopTracking = () => {
-        const totalTime = Math.floor((Date.now() - startTime) / 1000);
-        logUserEvent("view", scheme_id, { watch_time: totalTime + " seconds" });
+        const totalTime = Math.floor(Date.now() - startTime);
+        logUserEvent("view", scheme_id, {
+          watch_time: totalTime / 1000 + " seconds",
+        });
       };
 
       // Listen for modal close event
-      document.addEventListener("click", (event) => {
-        if (event.target.classList.contains("modal-close")) {
+      const observer = new MutationObserver(() => {
+        if (!isModalOpen) {
           stopTracking();
+          observer.disconnect();
         }
       });
+
+      observer.observe(document.body, { childList: true, subtree: true });
     }
   };
-
   // To save scheme
   const saveScheme = async (scheme_id) => {
     const myHeaders = new Headers();
@@ -341,16 +340,30 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     }
   };
 
-  const handleShare = () => {
-    const schemeUrl = window.location.href;
-    navigator.clipboard
-      .writeText(schemeUrl)
-      .then(() => {
-        alert("Link copied to clipboard!");
-      })
-      .catch((error) => {
-        console.error("Failed to copy link:", error);
-      });
+  const handleShare = async (schemeId) => {
+    const baseUrl = window.location.origin + window.location.pathname;
+    const shareUrl = `${baseUrl}?tab=${activeTab}&scheme_id=${schemeId}&modal_open=true`;
+
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
+        await NavigationHistoryEntry.clipboard.writeText(shareUrl);
+        toast.success("Link copied to clipboard!");
+      } catch (err) {
+        fallbackCopy(shareUrl);
+      }
+    } else {
+      fallbackCopy(shareUrl);
+    }
+  };
+
+  const fallbackCopy = (text) => {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+    toast.success("Link copied to clipboard!");
   };
 
   const openModal = (schemeId) => {
@@ -447,7 +460,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
           (item) =>
             item.title && (
               <div
-                className="flex items-start justify-between self-stretch relative border-[1px] border-gray-300 rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px]"
+                className="flex items-start justify-between self-stretch relative border-[1px] border-gray-300 rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px] pr-8"
                 key={item.id}
                 style={{
                   backgroundColor:
@@ -455,7 +468,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                 }}
               >
                 <div onClick={() => handleClick(item.id)}>
-                  <div className="gap-[12px] pt-[16px] pd-[16px] w-[200px] md:w-full">
+                  <div className="gap-[12px] pt-[16px] pd-[16px] w-[140px] md:w-full">
                     <p
                       className="font-inter text-[16px] sm:text-[18px] leading-[21.6px] cursor-pointer font-semibold mb-[10px] line-clamp-2 text-gray-700"
                       role="button"
@@ -521,18 +534,29 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                     </div>
                   </div>
                 </div>
-                <ToolTips tooltip="Save scheme">
-                  <div
-                    className="cursor-pointer px-2 py-2 right-[8.25px]"
-                    onClick={(e) => handleBookmarkToggle(e, item.id)}
-                  >
-                    {isBookmarked[item.id] ? (
-                      <GoBookmarkFill className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[20px] text-[#3431BB]" />
-                    ) : (
-                      <CiBookmark className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[20px] " />
-                    )}
-                  </div>
-                </ToolTips>
+                <div className="flex items-center gap-4">
+                  <ToolTips tooltip="Save scheme">
+                    <div
+                      className="cursor-pointer px-2 py-2 right-[8.25px]"
+                      onClick={(e) => handleBookmarkToggle(e, item.id)}
+                    >
+                      {isBookmarked[item.id] ? (
+                        <GoBookmarkFill className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[20px] text-[#3431BB]" />
+                      ) : (
+                        <CiBookmark className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[20px] " />
+                      )}
+                    </div>
+                  </ToolTips>
+
+                  <ToolTips tooltip="Share scheme">
+                    <div
+                      className="cursor-pointer px-2 py-2 right-[8.25px]"
+                      onClick={() => handleShare(item.id)}
+                    >
+                      <CiShare2 className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[22px] text-gray-600 hover:text-[#3431BB]" />
+                    </div>
+                  </ToolTips>
+                </div>
               </div>
             )
         )}
@@ -558,12 +582,15 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
             isOpen={isModalOpen}
             onRequestClose={() => {
               setIsModalOpen(false);
+              setSelectedScheme(null);
+
               router.push(
-                `/AllSchemes?${activeTab}?tab=${activeTab}`,
-                undefined,
                 {
-                  shallow: true,
-                }
+                  pathname: router.pathname,
+                  query: { tab: router.query.tab },
+                },
+                undefined,
+                { shallow: true }
               );
             }}
             scheme={selectedScheme}

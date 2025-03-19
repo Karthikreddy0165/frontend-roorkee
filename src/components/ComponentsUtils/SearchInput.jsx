@@ -39,10 +39,16 @@ function SearchInput() {
   };
 
   // Use useEffect to log search events whenever searchQuery changes
+  const DEBOUNCE_DELAY = 500;
+
   useEffect(() => {
-    if (searchQuery.trim() !== "") {
+    if (!searchQuery.trim()) return;
+
+    const handler = setTimeout(() => {
       logUserEvent("search", null, { searchQuery });
-    }
+    }, DEBOUNCE_DELAY);
+
+    return () => clearTimeout(handler);
   }, [searchQuery]);
 
   return (
