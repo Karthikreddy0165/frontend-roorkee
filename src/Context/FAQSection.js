@@ -25,7 +25,7 @@ const FAQSection = () => {
   }, [router.query]);
 
   return (
-    <div className="flex flex-col items-center bg-gradient-to-b from-gray-100 to-gray-50 py-8 px-4 sm:px-8 lg:px-16 xl:px-24 overflow-hidden w-full">
+    <div className="flex flex-col items-center  bg-[#2F329114] py-8 px-4 sm:px-8 lg:px-16 xl:px-24 overflow-hidden w-full">
       <div className="w-full max-w-3xl text-center">
         <h1 className="text-black font-inter text-[16px] sm:text-3xl font-semibold leading-[150%] mb-8 border-b-4 border-gray-300 inline-block px-4">
           Frequently Asked Questions
@@ -35,8 +35,8 @@ const FAQSection = () => {
         {faqs.map((faq, index) => (
           <Disclosure key={index}>
             {({ open }) => (
-              <div className="border border-gray-300 rounded-lg bg-white transition-all duration-300 ">
-                <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-left text-sm sm:text-[16px] sm:w-full  font-semibold text-black rounded-t-lg focus:outline-none hover:bg-gray-200 transition-all duration-300">
+              <div className="border bg-[#2F329114] border-gray-300 rounded-lg bg-white transition-all duration-300 ">
+                <Disclosure.Button className=" bg-[#2F329114] flex justify-between w-full px-4 py-4 text-left text-sm sm:text-[16px] sm:w-full  font-semibold text-black rounded-t-lg focus:outline-none hover:bg-gray-200 transition-all duration-300">
                   {faq.question}
                   <ChevronUpIcon
                     className={`w-6 h-6 text-gray-600 transform transition-transform duration-300 ${open ? "rotate-180" : ""}`}
