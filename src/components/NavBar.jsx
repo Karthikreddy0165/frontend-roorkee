@@ -113,8 +113,6 @@ const NavBar = () => {
               HOME
             </a>
 
-            {/* About Us Link */}
-
             {/* Dynamic Categories */}
             {categories.map((category, index) => (
               <a
@@ -129,6 +127,7 @@ const NavBar = () => {
                 {category.label}
               </a>
             ))}
+
             <a
               href="/AboutUs"
               className={`text-white  transition duration-300 ${
@@ -167,6 +166,7 @@ const NavBar = () => {
                   {category.label}
                 </a>
               ))}
+
               <a href="/AboutUs" className="block py-2 text-black ">
                 ABOUT US
               </a>
@@ -195,7 +195,7 @@ const NavBar = () => {
 
               {/* Dropdown Menu */}
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                <div className="absolute right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10 w-24">
                   <ul>
                     <li>
                       <button

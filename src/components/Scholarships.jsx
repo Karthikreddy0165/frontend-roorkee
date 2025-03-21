@@ -8,7 +8,7 @@ import { useTabContext } from "@/Context/TabContext";
 
 export default function Scholarships() {
   const { searchQuery } = useTabContext();
-  const { states, departments, beneficiaries, sponsoredBy } =
+  const { states, departments, beneficiaries, sponsoredBy, profileFieldData } =
     useContext(FilterContext);
   const { currentPage } = useContext(PageContext);
   const [dataOfApi, setDataOfApi] = useState({});
@@ -36,6 +36,7 @@ export default function Scholarships() {
           search_query: searchQuery,
           tag: "scholarship",
           is_active: true,
+          user_profile: profileFieldData
         });
 
         const requestOptions = {

@@ -14,7 +14,7 @@ export default function Resources() {
 
   useEffect(()=>{
     async function fetchStateResources() {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/resources/`)
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/states/`)
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       }
