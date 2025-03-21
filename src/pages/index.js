@@ -68,16 +68,8 @@ const App = () => {
           const sortedCategories = data.sort((a, b) => a.order - b.order);
           const availableCategories = sortedCategories.map((item) => item.column_name);
 
-          setCategories(availableCategories);
-
-          // Determine dynamic text based on available categories
-          const textParts = [];
-          if (availableCategories.includes("schemes")) textParts.push("schemes");
-          if (availableCategories.includes("jobs")) textParts.push("jobs");
-          if (availableCategories.includes("scholarships")) textParts.push("scholarships");
-
-          setDisplayText(textParts.length > 0 ? textParts.join(", ") : "opportunities");
           
+          setDisplayText(availableCategories)
           setCategories(sortedCategories.map((item) => ({
             name: item.column_name,
             label: item.column_name.toUpperCase(),
@@ -115,19 +107,7 @@ const App = () => {
         return null;
     }}
 
-  const handleCategoryClick = (tabName) => {
-    if (activeTab !== tabName) {
-      setActiveTab(tabName);
-      router.push(
-        {
-          pathname: "AllSchemes",
-          query: { tab: tabName },
-        },
-        undefined,
-        { shallow: true }
-      );
-    }
-  };
+  
 
   console.log("displayText", displayText)
 
@@ -153,14 +133,14 @@ const App = () => {
 
               {authState.token ? (
                 <button
-                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#F58220] text-white mt-[12px] hover:bg-blue-700 hidden sm:block"
+                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#F58220] text-white mt-[12px]  hidden sm:block"
                   onClick={handleClickAfterLogin}
                 >
                   My {firstCategory}
                 </button>
               ) : (
                 <button
-                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] hidden sm:block rounded-[8px] bg-[#F58220] text-white mt-[12px] hover:bg-blue-700"
+                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] hidden sm:block rounded-[8px] bg-[#F58220] text-white mt-[12px] "
                   onClick={handleClickGetStarted}
                 >
                   Get Started
@@ -327,7 +307,7 @@ const App = () => {
 
           <div className="self-stretch flex justify-center mt-8 ">
             <button
-              className="text-center text-white font-inter text-[16px] font-normal leading-normal bg-[#F58220] pt-[10px] pr-[9px] sm:pr-[44px] pb-[10px] pl-[9px] sm:pl-[44px] rounded-[4px] hover:bg-blue-700 sm:mt-[32px] sm:mb-[50px]"
+              className="text-center text-white font-inter text-[16px] font-normal leading-normal bg-[#F58220] pt-[10px] pr-[9px] sm:pr-[44px] pb-[10px] pl-[9px] sm:pl-[44px] rounded-[4px]  sm:mt-[32px] sm:mb-[50px]"
               onClick={handleClickFindrightSchemeForYOu}
             >
               Find the right {firstCategory} for me
@@ -385,33 +365,33 @@ const App = () => {
 >
 {displayText.includes("schemes") && (
     <div
-      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:bg-[#3431BB] hover:text-white hover:cursor-pointer flex flex-col justify-center items-center"
+      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#2F3291] p-4 sm:p-[3.48vw] text-[#F58220] hover:bg-[#3431BB]  hover:cursor-pointer flex flex-col justify-center items-center"
       onClick={handleSchemesClick}
     >
-      <p className="text-xs sm:text-base text-center">SCHEMES</p>
-      <PiNotepadBold className="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
+      <p className="text-xs sm:text-xl text-center">SCHEMES</p>
+      <PiNotepadBold className="  h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw]  mt-2" />
     </div>
   )}
 
   {/* JOBS */}
   {displayText.includes("jobs") && (
     <div
-      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
+      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#2F3291] p-4 sm:p-[3.48vw] text-[#F58220]  hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
       onClick={handleJobsClick}
     >
-      <p className="text-xs sm:text-base text-center">JOBS</p>
-      <FaBriefcase className="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
+      <p className="text-xs sm:text-xl text-center">JOBS</p>
+      <FaBriefcase className=" h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw]  mt-2" />
     </div>
   )}
 
   {/* SCHOLARSHIPS (Compact Box) */}
   {displayText.includes("scholarships") && displayText !== "scholarships" && (
     <div
-      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
+      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#2F3291] p-4 sm:p-[3.48vw] text-[#F58220]  hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
       onClick={handleScholarshipsClick}
     >
-      <p className="text-xs sm:text-base text-center">SCHOLARSHIPS</p>
-      <FaGraduationCap className="opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
+      <p className="text-xs sm:text-xl text-center">SCHOLARSHIPS</p>
+      <FaGraduationCap className=" h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw]  mt-2" />
     </div>
   )}
   {/* only shcolarship for mobile view  */}
@@ -430,6 +410,7 @@ const App = () => {
       </div>
     </div>
   )}
+  
 
   {/* SCHOLARSHIPS (Full Width View for One Box) for dekstop view */ }
   {displayText === "scholarships" && (
@@ -475,7 +456,7 @@ const App = () => {
           <div className="relative flex flex-col lg:flex-row justify-between gap-[20px] mt-[32px] px-6 sm:mt-[100px] mx-auto ">
             {/* Mission Section */}
             <div className=" flex flex-col gap-2 p-6 border-[0.3px] border-[#000000] rounded-lg h-[250px] sm:w-[550px] sm:h-[266px]  relative">
-              <p className="font-semibold text-lg lg:text-left text-[16px] sm:text-[20px]">
+              <p className="font-semibold text-[#3431BB] text-lg lg:text-left text-[16px] sm:text-[20px]">
                 Mission
               </p>
               <p className="text-[#616161] lg:text-left text-[14px] sm:text-[16px]">
@@ -500,7 +481,7 @@ const App = () => {
 
             {/* Vision Section */}
             <div className="flex flex-col gap-2 p-6 border-[0.3px] border-[#000000] rounded-lg sm:w-[550px] sm:h-[266px]  h-[250px] relative">
-              <p className="font-semibold text-lg lg:text-left text-[16px] sm:text-[20px]">
+              <p className="font-semibold  text-[#3431BB] text-lg lg:text-left text-[16px] sm:text-[20px]">
                 Vision
               </p>
               <p className="text-[#616161] lg:text-left text-[14px] sm:text-[16px]">
@@ -527,7 +508,7 @@ const App = () => {
           {/* Values Section - New Row, Full Width */}
           <div className="mt-[10px] p-6">
             <div className="flex flex-col gap-2 p-6 border-[0.3px] h-[350px] border-[#000000] rounded-lg w-full sm:w-[550px] lg:w-[1130px]  sm:h-[250px] relative">
-              <p className="font-semibold text-[16px] text-[20px]">
+              <p className="font-semibold text-[16px] text-[20px] text-[#3431BB]">
                 Our Values
               </p>
               <p className="text-[#616161] text-[14px] sm:text-[16px]">

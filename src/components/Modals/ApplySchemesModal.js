@@ -435,7 +435,7 @@ const handleReportSubmit = async (e) => {
 <div className="flex flex-wrap items-center gap-2 sm:gap-4">
 <button
     onClick={() => handleShare(scheme.id)}
-    className="flex items-center px-4 py-2 rounded-lg border border-transparent text-[#3431Bb]  hover:bg-blue-700 text-[12px] sm:text-sm"
+    className="flex items-center px-4 py-2 rounded-lg border border-transparent text-[#3431Bb]   text-[12px] sm:text-sm"
   >
    Share  <CiShare2 className="ml-2 h-[1rem] w-[1rem]"/>
   </button>

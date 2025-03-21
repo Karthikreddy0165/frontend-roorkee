@@ -7,13 +7,13 @@ const Footer = () => {
   const router = useRouter();
   const [displayText, setDisplayText] = useState("");
   const [categories, setCategories] = useState([]);
-  const [isTermsModalOpen, setIsTermsModalOpen] = useState(false)
+  const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
   const handlePrivacyPolicy = () => {
     router.push("/privacy-policy");
   };
-  const closeModal = ()=>{
-    setIsTermsModalOpen(false)
-  }
+  const closeModal = () => {
+    setIsTermsModalOpen(false);
+  };
 
   const handleTermsConditions = () => {
     router.push("/Terms-conditions");
@@ -205,12 +205,7 @@ const Footer = () => {
               )}
               {displayText.includes("jobs") && (
                 <li>
-                  <a
-                    href="/AllSchemes?tab=jobs"
-
-                    className="text-black text-[#FFFFFF]"
-
-                  >
+                  <a href="/AllSchemes?tab=jobs" className="text-[#FFFFFF] ">
                     Job openings
                   </a>
                 </li>
@@ -218,21 +213,15 @@ const Footer = () => {
               {displayText.includes("scholarships") && (
                 <li>
                   <a
-
-
-                    href="/AllSchemes?tab=scholarships"
-                    className="text-black hover:text-black"
-
+                    href="/AllSchemes?tab=Scholarships"
+                    className="text-[#FFFFFF]"
                   >
                     Scholarships
                   </a>
                 </li>
               )}
               <li>
-                <a
-                  href="/AllSchemes?tab=Saved"
-                  className="text-black text-[#FFFFFF]"
-                >
+                <a href="/AllSchemes?tab=Saved" className=" text-[#FFFFFF]">
                   Saved
                 </a>
               </li>
@@ -246,7 +235,7 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2 text-[#FFFFFF]">
               <li>
-                <a className="text-black text-[#FFFFFF]">FAQ’s</a>
+                <a className=" text-[#FFFFFF]">FAQ’s</a>
               </li>
               <li>
                 <FeedbackButton className="text-[#FFFFFF]" />
@@ -274,10 +263,8 @@ const Footer = () => {
               <li>
                 <a
                   href="#"
-
                   onClick={handleTermsConditions}
-                  className="text-black text-[#FFFFFF]"
-
+                  className="text-[#FFFFFF]"
                 >
                   Terms and Conditions
                 </a>
@@ -422,15 +409,15 @@ const Footer = () => {
           &copy; {new Date().getFullYear()} LaunchPad. All Rights Reserved.
         </p>
         {isTermsModalOpen && (
-      <div 
-        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-        onClick={(closeModal)}
-      >
-        <div onClick={(e) => e.stopPropagation()}>
-          <TermsAndConditions handleClose={closeModal} />
-        </div>
-      </div>
-    )}
+          <div
+            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+            onClick={closeModal}
+          >
+            <div onClick={(e) => e.stopPropagation()}>
+              <TermsAndConditions handleClose={closeModal} />
+            </div>
+          </div>
+        )}
       </footer>
     </>
   );
