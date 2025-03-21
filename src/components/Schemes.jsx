@@ -56,6 +56,7 @@ export default function Schemes() {
         }
 
         const data = await response.json();
+
         setDataOfApi(data);
         setTotalPages(Math.ceil(data.count / 10));
         localStorage.setItem(url, JSON.stringify(data));

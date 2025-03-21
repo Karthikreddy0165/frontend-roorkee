@@ -1,7 +1,7 @@
 import { useAuth } from "@/Context/AuthContext";
 import SavedModal from "@/components/Modals/savedModal.js";
 import { useEffect, useState } from "react";
-import { CiBookmark } from "react-icons/ci";
+import { CiBookmark,CiShare2 } from "react-icons/ci";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { GoBookmarkFill } from "react-icons/go";
 import ApplyModal from "@/components/Modals/ApplySchemesModal.js";
@@ -22,6 +22,7 @@ import { FaShareAlt } from "react-icons/fa";
 import { data } from "autoprefixer";
 import HowToApply from "./Modals/HowToApply.js";
 import { toast } from "react-toastify";
+
 
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const router = useRouter();
@@ -58,7 +59,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     console.log("Modal should open:", isModalopen);
   }, [router.isReady, isModalopen]);
 
-  
   useEffect(() => {
     if (isToastVisible) {
       const timer = setTimeout(() => {
@@ -125,8 +125,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     }
   }, [scheme_id, dataFromApi?.results]);
 
-
-
   const logUserEvent = async (eventType, schemeId = null, details = {}) => {
     const eventBody = {
       event_type: eventType,
@@ -177,12 +175,16 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
       // Track time when modal closes
       const stopTracking = () => {
-        const totalTime = Math.floor((Date.now() - startTime));
-        logUserEvent("view", scheme_id, { watch_time: totalTime / 1000 + " seconds" });
+
+        const totalTime = Math.floor(Date.now() - startTime);
+        logUserEvent("view", scheme_id, {
+          watch_time: totalTime / 1000 + " seconds",
+        });
       };
 
       // Listen for modal close event
-const observer = new MutationObserver(() => {
+      const observer = new MutationObserver(() => {
+
         if (!isModalOpen) {
           stopTracking();
           observer.disconnect();
@@ -191,7 +193,9 @@ const observer = new MutationObserver(() => {
 
       observer.observe(document.body, { childList: true, subtree: true });
     }
-  }
+
+  };
+
   // To save scheme
   const saveScheme = async (scheme_id) => {
     const myHeaders = new Headers();
@@ -343,7 +347,7 @@ const observer = new MutationObserver(() => {
   const handleShare = async (schemeId) => {
     const baseUrl = window.location.origin + window.location.pathname;
     const shareUrl = `${baseUrl}?tab=${activeTab}&scheme_id=${schemeId}&modal_open=true`;
-  
+
     if (navigator.clipboard && window.isSecureContext) {
       try {
         await NavigationHistoryEntry.clipboard.writeText(shareUrl);
@@ -355,7 +359,7 @@ const observer = new MutationObserver(() => {
       fallbackCopy(shareUrl);
     }
   };
-  
+
   const fallbackCopy = (text) => {
     const textArea = document.createElement("textarea");
     textArea.value = text;
@@ -536,28 +540,30 @@ const observer = new MutationObserver(() => {
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                <ToolTips tooltip="Save scheme">
-                  <div
-                    className="cursor-pointer px-2 py-2 right-[8.25px]"
-                    onClick={(e) => handleBookmarkToggle(e, item.id)}
-                  >
-                    {isBookmarked[item.id] ? (
-                      <GoBookmarkFill className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[20px] text-[#3431BB]" />
-                    ) : (
-                      <CiBookmark className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[20px] " />
-                    )}
-                  </div>
-                </ToolTips>
 
-                <ToolTips tooltip="Share scheme">
-                <div
-                  className="cursor-pointer px-2 py-2 right-[8.25px]"
-                  onClick={() => handleShare(item.id)}
-                >
-                  <FaShareAlt className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[22px] text-gray-600 hover:text-[#3431BB]" />
+                  <ToolTips tooltip="Save scheme">
+                    <div
+                      className="cursor-pointer px-2 py-2 right-[8.25px]"
+                      onClick={(e) => handleBookmarkToggle(e, item.id)}
+                    >
+                      {isBookmarked[item.id] ? (
+                        <GoBookmarkFill className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[20px] text-[#3431BB]" />
+                      ) : (
+                        <CiBookmark className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[20px] " />
+                      )}
+                    </div>
+                  </ToolTips>
+
+                  <ToolTips tooltip="Share scheme">
+                    <div
+                      className="cursor-pointer px-2 py-2 right-[8.25px]"
+                      onClick={() => handleShare(item.id)}
+                    >
+                      <CiShare2 className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[22px] text-gray-600 hover:text-[#3431BB]" />
+                    </div>
+                  </ToolTips>
                 </div>
-</ToolTips>
-              </div>
+
               </div>
             )
         )}
@@ -584,11 +590,13 @@ const observer = new MutationObserver(() => {
             onRequestClose={() => {
               setIsModalOpen(false);
               setSelectedScheme(null);
+
             
               router.push({
                 pathname: router.pathname,
                 query: { tab: router.query.tab }, 
               }, undefined, { shallow: true });
+
             }}
             
             

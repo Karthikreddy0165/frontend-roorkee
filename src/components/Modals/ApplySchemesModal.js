@@ -10,6 +10,8 @@ import Toast from "@/components/ComponentsUtils/SavedToast";
 import UnSaveToast from "@/components/ComponentsUtils/UnsaveToast";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { CiShare2 } from "react-icons/ci";
+
 
 const ApplyModal = ({
   isOpen,
@@ -433,9 +435,9 @@ const handleReportSubmit = async (e) => {
 <div className="flex flex-wrap items-center gap-2 sm:gap-4">
 <button
     onClick={() => handleShare(scheme.id)}
-    className="flex items-center px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
+    className="flex items-center px-4 py-2 rounded-lg border border-transparent text-[#3431Bb]   text-[12px] sm:text-sm"
   >
-    Share
+   Share  <CiShare2 className="ml-2 h-[1rem] w-[1rem]"/>
   </button>
   <a
     href={scheme.scheme_link}

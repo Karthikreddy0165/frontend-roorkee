@@ -4,7 +4,7 @@ import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { PiNotepadBold } from "react-icons/pi";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/Context/AuthContext";
-
+import { IoIosSearch } from "react-icons/io";
 import scholarshipcap from "../assets/students.webp"
 import "../styles/app.module.css";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
@@ -68,16 +68,8 @@ const App = () => {
           const sortedCategories = data.sort((a, b) => a.order - b.order);
           const availableCategories = sortedCategories.map((item) => item.column_name);
 
-          setCategories(availableCategories);
-
-          // Determine dynamic text based on available categories
-          const textParts = [];
-          if (availableCategories.includes("schemes")) textParts.push("schemes");
-          if (availableCategories.includes("jobs")) textParts.push("jobs");
-          if (availableCategories.includes("scholarships")) textParts.push("scholarships");
-
-          setDisplayText(textParts.length > 0 ? textParts.join(", ") : "opportunities");
           
+          setDisplayText(availableCategories)
           setCategories(sortedCategories.map((item) => ({
             name: item.column_name,
             label: item.column_name.toUpperCase(),
@@ -115,19 +107,7 @@ const App = () => {
         return null;
     }}
 
-  const handleCategoryClick = (tabName) => {
-    if (activeTab !== tabName) {
-      setActiveTab(tabName);
-      router.push(
-        {
-          pathname: "AllSchemes",
-          query: { tab: tabName },
-        },
-        undefined,
-        { shallow: true }
-      );
-    }
-  };
+  
 
   console.log("displayText", displayText)
 
@@ -138,12 +118,12 @@ const App = () => {
 
       <div className="sm:w-full  mx-auto">
         {/* Main Container */}
-        <div className=" p-[40px_0] mx-auto  ">
+        <div className="  mx-auto w-full ">
           {/* First Row */}
-          <div className="flex flex-col md:flex md:flex-row items-center sm:bg-[#EEEEFF] md:h-[500px] sm:h-[500px] sm:w-[70vw] px-4 rounded-[20px]  lg:flex-row justify-center mx-auto ">
+          <div className="flex flex-col  md:flex md:flex-row items-center bg-[#2F329126] md:h-[500px] sm:h-[500px] sm:w-full  rounded-[20px]  lg:flex-row justify-center p-[20px] lg:px-[100px] ">
             {/* Left Div */}
             
-            <div className="flex flex-col  w-full lg:w-[482px]   items-start gap-[20px] lg:text-left">
+            <div className="flex flex-col  w-full    items-start gap-[30px] lg:text-left">
               <h1 className="text-[#3F3BE1] font-inter text-[20px] lg:text-[40px] font-semibold">
                 Empowering the marginalized community
               </h1>
@@ -153,14 +133,14 @@ const App = () => {
 
               {authState.token ? (
                 <button
-                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#3431BB] text-white mt-[12px] hover:bg-blue-700 hidden sm:block"
+                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#F58220] text-white mt-[12px]  hidden sm:block"
                   onClick={handleClickAfterLogin}
                 >
                   My {firstCategory}
                 </button>
               ) : (
                 <button
-                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] hidden sm:block rounded-[8px] bg-[#3431BB] text-white mt-[12px] hover:bg-blue-700"
+                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] hidden sm:block rounded-[8px] bg-[#F58220] text-white mt-[12px] "
                   onClick={handleClickGetStarted}
                 >
                   Get Started
@@ -180,7 +160,7 @@ const App = () => {
         displayText.includes("jobs") || displayText.includes("scholarships") ? "border-r border-[#808080] pr-4 pb-4 sm:pb-0" : ""
       }`}
     >
-      Thousands of <br/> schemes
+      Thousands of  schemes
     </div>
   )}
 
@@ -190,7 +170,7 @@ const App = () => {
         displayText.includes("scholarships") ? "border-r border-[#808080] pr-4 pb-4 sm:pb-0" : ""
       }`}
     >
-      100+ job <br/> postings
+      100+ job  postings
     </div>
   )}
 
@@ -199,14 +179,14 @@ const App = () => {
  className={`class="text-center bg-white text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold  border-[#808080] pb-4 sm:pb-0 pr-4" ${
    displayText.includes("scholarships") ? " border-[#808080] pr-4 pb-4 sm:pb-0" : ""
  }`}
->       Multiple <br/> scholarships
+>       Multiple scholarships
     </div>
   )}
 </div>
 </div>
 
             {/* Right Div */}
-            <div className="w-[482px] h-[300px] mr-[30px] mb-[20px] md:hidden lg:block sm:hidden sm:block hidden">
+            <div className="w-[482px] mr-[160px] h-[300px]  mb-[20px] md:hidden lg:block sm:hidden sm:block hidden">
               {/* Right Modals here */}
               <Image
                 className="relative h-[334px] w-[258px] rounded-tl-[10rem] -right-[190px] pb-8"
@@ -249,7 +229,7 @@ const App = () => {
         </div>
 
         {/* Second Row */}
-        <div className="flex flex-col items-center w-full bg-gradient-to-b from-white to-[#FBFBFE] sm:mt-[40px]">
+        <div className="flex flex-col items-center w-full bg-gradient-to-b from-white to-[#FBFBFE] mt-[20px] sm:mt-[40px]">
           <div className="self-stretch flex justify-center">
             <p className="text-center text-[#3431BB] font-semibold text-[18px] font-normal leading-normal">
               HOW IT WORKS
@@ -267,19 +247,19 @@ const App = () => {
               <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
                 Step 1
               </p>
-              <div className="flex sm:h-[160px] sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px] border border-[#3F3BE1] p-4">
-                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-[#3F3BE1] bg-opacity-[10%]">
+              <div className="flex sm:h-[160px] bg-[#2F3291F2] sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px] border border-[#3F3BE1] p-4">
+                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-white ">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
-                    fill="none"
+                    fill="#2F3291"
                     stroke="currentColor"
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="lucide lucide-list-check"
+                    className="lucide lucide-list-check bg-white"
                   >
                     <path d="M11 18H3" />
                     <path d="m15 18 2 2 4-4" />
@@ -287,7 +267,7 @@ const App = () => {
                     <path d="M16 6H3" />
                   </svg>
                 </div>
-                <div className="text-[#424242] text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
+                <div className="text-white  text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
                   Tell Us About Yourself
                 </div>
               </div>
@@ -298,25 +278,11 @@ const App = () => {
               <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
                 Step 2
               </p>
-              <div className="flex sm:h-[160px] sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px] border border-[#3F3BE1] p-4">
-                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-[#3F3BE1] bg-opacity-[10%]">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-search"
-                  >
-                    <circle cx="11" cy="11" r="8" />
-                    <path d="m21 21-4.3-4.3" />
-                  </svg>{" "}
+              <div className="flex sm:h-[160px] bg-[#2F3291F2] sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px] border border-[#3F3BE1] p-4">
+                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-white ">
+                  <IoIosSearch className="h-[31.5px] w-[31.5px]"/>
                 </div>
-                <div className="text-[#424242] text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
+                <div className="text-white text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
                   We will find the best results for you.
                 </div>
               </div>
@@ -324,23 +290,24 @@ const App = () => {
 
             {/* Step 3 */}
             <div className="flex flex-col gap-4  lg:items-start">
-              <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
-                Step 3
-              </p>
-              <div className="flex sm:h-[160px] sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px] border border-[#3F3BE1] p-4">
-                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-[#3F3BE1] bg-opacity-[10%]">
-                  <HiOutlineClipboardDocumentList className="h-[31.5px] w-[31.5px]" />
-                </div>
-                <div className="text-[#424242] text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
-                  Apply to best-suited results.
-                </div>
-              </div>
-            </div>
+  <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
+    Step 3
+  </p>
+  <div className="flex sm:h-[160px] bg-[#2F3291F2] sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px] border border-[#3F3BE1] p-4">
+    <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-white">
+      <HiOutlineClipboardDocumentList className="h-[31.5px] w-[31.5px] " />
+    </div>
+    <div className="text-white text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
+      Apply to best-suited results.
+    </div>
+  </div>
+</div>
+
           </div>
 
           <div className="self-stretch flex justify-center mt-8 ">
             <button
-              className="text-center text-white font-inter text-[16px] font-normal leading-normal bg-[#3431BB] pt-[10px] pr-[9px] sm:pr-[44px] pb-[10px] pl-[9px] sm:pl-[44px] rounded-[4px] hover:bg-blue-700 sm:mt-[32px] sm:mb-[50px]"
+              className="text-center text-white font-inter text-[16px] font-normal leading-normal bg-[#F58220] pt-[10px] pr-[9px] sm:pr-[44px] pb-[10px] pl-[9px] sm:pl-[44px] rounded-[4px]  sm:mt-[32px] sm:mb-[50px]"
               onClick={handleClickFindrightSchemeForYOu}
             >
               Find the right {firstCategory} for me
@@ -398,33 +365,33 @@ const App = () => {
 >
 {displayText.includes("schemes") && (
     <div
-      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:bg-[#3431BB] hover:text-white hover:cursor-pointer flex flex-col justify-center items-center"
+      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#2F3291] p-4 sm:p-[3.48vw] text-[#F58220] hover:bg-[#3431BB]  hover:cursor-pointer flex flex-col justify-center items-center"
       onClick={handleSchemesClick}
     >
-      <p className="text-xs sm:text-base text-center">SCHEMES</p>
-      <PiNotepadBold className="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
+      <p className="text-xs sm:text-xl text-center">SCHEMES</p>
+      <PiNotepadBold className="  h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw]  mt-2" />
     </div>
   )}
 
   {/* JOBS */}
   {displayText.includes("jobs") && (
     <div
-      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
+      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#2F3291] p-4 sm:p-[3.48vw] text-[#F58220]  hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
       onClick={handleJobsClick}
     >
-      <p className="text-xs sm:text-base text-center">JOBS</p>
-      <FaBriefcase className="text-[#3F3BE1] opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
+      <p className="text-xs sm:text-xl text-center">JOBS</p>
+      <FaBriefcase className=" h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw]  mt-2" />
     </div>
   )}
 
   {/* SCHOLARSHIPS (Compact Box) */}
   {displayText.includes("scholarships") && displayText !== "scholarships" && (
     <div
-      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
+      className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#2F3291] p-4 sm:p-[3.48vw] text-[#F58220]  hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center"
       onClick={handleScholarshipsClick}
     >
-      <p className="text-xs sm:text-base text-center">SCHOLARSHIPS</p>
-      <FaGraduationCap className="opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] group-hover:text-[#FFFFFF] mt-2" />
+      <p className="text-xs sm:text-xl text-center">SCHOLARSHIPS</p>
+      <FaGraduationCap className=" h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw]  mt-2" />
     </div>
   )}
   {/* only shcolarship for mobile view  */}
@@ -443,45 +410,40 @@ const App = () => {
       </div>
     </div>
   )}
+  
 
   {/* SCHOLARSHIPS (Full Width View for One Box) for dekstop view */ }
   {displayText === "scholarships" && (
   <div
-    className="group flex flex-wrap hidden sm:block w-[80vw] sm:w-[70vw]  rounded-[8px] bg-[#EEF] p-6 sm:p-[3vw] text-[#3330BA]   hover:cursor-pointer  items-center  justify-center"
+    className="group flex flex-wrap hidden sm:block w-[80vw] sm:w-[70vw]  rounded-[8px] bg-gradient-to-r from-[#2F3291] to-[#0E0F2B33] p-6 sm:p-[3vw] text-[#3330BA]   hover:cursor-pointer  items-center  justify-center"
     onClick={handleScholarshipsClick}
   >
-    <div className="flex items-center  ">
-      {/* <FaGraduationCap className="opacity-[20%] h-[50px] sm:h-[8vw] w-[50px] sm:w-[8vw] group-hover:text-[#FFFFFF]" /> */}
-      <div className="flex flex-col max-w-[500px] sm:max-w-[600px]">
-      <h1 className="flex items-center gap-2 text-xs sm:text-[30px] text-left mb-2 sm:mb-10 font-semibold">
-  <FaGraduationCap className="opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw]  mt-2" />
-  SCHOLARSHIPS
-</h1>
+   <div className="flex items-center  p-4 rounded-lg">
+  <div className="flex flex-col max-w-[500px] sm:max-w-[600px]">
+    <h1 className="flex items-center gap-2 text-xs sm:text-[30px] text-left mb-2 sm:mb-10 font-semibold text-white">
+      <FaGraduationCap className="opacity-[20%] h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] mt-2" />
+      SCHOLARSHIPS
+    </h1>
+    <p className="text-xs sm:text-base text-left leading-relaxed sm:leading-6 text-wrap sm:w-auto md:w-[70%] lg:w-[60%] text-white">
+      Explore a wide range of scholarships designed to support students from diverse backgrounds. Find financial aid opportunities based on merit, need, and special categories. Click to discover and apply for scholarships that match your eligibility!
+    </p>
+    <p className="flex mt-12 italic hover:underline cursor-pointer gap-2 text-white">
+      Click here to view
+      <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" viewBox="0 0 443 512" className="w-4 h-4 mt-1">
+        <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+      </svg>
+    </p>
+  </div>
 
-  <p className="text-xs sm:text-base text-left leading-relaxed sm:leading-6 text-wrap sm:w-auto md:w-[70%] lg:w-[60%]">
-    Explore a wide range of scholarships designed to support students from diverse backgrounds. Find financial aid opportunities based on merit, need, and special categories. Click to discover and apply for scholarships that match your eligibility!
-  </p>
-  <p className="flex mt-12 italic hover:underline cursor-pointer gap-2">
-  Click here to view
-  <svg xmlns="http://www.w3.org/2000/svg" fill="#3330BA" viewBox="0 0 443 512" className="w-4 h-4 mt-1 text-blue-700">
-    <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
-  </svg>
-</p>
-
+  <div className="relative h-[300px] mr-[10px] mb-[20px] sm:block hidden">
+    <Image
+      className="relative h-[334px] md:hidden w-full lg:block rounded-tl-[10rem] rounded-br-[10rem] sm:-right-[10px] pb-8"
+      src={scholarshipcap}
+      alt="Image loading..."
+    />
+  </div>
 </div>
 
-      <div className="relative h-[300px] mr-[10px] mb-[20px]   sm:block hidden">
-              {/* Right Modals here */}
-            
-              <Image
-                className="relative h-[334px] md:hidden w-full lg:block rounded-bl-[rem] sm:hidden lg:block  rounded-tl-[10rem]  rounded-br-[10rem]   rounded-tr-[1 rem] sm:-right-[10px] pb-8"
-                src={scholarshipcap}
-                alt="Image loading..."
-              />
-              
-              
-            </div>
-    </div>
     
    
   </div>
@@ -494,7 +456,7 @@ const App = () => {
           <div className="relative flex flex-col lg:flex-row justify-between gap-[20px] mt-[32px] px-6 sm:mt-[100px] mx-auto ">
             {/* Mission Section */}
             <div className=" flex flex-col gap-2 p-6 border-[0.3px] border-[#000000] rounded-lg h-[250px] sm:w-[550px] sm:h-[266px]  relative">
-              <p className="font-semibold text-lg lg:text-left text-[16px] sm:text-[20px]">
+              <p className="font-semibold text-[#3431BB] text-lg lg:text-left text-[16px] sm:text-[20px]">
                 Mission
               </p>
               <p className="text-[#616161] lg:text-left text-[14px] sm:text-[16px]">
@@ -519,7 +481,7 @@ const App = () => {
 
             {/* Vision Section */}
             <div className="flex flex-col gap-2 p-6 border-[0.3px] border-[#000000] rounded-lg sm:w-[550px] sm:h-[266px]  h-[250px] relative">
-              <p className="font-semibold text-lg lg:text-left text-[16px] sm:text-[20px]">
+              <p className="font-semibold  text-[#3431BB] text-lg lg:text-left text-[16px] sm:text-[20px]">
                 Vision
               </p>
               <p className="text-[#616161] lg:text-left text-[14px] sm:text-[16px]">
@@ -546,7 +508,7 @@ const App = () => {
           {/* Values Section - New Row, Full Width */}
           <div className="mt-[10px] p-6">
             <div className="flex flex-col gap-2 p-6 border-[0.3px] h-[350px] border-[#000000] rounded-lg w-full sm:w-[550px] lg:w-[1130px]  sm:h-[250px] relative">
-              <p className="font-semibold text-[16px] text-[20px]">
+              <p className="font-semibold text-[16px] text-[20px] text-[#3431BB]">
                 Our Values
               </p>
               <p className="text-[#616161] text-[14px] sm:text-[16px]">
