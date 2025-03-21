@@ -22,7 +22,7 @@ const SavedModal = ({ isOpen, onRequestClose,heading,tag }) => {
             {/* Modal */}
             <div className="bg-white rounded-lg shadow-lg p-6 w-96 z-10">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="font-bold text-xl">{heading}</h2>
+                    <h2 className="font-bold text-xl text-black">{heading}</h2>
                     <button className="text-gray-500 hover:text-gray-700" onClick={onRequestClose}>
                         <span className="sr-only">Close</span>
                         <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -32,7 +32,7 @@ const SavedModal = ({ isOpen, onRequestClose,heading,tag }) => {
                 </div>
                 <hr className="my-4 w-full border-gray-300" />
                 <div>
-                    <h1 className="text-lg mb-2 p-2">To {tag}, please login to your account.</h1>
+                    <h1 className="text-lg mb-2 p-2 text-black">To {tag}, please login to your account.</h1>
                     <button className="bg-[#3431BB] text-white px-4 py-2 rounded-lg mb-4 w-full flex justify-center items-center"
                     onClick={handleRoutetologin}>
                         Login
