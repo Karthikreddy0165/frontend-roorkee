@@ -74,6 +74,7 @@ const SchemeCarousel = () => {
         circular
         autoplayInterval={3000}
         showNavigators={false}
+        orientation="vertical"
       />
     </div>
   );
