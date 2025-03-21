@@ -106,7 +106,7 @@ const NavBar = () => {
             {/* Home Link */}
             <a
               href="/"
-              className={`text-white  hover:text-[#3330BA] transition duration-300 ${
+              className={`text-white   transition duration-300 ${
                 router.pathname === "/" ? "underline decoration-[#3330BA]" : ""
               }`}
             >
@@ -114,23 +114,13 @@ const NavBar = () => {
             </a>
 
             {/* About Us Link */}
-            <a
-              href="/AboutUs"
-              className={`text-white hover:text-[#3330BA] transition duration-300 ${
-                router.pathname === "/AboutUs"
-                  ? "underline decoration-[#3330BA]"
-                  : ""
-              }`}
-            >
-              ABOUT US
-            </a>
 
             {/* Dynamic Categories */}
             {categories.map((category, index) => (
               <a
                 key={index}
                 href={`/AllSchemes?tab=${category.name.toLowerCase()}`}
-                className={`text-white  hover:text-[#3330BA] transition duration-300 ${
+                className={`text-white  transition duration-300 ${
                   router.query.tab === category.name.toLowerCase()
                     ? "underline decoration-[#3330BA]"
                     : ""
@@ -139,6 +129,16 @@ const NavBar = () => {
                 {category.label}
               </a>
             ))}
+            <a
+              href="/AboutUs"
+              className={`text-white  transition duration-300 ${
+                router.pathname === "/AboutUs"
+                  ? "underline decoration-[#3330BA]"
+                  : ""
+              }`}
+            >
+              ABOUT US
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -154,27 +154,22 @@ const NavBar = () => {
           {/* Mobile Dropdown */}
           {isMobileMenuOpen && (
             <div className="absolute top-16 right-6 p-6 w-48 bg-white shadow-lg rounded-lg md:hidden">
-              <a
-                href="/"
-                className="block py-2 text-black hover:text-[#3330BA]"
-              >
+              <a href="/" className="block py-2 text-black ">
                 HOME
               </a>
-              <a
-                href="/AboutUs"
-                className="block py-2 text-black hover:text-[#3330BA]"
-              >
-                ABOUT US
-              </a>
+
               {categories.map((category, index) => (
                 <a
                   key={index}
                   href={`/AllSchemes?tab=${category.name.toLowerCase()}`}
-                  className="block py-2 text-black hover:text-[#3330BA]"
+                  className="block py-2 text-black "
                 >
                   {category.label}
                 </a>
               ))}
+              <a href="/AboutUs" className="block py-2 text-black ">
+                ABOUT US
+              </a>
             </div>
           )}
         </div>
@@ -192,7 +187,7 @@ const NavBar = () => {
 
               {/* Profile Button for Desktop */}
               <button
-                className="flex items-center px-4 py-2 bg-[#F58220] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 md:flex hidden"
+                className="flex items-center px-4 py-2 bg-[#F58220] text-white text-sm font-semibold rounded-lg shadow-md  md:flex hidden"
                 onClick={toggleDropdown}
               >
                 Profile <IoIosArrowDown className="ml-2" />
@@ -204,7 +199,7 @@ const NavBar = () => {
                   <ul>
                     <li>
                       <button
-                        className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left hover:rounded-t-lg"
+                        className="block px-4 py-2 text-sm text-gray-800  w-full text-left hover:rounded-t-lg"
                         onClick={() => handleOptionClick("MyProfile")}
                       >
                         My Profile
@@ -212,7 +207,7 @@ const NavBar = () => {
                     </li>
                     <li>
                       <button
-                        className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left hover:rounded-b-lg"
+                        className="block px-4 py-2 text-sm text-gray-800  w-full text-left hover:rounded-b-lg"
                         onClick={() => handleOptionClick("Logout")}
                       >
                         Log Out
@@ -226,7 +221,7 @@ const NavBar = () => {
             <div>
               {/* Login Button for Mobile */}
               <button
-                className="px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 sm:hidden"
+                className="px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md  sm:hidden"
                 onClick={handleGotologin}
               >
                 Login
@@ -234,7 +229,7 @@ const NavBar = () => {
 
               {/* Login Button for Desktop */}
               <button
-                className="px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 hidden sm:block"
+                className="px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md  hidden sm:block"
                 onClick={handleGotologin}
               >
                 Login

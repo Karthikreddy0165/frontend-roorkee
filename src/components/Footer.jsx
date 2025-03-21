@@ -200,10 +200,7 @@ const Footer = () => {
               )}
               {displayText.includes("jobs") && (
                 <li>
-                  <a
-                    href="/AllSchemes?tab=jobs"
-                    className="text-black text-[#FFFFFF]"
-                  >
+                  <a href="/AllSchemes?tab=jobs" className="text-[#FFFFFF] ">
                     Job openings
                   </a>
                 </li>
@@ -212,17 +209,14 @@ const Footer = () => {
                 <li>
                   <a
                     href="/AllSchemes?tab=Scholarships"
-                    className="text-black text-[#FFFFFF]"
+                    className="text-[#FFFFFF]"
                   >
                     Scholarships
                   </a>
                 </li>
               )}
               <li>
-                <a
-                  href="/AllSchemes?tab=Saved"
-                  className="text-black text-[#FFFFFF]"
-                >
+                <a href="/AllSchemes?tab=Saved" className=" text-[#FFFFFF]">
                   Saved
                 </a>
               </li>
@@ -236,7 +230,7 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2 text-[#FFFFFF]">
               <li>
-                <a className="text-black text-[#FFFFFF]">FAQ’s</a>
+                <a className=" text-[#FFFFFF]">FAQ’s</a>
               </li>
               <li>
                 <FeedbackButton className="text-[#FFFFFF]" />
@@ -265,7 +259,7 @@ const Footer = () => {
                 <a
                   href="#"
                   onClick={handleTermsConditions}
-                  className="text-black text-[#FFFFFF]"
+                  className="text-[#FFFFFF]"
                 >
                   Terms and Conditions
                 </a>
