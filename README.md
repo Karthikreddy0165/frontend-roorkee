@@ -84,5 +84,5 @@ For more information on Next.js, check out:
 
 ---
 
-Contributions and feedback are welcome! If you encounter any issues or have suggestions, feel free to open an issue or submit a pull request.
+Contributions and feedback are welcome! If you encounter any issues or have suggestions, feel free to open an issue or submit a pull request. 
 
