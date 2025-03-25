@@ -16,7 +16,6 @@ const renderFilterButton = (filterValue, filterType) => {
   return (
     <button
       key={filterValue}
-      data-testid='selected-filter'
       className="flex items-center justify-center px-2 py-[5px] border border-gray-400 rounded-[8px] bg-white text-[#3330BA] font-inter text-xs font-medium hover:border-onclick-btnblue hover:text-onclick-btnblue whitespace-nowrap"
       data-full-text={filterValue}
     >
@@ -24,7 +23,6 @@ const renderFilterButton = (filterValue, filterType) => {
         {filterValue.length > 30 ? `${filterValue.substring(0, 30)}...` : filterValue}
       </span>
       <span
-      data-testid="remove-filter"
         className="ml-2 text-gray-500 hover:text-red-500 cursor-pointer"
         onClick={(e) => {
           e.stopPropagation(); // Prevents triggering parent button click
@@ -145,7 +143,7 @@ const renderFilterButton = (filterValue, filterType) => {
       );
 
       if (!response.ok) {
-        console.error("Failed to log event");
+        throw new Error("Failed to log event");
       }
 
       const data = await response.json();

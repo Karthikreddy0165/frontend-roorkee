@@ -30,18 +30,15 @@ const SponsorDropdownMenu = () => {
   // console.log(states);
 
   return (
-    <div 
-    data-testid="sponsored-dropdown"
-    className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0 ">
+    <div className="text-[#616161] bg-[rgb(255,255,255)] w-[200] max-w-[600px] flex flex-col whitespace-wrap z-50 text-[14px] mt-0">
       <ul className="flex flex-col font-sans list-none p-0 m-0 gap-0 pb-[18px]">
         {uniqueCategories.map((item, index) => (
           <li
             key={item + index}
-            data-testid='sponsored-option'
             className="flex items-center justify-between hover:bg-gray-100 p-[8px] cursor-pointer hover:rounded-[8px]"
             onClick={() => handleItemClick(item)}
           >
-            <div data-testid="sponsored-option">
+            <div>
               <p className="flex leading-5 overflow-hidden overflow-ellipsis line-clamp-2 max-h-10 text-black">
                 {item[1]}
                 {item[1] === "State" &&

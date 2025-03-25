@@ -136,7 +136,6 @@ const SchemesAll = () => {
           <div className="flex space-between ml-1 hidden md:block max-h-[70vh] overflow-y-auto scrollbar-none">
             {/* Sponsored By Dropdown */}
             <div
-              data-testid="sponsored-button"
               className="flex justify-between items-center hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pb-2 pr-2"
               onClick={() => toggleDropdown("sponsoredOpen")}
             >
@@ -154,7 +153,6 @@ const SchemesAll = () => {
             {/* Department Dropdown */}
             {isDepartmentVisible && (
               <div
-                data-testid="department-button"
                 className="flex justify-between items-center hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
                 onClick={() => toggleDropdown("departmentOpen")}
               >
@@ -167,13 +165,12 @@ const SchemesAll = () => {
               </div>
             )}
             {isDepartmentVisible && dropDownStates.departmentOpen && (
-              <DepartmentDropdownMenu/>
+              <DepartmentDropdownMenu />
             )}
 
             {/* Beneficiaries Dropdown */}
             {isBeneficiaryVisible && (
               <div
-                data-testid="beneficiaries-button"
                 className="flex justify-between items-center hover:bg-[#EEEEFF] hover:rounded-md hover:text-onclick-btnblue p-[4px] pr-2 pb-2"
                 onClick={() => toggleDropdown("beneficiaryOpen")}
               >
