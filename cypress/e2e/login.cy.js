@@ -146,10 +146,14 @@ describe('Login Page Tests', () => {
       cy.viewport('ipad-2')
       cy.get('.flex').should('be.visible')
     });
-    
-    it("image should be visible on large screens", () => {
-      cy.viewport(1200, 800); 
-      cy.get('img[alt="Design Background"]').should("be.visible");
+
+    it('should show/hide right panel based on viewport', () => {
+      cy.viewport(1920, 1080)
+      cy.get('.bg-\\[\\#FEF6F0\\]').should('be.visible')
+      
+
+      cy.viewport('iphone-x') 
+      cy.get('.bg-\\[\\#FEF6F0\\]').should('not.be.visible')
     });
- });
+  });
 });
