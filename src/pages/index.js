@@ -21,6 +21,7 @@ import NavBar from "../components/NavBar";
 import VerifiedStatus from "@/components/isVerfiedComponent";
 import FAQSection from "src/Context/FAQSection.js"; // Import FAQSection
 import Footer from "@/components/Footer";
+import AnnouncementPopup from "./Announcement";
 const App = () => {
   const { authState, logout } = useAuth();
   const router = useRouter();
@@ -115,6 +116,7 @@ const App = () => {
     <div>
       <NavBar />
       <VerifiedStatus />
+      <AnnouncementPopup/>
 
       <div className="sm:w-full  mx-auto">
         {/* Main Container */}
