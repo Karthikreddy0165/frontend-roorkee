@@ -13,7 +13,7 @@ import image02 from "../assets/Image002.png";
 import image03 from "../assets/Image003.png";
 
 import image04 from "../assets/Image004.png";
-
+import AnnouncementPopup from "./Announcement.js"
 import Image from "next/image";
 
 import { useTabContext } from "@/Context/TabContext";
@@ -115,6 +115,8 @@ const App = () => {
     <div>
       <NavBar />
       <VerifiedStatus />
+
+    <AnnouncementPopup/>
 
       <div className="sm:w-full  mx-auto">
         {/* Main Container */}
