@@ -117,34 +117,31 @@ const App = () => {
     <div>
       <NavBar />
       <VerifiedStatus />
-
-    <AnnouncementPopup/>
-
-      <div className="sm:w-full  mx-auto">
-        {/* Main Container */}
-        <div className="  mx-auto w-full ">
+      <AnnouncementPopup/>
+      <div className="w-full mx-auto">
+        <div className="mx-auto w-full">
           {/* First Row */}
-          <div className="flex flex-col  md:flex md:flex-row items-center bg-[#2F329126] md:h-[500px] sm:h-[500px] sm:w-full  rounded-[20px]  lg:flex-row justify-center p-[20px] lg:px-[100px] ">
+          <div className="flex flex-col md:flex-row items-center bg-[#2F329126] md:h-[500px] w-full rounded-[20px] justify-center p-[20px] sm:p-[30px] md:p-[40px] lg:px-[100px] transition-all duration-300">
             {/* Left Div */}
             
-            <div className="flex flex-col  w-full    items-start gap-[30px] lg:text-left">
-              <h1 className="text-[#3F3BE1] font-inter text-[20px] lg:text-[40px] font-semibold">
+            <div className="flex flex-col w-full items-start sm:items-center md:items-start gap-[20px] sm:gap-[30px] text-center sm:text-center md:text-left">
+              <h1 className="text-[#3F3BE1] font-inter text-[22px] sm:text-[28px] md:text-[32px] lg:text-[40px] font-semibold leading-[120%] sm:leading-[130%] md:leading-[140%]">
                 Empowering the marginalized community
               </h1>
-              <p className="text-[#000000] sm:text-[16px] text-[14px] font-start leading-[180%]">
+              <p className="text-[#000000] text-[14px] sm:text-[16px] md:text-[18px] font-start leading-[160%] sm:leading-[180%] max-w-[600px]">
       Helping all communities across India find personalized {displayText} based on eligibility.
     </p>
 
               {authState.token ? (
                 <button
-                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#F58220] text-white mt-[12px]  hidden sm:block"
+                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#F58220] text-white mt-[12px] hidden sm:block transition-all duration-300 hover:bg-[#e67615] transform hover:scale-[1.02] shadow-sm hover:shadow-md"
                   onClick={handleClickAfterLogin}
                 >
                   My {firstCategory}
                 </button>
               ) : (
                 <button
-                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] hidden sm:block rounded-[8px] bg-[#F58220] text-white mt-[12px] "
+                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] hidden sm:block rounded-[8px] bg-[#F58220] text-white mt-[20px] transition-all duration-300 hover:bg-[#e67615] transform hover:scale-[1.02] shadow-sm hover:shadow-md"
                   onClick={handleClickGetStarted}
                 >
                   Get Started
@@ -152,38 +149,37 @@ const App = () => {
               )}
 
 <div
-  className={`flex flex-row  h-auto bg-white items-center sm:items-start p-3 sm:p-6 md:p-8 rounded-[16px] shadow-[0px_3px_8px_rgba(0,0,0,0.1),_0px_-2px_6px_rgba(0,0,0,0.1)] ${
+  className={`flex flex-row h-auto bg-white items-center justify-center sm:items-start p-4 sm:p-6 md:p-8 mt-6 sm:mt-8 rounded-[16px] shadow-[0px_3px_8px_rgba(0,0,0,0.1),_0px_-2px_6px_rgba(0,0,0,0.1)] transition-all duration-300 w-full sm:w-auto ${
     [displayText.includes("schemes"), displayText.includes("jobs"), displayText.includes("scholarships")].filter(Boolean).length === 1
-      ? "justify-center gap-0 sm:gap-0"
+      ? "justify-center gap-2 sm:gap-4"
       : "justify-between gap-4 sm:gap-8"
   }`}
 >
   {displayText.includes("schemes") && (
     <div
-      className={`class="text-center  bg-white sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4" ${
-        displayText.includes("jobs") || displayText.includes("scholarships") ? "border-r border-[#808080] pr-4 pb-4 sm:pb-0" : ""
+      className={`text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold ${
+        displayText.includes("jobs") || displayText.includes("scholarships") ? "border-r border-[#808080] pr-4 pb-2 sm:pb-0" : ""
       }`}
     >
-      Thousands of  schemes
+      Thousands of schemes
     </div>
   )}
 
   {displayText.includes("jobs") && (
     <div
-      className={`class="text-center bg-white sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4" ${
-        displayText.includes("scholarships") ? "border-r border-[#808080] pr-4 pb-4 sm:pb-0" : ""
+      className={`text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold ${
+        displayText.includes("scholarships") ? "border-r border-[#808080] pr-4 pb-2 sm:pb-0" : ""
       }`}
     >
-      100+ job  postings
+      100+ job postings
     </div>
   )}
 
   {displayText.includes("scholarships") && (
- <div
- className={`class="text-center bg-white text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold  border-[#808080] pb-4 sm:pb-0 pr-4" ${
-   displayText.includes("scholarships") ? " border-[#808080] pr-4 pb-4 sm:pb-0" : ""
- }`}
->       Multiple scholarships
+    <div
+      className={`text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold`}
+    >
+      Multiple scholarships
     </div>
   )}
 </div>
@@ -215,14 +211,14 @@ const App = () => {
             </div>
             {authState.token ? (
               <button
-                className="flex h-[44px] px-[17px] py-[13px] justify-center items-center text-[16px]  gap-[20px] rounded-[8px] bg-[#3431BB] text-white mt-[12px] hover:bg-blue-700 block sm:hidden"
+                className="flex h-[44px] w-full sm:w-auto px-[24px] py-[13px] justify-center items-center text-[16px] gap-[10px] rounded-[8px] bg-[#3431BB] text-white mt-[24px] hover:bg-[#2D2AA5] transition-all duration-300 transform hover:scale-[1.02] shadow-sm hover:shadow-md block sm:hidden"
                 onClick={handleClickAfterLogin}
               >
                 My {firstCategory}
               </button>
             ) : (
               <button
-                className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#3431BB] text-white mt-[12px] hover:bg-blue-700 block sm:hidden"
+                className="flex h-[44px] w-full sm:w-auto px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#3431BB] text-white mt-[24px] hover:bg-[#2D2AA5] transition-all duration-300 transform hover:scale-[1.02] shadow-sm hover:shadow-md block sm:hidden"
                 onClick={handleClickGetStarted}
               >
                 Get Started
@@ -233,26 +229,25 @@ const App = () => {
         </div>
 
         {/* Second Row */}
-        <div className="flex flex-col items-center w-full bg-gradient-to-b from-white to-[#FBFBFE] mt-[20px] sm:mt-[40px]">
+        <div className="flex flex-col items-center w-full bg-gradient-to-b from-white to-[#FBFBFE] mt-[30px] sm:mt-[50px] px-4 sm:px-6">
           <div className="self-stretch flex justify-center">
-            <p className="text-center text-[#3431BB] font-semibold text-[18px] font-normal leading-normal">
+            <p className="text-center text-[#3431BB] font-semibold text-[16px] sm:text-[18px] md:text-[20px] leading-normal">
               HOW IT WORKS
             </p>
           </div>
-          <div className="self-stretch flex justify-center mt-4">
-            <h1 className="text-center text-black font-inter text-[16px] sm:text-[24px] font-semibold leading-[150%]">
+          <div className="self-stretch flex justify-center mt-3 sm:mt-4">
+            <h1 className="text-center text-black font-inter text-[18px] sm:text-[22px] md:text-[26px] font-semibold leading-[140%] sm:leading-[150%] max-w-[800px]">
               Easy and Simple steps to find right resource
             </h1>
           </div>
-
-          <div className="steps grid gap-[40px] sm:grid-cols-1 lg:grid-cols-3 items-center mt-[40px]" >
+          <div className="steps grid gap-[30px] sm:gap-[40px] md:gap-[50px] sm:grid-cols-1 lg:grid-cols-3 items-center mt-[50px]" >
             {/* Step 1 */}
-            <div className="flex flex-col gap-4  lg:items-start sm:h-full sm:w-full">
-              <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
+            <div className="flex flex-col gap-5 lg:items-start sm:h-full sm:w-full">
+              <p className="text-[#3F3BE1] font-inter text-[16px] font-semibold leading-normal">
                 Step 1
               </p>
-              <div className="flex sm:h-[160px] bg-[#2F3291F2] sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px] border border-[#3F3BE1] p-4">
-                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-white ">
+              <div className="flex sm:h-[160px] bg-[#2F3291F2] sm:w-[318px] h-[120px] w-[290px] lg:w-[318px] justify-center items-center gap-5 rounded-[8px] border border-[#3F3BE1] p-5 transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02] hover:bg-[#2a2e86]">
+                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-white shadow-md">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -278,13 +273,12 @@ const App = () => {
             </div>
 
             {/* Step 2 */}
-            <div className="flex flex-col gap-4  lg:items-start">
-              <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
+            <div className="flex flex-col gap-5 lg:items-start">
+              <p className="text-[#3F3BE1] font-inter text-[16px] font-semibold leading-normal">
                 Step 2
               </p>
-              <div className="flex sm:h-[160px] bg-[#2F3291F2] sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px] border border-[#3F3BE1] p-4">
-                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-white ">
-                  <IoIosSearch className="h-[31.5px] w-[31.5px]"/>
+              <div className="flex sm:h-[160px] bg-[#2F3291F2] sm:w-[318px] h-[120px] w-[290px] lg:w-[318px] justify-center items-center gap-5 rounded-[8px] border border-[#3F3BE1] p-5 transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02] hover:bg-[#2a2e86]">
+                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-white shadow-md">
                 </div>
                 <div className="text-white text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
                   We will find the best results for you.
@@ -293,19 +287,19 @@ const App = () => {
             </div>
 
             {/* Step 3 */}
-            <div className="flex flex-col gap-4  lg:items-start">
-  <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
-    Step 3
-  </p>
-  <div className="flex sm:h-[160px] bg-[#2F3291F2] sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px] border border-[#3F3BE1] p-4">
-    <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-white">
-      <HiOutlineClipboardDocumentList className="h-[31.5px] w-[31.5px] " />
-    </div>
-    <div className="text-white text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
-      Apply to best-suited results.
-    </div>
-  </div>
-</div>
+            <div className="flex flex-col gap-5 lg:items-start">
+              <p className="text-[#3F3BE1] font-inter text-[16px] font-semibold leading-normal">
+                Step 3
+              </p>
+              <div className="flex sm:h-[160px] bg-[#2F3291F2] sm:w-[318px] h-[120px] w-[290px] lg:w-[318px] justify-center items-center gap-5 rounded-[8px] border border-[#3F3BE1] p-5 transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02] hover:bg-[#2a2e86]">
+                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-white shadow-md">
+                  <HiOutlineClipboardDocumentList className="h-[31.5px] w-[31.5px] text-[#2F3291]" />
+                </div>
+                <div className="text-white text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal ml-2">
+                  Apply for the best match
+                </div>
+              </div>
+            </div>
 
           </div>
 
@@ -354,48 +348,38 @@ const App = () => {
       ))}
     </div> */}
 <div
-  className={`grid gap-4 items-center justify-center mt-10
-    ${
+  className={`grid gap-6 items-center justify-center mt-12 ${
       displayText.length === 1
         ? "grid-cols-1"
         : displayText.length === 2
         ? "grid-cols-2" 
-        : displayText.length === 3
-        ? "grid-cols-3"
         : "grid-cols-3"
-    } 
-    sm:flex sm:flex-wrap sm:gap-4 font-semibold`}
-  
+    } sm:flex sm:flex-wrap sm:gap-8 font-semibold`}
 >
-{displayText.includes("schemes") && displayText.length===3 &&(
-    <div
-      className="group w-full sm:w-[25.7vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#FFFFFF] p-4 sm:p-[3.48vw] text-[#F58220] hover:bg-[#FFFFFF] border-[0.3px] border-black hover:cursor-pointer flex flex-col justify-center items-center"
-      onClick={handleSchemesClick}
-    >
-      <p className="text-xs text-[#2B3E80] sm:text-xl text-center">SCHEMES</p>
-      <PiNotepadBold className="  h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw]  mt-2" />
+  {displayText.includes("schemes") && displayText.length === 3 && (
+    <div 
+      className="group w-full sm:w-[25.7vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#FFFFFF] p-4 sm:p-[3.48vw] text-[#F58220] hover:bg-[#F8F8FF] border-[0.3px] border-black hover:cursor-pointer flex flex-col justify-center items-center transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02]"
+      onClick={handleSchemesClick}>
+      <p className="text-xs text-[#2B3E80] sm:text-xl text-center font-semibold mb-3">SCHEMES</p>
+      <PiNotepadBold className="h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] text-[#2F3291] opacity-80 group-hover:opacity-100 transition-all duration-300" />
     </div>
   )}
 
-  {/* JOBS */}
-  {displayText.includes("jobs") && displayText.length===3 && (
-    <div
-      className="group w-full sm:w-[25.7vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#FFFFFF] p-4 sm:p-[3.48vw] text-[#F58220]  hover:bg-[#FFFFFF] border-[0.3px] border-black hover:cursor-pointer flex flex-col justify-center items-center"
-      onClick={handleJobsClick}
-    >
-      <p className="text-xs text-[#2B3E80] sm:text-xl text-center">JOBS</p>
-      <FaBriefcase className=" h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw]  mt-2" />
+  {displayText.includes("jobs") && displayText.length === 3 && (
+    <div 
+      className="group w-full sm:w-[25.7vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#FFFFFF] p-4 sm:p-[3.48vw] text-[#F58220] hover:bg-[#F8F8FF] border-[0.3px] border-black hover:cursor-pointer flex flex-col justify-center items-center transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02]"
+      onClick={handleJobsClick}>
+      <p className="text-xs text-[#2B3E80] sm:text-xl text-center font-semibold mb-3">JOBS</p>
+      <FaBriefcase className="h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] text-[#2F3291] opacity-80 group-hover:opacity-100 transition-all duration-300" />
     </div>
   )}
 
-  {/* SCHOLARSHIPS (Compact Box) */}
-  {displayText.includes("scholarships") && displayText.length===3 && (
-    <div
-      className="group w-full sm:w-[25.7vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#FFFFFF] p-4 sm:p-[3.48vw] text-[#F58220]  hover:bg-[#FFFFFF] border-[0.3px] border-black hover:cursor-pointer flex flex-col justify-center items-center"
-      onClick={handleScholarshipsClick}
-    >
-      <p className="text-xs text-[#2B3E80]  sm:text-xl text-center">SCHOLARSHIPS</p>
-      <FaGraduationCap className=" h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw]  mt-2" />
+  {displayText.includes("scholarships") && displayText.length === 3 && (
+    <div 
+      className="group w-full sm:w-[25.7vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#FFFFFF] p-4 sm:p-[3.48vw] text-[#F58220] hover:bg-[#F8F8FF] border-[0.3px] border-black hover:cursor-pointer flex flex-col justify-center items-center transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02]"
+      onClick={handleScholarshipsClick}>
+      <p className="text-xs text-[#2B3E80] sm:text-xl text-center font-semibold mb-3">SCHOLARSHIPS</p>
+      <FaGraduationCap className="h-[40px] sm:h-[6.80vw] w-[40px] sm:w-[5.76vw] text-[#2F3291] opacity-80 group-hover:opacity-100 transition-all duration-300" />
     </div>
   )}
 
@@ -489,21 +473,20 @@ const App = () => {
 
     
 </div>
-
-
+          {/* Your existing sections until Mission/Vision/Values */}
+          
           {/* Mission, Vision, and Values Section */}
-
-          <div className="relative flex flex-col lg:flex-row justify-between items-center gap-5 m-8 px-6 sm:mt-[100px] mx-auto w-[82.9vw]">
+          <div className="relative flex flex-col lg:flex-row justify-between items-stretch gap-8 m-8 px-6 sm:mt-[100px] mx-auto w-[82.9vw]">
             {/* Mission Section */}
-            <div className=" flex flex-col gap-2 p-6 border-[0.3px] border-[#000000] rounded-lg h-[250px] sm:w-[80vw] sm:h-[266px]  relative ">
+            <div className="flex flex-col gap-4 p-6 border-[0.3px] border-[#000000] rounded-lg min-h-[250px] w-full lg:w-[calc(50%-1rem)] relative hover:shadow-lg hover:border-[#3F3BE1] transition-all duration-300 transform hover:scale-[1.02]">
               <p className="font-semibold text-[#2F3291] text-lg lg:text-left text-[16px] sm:text-[20px]">
                 Mission
               </p>
-              <p className="text-[#616161] lg:text-left text-[14px] sm:text-[16px]">
+              <p className="text-[#616161] lg:text-left text-[14px] sm:text-[16px] leading-relaxed">
                 Spread the feeling of harmony and build a strong,
                 discrimination-free nation.
               </p>
-              <div className="absolute bottom-1 right-1 text-4xl sm:text-3xl md:text-4xl lg:text-4xl text-[#F58220] ">
+              <div className="absolute bottom-4 right-4 text-[#F58220] transition-all duration-300 group-hover:opacity-80">
                 <svg
                   width="75"
                   height="75"
@@ -520,15 +503,15 @@ const App = () => {
             </div>
 
             {/* Vision Section */}
-            <div className="flex flex-col gap-2 p-6 border-[0.3px] border-[#000000] rounded-lg sm:w-[80vw] sm:h-[266px]  h-[250px] relative ">
-              <p className="font-semibold  text-[#2F3291] text-lg lg:text-left text-[16px] sm:text-[20px] ">
+            <div className="flex flex-col gap-4 p-6 border-[0.3px] border-[#000000] rounded-lg min-h-[250px] w-full lg:w-[calc(50%-1rem)] relative hover:shadow-lg hover:border-[#3F3BE1] transition-all duration-300 transform hover:scale-[1.02]">
+              <p className="font-semibold text-[#2F3291] text-lg lg:text-left text-[16px] sm:text-[20px]">
                 Vision
               </p>
-              <p className="text-[#616161] lg:text-left text-[14px] sm:text-[16px]">
+              <p className="text-[#616161] lg:text-left text-[14px] sm:text-[16px] leading-relaxed">
                 To be a significant contributor in the building of a
                 discrimination-free and harmonious society.
               </p>
-              <div className="absolute bottom-1 right-2 ">
+              <div className="absolute bottom-4 right-4 text-[#F58220] transition-all duration-300 group-hover:opacity-80">
                 <svg
                   width="70"
                   height="70"
@@ -545,31 +528,35 @@ const App = () => {
             </div>
           </div>
 
-          {/* Values Section - New Row, Full Width */}
-          <div className="pt-0 p-6">
-            {/* <div className="flex flex-col gap-2 p-6 border-[0.3px] h-[350px] border-[#000000] rounded-lg w-full sm:w-[550px] max:w-[1080px]  sm:h-[250px] relative"> */}
-            <div className="flex flex-col gap-2 p-6 border-[0.3px] h-[350px] border-[#000000] rounded-lg w-[80vw] sm:w-[80vw] lg:w-[80vw]  sm:h-[250px] relative">
-              <p className="font-semibold text-[16px] text-[20px] text-[#2F3291]">
+          {/* Values Section */}
+          <div className="px-6 sm:px-8 md:px-10 mb-12">
+            <div className="flex flex-col gap-4 p-6 sm:p-8 border-[0.3px] border-[#000000] rounded-lg w-[80vw] mx-auto relative hover:shadow-lg hover:border-[#3F3BE1] transition-all duration-300 transform hover:scale-[1.01]">
+              <p className="font-semibold text-[18px] sm:text-[22px] text-[#2F3291] mb-4">
                 Our Values
               </p>
-              <p className="text-[#616161] text-[14px] sm:text-[16px]">
-                1. Commitment to the Ideology.
-              </p>
-              <p className="text-[#616161] text-[14px] sm:text-[16px]">
-                2. Positivity in every action.
-              </p>
-              <p className="text-[#616161] text-[14px] sm:text-[16px]">
-                3. Transparency in all the activities.
-              </p>
-              <p className="text-[#616161] text-[14px] sm:text-[16px]">
-                4. Being unbiased in our studies and research.
-              </p>
-              <p className="text-[#616161] text-[14px] sm:text-[16px]">
-                5. Meaningful contribution in eradicating the feeling of
-                inequality.
-              </p>
-
-              <div className="absolute bottom-[10px] right-2 sm:bottom-4 sm:right-4 lg:bottom-2 lg:right-2 text-2xl sm:text-3xl lg:text-4xl text-gray-400">
+              <ul className="list-none space-y-4">
+                <li className="text-[#616161] text-[14px] sm:text-[16px] leading-relaxed flex items-start">
+                  <span className="text-[#3F3BE1] font-semibold mr-2">1.</span>
+                  Commitment to the Ideology.
+                </li>
+                <li className="text-[#616161] text-[14px] sm:text-[16px] leading-relaxed flex items-start">
+                  <span className="text-[#3F3BE1] font-semibold mr-2">2.</span>
+                  Positivity in every action.
+                </li>
+                <li className="text-[#616161] text-[14px] sm:text-[16px] leading-relaxed flex items-start">
+                  <span className="text-[#3F3BE1] font-semibold mr-2">3.</span>
+                  Transparency in all the activities.
+                </li>
+                <li className="text-[#616161] text-[14px] sm:text-[16px] leading-relaxed flex items-start">
+                  <span className="text-[#3F3BE1] font-semibold mr-2">4.</span>
+                  Being unbiased in our studies and research.
+                </li>
+                <li className="text-[#616161] text-[14px] sm:text-[16px] leading-relaxed flex items-start">
+                  <span className="text-[#3F3BE1] font-semibold mr-2">5.</span>
+                  Meaningful contribution in eradicating the feeling of inequality.
+                </li>
+              </ul>
+              <div className="absolute bottom-4 right-4 text-gray-400 transition-all duration-300 opacity-70 hover:opacity-100">
                 <svg
                   width="65"
                   height="65"
@@ -585,13 +572,18 @@ const App = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className=" w-full sm:p-0  md:px-[100px] px-[20px]">
-          <FAQSection />
-        </div>
 
-        <div className="mt-[5rem]">
-          <Footer />
+          {/* FAQ Section */}
+          <div className="w-full sm:p-0 md:px-[100px] px-[20px] py-12 sm:py-16">
+            <div className="max-w-[1200px] mx-auto">
+              <FAQSection />
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="mt-16 sm:mt-20 md:mt-24">
+            <Footer />
+          </div>
         </div>
       </div>
     </div>
