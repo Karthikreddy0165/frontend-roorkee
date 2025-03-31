@@ -8,6 +8,7 @@ import { IoIosSearch } from "react-icons/io";
 import scholarshipcap from "../assets/students.webp"
 import "../styles/app.module.css";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
+
 import Carousel from "./carosuel";
 
 import Image from "next/image";
@@ -114,6 +115,8 @@ const App = () => {
       <NavBar />
       <VerifiedStatus />
     
+
+    <AnnouncementPopup/>
 
       <div className="sm:w-full  mx-auto">
         {/* Main Container */}
