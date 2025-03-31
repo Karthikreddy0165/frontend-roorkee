@@ -31,7 +31,7 @@ const FAQSection = () => {
           Frequently Asked Questions
         </h1>
       </div>
-      <div className="w-full max-w-[200px] space-y-4">
+      <div className="w-full max-w-48 space-y-4">
         {faqs.map((faq, index) => (
           <Disclosure key={index}>
             {({ open }) => (
