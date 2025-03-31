@@ -323,6 +323,7 @@ const App = () => {
             alignItems: "center",
             margin: "auto",
             padding: "20px",
+            paddingBottom:'0'
           }}
         >
           <div className="flex justify-center mt-[16px] sm:mt-[32px]">
@@ -348,7 +349,7 @@ const App = () => {
       ))}
     </div> */}
 <div
-  className={`grid gap-6 items-center justify-center mt-12 ${
+  className={` ${displayText.length ===3 ? 'grid':'flex flex-wrap' }  gap-6 items-center justify-center mt-12 ${
       displayText.length === 1
         ? "grid-cols-1"
         : displayText.length === 2
@@ -387,7 +388,7 @@ const App = () => {
   {/* SCHOLARSHIPS (Full Width View for One Box) for dekstop view */ }
   {displayText.includes('scholarships') && displayText.length < 3 && (
   <div
-    className="group flex items-center justify-between w-[80vw] rounded-[8px] p-2 sm:p-[2vw] text-[#3330BA] hover:cursor-pointer"
+    className="group flex items-center justify-between w-[80vw] rounded-[8px] p-2 sm:p-[2vw] text-[#3330BA] hover:cursor-pointer transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02]"
     onClick={handleScholarshipsClick}
   >
     {/* Text Section */}
@@ -432,7 +433,7 @@ const App = () => {
   {/* Schemes (Full Width Box) for dekstop view */ }
   {displayText.includes('schemes') && displayText.length < 3 && (
   <div
-    className="group flex items-center justify-between w-[80vw] rounded-[8px] p-2 sm:p-[2vw] text-[#3330BA] hover:cursor-pointer"
+    className="group flex items-center justify-between w-[80vw] rounded-[8px] p-2 sm:p-[2vw] text-[#3330BA] hover:cursor-pointer transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02]"
     onClick={handleSchemesClick}
   >
     {/* Image Section */}
@@ -556,7 +557,7 @@ const App = () => {
                   Meaningful contribution in eradicating the feeling of inequality.
                 </li>
               </ul>
-              <div className="absolute bottom-4 right-4 text-gray-400 transition-all duration-300 opacity-70 hover:opacity-100">
+              <div className="absolute bottom-4 right-4 text-gray-400 transition-all duration-300 ">
                 <svg
                   width="65"
                   height="65"
@@ -581,7 +582,7 @@ const App = () => {
           </div>
 
           {/* Footer */}
-          <div className="mt-16 sm:mt-20 md:mt-24">
+          <div className="mt-16 sm:mt-20 md:mt-24 w-[100vw] pb-0">
             <Footer />
           </div>
         </div>
