@@ -28,7 +28,6 @@ const ApplyModal = ({
   const [isDescriptionLong, setIsDescriptionLong] = useState(false);
   const [readMore, setReadMore] = useState(false);
   const [reportModalOpen, setReportModalOpen] = useState(false);
-  const [applyLinkStatus, setApplyLinkStatus] = useState("loading");
   
   const [reportFormData, setReportFormData] = useState({
     scheme_id: "",
@@ -124,42 +123,9 @@ const ApplyModal = ({
 
           setCriteria(criteriaData);
           setDocuments(documentsData);
-          
-          // Check scheme_link status if it exists
-          if (scheme.scheme_link) {
-            try {
-              const response = await fetch(scheme.scheme_link, { 
-                method: 'HEAD',
-                // Adding timeout to avoid long-hanging requests
-                signal: AbortSignal.timeout(5000) 
-              });
-              
-              // Handle HTTP status codes
-              if (response.ok) {
-                // 2xx status codes
-                setApplyLinkStatus("valid");
-              } else if (response.status === 404 || response.status === 500) {
-                // 404 Not Found or 500 Internal Server Error
-                console.warn(`Scheme link returned status ${response.status}`);
-                setApplyLinkStatus("error");
-              } else {
-                // Handle other status codes (e.g. 403, 401, etc.)
-                console.warn(`Scheme link returned unexpected status ${response.status}`);
-                setApplyLinkStatus("error");
-              }
-            } catch (linkError) {
-              // Handle network errors, CORS issues, timeouts, etc.
-              console.error("Error checking scheme link:", linkError);
-              setApplyLinkStatus("error");
-            }
-          } else {
-            // No scheme_link available
-            setApplyLinkStatus("error");
-          }
         } catch (error) {
           console.error("Error fetching data:", error);
           setError("Failed to load data. Please try again later.");
-          setApplyLinkStatus("error");
         } finally {
           setLoading(false);
         }
@@ -473,24 +439,15 @@ const handleReportSubmit = async (e) => {
   >
    Share  <CiShare2 className="ml-2 h-[1rem] w-[1rem]"/>
   </button>
-  {applyLinkStatus === "valid" ? (
-    <a
-      href={scheme.scheme_link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
-      onClick={() => logUserEvent("apply", scheme.id)} 
-    >
-      Apply
-    </a>
-  ) : (
-    <div className="px-4 py-2 rounded-lg border border-[#D32F2F] bg-[#FFEBEE] text-[#B71C1C] font-medium text-[12px] sm:text-sm flex items-center">
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-      </svg>
-      Temporarily Unavailable
-    </div>
-  )}
+  <a
+    href={scheme.scheme_link}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
+       onClick={() => logUserEvent("apply", scheme.id)} 
+  >
+    Apply
+  </a>
  
 </div>
 
