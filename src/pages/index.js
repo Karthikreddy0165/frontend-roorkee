@@ -8,11 +8,7 @@ import { IoIosSearch } from "react-icons/io";
 import scholarshipcap from "../assets/students.webp"
 import "../styles/app.module.css";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
-import image01 from "../assets/Image001.png";
-import image02 from "../assets/Image002.png";
-import image03 from "../assets/Image003.png";
-
-import image04 from "../assets/Image004.png";
+import Carousel from "./carosuel";
 
 import Image from "next/image";
 
@@ -21,7 +17,8 @@ import NavBar from "../components/NavBar";
 import VerifiedStatus from "@/components/isVerfiedComponent";
 import FAQSection from "src/Context/FAQSection.js"; // Import FAQSection
 import Footer from "@/components/Footer";
-import AnnouncementPopup from "./Announcement";
+
+
 const App = () => {
   const { authState, logout } = useAuth();
   const router = useRouter();
@@ -116,119 +113,12 @@ const App = () => {
     <div>
       <NavBar />
       <VerifiedStatus />
-      <AnnouncementPopup/>
+    
 
       <div className="sm:w-full  mx-auto">
         {/* Main Container */}
-        <div className="  mx-auto w-full ">
-          {/* First Row */}
-          <div className="flex flex-col  md:flex md:flex-row items-center bg-[#2F329126] md:h-[500px] sm:h-[500px] sm:w-full  rounded-[20px]  lg:flex-row justify-center p-[20px] lg:px-[100px] ">
-            {/* Left Div */}
-            
-            <div className="flex flex-col  w-full    items-start gap-[30px] lg:text-left">
-              <h1 className="text-[#3F3BE1] font-inter text-[20px] lg:text-[40px] font-semibold">
-                Empowering the marginalized community
-              </h1>
-              <p className="text-[#000000] sm:text-[16px] text-[14px] font-start leading-[180%]">
-      Helping all communities across India find personalized {displayText} based on eligibility.
-    </p>
+       <Carousel/>
 
-              {authState.token ? (
-                <button
-                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#F58220] text-white mt-[12px]  hidden sm:block"
-                  onClick={handleClickAfterLogin}
-                >
-                  My {firstCategory}
-                </button>
-              ) : (
-                <button
-                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] hidden sm:block rounded-[8px] bg-[#F58220] text-white mt-[12px] "
-                  onClick={handleClickGetStarted}
-                >
-                  Get Started
-                </button>
-              )}
-
-<div
-  className={`flex flex-row  h-auto bg-white items-center sm:items-start p-3 sm:p-6 md:p-8 rounded-[16px] shadow-[0px_3px_8px_rgba(0,0,0,0.1),_0px_-2px_6px_rgba(0,0,0,0.1)] ${
-    [displayText.includes("schemes"), displayText.includes("jobs"), displayText.includes("scholarships")].filter(Boolean).length === 1
-      ? "justify-center gap-0 sm:gap-0"
-      : "justify-between gap-4 sm:gap-8"
-  }`}
->
-  {displayText.includes("schemes") && (
-    <div
-      className={`class="text-center  bg-white sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4" ${
-        displayText.includes("jobs") || displayText.includes("scholarships") ? "border-r border-[#808080] pr-4 pb-4 sm:pb-0" : ""
-      }`}
-    >
-      Thousands of  schemes
-    </div>
-  )}
-
-  {displayText.includes("jobs") && (
-    <div
-      className={`class="text-center bg-white sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold border-r border-[#808080] pb-4 sm:pb-0 pr-4" ${
-        displayText.includes("scholarships") ? "border-r border-[#808080] pr-4 pb-4 sm:pb-0" : ""
-      }`}
-    >
-      100+ job  postings
-    </div>
-  )}
-
-  {displayText.includes("scholarships") && (
- <div
- className={`class="text-center bg-white text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold  border-[#808080] pb-4 sm:pb-0 pr-4" ${
-   displayText.includes("scholarships") ? " border-[#808080] pr-4 pb-4 sm:pb-0" : ""
- }`}
->       Multiple scholarships
-    </div>
-  )}
-</div>
-</div>
-
-            {/* Right Div */}
-            <div className="w-[482px] mr-[160px] h-[300px]  mb-[20px] md:hidden lg:block sm:hidden sm:block hidden">
-              {/* Right Modals here */}
-              <Image
-                className="relative h-[334px] w-[258px] rounded-tl-[10rem] -right-[190px] pb-8"
-                src={image01}
-                alt="Image loading..."
-              />
-              <Image
-                className="relative  h-[120.7px] w-[120px] rounded-tl-[10rem] rounded-tr-[10rem] rounded-bl-[10rem] -right-[60px] bottom-[280px]"
-                src={image02}
-                alt="Image loading..."
-              />
-              <Image
-                className="relative  bg-[#EEEEFF]  h-[160px] w-[155px] rounded-tl-[4rem] -right-[70px] bottom-[260px] p-2"
-                src={image03}
-                alt="Image loading..."
-              />
-              <Image
-                className="relative  bg-[#EEEEFF] h-[120px] w-[112px] rounded-br-[4rem] -right-[380px] bottom-[380px] p-2"
-                src={image04}
-                alt="Image loading..."
-              />
-            </div>
-            {authState.token ? (
-              <button
-                className="flex h-[44px] px-[17px] py-[13px] justify-center items-center text-[16px]  gap-[20px] rounded-[8px] bg-[#3431BB] text-white mt-[12px] hover:bg-blue-700 block sm:hidden"
-                onClick={handleClickAfterLogin}
-              >
-                My {firstCategory}
-              </button>
-            ) : (
-              <button
-                className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#3431BB] text-white mt-[12px] hover:bg-blue-700 block sm:hidden"
-                onClick={handleClickGetStarted}
-              >
-                Get Started
-              </button>
-            )}
-          </div>
-
-        </div>
 
         {/* Second Row */}
         <div className="flex flex-col items-center w-full bg-gradient-to-b from-white to-[#FBFBFE] mt-[20px] sm:mt-[40px]">

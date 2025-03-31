@@ -106,4 +106,5 @@ const AnnouncementPopup = () => {
   );
 };
 
+
 export default AnnouncementPopup;
