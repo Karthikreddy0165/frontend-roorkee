@@ -121,7 +121,7 @@ const App = () => {
 
 
         {/* Second Row */}
-        <div className="flex flex-col items-center w-full bg-gradient-to-b from-white to-[#FBFBFE] mt-[20px] sm:mt-[40px]">
+        <div className="flex flex-col items-center w-full bg-gradient-to-b from-white to-[#EEEEFF] mt-[20px] sm:mt-[40px]">
           <div className="self-stretch flex justify-center">
             <p className="text-center text-[#3431BB] font-semibold text-[18px] font-normal leading-normal">
               HOW IT WORKS
@@ -139,19 +139,19 @@ const App = () => {
               <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
                 Step 1
               </p>
-              <div className="flex sm:h-[160px] bg-[#2F3291F2] sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px] border border-[#3F3BE1] p-4">
-                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-white ">
+              <div className="flex sm:h-[160px]  sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px]  p-4 shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-lg">
+                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-[#EEEEFF] ">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
-                    fill="#2F3291"
+                    fill="#EEEEFF"
                     stroke="currentColor"
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="lucide lucide-list-check bg-white"
+                    className="lucide lucide-list-check bg-[#EEEEFF]"
                   >
                     <path d="M11 18H3" />
                     <path d="m15 18 2 2 4-4" />
@@ -159,7 +159,7 @@ const App = () => {
                     <path d="M16 6H3" />
                   </svg>
                 </div>
-                <div className="text-white  text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
+                <div className="text-black  text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
                   Tell Us About Yourself
                 </div>
               </div>
@@ -170,11 +170,11 @@ const App = () => {
               <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
                 Step 2
               </p>
-              <div className="flex sm:h-[160px] bg-[#2F3291F2] sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px] border border-[#3F3BE1] p-4">
-                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-white ">
+              <div className="flex sm:h-[160px]  sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px]  p-4 shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-lg">
+                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-[#EEEEFF] ">
                   <IoIosSearch className="h-[31.5px] w-[31.5px]"/>
                 </div>
-                <div className="text-white text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
+                <div className="text-black text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
                   We will find the best results for you.
                 </div>
               </div>
@@ -185,11 +185,11 @@ const App = () => {
   <p className="text-[#3F3BE1] font-inter text-[14px] font-semibold leading-normal">
     Step 3
   </p>
-  <div className="flex sm:h-[160px] bg-[#2F3291F2] sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px] border border-[#3F3BE1] p-4">
-    <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-white">
+  <div className="flex sm:h-[160px]  sm:w-[318px]  h-[111px] w-[280px] items-start lg:w-[318px] justify-center items-center gap-4 rounded-[3px]  p-4 shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-lg">
+    <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-[#EEEEFF]">
       <HiOutlineClipboardDocumentList className="h-[31.5px] w-[31.5px] " />
     </div>
-    <div className="text-white text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
+    <div className="text-black text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
       Apply to best-suited results.
     </div>
   </div>

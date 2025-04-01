@@ -40,7 +40,7 @@ const Carousel = () => {
     };
 
     return (
-        <div className="relative w-full max-w-[1200px] mx-auto">
+        <div className="relative w-full max-w-[1200px] mt-5 mx-auto">
             <Slider {...settings}>
                 {/* Slide 1 */}
                 <div>
@@ -54,7 +54,7 @@ const Carousel = () => {
                     {/* Announcement Overlay */}
                     {announcement && (
                         <div className="absolute top-10 left-1/4 transform -translate-x-1/4 mt-[150px] mr-[100px] bg-white bg-opacity-80 p-4 rounded-lg shadow-md max-w-md text-center">
-                            <h2 className="text-xl font-bold text-blue-600">{announcement.title}</h2>
+                            <h2 className="text-xl font-bold text-[#3333DD]">{announcement.title}</h2>
                             <p className="mt-2 text-gray-700">{announcement.description}</p>
                         </div>
                     )}
