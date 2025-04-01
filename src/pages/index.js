@@ -170,7 +170,7 @@ const App = () => {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 512 512"
-        className="w-8 h-8 text-black"  // Adjust the icon size using Tailwind
+        className="w-8 h-8 text-black"  
         fill="currentColor"
       >
         <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
@@ -229,22 +229,6 @@ const App = () => {
             </h1>
           </div>
 
-          {/* <div className="grid grid-cols-3 gap-4 items-center justify-center mt-10 sm:flex sm:flex-wrap sm:flex-nowrap sm:gap-4 font-semibold">
-      {categories.map((category) => (
-        <div
-          key={category.column_name}
-          className={`group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:bg-[#3431BB] hover:text-white hover:cursor-pointer flex flex-col justify-center items-center`}
-          onClick={() => handleCategoryClick(category.column_name)}
-        >
-          <div className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center">
-          <p className="text-xs sm:text-base text-center  hover:text-white">{category.label}</p>
-          <div >
-            {category.icon}
-          </div>
-          </div>
-        </div>
-      ))}
-    </div> */}
 <div
   className={` ${displayText.length ===3 ? 'grid':'flex flex-wrap' }  gap-6 items-center justify-center mt-12 ${
       displayText.length === 1
@@ -428,7 +412,7 @@ const App = () => {
 
           {/* Values Section */}
           <div className="px-6 sm:px-8 md:px-10 mb-12">
-            <div className="flex flex-col gap-4 p-6 sm:p-8 border-[0.3px] border-[#000000] rounded-lg w-[80vw] mx-auto relative hover:shadow-lg hover:border-[#3F3BE1] transition-all duration-300 transform hover:scale-[1.01]">
+            <div className="flex flex-col gap-4 p-6 sm:p-8 border-[0.3px] border-[#000000] rounded-lg sm:w-[70vw] lg:w-[80vw] md:w-[80vw] mx-auto relative hover:shadow-lg hover:border-[#3F3BE1] transition-all duration-300 transform hover:scale-[1.01]">
               <p className="font-semibold text-[18px] sm:text-[22px] text-[#2F3291] mb-4">
                 Our Values
               </p>
@@ -454,7 +438,7 @@ const App = () => {
                   Meaningful contribution in eradicating the feeling of inequality.
                 </li>
               </ul>
-              <div className="absolute bottom-4 right-4 text-gray-400 transition-all duration-300 ">
+              <div className="absolute bottom-4 right-4 text-gray-400 transition-all duration-300 mt-[4rem] ">
                 <svg
                   width="65"
                   height="65"
@@ -473,7 +457,7 @@ const App = () => {
 
           {/* FAQ Section */}
           <div className="w-full sm:p-0 md:px-[100px] px-[20px] py-12 sm:py-16">
-            <div className="max-w-[1200px] mx-auto">
+            <div className="max-w-[1500px] mx-auto">
               <FAQSection />
             </div>
           </div>
