@@ -9,12 +9,7 @@ import scholarshipcap from "../assets/students.webp"
 import schemesImage from '../assets/schemesImage.png'
 import "../styles/app.module.css";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
-import image01 from "../assets/Image001.png";
-import image02 from "../assets/Image002.png";
-import image03 from "../assets/Image003.png";
-
-import image04 from "../assets/Image004.png";
-import AnnouncementPopup from "./Announcement.js"
+import Carosuel from "./carosuel"
 import Image from "next/image";
 
 import { useTabContext } from "@/Context/TabContext";
@@ -117,119 +112,12 @@ const App = () => {
     <div>
       <NavBar />
       <VerifiedStatus />
-      <AnnouncementPopup/>
+   
       <div className="w-full mx-auto">
-        <div className="mx-auto w-full">
-          {/* First Row */}
-          <div className="flex flex-col md:flex-row items-center bg-[#2F329126] md:h-[500px] w-full rounded-[20px] justify-center p-[20px] sm:p-[30px] md:p-[40px] lg:px-[100px] transition-all duration-300">
-            {/* Left Div */}
-            
-            <div className="flex flex-col w-full items-start sm:items-center md:items-start gap-[20px] sm:gap-[30px] text-center sm:text-center md:text-left">
-              <h1 className="text-[#3F3BE1] font-inter text-[22px] sm:text-[28px] md:text-[32px] lg:text-[40px] font-semibold leading-[120%] sm:leading-[130%] md:leading-[140%]">
-                Empowering the marginalized community
-              </h1>
-              <p className="text-[#000000] text-[14px] sm:text-[16px] md:text-[18px] font-start leading-[160%] sm:leading-[180%] max-w-[600px]">
-      Helping all communities across India find personalized {displayText} based on eligibility.
-    </p>
-
-              {authState.token ? (
-                <button
-                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#F58220] text-white mt-[12px] hidden sm:block transition-all duration-300 hover:bg-[#e67615] transform hover:scale-[1.02] shadow-sm hover:shadow-md"
-                  onClick={handleClickAfterLogin}
-                >
-                  My {firstCategory}
-                </button>
-              ) : (
-                <button
-                  className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] hidden sm:block rounded-[8px] bg-[#F58220] text-white mt-[20px] transition-all duration-300 hover:bg-[#e67615] transform hover:scale-[1.02] shadow-sm hover:shadow-md"
-                  onClick={handleClickGetStarted}
-                >
-                  Get Started
-                </button>
-              )}
-
-<div
-  className={`flex flex-row h-auto bg-white items-center justify-center sm:items-start p-4 sm:p-6 md:p-8 mt-6 sm:mt-8 rounded-[16px] shadow-[0px_3px_8px_rgba(0,0,0,0.1),_0px_-2px_6px_rgba(0,0,0,0.1)] transition-all duration-300 w-full sm:w-auto ${
-    [displayText.includes("schemes"), displayText.includes("jobs"), displayText.includes("scholarships")].filter(Boolean).length === 1
-      ? "justify-center gap-2 sm:gap-4"
-      : "justify-between gap-4 sm:gap-8"
-  }`}
->
-  {displayText.includes("schemes") && (
-    <div
-      className={`text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold ${
-        displayText.includes("jobs") || displayText.includes("scholarships") ? "border-r border-[#808080] pr-4 pb-2 sm:pb-0" : ""
-      }`}
-    >
-      Thousands of schemes
-    </div>
-  )}
-
-  {displayText.includes("jobs") && (
-    <div
-      className={`text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold ${
-        displayText.includes("scholarships") ? "border-r border-[#808080] pr-4 pb-2 sm:pb-0" : ""
-      }`}
-    >
-      100+ job postings
-    </div>
-  )}
-
-  {displayText.includes("scholarships") && (
-    <div
-      className={`text-center sm:text-left text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold`}
-    >
-      Multiple scholarships
-    </div>
-  )}
-</div>
-</div>
-
-            {/* Right Div */}
-            <div className="w-[482px] mr-[160px] h-[300px]  mb-[20px] md:hidden lg:block sm:hidden sm:block hidden">
-              {/* Right Modals here */}
-              <Image
-                className="relative h-[334px] w-[258px] rounded-tl-[10rem] -right-[190px] pb-8"
-                src={image01}
-                alt="Image loading..."
-              />
-              <Image
-                className="relative  h-[120.7px] w-[120px] rounded-tl-[10rem] rounded-tr-[10rem] rounded-bl-[10rem] -right-[60px] bottom-[280px]"
-                src={image02}
-                alt="Image loading..."
-              />
-              <Image
-                className="relative  bg-[#EEEEFF]  h-[160px] w-[155px] rounded-tl-[4rem] -right-[70px] bottom-[260px] p-2"
-                src={image03}
-                alt="Image loading..."
-              />
-              <Image
-                className="relative  bg-[#EEEEFF] h-[120px] w-[112px] rounded-br-[4rem] -right-[380px] bottom-[380px] p-2"
-                src={image04}
-                alt="Image loading..."
-              />
-            </div>
-            {authState.token ? (
-              <button
-                className="flex h-[44px] w-full sm:w-auto px-[24px] py-[13px] justify-center items-center text-[16px] gap-[10px] rounded-[8px] bg-[#3431BB] text-white mt-[24px] hover:bg-[#2D2AA5] transition-all duration-300 transform hover:scale-[1.02] shadow-sm hover:shadow-md block sm:hidden"
-                onClick={handleClickAfterLogin}
-              >
-                My {firstCategory}
-              </button>
-            ) : (
-              <button
-                className="flex h-[44px] w-full sm:w-auto px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#3431BB] text-white mt-[24px] hover:bg-[#2D2AA5] transition-all duration-300 transform hover:scale-[1.02] shadow-sm hover:shadow-md block sm:hidden"
-                onClick={handleClickGetStarted}
-              >
-                Get Started
-              </button>
-            )}
-          </div>
-
-        </div>
-
+       
+<Carosuel/>
         {/* Second Row */}
-        <div className="flex flex-col items-center w-full bg-gradient-to-b from-white to-[#FBFBFE] mt-[30px] sm:mt-[50px] px-4 sm:px-6">
+        <div className="flex flex-col items-center w-full bg-gradient-to-b from-white to-[#EEEEFF] mt-[30px] sm:mt-[50px] px-4 sm:px-6">
           <div className="self-stretch flex justify-center">
             <p className="text-center text-[#3431BB] font-semibold text-[16px] sm:text-[18px] md:text-[20px] leading-normal">
               HOW IT WORKS
@@ -246,19 +134,19 @@ const App = () => {
               <p className="text-[#3F3BE1] font-inter text-[16px] font-semibold leading-normal">
                 Step 1
               </p>
-              <div className="flex sm:h-[160px] bg-[#2F3291F2] sm:w-[318px] h-[120px] w-[290px] lg:w-[318px] justify-center items-center gap-5 rounded-[8px] border border-[#3F3BE1] p-5 transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02] hover:bg-[#2a2e86]">
-                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-white shadow-md">
+              <div className="flex sm:h-[160px] bg-white sm:w-[318px] h-[120px] w-[290px] lg:w-[318px] justify-center items-center shadow-lg gap-5 rounded-[8px]  p-5 transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02] ">
+                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-[#EEEEFF] shadow-md">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
-                    fill="#2F3291"
+                    fill="#EEEEFF"
                     stroke="currentColor"
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="lucide lucide-list-check bg-white"
+                    className="lucide lucide-list-check bg-[#EEEEFF]"
                   >
                     <path d="M11 18H3" />
                     <path d="m15 18 2 2 4-4" />
@@ -266,7 +154,7 @@ const App = () => {
                     <path d="M16 6H3" />
                   </svg>
                 </div>
-                <div className="text-white  text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
+                <div className="text-black  text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
                   Tell Us About Yourself
                 </div>
               </div>
@@ -274,28 +162,37 @@ const App = () => {
 
             {/* Step 2 */}
             <div className="flex flex-col gap-5 lg:items-start">
-              <p className="text-[#3F3BE1] font-inter text-[16px] font-semibold leading-normal">
-                Step 2
-              </p>
-              <div className="flex sm:h-[160px] bg-[#2F3291F2] sm:w-[318px] h-[120px] w-[290px] lg:w-[318px] justify-center items-center gap-5 rounded-[8px] border border-[#3F3BE1] p-5 transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02] hover:bg-[#2a2e86]">
-                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-white shadow-md">
-                </div>
-                <div className="text-white text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
-                  We will find the best results for you.
-                </div>
-              </div>
-            </div>
+  <p className="text-[#3F3BE1] font-inter text-[16px] font-semibold leading-normal">
+    Step 2
+  </p>
+  <div className="flex sm:h-[160px] bg-white sm:w-[318px] shadow-lg h-[120px] w-[290px] lg:w-[318px] justify-center items-center gap-5 rounded-[8px] p-5 transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02]">
+    <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-[#EEEEFF] shadow-md">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+        className="w-8 h-8 text-black"  
+        fill="currentColor"
+      >
+        <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+      </svg>
+    </div>
+    <div className="text-black text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal">
+      We will find the best results for you.
+    </div>
+  </div>
+</div>
+
 
             {/* Step 3 */}
             <div className="flex flex-col gap-5 lg:items-start">
               <p className="text-[#3F3BE1] font-inter text-[16px] font-semibold leading-normal">
                 Step 3
               </p>
-              <div className="flex sm:h-[160px] bg-[#2F3291F2] sm:w-[318px] h-[120px] w-[290px] lg:w-[318px] justify-center items-center gap-5 rounded-[8px] border border-[#3F3BE1] p-5 transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02] hover:bg-[#2a2e86]">
-                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-white shadow-md">
-                  <HiOutlineClipboardDocumentList className="h-[31.5px] w-[31.5px] text-[#2F3291]" />
+              <div className="flex sm:h-[160px] bg-white sm:w-[318px] h-[120px] w-[290px] lg:w-[318px] justify-center items-center gap-5 rounded-[8px] shadow-lg  p-5 transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02] ">
+                <div className="flex w-[60px] h-[60px] justify-center items-center rounded-full bg-[#EEEEFF] shadow-md">
+                  <HiOutlineClipboardDocumentList className="h-[31.5px] w-[31.5px] text-black bg-[#EEEEFF]" />
                 </div>
-                <div className="text-white text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal ml-2">
+                <div className="text-black text-center lg:text-left w-[8rem] font-inter text-base font-normal leading-normal ml-2">
                   Apply for the best match
                 </div>
               </div>
@@ -332,22 +229,6 @@ const App = () => {
             </h1>
           </div>
 
-          {/* <div className="grid grid-cols-3 gap-4 items-center justify-center mt-10 sm:flex sm:flex-wrap sm:flex-nowrap sm:gap-4 font-semibold">
-      {categories.map((category) => (
-        <div
-          key={category.column_name}
-          className={`group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:bg-[#3431BB] hover:text-white hover:cursor-pointer flex flex-col justify-center items-center`}
-          onClick={() => handleCategoryClick(category.column_name)}
-        >
-          <div className="group w-full sm:w-[22vw] h-[100px] sm:h-[17.46vw] rounded-[8px] bg-[#EEF] p-4 sm:p-[3.48vw] text-[#3330BA] hover:text-white hover:bg-[#3431BB] hover:cursor-pointer flex flex-col justify-center items-center">
-          <p className="text-xs sm:text-base text-center  hover:text-white">{category.label}</p>
-          <div >
-            {category.icon}
-          </div>
-          </div>
-        </div>
-      ))}
-    </div> */}
 <div
   className={` ${displayText.length ===3 ? 'grid':'flex flex-wrap' }  gap-6 items-center justify-center mt-12 ${
       displayText.length === 1
@@ -531,7 +412,7 @@ const App = () => {
 
           {/* Values Section */}
           <div className="px-6 sm:px-8 md:px-10 mb-12">
-            <div className="flex flex-col gap-4 p-6 sm:p-8 border-[0.3px] border-[#000000] rounded-lg w-[80vw] mx-auto relative hover:shadow-lg hover:border-[#3F3BE1] transition-all duration-300 transform hover:scale-[1.01]">
+            <div className="flex flex-col gap-4 p-6 sm:p-8 border-[0.3px] border-[#000000] rounded-lg sm:w-[70vw] lg:w-[80vw] md:w-[80vw] mx-auto relative hover:shadow-lg hover:border-[#3F3BE1] transition-all duration-300 transform hover:scale-[1.01]">
               <p className="font-semibold text-[18px] sm:text-[22px] text-[#2F3291] mb-4">
                 Our Values
               </p>
@@ -557,7 +438,7 @@ const App = () => {
                   Meaningful contribution in eradicating the feeling of inequality.
                 </li>
               </ul>
-              <div className="absolute bottom-4 right-4 text-gray-400 transition-all duration-300 ">
+              <div className="absolute bottom-4 right-4 text-gray-400 transition-all duration-300 mt-[4rem] ">
                 <svg
                   width="65"
                   height="65"
@@ -576,7 +457,7 @@ const App = () => {
 
           {/* FAQ Section */}
           <div className="w-full sm:p-0 md:px-[100px] px-[20px] py-12 sm:py-16">
-            <div className="max-w-[1200px] mx-auto">
+            <div className="max-w-[1500px] mx-auto">
               <FAQSection />
             </div>
           </div>
