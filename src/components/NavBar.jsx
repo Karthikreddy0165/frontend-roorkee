@@ -89,7 +89,7 @@ const NavBar = () => {
   };
 
   return (
-    <div>
+    <nav>
       {/* Navbar Container */}
       <div className="flex  items-center border-b-2 sm:border-none py-2  px-2 z-10 relative sm:h-[73px] h-[73px] gap-2 w-full sm:px-6">
         {/* Logo Section */}
@@ -273,7 +273,7 @@ const NavBar = () => {
           <ProfileModal onClose={closeProfileModal} />
         )}
       </div>
-    </div>
+    </nav>
   );
 };
 
