@@ -60,7 +60,7 @@ const ApplyModal = ({
           
           const response = await fetch(`http://localhost:8000/api/proxy/?url=${scheme.scheme_link}`);
             console.log(response, "I am the res")
-            if (response.status === 500 || response.status === 404) {
+            if (response.status === 500 || response.status === 404 || !response.ok) {
                 setIsError(true);
             }
         } catch (error) {
@@ -304,11 +304,6 @@ const handleReportSubmit = async (e) => {
         </button>
 
         <div className="modal-content overflow-y-auto mt-[10px] max-h-[90vh] sm:p-8 h-full">
-          {isError && (
-            <div className="bg-[#FFEBEB] text-[#FF0000] px-6 py-4 rounded-lg mb-6 flex flex-col items-center">
-              <span className="text-[16px] font-semibold mb-1">Scheme Temporarily Unavailable</span>
-            </div>
-          )}
           
           <div className="flex flex-col items-start w-full py-[20px] overflow-hidden">
   {/* Title and Report Button */}
@@ -437,8 +432,7 @@ const handleReportSubmit = async (e) => {
  
               {scheme.scheme_link ? (
                 <>
-                  <div className="mt-8 flex sm:gap-[50px] gap-[5px] justify-between">
-
+              <div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:gap-[10rem] gap-[5px]">
                     <div className="flex items-center text-[#3431Bb] font-semibold cursor-pointer" onClick={() => handleSave(scheme.id,authState)}>
                     {isSaved ? "Unsave Scheme" : "Save for Later"}
                     </div>
@@ -460,25 +454,40 @@ const handleReportSubmit = async (e) => {
 
                   
 <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-<button
+  {/* Share Button */}
+  <button
     onClick={() => handleShare(scheme.id)}
-    className="flex items-center px-4 py-2 rounded-lg border border-transparent text-[#3431Bb]   text-[12px] sm:text-sm"
+    className="flex items-center px-4 py-2 rounded-lg border border-transparent text-[#3431Bb] text-[12px] sm:text-sm"
   >
-   Share  <CiShare2 className="ml-2 h-[1rem] w-[1rem]"/>
+    Share <CiShare2 className="ml-2 h-[1rem] w-[1rem]" />
   </button>
+
+  {/* Apply Button */}
   <a
-    href={scheme.scheme_link}
+    href={isError ? "#" : scheme.scheme_link}
     target="_blank"
     rel="noopener noreferrer"
-    className="px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
-       onClick={() => logUserEvent("apply", scheme.id)} 
+    className={`px-4 py-2 rounded-lg border border-transparent text-white text-[12px] sm:text-sm 
+      ${isError ? "bg-gray-400 cursor-not-allowed opacity-50" : "bg-[#3431Bb] hover:bg-blue-700"}`}
+    onClick={(e) => {
+      if (isError) {
+        e.preventDefault();
+      } else {
+        logUserEvent("apply", scheme.id);
+      }
+    }}
   >
     Apply
   </a>
- 
+
+  {/* Message with Fixed Height to Prevent Layout Shift */}
+  <p className="text-red-500 text-xs mt-1 min-h-[16px]">
+    {isError ? "Scheme Temporarily Unavailable" : ""}
+  </p>
 </div>
 
-                  </div>
+
+  </div>
 
 
                   <div className="mt-8">
