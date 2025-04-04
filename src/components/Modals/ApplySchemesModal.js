@@ -58,7 +58,7 @@ const ApplyModal = ({
         try {
           console.log("Fetching URL:", scheme.scheme_link);
           
-          const response = await fetch(`http://localhost:8000/api/proxy/?url=${scheme.scheme_link}`);
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/proxy/?url=${scheme.scheme_link}`);
             console.log(response, "I am the res")
             if (response.status === 500 || response.status === 404 || !response.ok) {
                 setIsError(true);
