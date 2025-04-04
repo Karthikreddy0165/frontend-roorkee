@@ -1,17 +1,13 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
 import Image from "next/image";
+import rightSide from "@/assets/rightSide.png"; 
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { CiBookmark } from "react-icons/ci";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
-import App from "./index";
 import { FaAngleRight, FaArrowLeftLong } from "react-icons/fa6";
 import LoginSuccess from "@/utils/LoginSuccess";
 import { useAuth } from "@/Context/AuthContext";
-import loginperson from "../assets/image.png";
-import newloginperson from '../assets/newImage.png'
-import { Carousel } from "primereact/carousel";
 import SchemeCarousel from "@/components/schemeCarousel";
 
 const login = () => {
@@ -291,63 +287,22 @@ const login = () => {
           )}
         </Formik>
       </div>
-      <div
-        className="w-1/2 bg-[#FEF6F0] relative flex items-center justify-center hidden lg:block sm:hidden md:hidden"
-      >
-        <div className="absolute top-0  mt-28 ml-8 mr-8">
-          <h1 className="text-[#3431BB] font-inter italic  text-3xl mb-4 w-[100%]">
-            “For the Indians by the Indians”
-          </h1>
-          <p className="text-[#939292] font-inter text-[22px] text-base font-medium w-3/4 opacity-0.4">
-            Find all the details about government schemes, scholarships, and job
-            openings for all states in one place.
-          </p>
+  <div className="relative w-full lg:w-1/2 min-w-[300px] h-full min-h-screen flex items-center justify-center hidden lg:block">
+  {/* Background Image */}
+    <Image
+      src={rightSide}
+      alt="Design Background"
+      className="absolute inset-0 w-full h-full object-fit"
+    />
 
-          {/* bg div images */}
-          <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 opacity-5 bg-[#DF8317] ml-[530px] mt-[-150px] z-0"></div>
 
-          <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 rounded-[55px] bg-[rgba(223,131,23,0.2)] ml-[230px] mt-[300px] z-0"></div>
+    <div className="relative w-full flex justify-center z-20 top-[64%] right-[16%]"
+    >
+    <SchemeCarousel />
+    </div>
+  </div>
 
-          <div className="absolute w-[446.08px] h-[446.08px] rotate-[-51.369deg] flex-shrink-0 opacity-5 bg-[#DF8317] rounded-[55px] ml-[-340px] mt-[500px] z-0"></div>
 
-<div className="absolute w-[90%] lg:w-1/2 h-auto p-3 lg:p-[10.8px] items-center rounded-lg border border-[#EEF] bg-[#FFF] shadow-md top-[250px] left-1/4 transform -translate-x-1/2 hidden sm:block">
-            <p className="self-stretch text-[#000] mb-[5px] font-inter text-[9.452px] font-semibold leading-normal">
-              Opening for bank staff
-            </p>
-            <p className="self-stretch text-[#616161] font-inter text-[6.751px]  font-normal leading-normal underline">
-              Welfare Department
-            </p>
-          </div>
-        </div>
-
-        <div className="absolute w-2/5 p-[7.919px] items-center rounded-[8.102px] border border-[#EEF] bg-[#FFF] shadow-[0px_0px_9.791px_rgba(5,2,160,0.08)] bottom-[170px] mr-[270px] scale-[.8]">
-          <p className="self-stretch text-[#000] font-inter text-[8.929px] font-semibold leading-normal mb-[5.939px]">
-            Scholarships for female student
-          </p>
-          <p className="self-stretch text-[#616161] font-inter text-[6.649px] font-semibold leading-normal opacity-60 line-clamp-2">
-            <span className="font-bold">Description:</span> Free education upto
-            12th Std. to all i.e. tution fee will not be collected and the
-            amount will be reimbursed by government
-          </p>
-        </div>
-
-        <div className="absolute bottom-0 right-44 ">
-          <Image
-            className="z-10 image-opacity transform -scale-x-100 sm:block hidden"
-            src={loginperson}
-            alt="Login Person Image"
-            height={360}
-          />
-        </div>
-        <div className="absolute bottom-0 right-4 ">
-          <Image
-            className="z-10 image-opacity transform -scale-x-100 sm:block hidden"
-            src={newloginperson}
-            alt="Login Person Image"
-            height={364}
-          />
-        </div>
-      </div>
     </div>
   );
 };
