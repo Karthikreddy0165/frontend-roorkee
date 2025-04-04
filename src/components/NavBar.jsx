@@ -2,17 +2,11 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
-import { IoMdClose } from "react-icons/io"; // For menu icon in mobile
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "@/Context/AuthContext";
-import { IoIosPerson } from "react-icons/io";
+
 import { CgProfile } from "react-icons/cg";
 import ProfileModal from "@/components/Modals/profileModal";
 import { MdMenu, MdClose } from "react-icons/md"; // Import icons
-
-import Link from "next/link";
 
 const NavBar = () => {
   const router = useRouter();
