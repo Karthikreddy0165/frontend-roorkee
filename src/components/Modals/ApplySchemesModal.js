@@ -28,6 +28,7 @@ const ApplyModal = ({
   const [isDescriptionLong, setIsDescriptionLong] = useState(false);
   const [readMore, setReadMore] = useState(false);
   const [reportModalOpen, setReportModalOpen] = useState(false);
+  const [isError, setIsError] = useState(false);
   
   const [reportFormData, setReportFormData] = useState({
     scheme_id: "",
@@ -48,6 +49,27 @@ const ApplyModal = ({
   const { saveScheme } = useScheme();
   const { unsaveScheme } = useScheme();
 
+  useEffect(() => {
+    if (!scheme.scheme_link) return;
+
+    const checkLinkStatus = async () => {
+        try {
+          console.log("Fetching URL:", scheme.scheme_link);
+          
+          const response = await fetch(`http://localhost:8000/api/proxy/?url=${scheme.scheme_link}`);
+            console.log(response, "I am the res")
+            if (response.status === 500 || response.status === 404) {
+                setIsError(true);
+            }
+        } catch (error) {
+          console.log(error, "I am the err")
+            setIsError(true);
+        }
+    };
+
+    checkLinkStatus();
+}, [scheme.scheme_link]);
+console.log(isError,"isError")
   const handleSave = async (scheme_id, authState) => {
     const success = isBookmarked[scheme_id]
           ? await unsaveScheme(scheme_id, authState)
@@ -122,7 +144,7 @@ const ApplyModal = ({
           ]);
 
           setCriteria(criteriaData);
-          setDocuments(documentsData);
+          // Documents state has been removed as it's unused
         } catch (error) {
           console.error("Error fetching data:", error);
           setError("Failed to load data. Please try again later.");
@@ -280,10 +302,13 @@ const handleReportSubmit = async (e) => {
         </button>
 
         <div className="modal-content overflow-y-auto mt-[10px] max-h-[90vh] sm:p-8 h-full">
-     
-
-
-<div className="flex flex-col  items-start w-full py-[20px] overflow-hidden">
+          {isError && (
+            <div className="bg-[#FFEBEB] text-[#FF0000] px-6 py-4 rounded-lg mb-6 flex flex-col items-center">
+              <span className="text-[16px] font-semibold mb-1">Scheme Temporarily Unavailable</span>
+            </div>
+          )}
+          
+          <div className="flex flex-col items-start w-full py-[20px] overflow-hidden">
   {/* Title and Report Button */}
   <div className="flex items-center justify-between w-full flex-wrap ">
     <h1 className="text-[18px] sm:text-[20px] font-bold mb-2 w-full sm:w-auto ">{scheme.title}</h1>
