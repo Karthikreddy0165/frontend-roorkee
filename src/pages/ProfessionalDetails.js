@@ -7,7 +7,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import * as Yup from "yup";
 import { useAuth } from "@/Context/AuthContext";
 import { useFormData } from "@/Context/FormContext";
-import loginperson from "../assets/image.png";
+import loginperson from "../assets/loginperson.png";
 import IndialImg from "../assets/ind2.png";
 
 
