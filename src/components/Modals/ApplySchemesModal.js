@@ -50,6 +50,8 @@ const ApplyModal = ({
   const { unsaveScheme } = useScheme();
 
   useEffect(() => {
+    // Reset error state when scheme changes
+    setIsError(false);
     if (!scheme.scheme_link) return;
 
     const checkLinkStatus = async () => {
@@ -68,7 +70,7 @@ const ApplyModal = ({
     };
 
     checkLinkStatus();
-}, [scheme.scheme_link]);
+}, [scheme]);
 console.log(isError,"isError")
   const handleSave = async (scheme_id, authState) => {
     const success = isBookmarked[scheme_id]
@@ -183,7 +185,7 @@ console.log(isError,"isError")
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
     };
-  }, [isOpen]);
+  }, [isOpen, scheme?.id, isBookmarked]);
 
 
   useEffect(() => {
