@@ -11,6 +11,7 @@ import UnSaveToast from "@/components/ComponentsUtils/UnsaveToast";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CiShare2 } from "react-icons/ci";
+import ShareModal from "../ShareModal";
 
 
 const ApplyModal = ({
@@ -42,7 +43,8 @@ const ApplyModal = ({
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const descriptionRef = useRef(null);
   const [isHowToApplyOpen, setIsHowToApplyOpen] = useState(false); 
-
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [schemeUrl, setSchemeUrl] = useState("");
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [isUnSaveToastVisible, setIsUnSaveToastVisible] = useState(false);
   const {authState} = useAuth()
@@ -251,8 +253,10 @@ const handleReportSubmit = async (e) => {
   };
 
   const handleShare = async (schemeId) => {
+    setIsShareModalOpen(true)
     const baseUrl = window.location.origin + window.location.pathname;
     const shareUrl = `${baseUrl}?tab=${activeTab}&scheme_id=${schemeId}&modal_open=${isOpen}`;
+    setSchemeUrl(shareUrl)
   
     if (navigator.clipboard && window.isSecureContext) {
       try {
@@ -462,7 +466,16 @@ const handleReportSubmit = async (e) => {
     Share <CiShare2 className="ml-2 h-[1rem] w-[1rem]" />
   </button>
 
+  <ShareModal 
+      url={schemeUrl} 
+      title="" 
+      isOpen={isShareModalOpen} 
+      onClose={() => setIsShareModalOpen(false)} 
+    />
+
+
   {/* Apply Button */}
+
   <a
     href={isError ? "#" : scheme.scheme_link}
     target="_blank"
