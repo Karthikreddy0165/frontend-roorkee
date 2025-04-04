@@ -148,9 +148,10 @@ const NavBarScheme = () => {
   };
 
   return (
-    <div>
+    <nav>
       {/* Navbar Container */}
-      <div className="flex justify-between items-center py-2 px-6  bg-[#2F3291] border-b-[1px] z-10 relative sm:h-[73px] h-[73px] gap-2 w-full">
+      <div className="flex justify-between items-center py-2 px-6  bg-[#2F3291] border-b-[1px] z-10 relative sm:h-[73px] h-[73px] gap-2 w-full"
+      >
         {/* Logo Section */}
 
         <div
@@ -468,7 +469,7 @@ const NavBarScheme = () => {
       {isProfileModalOpen && ProfileModal && (
         <ProfileModal onClose={closeProfileModal} />
       )}
-    </div>
+    </nav>
   );
 };
 
