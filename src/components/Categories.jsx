@@ -22,6 +22,7 @@ import { FaShareAlt } from "react-icons/fa";
 import { data } from "autoprefixer";
 import HowToApply from "./Modals/HowToApply.js";
 import { toast } from "react-toastify";
+import ShareModal from "./ShareModal.jsx";
 
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const router = useRouter();
@@ -40,6 +41,8 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   const [first, setFirst] = useState(0);
   const [rows, setRows] = useState(10);
   const [sidePannelSelected, setSidePannelSelected] = useState(null);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [schemeUrl, setSchemeUrl] = useState("");
 
   const {
     states,
@@ -341,8 +344,10 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   };
 
   const handleShare = async (schemeId) => {
+    setIsShareModalOpen(true)
     const baseUrl = window.location.origin + window.location.pathname;
     const shareUrl = `${baseUrl}?tab=${activeTab}&scheme_id=${schemeId}&modal_open=true`;
+    setSchemeUrl(shareUrl)
 
     if (navigator.clipboard && window.isSecureContext) {
       try {
@@ -556,6 +561,12 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                       <CiShare2 className="sm:w-[27.5px] sm:h-[27.5px] h-[20px] w-[22px] text-gray-600 hover:text-[#3431BB]" />
                     </div>
                   </ToolTips>
+                  <ShareModal 
+                    url={schemeUrl} 
+                    title="" 
+                    isOpen={isShareModalOpen} 
+                    onClose={() => setIsShareModalOpen(false)} 
+                  />
                 </div>
               </div>
             )

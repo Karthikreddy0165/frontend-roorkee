@@ -11,6 +11,7 @@ import UnSaveToast from "@/components/ComponentsUtils/UnsaveToast";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CiShare2 } from "react-icons/ci";
+import ShareModal from "../ShareModal";
 
 
 const ApplyModal = ({
@@ -28,6 +29,7 @@ const ApplyModal = ({
   const [isDescriptionLong, setIsDescriptionLong] = useState(false);
   const [readMore, setReadMore] = useState(false);
   const [reportModalOpen, setReportModalOpen] = useState(false);
+  const [isError, setIsError] = useState(false);
   
   const [reportFormData, setReportFormData] = useState({
     scheme_id: "",
@@ -41,13 +43,37 @@ const ApplyModal = ({
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const descriptionRef = useRef(null);
   const [isHowToApplyOpen, setIsHowToApplyOpen] = useState(false); 
-
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [schemeUrl, setSchemeUrl] = useState("");
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [isUnSaveToastVisible, setIsUnSaveToastVisible] = useState(false);
   const {authState} = useAuth()
   const { saveScheme } = useScheme();
   const { unsaveScheme } = useScheme();
 
+  useEffect(() => {
+    // Reset error state when scheme changes
+    setIsError(false);
+    if (!scheme.scheme_link) return;
+
+    const checkLinkStatus = async () => {
+        try {
+          console.log("Fetching URL:", scheme.scheme_link);
+          
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/proxy/?url=${scheme.scheme_link}`);
+            console.log(response, "I am the res")
+            if (response.status === 500 || response.status === 404 || !response.ok) {
+                setIsError(true);
+            }
+        } catch (error) {
+          console.log(error, "I am the err")
+            setIsError(true);
+        }
+    };
+
+    checkLinkStatus();
+}, [scheme]);
+console.log(isError,"isError")
   const handleSave = async (scheme_id, authState) => {
     const success = isBookmarked[scheme_id]
           ? await unsaveScheme(scheme_id, authState)
@@ -122,7 +148,7 @@ const ApplyModal = ({
           ]);
 
           setCriteria(criteriaData);
-          setDocuments(documentsData);
+          // Documents state has been removed as it's unused
         } catch (error) {
           console.error("Error fetching data:", error);
           setError("Failed to load data. Please try again later.");
@@ -161,7 +187,7 @@ const ApplyModal = ({
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
     };
-  }, [isOpen]);
+  }, [isOpen, scheme?.id, isBookmarked]);
 
 
   useEffect(() => {
@@ -227,8 +253,10 @@ const handleReportSubmit = async (e) => {
   };
 
   const handleShare = async (schemeId) => {
+    setIsShareModalOpen(true)
     const baseUrl = window.location.origin + window.location.pathname;
     const shareUrl = `${baseUrl}?tab=${activeTab}&scheme_id=${schemeId}&modal_open=${isOpen}`;
+    setSchemeUrl(shareUrl)
   
     if (navigator.clipboard && window.isSecureContext) {
       try {
@@ -280,10 +308,8 @@ const handleReportSubmit = async (e) => {
         </button>
 
         <div className="modal-content overflow-y-auto mt-[10px] max-h-[90vh] sm:p-8 h-full">
-     
-
-
-<div className="flex flex-col  items-start w-full py-[20px] overflow-hidden">
+          
+          <div className="flex flex-col items-start w-full py-[20px] overflow-hidden">
   {/* Title and Report Button */}
   <div className="flex items-center justify-between w-full flex-wrap ">
     <h1 className="text-[18px] sm:text-[20px] font-bold mb-2 w-full sm:w-auto ">{scheme.title}</h1>
@@ -410,8 +436,7 @@ const handleReportSubmit = async (e) => {
  
               {scheme.scheme_link ? (
                 <>
-                  <div className="mt-8 flex sm:gap-[50px] gap-[5px] justify-between">
-
+              <div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:gap-[10rem] gap-[5px]">
                     <div className="flex items-center text-[#3431Bb] font-semibold cursor-pointer" onClick={() => handleSave(scheme.id,authState)}>
                     {isSaved ? "Unsave Scheme" : "Save for Later"}
                     </div>
@@ -433,25 +458,49 @@ const handleReportSubmit = async (e) => {
 
                   
 <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-<button
+  {/* Share Button */}
+  <button
     onClick={() => handleShare(scheme.id)}
-    className="flex items-center px-4 py-2 rounded-lg border border-transparent text-[#3431Bb]   text-[12px] sm:text-sm"
+    className="flex items-center px-4 py-2 rounded-lg border border-transparent text-[#3431Bb] text-[12px] sm:text-sm"
   >
-   Share  <CiShare2 className="ml-2 h-[1rem] w-[1rem]"/>
+    Share <CiShare2 className="ml-2 h-[1rem] w-[1rem]" />
   </button>
+
+  <ShareModal 
+      url={schemeUrl} 
+      title="" 
+      isOpen={isShareModalOpen} 
+      onClose={() => setIsShareModalOpen(false)} 
+    />
+
+
+  {/* Apply Button */}
+
   <a
-    href={scheme.scheme_link}
+    href={isError ? "#" : scheme.scheme_link}
     target="_blank"
     rel="noopener noreferrer"
-    className="px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
-       onClick={() => logUserEvent("apply", scheme.id)} 
+    className={`px-4 py-2 rounded-lg border border-transparent text-white text-[12px] sm:text-sm 
+      ${isError ? "bg-gray-400 cursor-not-allowed opacity-50" : "bg-[#3431Bb] hover:bg-blue-700"}`}
+    onClick={(e) => {
+      if (isError) {
+        e.preventDefault();
+      } else {
+        logUserEvent("apply", scheme.id);
+      }
+    }}
   >
     Apply
   </a>
- 
+
+  {/* Message with Fixed Height to Prevent Layout Shift */}
+  <p className="text-red-500 text-xs mt-1 min-h-[16px]">
+    {isError ? "Scheme Temporarily Unavailable" : ""}
+  </p>
 </div>
 
-                  </div>
+
+  </div>
 
 
                   <div className="mt-8">

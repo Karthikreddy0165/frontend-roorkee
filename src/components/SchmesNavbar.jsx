@@ -148,9 +148,12 @@ const NavBarScheme = () => {
   };
 
   return (
-    <div>
+    <nav>
       {/* Navbar Container */}
+
       <div className="fixed top-0 flex justify-between items-center py-2 px-6 bg-white z-10 relative sm:h-[73px] h-[73px] gap-2 w-full">
+
+    
         {/* Logo Section */}
 
         <div
@@ -190,7 +193,11 @@ const NavBarScheme = () => {
           </svg>
         </div>
 
+<<<<<<< HEAD
         <div className="hidden md:flex space-x-10 justify-end ml-auto -mr-[500px] text-[16px] font-semibold">
+=======
+        <div className="hidden md:flex space-x-10 justify-end ml-auto -mr-[550px] text-[16px] font-semibold">
+>>>>>>> 8b833e99cb3468c5033c95d15fd1b77a0dfd87de
           {/* Home is always present */}
           <a
             href="/"
@@ -495,7 +502,7 @@ const NavBarScheme = () => {
       {isProfileModalOpen && ProfileModal && (
         <ProfileModal onClose={closeProfileModal} />
       )}
-    </div>
+    </nav>
   );
 };
 
