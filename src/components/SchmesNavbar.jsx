@@ -193,7 +193,9 @@ const NavBarScheme = () => {
           </svg>
         </div>
 
+
         <div className="hidden md:flex space-x-10 justify-end ml-auto -mr-[550px] text-[16px] font-semibold">
+
           {/* Home is always present */}
           <a
             href="/"
