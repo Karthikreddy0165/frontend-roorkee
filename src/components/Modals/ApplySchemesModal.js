@@ -71,7 +71,7 @@ const ApplyModal = ({
   const logUserEvent = async (eventType, schemeId = null, details = {}) => {
     const eventBody = {
       event_type: eventType,
-      ...(schemeId && { scheme_id: schemeId }),
+      ...(schemeId && { scheme: schemeId }),
       details: details,
     };
 

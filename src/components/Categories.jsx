@@ -1,7 +1,7 @@
 import { useAuth } from "@/Context/AuthContext";
 import SavedModal from "@/components/Modals/savedModal.js";
 import { useEffect, useState } from "react";
-import { CiBookmark,CiShare2 } from "react-icons/ci";
+import { CiBookmark, CiShare2 } from "react-icons/ci";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { GoBookmarkFill } from "react-icons/go";
 import ApplyModal from "@/components/Modals/ApplySchemesModal.js";
@@ -22,7 +22,6 @@ import { FaShareAlt } from "react-icons/fa";
 import { data } from "autoprefixer";
 import HowToApply from "./Modals/HowToApply.js";
 import { toast } from "react-toastify";
-
 
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const router = useRouter();
@@ -128,7 +127,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   const logUserEvent = async (eventType, schemeId = null, details = {}) => {
     const eventBody = {
       event_type: eventType,
-      ...(schemeId && { scheme_id: schemeId }),
+      ...(schemeId && { scheme: schemeId }),
       details: details,
     };
 
@@ -175,7 +174,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
       // Track time when modal closes
       const stopTracking = () => {
-
         const totalTime = Math.floor(Date.now() - startTime);
         logUserEvent("view", scheme_id, {
           watch_time: totalTime / 1000 + " seconds",
@@ -184,7 +182,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
       // Listen for modal close event
       const observer = new MutationObserver(() => {
-
         if (!isModalOpen) {
           stopTracking();
           observer.disconnect();
@@ -193,7 +190,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
       observer.observe(document.body, { childList: true, subtree: true });
     }
-
   };
 
   // To save scheme
@@ -369,7 +365,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     document.body.removeChild(textArea);
     toast.success("Link copied to clipboard!");
   };
-  
 
   const openModal = (schemeId) => {
     setIsModalOpen(true);
@@ -540,7 +535,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-
                   <ToolTips tooltip="Save scheme">
                     <div
                       className="cursor-pointer px-2 py-2 right-[8.25px]"
@@ -563,7 +557,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                     </div>
                   </ToolTips>
                 </div>
-
               </div>
             )
         )}
@@ -591,15 +584,15 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
               setIsModalOpen(false);
               setSelectedScheme(null);
 
-            
-              router.push({
-                pathname: router.pathname,
-                query: { tab: router.query.tab }, 
-              }, undefined, { shallow: true });
-
+              router.push(
+                {
+                  pathname: router.pathname,
+                  query: { tab: router.query.tab },
+                },
+                undefined,
+                { shallow: true }
+              );
             }}
-            
-            
             scheme={selectedScheme}
             activeTab={activeTab}
           />
