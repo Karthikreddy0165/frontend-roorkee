@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import * as Yup from "yup";
-import rightSide from "@/assets/rightSide.png"; 
+ 
 import { useFormData } from "@/Context/FormContext";
 import AccCreatSucc from "@/utils/AccountCreated";
 import Checkbox from "@/components/Checkbox";
@@ -334,11 +334,7 @@ const CreateAcc01 = () => {
       </div>
          <div className="relative w-full lg:w-1/2 min-w-[300px] h-full min-h-screen flex items-center justify-center hidden lg:block">
          {/* Background Image */}
-           <Image
-             src={rightSide}
-             alt="Design Background"
-             className="absolute inset-0 w-full h-full object-fit"
-           />
+
        
        
            <div className="relative w-full flex justify-center z-20 top-[64%] right-[16%]"
