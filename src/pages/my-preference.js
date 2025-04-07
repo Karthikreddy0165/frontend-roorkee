@@ -4,7 +4,7 @@ import { useContext, useState, useEffect, useRef } from "react";
 import { useAuth } from "../Context/AuthContext";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import logo from "../assets/changedlogo.svg"
+
 
 const PreferencesModal = () => {
 const { states, setStates, statesFromApi, setBeneficiaries } = useContext(FilterContext);

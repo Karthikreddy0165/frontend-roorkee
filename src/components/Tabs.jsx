@@ -26,16 +26,15 @@ export default function Tabs() {
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/layout-items/`
         );
         const data = await response.json();
-  
+
         if (Array.isArray(data)) {
           const sortedTabs = data.sort((a, b) => a.order - b.order);
           setTabs(sortedTabs);
-  
+
           const { tab } = router.query;
-          if (tab && sortedTabs.some(t => t.column_name === tab)) {
+          if (tab && sortedTabs.some((t) => t.column_name === tab)) {
             setActiveTab(tab);
-          }
-          else if (!tab) {
+          } else if (!tab) {
             const defaultTab = sortedTabs[0]?.column_name;
             setActiveTab(defaultTab);
             router.replace(
@@ -54,9 +53,9 @@ export default function Tabs() {
         setLoading(false);
       }
     }
-  
+
     fetchTabs();
-  }, [router.pathname,router.query]); 
+  }, [router.pathname, router.query]);
 
   const handleTabClick = (tabName) => {
     if (activeTab !== tabName) {
@@ -76,8 +75,8 @@ export default function Tabs() {
   const getButtonClass = (tabName) => {
     return `sticky top-0 flex-grow text-center border-b-[2px] font-sm p-[12px] rounded-t-[8px] text-semibold text-[14px] cursor-pointer font-sans ${
       activeTab === tabName
-        ? "bg-[#EEEEFF] border-b-[3px] border-[#3431BB]"
-        : "hover:bg-[#EEEEFF] hover:border-b-[3px] hover:border-[#3431BB]"
+        ? "bg-[#FADFC9] border-b-[3px] border-[#F58220]"
+        : "hover:bg-[#FADFC9] hover:border-b-[3px] hover:border-[#F58220]"
     }`;
   };
 
@@ -96,14 +95,12 @@ export default function Tabs() {
     }
   };
 
-
   if (!tabs.some((tab) => tab.column_name === "Saved")) {
     tabs.push({
       column_name: "Saved",
       order: Math.max(...tabs.map((tab) => tab.order), 1) + 1,
     });
   }
-
 
   return (
     <div>
