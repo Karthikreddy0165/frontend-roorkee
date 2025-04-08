@@ -310,6 +310,7 @@ const Footer = () => {
         onClick={closePrivacyModal}
       >
         <div 
+        className="z-50"
         onClick={(e) => e.stopPropagation()} 
         data-testid="privacy-modal-content">
           <PrivacyPolicy handleClose={closePrivacyModal} />
