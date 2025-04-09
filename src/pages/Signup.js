@@ -323,8 +323,8 @@ const CreateAcc01 = () => {
                     className="mt-4 cursor-pointer"
                   />
                            <p className=" font-normal text-base p-3 pl-0 mt-2">By continuing, you agree to our <span> </span>
-                    <span className=" underline font-medium cursor-pointer" data-testid="terms-link" onClick={openModal}>T&C</span> and <span> </span>
-                    <span className=" underline font-medium cursor-pointer" data-testid="privacy-link"  onClick={openPrivacyModal}>Privacy Policy.</span></p>
+                    <span className=" underline font-medium cursor-pointer" data-testid="terms-link" onClick={()=>router.push('/Terms-conditions')}>T&C</span> and <span> </span>
+                    <span className=" underline font-medium cursor-pointer" data-testid="privacy-link"  onClick={()=>router.push('/privacy-policy')}>Privacy Policy.</span></p>
                   {formik.touched.terms && formik.errors.terms && (
           <div className="text-red-500 text-sm mt-1" data-test-id="email-password-error">{formik.errors.terms}</div>
         )}
