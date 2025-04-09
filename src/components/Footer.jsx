@@ -14,7 +14,9 @@ const Footer = () => {
   const closeModal = () => {
     setIsTermsModalOpen(false);
   };
-
+  const handleAboutUs = () => {
+    router.push("/AboutUs");
+  };
   const handleTermsConditions = () => {
     router.push("/Terms-conditions");
   };
@@ -270,7 +272,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className=" text-[#FFFFFF]">
+                <a href="#" onClick={handleAboutUs} className=" text-[#FFFFFF]">
                   About us
                 </a>
               </li>
