@@ -21,7 +21,7 @@ export default function PrivacyPolicy({handleClose}) {
     <>
       {/* <NavBar/> */}
 
-      <div className="max-w-4xl mx-auto px-6 py-9 bg-white shadow-lg rounded-lg sm:transform sm:-translate-y-12">
+      <div className="max-w-4xl mx-auto px-6 py-9 bg-white shadow-lg rounded-lg sm:transform sm:-translate-y-12 z-50 ">
   <div className="flex items-center justify-center relative">
     <div className="absolute left-0 cursor-pointer" onClick={handleClose}>
     <IoClose size={25}/>

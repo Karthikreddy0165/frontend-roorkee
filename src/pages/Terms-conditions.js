@@ -8,8 +8,8 @@ export default function TermsAndConditions({handleClose}) {
   return (
     <>
       {/* <NavBar /> */}
-      <div className=" ">
-        <div className="w-full max-w-4xl  p-6 bg-white shadow-lg rounded-lg sm:transform sm:-translate-y-12">
+      <div className="">
+        <div className="w-full max-w-4xl  p-6 bg-white shadow-lg rounded-lg sm:transform sm:-translate-y-12 z-50 relative">
           <div className="flex items-center justify-center relative mb-4">
             <div className="absolute left-0 cursor-pointer" onClick={handleClose}>
               <IoClose size={25}/>

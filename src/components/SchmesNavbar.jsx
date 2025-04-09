@@ -151,7 +151,7 @@ const NavBarScheme = () => {
     <nav>
       {/* Navbar Container */}
 
-      <div className="fixed top-0 flex justify-between items-center py-2 px-6 bg-white z-10 relative sm:h-[73px] h-[73px] gap-2 w-full">
+      <div className="fixed top-0 flex justify-between items-center py-2 px-6 bg-white z-0 relative sm:h-[73px] h-[73px] gap-2 w-full">
 
     
         {/* Logo Section */}

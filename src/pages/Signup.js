@@ -153,7 +153,7 @@ const CreateAcc01 = () => {
   </div>
 
       
-      <div className="relative w-full h-screen lg:w-1/2 flex items-center justify-center bg-white px-4 sm:px-8 z-40">
+      <div className="relative w-full h-screen lg:w-1/2 flex items-center justify-center bg-white px-4 sm:px-8 z-30">
         
         <Formik
           initialValues={{
@@ -366,6 +366,7 @@ const CreateAcc01 = () => {
         onClick={closePrivacyModal}
       >
         <div 
+        className=""
         onClick={(e) => e.stopPropagation()} 
         data-testid="privacy-modal-content">
           <PrivacyPolicy handleClose={closePrivacyModal} />
