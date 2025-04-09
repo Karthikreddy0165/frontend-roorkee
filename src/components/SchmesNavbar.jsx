@@ -151,7 +151,7 @@ const NavBarScheme = () => {
     <nav>
       {/* Navbar Container */}
 
-      <div className="fixed top-0 flex justify-between items-center py-2 px-6 bg-white z-10 relative sm:h-[73px] h-[73px] gap-2 w-full">
+      <div className="fixed top-0 flex justify-between items-center py-2 px-6 bg-white z-0 relative sm:h-[73px] h-[73px] gap-2 w-full">
         {/* Logo Section */}
 
         <div
@@ -321,7 +321,7 @@ const NavBarScheme = () => {
 
               {/* Login Button (Visible on desktop) */}
               <button
-                className="px-4 py-2 bg-[#F58220] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 hidden sm:block"
+                className="px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 hidden sm:block"
                 onClick={handleGotologin}
               >
                 Login
