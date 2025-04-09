@@ -1,18 +1,23 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
 import Image from "next/image";
-import leftSide from '../assets/leftSide.png'
-import scheme from '../assets/scheme.png'
+import leftSide from '../assets/leftSide.jpeg'
+import scheme1 from '../assets/scheme1.png'
 import scheme2 from '../assets/scheme2.png'
-import image from '../assets/image.png'
-import newImage from '../assets/newImage.png'
+import scheme3 from '../assets/scheme3.png'
+import scheme4 from '../assets/scheme4.png'
+import scheme5 from '../assets/scheme5.png'
+import character1 from '../assets/character1.png'
+import character2 from '../assets/character2.png'
+import character3 from '../assets/character3.png'
+import character4 from '../assets/character4.png'
+import character5 from '../assets/character5.png'
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { FaAngleRight, FaArrowLeftLong } from "react-icons/fa6";
 import LoginSuccess from "@/utils/LoginSuccess";
 import { useAuth } from "@/Context/AuthContext";
-import SchemeCarousel from "@/components/schemeCarousel";
 import DynamicCarousel from "../components/DynamicCarousel";
 
 const login = () => {
@@ -27,13 +32,19 @@ const login = () => {
 
 
   const c1Images = [
-    scheme.src,
+    scheme1.src,
     scheme2.src,
+    scheme3.src,
+    scheme4.src,
+    scheme5.src,
   ];
   
   const c2Images = [
-    image.src,
-    newImage.src,
+    character1.src,
+    character2.src,
+    character3.src,
+    character4.src,
+    character5.src,
   ];
   
 
@@ -123,17 +134,9 @@ const login = () => {
       className="absolute inset-0 w-full h-full object-fit"
     />
 <DynamicCarousel c1Images={c1Images} c2Images={c2Images} />;
-
-
-
-    {/* <div className="relative w-full flex justify-center z-20 top-[49%] right-[9%]"
-    >
-    <SchemeCarousel />
-    </div> */}
-
   </div>
 
-      <div className="relative w-full h-screen lg:w-1/2 flex items-center justify-center bg-white px-4 sm:px-8">
+      <div className="relative w-full h-screen lg:w-1/2 flex items-center justify-center bg-white px-4 sm:px-8 z-40">
         <Formik
           initialValues={{
             email: "", // Change username to email
@@ -197,32 +200,39 @@ const login = () => {
           <p className="text-red-500 text-xs" data-testid="email-error">{formik.errors.email}</p>
         ) : null}
               </div>
-              <div className="mt-[24px] relative">
+              <div className="mt-[24px]">
                 <label
                   className="block text-gray-700 text-sm font-medium mb-2"
                   htmlFor="password"
                 >
                   Password
                 </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  id="password"
-                  type={showPassword ? "text" : "password"} // Toggle password visibility
-                  placeholder="Enter your password"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.password}
-                />
-                 {formik.touched.password && formik.errors.password ? (
-          <p className="text-red-500 text-xs" data-testid="password-error">{formik.errors.password}</p>
-        ) : null}
-                <div
-                  className="absolute inset-y-0 right-0 pr-3 mt-4 flex items-center cursor-pointer "
-                  data-testid="toggle-password-visibility"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? <FaEye /> : <FaEyeSlash />}
+
+                <div className="relative">
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="password"
+                    type={showPassword ? "text" : "password"} // Toggle password visibility
+                    placeholder="Enter your password"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.password}
+                  />
+
+                  <div
+                    className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+                    data-testid="toggle-password-visibility"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <FaEye /> : <FaEyeSlash />}
+                  </div>
                 </div>
+
+                {formik.touched.password && formik.errors.password && (
+                  <p className="text-red-500 text-xs mt-1" data-testid="password-error">
+                    {formik.errors.password}
+                  </p>
+                )}
               </div>
 
               <div className="text-sm flex flex-column mb-[20px]">
@@ -233,18 +243,6 @@ const login = () => {
                   Forgot password?
                 </a>
               </div>
-
-              {errorMessage && (
-                <div className="mb-4 mt-4" data-test-id="login-error">
-                  <button
-                    className="bg-red-100 text-red-700 py-2 px-4 rounded w-full"
-                    type="submit"
-                    disabled={formik.isSubmitting}
-                  >
-                    {errorMessage}
-                  </button>
-                </div>
-              )}
 
               <div>
                 <button
@@ -280,6 +278,17 @@ const login = () => {
                   </div>
                 </div>
               </div>
+              {errorMessage && (
+                <div className="mb-4 mt-4" data-test-id="login-error">
+                  <button
+                    className="bg-red-100 text-red-700 py-2 px-4 rounded w-full"
+                    type="submit"
+                    disabled={formik.isSubmitting}
+                  >
+                    {errorMessage}
+                  </button>
+                </div>
+              )}
             </form>
           )}
         </Formik>

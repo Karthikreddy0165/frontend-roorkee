@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CiShare2 } from "react-icons/ci";
 import ShareModal from "../ShareModal";
+import RelatedSchemesModal from "../RelatedSchemesModal";
 
 
 const ApplyModal = ({
@@ -58,7 +59,6 @@ const ApplyModal = ({
 
     const checkLinkStatus = async () => {
         try {
-          console.log("Fetching URL:", scheme.scheme_link);
           
           const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/proxy/?url=${scheme.scheme_link}`);
             console.log(response, "I am the res")
@@ -73,14 +73,12 @@ const ApplyModal = ({
 
     checkLinkStatus();
 }, [scheme]);
-console.log(isError,"isError")
   const handleSave = async (scheme_id, authState) => {
     const success = isBookmarked[scheme_id]
           ? await unsaveScheme(scheme_id, authState)
           : await saveScheme(scheme_id, authState);
     if (success && !isBookmarked[scheme_id]) {
       toggleBookmark(scheme_id, isBookmarked[scheme_id])
-      console.log("Scheme saved successfully!");
       setIsToastVisible(true)
       logUserEvent("save", scheme_id)
       setIsSaved(true)
@@ -169,10 +167,8 @@ console.log(isError,"isError")
 
   useEffect(() => {
     if (isBookmarked[scheme?.id]) {
-      console.log("This scheme is already bookmarked.");
       setIsSaved(true);
     } else {
-      console.log("This scheme is not bookmarked.");
       setIsSaved(false);
     }
     if (isOpen) {
@@ -294,7 +290,7 @@ const handleReportSubmit = async (e) => {
     className={`fixed inset-0 z-50 gap-[10px] ${isHowToApplyOpen || isReportModalOpen || isSavedModalOpen ? '' : 'pointer-events-none'}`}
   >
 <div
-  className={`absolute h-full sm:h-screen bg-white transition-all w-full sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[40%] right-0 top-0 p-4 sm:p-6 rounded-lg border gap-[10px] border-gray-200 shadow-lg z-50 pointer-events-auto`}
+  className={`absolute h-full sm:h-screen bg-white transition-all w-full sm:w-[100%] md:w-[72.5%] lg:w-[48%] xl:w-[42.5%] right-0 top-0 p-4 sm:p-6 rounded-lg border gap-[10px] border-gray-200 shadow-lg z-50 pointer-events-auto`}
 
   style={{
     right: "0",
@@ -435,88 +431,87 @@ const handleReportSubmit = async (e) => {
               )}
  
               {scheme.scheme_link ? (
-                <>
-              <div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:gap-[10rem] gap-[5px]">
-                    <div className="flex items-center text-[#3431Bb] font-semibold cursor-pointer" onClick={() => handleSave(scheme.id,authState)}>
-                    {isSaved ? "Unsave Scheme" : "Save for Later"}
-                    </div>
-                    
+ <>
+ {/* Top Action Row */}
+ <div className="mt-8 flex flex-row items-center justify-between gap-3 sm:gap-8">
+   
+   {/* Save/Unsave */}
+   <div
+     className="text-[#3431BB] font-semibold cursor-pointer"
+     onClick={() => handleSave(scheme.id, authState)}
+   >
+     {isSaved ? "Unsave Scheme" : "Save for Later"}
+   </div>
 
-                {isToastVisible && (
-                          <Toast
-                            message={""}
-                            onClose={() => setIsToastVisible(false)}
-                          />
-                        )}
+   {/* Toasts */}
+   {isToastVisible && (
+     <Toast message={""} onClose={() => setIsToastVisible(false)} />
+   )}
+   {isUnSaveToastVisible && (
+     <UnSaveToast message={""} onClose={() => setIsUnSaveToastVisible(false)} />
+   )}
 
-            {isUnSaveToastVisible && (
-                      <UnSaveToast
-                        message={""}
-                        onClose={() => setIsUnSaveToastVisible(false)}
-                      />
-                    )}
+   {/* Buttons */}
+   <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+     
+     {/* Share Button */}
+     <button
+       onClick={() => handleShare(scheme.id)}
+       className="flex items-center px-4 py-2 rounded-lg border border-[#3431BB] text-[#3431BB] text-xs sm:text-sm hover:bg-[#f0f3ff] transition"
+     >
+       Share <CiShare2 className="ml-2 h-4 w-4" />
+     </button>
 
-                  
-<div className="flex flex-wrap items-center gap-2 sm:gap-4">
-  {/* Share Button */}
-  <button
-    onClick={() => handleShare(scheme.id)}
-    className="flex items-center px-4 py-2 rounded-lg border border-transparent text-[#3431Bb] text-[12px] sm:text-sm"
-  >
-    Share <CiShare2 className="ml-2 h-[1rem] w-[1rem]" />
-  </button>
+     <ShareModal
+       url={schemeUrl}
+       title=""
+       isOpen={isShareModalOpen}
+       onClose={() => setIsShareModalOpen(false)}
+     />
 
-  <ShareModal 
-      url={schemeUrl} 
-      title="" 
-      isOpen={isShareModalOpen} 
-      onClose={() => setIsShareModalOpen(false)} 
-    />
+     {/* Apply Button */}
+     <a
+       href={isError ? "#" : scheme.scheme_link}
+       target="_blank"
+       rel="noopener noreferrer"
+       className={`px-4 py-2 rounded-lg text-white text-xs sm:text-sm transition 
+         ${isError
+           ? "bg-gray-400 cursor-not-allowed opacity-50"
+           : "bg-[#3431BB] hover:bg-blue-700"}`}
+       onClick={(e) => {
+         if (isError) {
+           e.preventDefault();
+         } else {
+           logUserEvent("apply", scheme.id);
+         }
+       }}
+     >
+       Apply
+     </a>
+   </div>
+ </div>
 
+ {/* Error Message - Prevent Layout Shift */}
+ <p className="flex justify-end text-red-500 text-xs mt-1 min-h-[16px]">
+   {isError ? "Scheme Temporarily Unavailable" : ""}
+ </p>
 
-  {/* Apply Button */}
+ {/* PDF Viewer */}
+ {scheme.pdf_url && (
+   <div className="mt-8">
+     <div className="flex justify-center">
+       <embed
+         src={scheme.pdf_url}
+         width="100%"
+         height="500px"
+         type="application/pdf"
+         className="rounded-lg max-w-full"
+       />
+     </div>
+   </div>
+ )}
+</>
 
-  <a
-    href={isError ? "#" : scheme.scheme_link}
-    target="_blank"
-    rel="noopener noreferrer"
-    className={`px-4 py-2 rounded-lg border border-transparent text-white text-[12px] sm:text-sm 
-      ${isError ? "bg-gray-400 cursor-not-allowed opacity-50" : "bg-[#3431Bb] hover:bg-blue-700"}`}
-    onClick={(e) => {
-      if (isError) {
-        e.preventDefault();
-      } else {
-        logUserEvent("apply", scheme.id);
-      }
-    }}
-  >
-    Apply
-  </a>
-
-  {/* Message with Fixed Height to Prevent Layout Shift */}
-  <p className="text-red-500 text-xs mt-1 min-h-[16px]">
-    {isError ? "Scheme Temporarily Unavailable" : ""}
-  </p>
-</div>
-
-
-  </div>
-
-
-                  <div className="mt-8">
-                    {scheme.pdf_url  ? (
-                      <div className="flex justify-center">
-                        <embed
-                          src={scheme.pdf_url}
-                          width="100%"
-                          height="500px"
-                          type="application/pdf"
-                          className="rounded-lg object-cover max-w-full"
-                        />
-                      </div>
-                    ) : null}
-                  </div>
-                </>
               ) : null}
             </>
           )}
@@ -639,8 +634,10 @@ const handleReportSubmit = async (e) => {
             </span>{" "}
             to know how to apply for this scheme.
           </div>
+          <RelatedSchemesModal schemeId={scheme.id} />
         </div>
       </div>
+
 
       {isHowToApplyOpen && (
         <HowToApply closeModal={handleCloseHowToApply} schemeId={scheme.id} /> 

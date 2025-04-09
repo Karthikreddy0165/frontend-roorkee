@@ -5,7 +5,7 @@ const Checkbox = ({ id, label, checked, onChange, className }) => {
     onChange({ target: { name: id, value: !checked } });
   };
   return (
-    <div className={`flex items-center space-x-2 cursor-pointer ${className}`} onClick={handleToggle}>
+    <div className={`flex items-center justify-start gap-4 cursor-pointer ${className} `} onClick={handleToggle}>
       {/* Hidden Checkbox Input */}
       <input
         type="checkbox"
@@ -17,7 +17,8 @@ const Checkbox = ({ id, label, checked, onChange, className }) => {
 
       {/* Custom Checkbox UI */}
       <div
-        className={`w-6 h-6 border-2 border-gray-400 rounded-sm flex items-center justify-center 
+        className={`w-5 h-5 border 
+         border-black rounded-md flex items-center justify-center 
           ${checked ? "bg-blue-500 border-blue-500" : ""} 
           transition-all duration-300 ease-in-out`}
         aria-hidden="true"
@@ -34,7 +35,7 @@ const Checkbox = ({ id, label, checked, onChange, className }) => {
       </div>
 
       {/* Label (Clicking this will also toggle the checkbox) */}
-      <label htmlFor={id} className="text-gray-700 cursor-pointer" onClick={onChange}>
+      <label htmlFor={id} className="font-inter font-medium text-black text-base cursor-pointer" onClick={onChange}>
         {label}
       </label>
     </div>

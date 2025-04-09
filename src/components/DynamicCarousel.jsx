@@ -4,23 +4,37 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
 const DynamicCarousel = ({ c1Images, c2Images }) => {
-  const imageTemplate = (image, index) => {
+  const schemeTemplate = (image, index) => {
     return (
-      <img
-        src={image}
-        alt={`Image-${index}`}
-        className="w-60 h-40 object-cover rounded shadow-md"
-      />
+      <div className="w-[50%] h-[153px] overflow-hidden flex items-center justify-center">
+        <img
+          src={image}
+          alt={`Image-${index}`}
+          className="w-full h-full object-fit"
+        />
+      </div>
+    );
+  };
+
+  const characterTemplate = (image, index) => {
+    return (
+      <div className="w-[60%] h-[350px]  overflow-hidden flex items-center justify-center">
+        <img
+          src={image}
+          alt={`Image-${index}`}
+          className="w-full h-full object-fit"
+        />
+      </div>
     );
   };
 
   return (
     <div className="relative w-full h-screen">
-      {/* C1 Carousel */}
-      <div className="absolute top-1/4 left-10 w-60 z-20">
+      {/* C1 Carousel (Top) */}
+      <div className="absolute top-[48%] w-full h-auto px-4 z-20">
         <Carousel
           value={c1Images}
-          itemTemplate={imageTemplate}
+          itemTemplate={schemeTemplate}
           numVisible={1}
           numScroll={1}
           circular
@@ -29,11 +43,11 @@ const DynamicCarousel = ({ c1Images, c2Images }) => {
         />
       </div>
 
-      {/* C2 Carousel */}
-      <div className="absolute bottom-1/4 right-10 w-60 h-80 z-20">
+      {/* C2 Carousel (Bottom) */}
+      <div className="absolute bottom-0 left-[38%] w-full h-auto px-4 z-20">
         <Carousel
           value={c2Images}
-          itemTemplate={imageTemplate}
+          itemTemplate={characterTemplate}
           numVisible={1}
           numScroll={1}
           circular
