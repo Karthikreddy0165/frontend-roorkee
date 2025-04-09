@@ -7,6 +7,7 @@ import { useAuth } from "@/Context/AuthContext";
 import { CgProfile } from "react-icons/cg";
 import ProfileModal from "@/components/Modals/profileModal";
 import { MdMenu, MdClose } from "react-icons/md"; // Import icons
+import Footer from "./Footer";
 
 const NavBar = () => {
   const router = useRouter();
@@ -94,10 +95,10 @@ const NavBar = () => {
           <svg
             width="200" // Adjusted to a more reasonable size
             height="90" // Adjusted to maintain aspect ratio
-            viewBox="0 0 1528 681" // Keep original viewBox to maintain proportions
+            viewBox="0 0 1528 680" // Keep original viewBox to maintain proportions
             fill="none"
           >
-            <rect x="1" width="1527" height="681" fill="white" />
+            <rect x="1" width="1527" height="500" fill="white" />
             <path
               d="M1354.95 384.112C1354.95 480.159 508.998 539.5 665.259 539.5C821.52 539.5 1473.5 519.159 1473.5 423.112C1473.5 327.065 1024.26 183 868 183C711.739 183 1354.95 288.065 1354.95 384.112Z"
               fill="#008000"
@@ -245,7 +246,7 @@ const NavBar = () => {
             <div>
               {/* Login Button for Mobile */}
               <button
-                className="px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md  sm:hidden"
+                className="px-4 py-2 bg-[#F58220] text-white text-sm font-semibold rounded-lg shadow-md  sm:hidden"
                 onClick={handleGotologin}
               >
                 Login
@@ -253,7 +254,7 @@ const NavBar = () => {
 
               {/* Login Button for Desktop */}
               <button
-                className="px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md  hidden sm:block"
+                className="px-4 py-2 bg-[#F58220] text-white text-sm font-semibold rounded-lg shadow-md  hidden sm:block"
                 onClick={handleGotologin}
               >
                 Login

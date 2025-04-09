@@ -11,12 +11,12 @@ const Footer = () => {
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
-  
+
   const openModal = () => {
-    setIsModalOpen(true); 
+    setIsModalOpen(true);
   };
-  const openPrivacyModal = () => {
-    setIsPrivacyModalOpen(true); 
+  const handlePrivacyPolicy = () => {
+    router.push("/privacy-policy");
   };
 
   const closeModal = () => {
@@ -25,7 +25,9 @@ const Footer = () => {
   const closePrivacyModal = () => {
     setIsPrivacyModalOpen(false);
   };
-
+  const handleAboutUs = () => {
+    router.push("/AboutUs");
+  };
   const handleTermsConditions = () => {
     router.push("/Terms-conditions");
   };
@@ -268,20 +270,21 @@ const Footer = () => {
                 >
                   Privacy Policy
                 </a> */}
-                <button onClick={openPrivacyModal}>privacy policy</button>
+
+                <button onClick={handlePrivacyPolicy}>Privacy Policy</button>
               </li>
 
               <li>
                 <a
                   href="#"
-                  onClick={openModal}
+                  onClick={handleTermsConditions}
                   className="text-[#FFFFFF]"
                 >
                   Terms and Conditions
                 </a>
               </li>
               <li>
-                <a href="#" className=" text-[#FFFFFF]">
+                <a href="#" onClick={handleAboutUs} className=" text-[#FFFFFF]">
                   About us
                 </a>
               </li>
@@ -290,33 +293,35 @@ const Footer = () => {
               </li>
             </ul>
             {isModalOpen && (
-      <div 
-        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-        onClick={closeModal}
-        data-testid="terms-modal-overlay"
-      >
-        <div 
-        data-testid="terms-modal-content"
-        onClick={(e) => e.stopPropagation()}>
-          <TermsAndConditions handleClose={closeModal} />
-        </div>
-      </div>
-    )}
+              <div
+                className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+                onClick={closeModal}
+                data-testid="terms-modal-overlay"
+              >
+                <div
+                  data-testid="terms-modal-content"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <TermsAndConditions handleClose={closeModal} />
+                </div>
+              </div>
+            )}
 
-{isPrivacyModalOpen && (
-      <div 
-        data-testid="privacy-modal-overlay"
-        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-        onClick={closePrivacyModal}
-      >
-        <div 
-        className="z-50"
-        onClick={(e) => e.stopPropagation()} 
-        data-testid="privacy-modal-content">
-          <PrivacyPolicy handleClose={closePrivacyModal} />
-        </div>
-      </div>
-    )}
+            {isPrivacyModalOpen && (
+              <div
+                data-testid="privacy-modal-overlay"
+                className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+                onClick={closePrivacyModal}
+              >
+                <div
+                  className="z-50"
+                  onClick={(e) => e.stopPropagation()}
+                  data-testid="privacy-modal-content"
+                >
+                  <PrivacyPolicy handleClose={closePrivacyModal} />
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Contact Information and Social Media */}

@@ -153,7 +153,6 @@ const NavBarScheme = () => {
 
       <div className="fixed top-0 flex justify-between items-center py-2 px-6 bg-white z-0 relative sm:h-[73px] h-[73px] gap-2 w-full">
 
-    
         {/* Logo Section */}
 
         <div
@@ -193,9 +192,7 @@ const NavBarScheme = () => {
           </svg>
         </div>
 
-
         <div className="hidden md:flex space-x-10 justify-end ml-auto -mr-[550px] text-[16px] font-semibold">
-
           {/* Home is always present */}
           <a
             href="/"
