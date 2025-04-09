@@ -341,7 +341,7 @@ const CreateAcc01 = () => {
            />
        
        
-           <div className="relative w-full flex justify-center z-20 top-[64%] right-[16%]"
+           <div className="relative w-full flex justify-center z-0 top-[64%] right-[16%]"
            >
            <SchemeCarousel />
            </div>
@@ -368,6 +368,7 @@ const CreateAcc01 = () => {
         onClick={closePrivacyModal}
       >
         <div 
+        className=""
         onClick={(e) => e.stopPropagation()} 
         data-testid="privacy-modal-content">
           <PrivacyPolicy handleClose={closePrivacyModal} />

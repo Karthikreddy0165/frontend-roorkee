@@ -3,16 +3,27 @@ import { FeedbackButtonFooter } from "./feedBack";
 import FeedbackButton from "./feedBack";
 import { useState, useEffect } from "react";
 import TermsAndConditions from "@/pages/Terms-conditions";
+import PrivacyPolicy from "@/pages/privacy-policy";
 const Footer = () => {
   const router = useRouter();
   const [displayText, setDisplayText] = useState("");
   const [categories, setCategories] = useState([]);
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
-  const handlePrivacyPolicy = () => {
-    router.push("/privacy-policy");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
+  
+  const openModal = () => {
+    setIsModalOpen(true); 
   };
+  const openPrivacyModal = () => {
+    setIsPrivacyModalOpen(true); 
+  };
+
   const closeModal = () => {
-    setIsTermsModalOpen(false);
+    setIsModalOpen(false);
+  };
+  const closePrivacyModal = () => {
+    setIsPrivacyModalOpen(false);
   };
   const handleAboutUs = () => {
     router.push("/AboutUs");
@@ -259,13 +270,15 @@ const Footer = () => {
                 >
                   Privacy Policy
                 </a> */}
+
                 <button onClick={handlePrivacyPolicy}>Privacy Policy</button>
+
               </li>
 
               <li>
                 <a
                   href="#"
-                  onClick={handleTermsConditions}
+                  onClick={openModal}
                   className="text-[#FFFFFF]"
                 >
                   Terms and Conditions
@@ -280,6 +293,34 @@ const Footer = () => {
                 <a className=" text-[#FFFFFF] cursor-pointer">Resources</a>
               </li>
             </ul>
+            {isModalOpen && (
+      <div 
+        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+        onClick={closeModal}
+        data-testid="terms-modal-overlay"
+      >
+        <div 
+        data-testid="terms-modal-content"
+        onClick={(e) => e.stopPropagation()}>
+          <TermsAndConditions handleClose={closeModal} />
+        </div>
+      </div>
+    )}
+
+{isPrivacyModalOpen && (
+      <div 
+        data-testid="privacy-modal-overlay"
+        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+        onClick={closePrivacyModal}
+      >
+        <div 
+        className="z-50"
+        onClick={(e) => e.stopPropagation()} 
+        data-testid="privacy-modal-content">
+          <PrivacyPolicy handleClose={closePrivacyModal} />
+        </div>
+      </div>
+    )}
           </div>
 
           {/* Contact Information and Social Media */}
@@ -410,16 +451,6 @@ const Footer = () => {
         <p className="flex justify-center font-semibold mt-[1rem] items-center  border-t-[1px] text-sm text-[#FFFFFF]  py-[1rem]">
           &copy; {new Date().getFullYear()} LaunchPad. All Rights Reserved.
         </p>
-        {isTermsModalOpen && (
-          <div
-            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-            onClick={closeModal}
-          >
-            <div onClick={(e) => e.stopPropagation()}>
-              <TermsAndConditions handleClose={closeModal} />
-            </div>
-          </div>
-        )}
       </footer>
     </>
   );

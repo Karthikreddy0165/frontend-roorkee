@@ -239,7 +239,7 @@ const renderFilterButton = (filterValue, filterType) => {
         </button>
       </div>
     </div>
-    <div className="flex-shrink-0 w-[140px] z-10">
+    <div className="flex-shrink-0 w-[140px] z-0">
       <ToolTips tooltip={`${isPreferenceApplied ? "Clear your preferences" : "Apply your preference"}`}>
         <button
           className={`w-full px-4 py-2 font-inter text-[12px] font-medium sm:text-sm rounded-lg
