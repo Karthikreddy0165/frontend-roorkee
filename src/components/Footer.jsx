@@ -257,7 +257,7 @@ const Footer = () => {
                 >
                   Privacy Policy
                 </a> */}
-                <button onClick={handlePrivacyPolicy}>privacy policy</button>
+                <button onClick={handlePrivacyPolicy}>Privacy Policy</button>
               </li>
 
               <li>

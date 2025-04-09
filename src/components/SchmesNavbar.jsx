@@ -152,8 +152,6 @@ const NavBarScheme = () => {
       {/* Navbar Container */}
 
       <div className="fixed top-0 flex justify-between items-center py-2 px-6 bg-white z-10 relative sm:h-[73px] h-[73px] gap-2 w-full">
-
-    
         {/* Logo Section */}
 
         <div
@@ -193,11 +191,7 @@ const NavBarScheme = () => {
           </svg>
         </div>
 
-<<<<<<< HEAD
-        <div className="hidden md:flex space-x-10 justify-end ml-auto -mr-[500px] text-[16px] font-semibold">
-=======
         <div className="hidden md:flex space-x-10 justify-end ml-auto -mr-[550px] text-[16px] font-semibold">
->>>>>>> 8b833e99cb3468c5033c95d15fd1b77a0dfd87de
           {/* Home is always present */}
           <a
             href="/"
@@ -327,7 +321,7 @@ const NavBarScheme = () => {
 
               {/* Login Button (Visible on desktop) */}
               <button
-                className="px-4 py-2 bg-[#3431BB] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 hidden sm:block"
+                className="px-4 py-2 bg-[#F58220] text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-700 hidden sm:block"
                 onClick={handleGotologin}
               >
                 Login
