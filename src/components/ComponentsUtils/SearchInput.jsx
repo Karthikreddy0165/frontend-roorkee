@@ -4,7 +4,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import { useAuth } from "@/Context/AuthContext";
 
 function SearchInput() {
-  const { searchQuery, setSearchQuery } = useTabContext();
+  const { query, setquery } = useTabContext();
   const { authState } = useAuth();
 
   const logUserEvent = async (eventType, schemeId = null, details = {}) => {
@@ -38,20 +38,20 @@ function SearchInput() {
     }
   };
 
-  // Use useEffect to log search events whenever searchQuery changes
+  // Use useEffect to log search events whenever query changes
 
   const DEBOUNCE_DELAY = 500;
 
 
   useEffect(() => {
-    if (!searchQuery.trim()) return;
+    if (!query.trim()) return;
 
     const handler = setTimeout(() => {
-      logUserEvent("search", null, { searchQuery });
+      logUserEvent("search", null, { query });
     }, DEBOUNCE_DELAY);
 
     return () => clearTimeout(handler);
-  }, [searchQuery]);
+  }, [query]);
 
   return (
     <div className="sticky top-0 z-0 flex items-center gap-3 h-14 px-3 rounded-lg border border-gray-300 bg-white hidden sm:flex">
@@ -73,16 +73,16 @@ function SearchInput() {
         type="text"
         placeholder="Search schemes, job openings or scholarships"
         className="flex-1 px-2 text-sm bg-transparent focus:outline-none placeholder-[#616161]"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        value={query}
+        onChange={(e) => setquery(e.target.value)}
       />
 
       {/* Clear Input Icon */}
       <div className="cursor-pointer hover:scale-110">
-        {searchQuery && (
+        {query && (
           <IoCloseSharp
             className="text-gray-500 w-5 h-5"
-            onClick={() => setSearchQuery("")}
+            onClick={() => setquery("")}
           />
         )}
       </div>
