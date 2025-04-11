@@ -59,6 +59,9 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   useEffect(() => {
     console.log("Window URL:", window.location.href);
     console.log("Modal should open:", isModalopen);
+    if(isModalOpen){
+      openModal(parseInt(router.query.scheme_id))
+    }
   }, [router.isReady, isModalopen]);
 
   useEffect(() => {

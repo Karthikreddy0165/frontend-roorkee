@@ -7,7 +7,7 @@ const VerifiedStatus = () => {
 
   useEffect(() => {
     const checkEmailVerification = async () => {
-      if (!authState.token || localStorage.getItem("emailVerifiedDismissed")) {
+      if (!authState.token) {
         return;
       }
 
