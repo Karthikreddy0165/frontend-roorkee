@@ -52,17 +52,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     statesFromApi,
     setStatesFromApi,
   } = useContext(FilterContext);
-  // Close the toast after a certain time
-
-  const isModalopen = router.isReady && router.query.modal_open === "true";
-
-  useEffect(() => {
-    console.log("Window URL:", window.location.href);
-    console.log("Modal should open:", isModalopen);
-    if(isModalOpen){
-      openModal(parseInt(router.query.scheme_id))
-    }
-  }, [router.isReady, isModalopen]);
 
   useEffect(() => {
     if (isToastVisible) {
@@ -87,7 +76,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
   useEffect(() => {
     const fetchSavedSchemes = async () => {
       if (authState.token) {
-        // console.log("Auth token for catagory:", authState.token);
         try {
           const myHeaders = new Headers();
           myHeaders.append("Authorization", `Bearer ${authState.token}`);
@@ -117,18 +105,42 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     };
     fetchSavedSchemes();
   }, [authState.token]);
-
   useEffect(() => {
     if (!router.isReady) return;
-    console.log("dataFromApi", dataFromApi);
-    const scheme = dataFromApi.results?.find(
-      (item) => item.id === parseInt(scheme_id)
-    );
-    if (scheme) {
-      setSelectedScheme(scheme);
-      setIsModalOpen(true);
+  
+    const schemeId = parseInt(router.query.scheme_id);
+    const modalOpen = router.query.modal_open === "true";
+  
+    if (modalOpen && schemeId) {
+      const existingScheme = dataFromApi?.results?.find(
+        (scheme) => scheme.id === schemeId
+      );
+  
+      if (existingScheme) {
+        setSelectedScheme(existingScheme);
+        setIsModalOpen(true);
+      } else {
+        fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/${schemeId}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data?.id) {
+              setSelectedScheme(data);
+              setIsModalOpen(true);
+            } else {
+              console.warn("❌ Scheme not found via ID fetch");
+            }
+          })
+          .catch((err) => console.error("Error fetching scheme:", err));
+      }
     }
-  }, [scheme_id, dataFromApi?.results]);
+  }, [
+    router.isReady,
+    router.query.scheme_id,
+    router.query.modal_open,
+    dataFromApi?.results,
+  ]);
+  
+  
 
   const logUserEvent = async (eventType, schemeId = null, details = {}) => {
     const eventBody = {
@@ -155,7 +167,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       }
 
       const data = await response.json();
-      console.log("Event logged successfully:", data);
     } catch (error) {
       console.error("Error logging event:", error);
     }
@@ -253,8 +264,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     };
 
     try {
-      console.log("Sending unsave request for scheme_id:", scheme_id);
-      console.log("Request payload:", raw);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/unsave_scheme/`,
         requestOptions
@@ -296,9 +305,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
         requestOptions
       );
       const result = await response.json();
-      // console.log("Unsave response:", result); // Log the response
       if (response.ok) {
-        console.log("Scheme saved successfully!");
       } else {
         console.error("Failed to save scheme");
         return false;
@@ -333,11 +340,8 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
         requestOptions
       );
       const result = await response.json();
-      // console.log("Unsave response:", result); // Log the response
       if (response.ok) {
-        console.log("Scheme viewed successfully!");
       } else {
-        console.error("Failed to view scheme");
         return false;
       }
     } catch (error) {
@@ -590,7 +594,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
             onClose={() => setIsUnSaveToastVisible(false)}
           />
         )}
-
         {isModalOpen && selectedScheme && (
           <ApplyModal
             isOpen={isModalOpen}
