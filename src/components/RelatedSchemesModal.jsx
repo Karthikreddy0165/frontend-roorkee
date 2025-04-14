@@ -22,7 +22,7 @@ const RelatedSchemesModal = ({ schemeId }) => {
         return null;
     }
 
-    const frontendUrl = 'http://localhost:3000'
+    const frontendUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(':8000','')
 
     return (
         <div className="w-full bg-white shadow-lg rounded-lg p-6 md:p-8 border border-gray-200">
