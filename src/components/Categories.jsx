@@ -378,14 +378,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     toast.success("Link copied to clipboard!");
   };
 
-  const openModal = (schemeId) => {
-    setIsModalOpen(true);
-    setSelectedScheme(schemeId);
-    const baseUrl = window.location.origin + window.location.pathname;
-    const newUrl = `${baseUrl}?tab=${activeTab}&scheme_id=${schemeId}&modal_open=true`;
-    router.push(newUrl, undefined, { shallow: true });
-  };
-
   const handleBookmarkToggle = async (e, itemId) => {
     e.preventDefault();
     if (authState.token) {
