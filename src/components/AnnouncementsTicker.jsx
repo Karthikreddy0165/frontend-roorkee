@@ -5,7 +5,7 @@ const AnnouncementsTicker = () => {
   const tickerRef = useRef(null);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/announcements/')
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/announcements/`)
       .then(res => res.json())
       .then(data => setAnnouncements(data))
       .catch(err => console.error(err));
