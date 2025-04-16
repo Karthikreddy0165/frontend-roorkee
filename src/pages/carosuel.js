@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -12,12 +12,12 @@ import mobilebanner1 from "../assets/mobilebanner1.jpeg";
 import { useAuth } from "@/Context/AuthContext";
 
 const Carousel = () => {
-    const [announcements, setAnnouncements] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
+    const { authState } = useAuth();
     const [categories, setCategories] = useState([]);
     const [displayText, setDisplayText] = useState("");
-    const { authState } = useAuth();
+    const [announcements, setAnnouncements] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [activeIndex, setActiveIndex] = useState(0);
 
     // Fetch announcement data from the API
@@ -60,7 +60,7 @@ const Carousel = () => {
             }
         }
         fetchCategories();
-    }, [router.query, setCategories]);
+    }, [router.query]);
 
     useEffect(() => {
         if (announcements.length > 1) {
@@ -74,6 +74,7 @@ const Carousel = () => {
     const handleClickGetStarted = () => {
         router.push("/login");
     };
+
     const handleClickAfterLogin = () => {
         router.push("/AllSchemes");
     };

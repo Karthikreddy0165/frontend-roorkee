@@ -8,6 +8,7 @@ import { IoIosSearch } from "react-icons/io";
 import scholarshipcap from "../assets/students.webp"
 import schemesImage from '../assets/schemesImage.png'
 import "../styles/app.module.css";
+import AnnouncementsTicker from '../components/AnnouncementsTicker'
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import Carosuel from "./carosuel"
 import Image from "next/image";
@@ -112,19 +113,12 @@ const App = () => {
     <div>
       <NavBar />
       <VerifiedStatus />
+      <AnnouncementsTicker />
    
       <div className="w-full mx-auto z-0">
        
 <Carosuel/>
-<div className="flex justify-center mt-[3rem] block md:hidden">
 
-
-<button
-                            className=" md:flex   py-2 px-4 justify-center items-center gap-2 rounded-lg bg-[#F58220] text-white text-base"
-                            onClick={authState.token ? handleClickAfterLogin : handleClickGetStarted}
-                        >
-                            {authState.token ? `My ${firstCategory}` : "Get Started"}
-                        </button></div>
         {/* Second Row */}
         <div className="flex flex-col items-center w-full bg-gradient-to-b from-white to-[#EEEEFF] mt-[30px] sm:mt-[50px]  sm:px-6">
           <div className="self-stretch flex justify-center">

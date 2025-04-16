@@ -21,7 +21,8 @@ const RelatedSchemesModal = ({ schemeId }) => {
     if (relatedSchemes.length === 0) {
         return null;
     }
-    const frontendUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(':8000', '')
+
+    const frontendUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(':8000','')
 
     return (
         <div className="w-full bg-white shadow-lg rounded-lg p-6 md:p-8 border border-gray-200">
@@ -32,7 +33,7 @@ const RelatedSchemesModal = ({ schemeId }) => {
                 {relatedSchemes.map((scheme) => (
                     <li key={scheme.id} className="text-md font-medium">
                         <a
-                            href={`${frontendUrl}/AllSchemes?tab=schemes&scheme_id=${schemeId}&modal_open=true`}
+                            href={`${frontendUrl}/AllSchemes?tab=schemes&scheme_id=${scheme.id}&modal_open=true`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-[#3431BB] hover:text-blue-900 transition-colors underline underline-offset-2"
