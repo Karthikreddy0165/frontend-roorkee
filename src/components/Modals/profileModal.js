@@ -367,17 +367,18 @@ console.log(" this is emaildata", emailData)
 
 <div className="flex justify-between items-center mb-2 -mt-2 p-4 w-full  shadow-md">
 <div className="flex items-center ">
-    <div
-          className=" mt-2 font-semibold text-[#3431BB] text-sm hover:text-blue-700 cursor-pointer flex items-center  gap-2 "
-     
+<div
+          className="sm:text-[16px] font-semibold text-[#3431BB] text-sm hover:text-blue-700 cursor-pointer"
+       
         >
-            <svg
-            width="200" // Adjusted to a more reasonable size
-            height="70" // Adjusted to maintain aspect ratio
-            viewBox="0 0 1528 681" // Keep original viewBox to maintain proportions
+          <svg
+            viewBox="0 0 1528 580"
             fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-auto h-[40px] sm:h-[50px] md:h-[60px] lg:h-[70px] xl:h-[80px]"
+            preserveAspectRatio="xMidYMid meet"
           >
-            <rect x="1" width="1527" height="581" fill="white" />
+            <rect x="1" width="1527" height="500" fill="white" />
             <path
               d="M1354.95 384.112C1354.95 480.159 508.998 539.5 665.259 539.5C821.52 539.5 1473.5 519.159 1473.5 423.112C1473.5 327.065 1024.26 183 868 183C711.739 183 1354.95 288.065 1354.95 384.112Z"
               fill="#008000"
@@ -402,8 +403,8 @@ console.log(" this is emaildata", emailData)
               fill="url(#pattern0_3080_5131)"
             />
           </svg>
-        
         </div>
+
         
     </div>
   
@@ -419,7 +420,7 @@ console.log(" this is emaildata", emailData)
             <hr className="w-full inline-block"/>
 
         <div className="gap-4 w-full mt-[1rem] px-6 ">
-        <h2 className="text-2xl font-semibold text-[#000000] mb-2">Profile</h2>
+        <h2 className="lg:text-2xl md:text-2xl  text-xl font-semibold text-[#000000] mb-2">Profile</h2>
               <label className="block text-[14px] font-semibold text-[#1E1E1E] mb-2">Profile Completion</label>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div

@@ -86,17 +86,18 @@ const NavBar = () => {
   return (
     <nav>
       {/* Navbar Container */}
-      <div className="flex  items-center border-b-2 sm:border-none py-2  px-2 relative sm:h-[73px] h-[73px] gap-2 w-full sm:px-6">
+      <div className="flex  items-center border-b-2 sm:border-none py-2 px-2 relative sm:h-[73px] h-[73px]  w-full sm:px-[10px] md:px-5">
         {/* Logo Section */}
         <div
-          className="sm:text-[16px] mt-2 font-semibold text-[#3431BB] text-sm hover:text-blue-700 cursor-pointer"
+          className="sm:text-[16px] font-semibold text-[#3431BB] text-sm hover:text-blue-700 cursor-pointer"
           onClick={handleClickLogo}
         >
           <svg
-            width="200" // Adjusted to a more reasonable size
-            height="90" // Adjusted to maintain aspect ratio
-            viewBox="0 0 1528 680" // Keep original viewBox to maintain proportions
+            viewBox="0 0 1528 580"
             fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-auto h-[40px] sm:h-[50px] md:h-[60px] lg:h-[60px] xl:h-[60px]"
+            preserveAspectRatio="xMidYMid meet"
           >
             <rect x="1" width="1527" height="500" fill="white" />
             <path
@@ -125,17 +126,17 @@ const NavBar = () => {
           </svg>
         </div>
 
-        <div className="flex items-center justify-end w-full sm:px-6 md:px-10">
+        <div className="flex items-center space-x-4 justify-end w-full sm:px-3 md:px-5  relative">
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-6 text-[16px] font-semibold">
             {/* Home Link */}
             <a
               href="/"
-              className={`text-black   transition duration-300 ${
+              className={`text-black transition duration-300 underline-offset-8 ${
                 router.pathname === "/" ? "underline decoration-[#3330BA]" : ""
               }`}
             >
-              HOME
+              Home
             </a>
 
             {/* Dynamic Categories */}
@@ -143,68 +144,93 @@ const NavBar = () => {
               <a
                 key={index}
                 href={`/AllSchemes?tab=${category.name.toLowerCase()}`}
-                className={`text-black  transition duration-300 ${
+                className={`text-black transition duration-300 underline-offset-8  ${
                   router.query.tab === category.name.toLowerCase()
                     ? "underline decoration-[#3330BA]"
                     : ""
                 }`}
               >
-                {category.label}
+                {category.label.charAt(0).toUpperCase() +
+                  category.label.slice(1).toLowerCase()}
               </a>
             ))}
 
             <a
               href="/AboutUs"
-              className={`text-black  transition duration-300 ${
+              className={`text-black transition duration-300 underline-offset-8  ${
                 router.pathname === "/AboutUs"
                   ? "underline decoration-[#3330BA]"
                   : ""
               }`}
             >
-              ABOUT US
+              About Us
             </a>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden z-50">
             <button
               onClick={toggleMobileMenu}
               className="text-[#000000] focus:outline-none"
+              aria-label="Toggle menu"
             >
               <MdMenu className="w-6 h-6" />
             </button>
           </div>
 
-          {/* Mobile Dropdown */}
-          {isMobileMenuOpen && (
-            <div className="absolute top-16 right-6 p-6 w-48 bg-white shadow-lg rounded-lg md:hidden">
-              <a href="/" className="block py-2 text-black ">
-                HOME
-              </a>
-
-              {categories.map((category, index) => (
+          {/* Mobile Dropdown with Animation */}
+          <div
+            className={`fixed md:hidden top-0 left-0 w-full h-full bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out z-50 ${
+              isMobileMenuOpen
+                ? "opacity-100 visible"
+                : "opacity-0 invisible pointer-events-none"
+            }`}
+          >
+            <div
+              className={`absolute top-16 right-6 w-48 bg-white shadow-lg rounded-lg transition-all duration-300 ease-in-out transform ${
+                isMobileMenuOpen
+                  ? "translate-y-0 opacity-100"
+                  : "-translate-y-4 opacity-0"
+              }`}
+            >
+              <div className="p-4 space-y-2">
                 <a
-                  key={index}
-                  href={`/AllSchemes?tab=${category.name.toLowerCase()}`}
-                  className="block py-2 text-black "
+                  href="/"
+                  className="block py-2 text-black hover:bg-gray-100 px-2 rounded transition-colors"
+                  onClick={toggleMobileMenu}
                 >
-                  {category.label}
+                  HOME
                 </a>
-              ))}
 
-              <a href="/AboutUs" className="block py-2 text-black ">
-                ABOUT US
-              </a>
+                {categories.map((category, index) => (
+                  <a
+                    key={index}
+                    href={`/AllSchemes?tab=${category.name.toLowerCase()}`}
+                    className="block py-2 text-black hover:bg-gray-100 px-2 rounded transition-colors"
+                    onClick={toggleMobileMenu}
+                  >
+                    {category.label}
+                  </a>
+                ))}
+
+                <a
+                  href="/AboutUs"
+                  className="block py-2 text-black hover:bg-gray-100 px-2 rounded transition-colors"
+                  onClick={toggleMobileMenu}
+                >
+                  ABOUT US
+                </a>
+              </div>
             </div>
-          )}
+          </div>
         </div>
 
-        <div className="flex  ml-auto items-center  ">
+        <div className="flex   items-center  ">
           {authState.token ? (
             <div className="relative">
               {/* Profile Icon for Mobile */}
               <button
-                className="flex items-center px-4 py-2 text-gray-500 text-[35px] font-semibold rounded-lg sm:hidden"
+                className="flex items-center px-4 py-2 text-gray-500 text-[35px] font-semibold rounded-lg sm:block block md:hidden  lg:hidden"
                 onClick={toggleDropdown}
               >
                 <CgProfile />
@@ -212,7 +238,7 @@ const NavBar = () => {
 
               {/* Profile Button for Desktop */}
               <button
-                className="flex items-center px-4 py-2 bg-[#F58220] text-white text-sm font-semibold rounded-lg shadow-md  md:flex hidden"
+                className="flex items-center px-4 py-2 bg-[#F58220] text-white text-sm font-semibold rounded-lg shadow-md sm:hidden lg:block lg:flex md:flex md:block hidden"
                 onClick={toggleDropdown}
               >
                 Profile <IoIosArrowDown className="ml-2" />

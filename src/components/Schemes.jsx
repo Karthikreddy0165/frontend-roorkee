@@ -9,7 +9,7 @@ import { data } from "autoprefixer";
 import { useRouter } from "next/router.js";
 
 export default function Schemes() {
-  const { searchQuery } = useTabContext();
+  const { query } = useTabContext();
   const { states, departments, beneficiaries, sponsoredBy, profileFieldData } =
     useContext(FilterContext);
   const { currentPage } = useContext(PageContext);
@@ -41,8 +41,8 @@ export default function Schemes() {
           sponsor_ids:
             sponsoredBy.length && sponsoredBy[0][0] === 2 ? sponsoredBy[0] : [],
           beneficiary_keywords: beneficiaries,
-          search_query: searchQuery,
-          user_profile: profileFieldData
+          search_query: query,
+          user_profile: profileFieldData,
         });
 
         const response = await fetch(url, {
@@ -67,14 +67,7 @@ export default function Schemes() {
     };
 
     fetchState();
-  }, [
-    searchQuery,
-    currentPage,
-    sponsoredBy,
-    states,
-    departmentIds,
-    beneficiaries,
-  ]);
+  }, [query, currentPage, sponsoredBy, states, departmentIds, beneficiaries]);
 
   console.log(dataOfApi);
 

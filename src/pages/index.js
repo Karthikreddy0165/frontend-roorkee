@@ -113,11 +113,20 @@ const App = () => {
       <NavBar />
       <VerifiedStatus />
    
-      <div className="w-full mx-auto">
+      <div className="w-full mx-auto z-0">
        
 <Carosuel/>
+<div className="flex justify-center mt-[3rem] block md:hidden">
+
+
+<button
+                            className=" md:flex   py-2 px-4 justify-center items-center gap-2 rounded-lg bg-[#F58220] text-white text-base"
+                            onClick={authState.token ? handleClickAfterLogin : handleClickGetStarted}
+                        >
+                            {authState.token ? `My ${firstCategory}` : "Get Started"}
+                        </button></div>
         {/* Second Row */}
-        <div className="flex flex-col items-center w-full bg-gradient-to-b from-white to-[#EEEEFF] mt-[30px] sm:mt-[50px] px-4 sm:px-6">
+        <div className="flex flex-col items-center w-full bg-gradient-to-b from-white to-[#EEEEFF] mt-[30px] sm:mt-[50px]  sm:px-6">
           <div className="self-stretch flex justify-center">
             <p className="text-center text-[#3431BB] font-semibold text-[16px] sm:text-[18px] md:text-[20px] leading-normal">
               HOW IT WORKS
@@ -200,9 +209,9 @@ const App = () => {
 
           </div>
 
-          <div className="self-stretch flex justify-center mt-8 ">
+          <div className="self-stretch flex justify-center mt-8 mb-[2rem] sm:mb-0 ">
             <button
-              className="text-center text-white font-inter text-[16px] font-normal leading-normal bg-[#F58220] pt-[10px] pr-[9px] sm:pr-[44px] pb-[10px] pl-[9px] sm:pl-[44px] rounded-[4px]  sm:mt-[32px] sm:mb-[50px]"
+              className="text-center text-white font-inter text-[16px] font-normal leading-normal bg-[#F58220] py-2 px-4 sm:py-3 sm:px-6 rounded-[8px]  sm:mt-[32px] sm:mb-[50px]"
               onClick={handleClickFindrightSchemeForYOu}
             >
               Find the right {firstCategory} for me
@@ -269,20 +278,20 @@ const App = () => {
   {/* SCHOLARSHIPS (Full Width View for One Box) for dekstop view */ }
   {displayText.includes('scholarships') && displayText.length < 3 && (
   <div
-    className="group flex items-center justify-between w-[80vw] rounded-[8px] p-2 sm:p-[2vw] text-[#3330BA] hover:cursor-pointer transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02]"
+    className="group flex items-center justify-between sm:w-[80vw] w-[90vw] rounded-[8px] p-2 sm:p-[2vw] text-[#3330BA] hover:cursor-pointer transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02] border-[1px] "
     onClick={handleScholarshipsClick}
   >
     {/* Text Section */}
     <div className="flex-1 min-w-0 p-2">
       <div className="max-w-xl">
-        <h1 className="flex items-center gap-2 text-3xl text-left text-[#F27E17] mb-2 sm:mb-6 font-semibold">
+        <h1 className="flex items-center gap-2 sm:text-3xl text-xl text-left text-[#F27E17] mb-2 sm:mb-6 font-semibold">
         <svg width="55" height="55" viewBox="0 0 55 55" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M53.6679 18.367L28.746 4.61704C28.3645 4.40639 27.9357 4.2959 27.4999 4.2959C27.0641 4.2959 26.6354 4.40639 26.2538 4.61704L1.33195 18.367C0.928984 18.59 0.593097 18.9168 0.359204 19.3135C0.125312 19.7102 0.00195312 20.1624 0.00195312 20.6229C0.00195312 21.0834 0.125312 21.5356 0.359204 21.9323C0.593097 22.329 0.928984 22.6558 1.33195 22.8788L6.01554 25.4569V35.7178C6.01385 36.7741 6.40342 37.7936 7.1091 38.5795C10.0181 41.8301 16.5429 47.2657 27.4999 47.2657C30.4098 47.2813 33.306 46.865 36.0937 46.0303V51.5625C36.0937 52.2463 36.3653 52.9021 36.8488 53.3856C37.3323 53.869 37.988 54.1407 38.6718 54.1407C39.3556 54.1407 40.0113 53.869 40.4948 53.3856C40.9783 52.9021 41.2499 52.2463 41.2499 51.5625V43.854C43.7399 42.4786 45.9841 40.6991 47.8907 38.5881C48.5964 37.8022 48.986 36.7827 48.9843 35.7264V25.4655L53.6679 22.8874C54.0708 22.6644 54.4067 22.3376 54.6406 21.9409C54.8745 21.5441 54.9979 21.092 54.9979 20.6315C54.9979 20.171 54.8745 19.7188 54.6406 19.3221C54.4067 18.9254 54.0708 18.5986 53.6679 18.3756V18.367ZM27.4999 9.82055L47.0851 20.625L39.9609 24.5567C39.9475 24.5488 39.9346 24.5402 39.9222 24.5309L28.7503 18.367C28.1538 18.0588 27.4606 17.9953 26.8181 18.1903C26.1756 18.3852 25.6345 18.8231 25.3099 19.4108C24.9852 19.9985 24.9027 20.6897 25.0797 21.3373C25.2568 21.985 25.6796 22.538 26.2581 22.8788L34.637 27.4958L27.4999 31.4317L7.91476 20.625L27.4999 9.82055ZM27.4999 42.1094C18.8159 42.1094 13.6103 38.0124 11.1718 35.3913V28.3014L26.2538 36.6245C26.6354 36.8351 27.0641 36.9456 27.4999 36.9456C27.9357 36.9456 28.3645 36.8351 28.746 36.6245L36.0937 32.579V40.5776C33.3484 41.6152 30.4346 42.1346 27.4999 42.1094ZM43.828 35.3913C43.0375 36.2385 42.1749 37.0156 41.2499 37.7137V29.7323L43.828 28.31V35.3913Z" fill="#F58220"/>
         </svg>
 
           SCHOLARSHIPS
         </h1>
-        <p className="text-sm sm:text-base text-left leading-relaxed sm:leading-6 text-[#000000]">
+        <p className="text-sm sm:text-base text-left leading-relaxed sm:leading-6 text-[#616161]">
           Explore a wide range of scholarships designed to support students from diverse backgrounds.
           Find financial aid opportunities based on merit, need, and special categories. Click to discover
           and apply for scholarships that match your eligibility!
@@ -314,7 +323,7 @@ const App = () => {
   {/* Schemes (Full Width Box) for dekstop view */ }
   {displayText.includes('schemes') && displayText.length < 3 && (
   <div
-    className="group flex items-center justify-between w-[80vw] rounded-[8px] p-2 sm:p-[2vw] text-[#3330BA] hover:cursor-pointer transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02]"
+    className="group flex items-center justify-between sm:w-[80vw] w-[90vw] rounded-[8px] p-2 sm:p-[2vw] text-[#3330BA] hover:cursor-pointer transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02] border-[1px] mt-[2rem]"
     onClick={handleSchemesClick}
   >
     {/* Image Section */}
@@ -331,13 +340,13 @@ const App = () => {
     {/* Text Section */}
     <div className="flex-1 min-w-0 p-2">
       <div className="max-w-xl">
-        <h1 className="flex items-center gap-2 text-3xl text-left text-[#F27E17] mb-2 sm:mb-6 font-semibold">
+        <h1 className="flex items-center gap-2 sm:text-3xl text-xl text-left text-[#F27E17] mb-2 sm:mb-6 font-semibold">
         <svg width="55" height="55" viewBox="0 0 55 55" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M36.9531 26.6406C36.9531 27.3244 36.6815 27.9801 36.198 28.4636C35.7145 28.9471 35.0588 29.2188 34.375 29.2188H20.625C19.9412 29.2188 19.2855 28.9471 18.802 28.4636C18.3185 27.9801 18.0469 27.3244 18.0469 26.6406C18.0469 25.9569 18.3185 25.3011 18.802 24.8176C19.2855 24.3341 19.9412 24.0625 20.625 24.0625H34.375C35.0588 24.0625 35.7145 24.3341 36.198 24.8176C36.6815 25.3011 36.9531 25.9569 36.9531 26.6406ZM34.375 32.6562H20.625C19.9412 32.6562 19.2855 32.9279 18.802 33.4114C18.3185 33.8949 18.0469 34.5506 18.0469 35.2344C18.0469 35.9181 18.3185 36.5739 18.802 37.0574C19.2855 37.5409 19.9412 37.8125 20.625 37.8125H34.375C35.0588 37.8125 35.7145 37.5409 36.198 37.0574C36.6815 36.5739 36.9531 35.9181 36.9531 35.2344C36.9531 34.5506 36.6815 33.8949 36.198 33.4114C35.7145 32.9279 35.0588 32.6562 34.375 32.6562ZM47.2656 8.59375V42.9688C47.2656 45.02 46.4508 46.9873 45.0003 48.4378C43.5498 49.8883 41.5825 50.7031 39.5312 50.7031H15.4688C13.4175 50.7031 11.4502 49.8883 9.99972 48.4378C8.54924 46.9873 7.73438 45.02 7.73438 42.9688V8.59375C7.73438 7.90999 8.006 7.25423 8.48949 6.77074C8.97298 6.28725 9.62874 6.01562 10.3125 6.01562H15.4688V5.15625C15.4688 4.47249 15.7404 3.81673 16.2239 3.33324C16.7074 2.84975 17.3631 2.57813 18.0469 2.57812C18.7306 2.57813 19.3864 2.84975 19.8699 3.33324C20.3534 3.81673 20.625 4.47249 20.625 5.15625V6.01562H24.9219V5.15625C24.9219 4.47249 25.1935 3.81673 25.677 3.33324C26.1605 2.84975 26.8162 2.57813 27.5 2.57812C28.1838 2.57813 28.8395 2.84975 29.323 3.33324C29.8065 3.81673 30.0781 4.47249 30.0781 5.15625V6.01562H34.375V5.15625C34.375 4.47249 34.6466 3.81673 35.1301 3.33324C35.6136 2.84975 36.2694 2.57813 36.9531 2.57812C37.6369 2.57813 38.2926 2.84975 38.7761 3.33324C39.2596 3.81673 39.5312 4.47249 39.5312 5.15625V6.01562H44.6875C45.3713 6.01562 46.027 6.28725 46.5105 6.77074C46.994 7.25423 47.2656 7.90999 47.2656 8.59375ZM42.1094 11.1719H39.5312V12.0312C39.5312 12.715 39.2596 13.3708 38.7761 13.8543C38.2926 14.3378 37.6369 14.6094 36.9531 14.6094C36.2694 14.6094 35.6136 14.3378 35.1301 13.8543C34.6466 13.3708 34.375 12.715 34.375 12.0312V11.1719H30.0781V12.0312C30.0781 12.715 29.8065 13.3708 29.323 13.8543C28.8395 14.3378 28.1838 14.6094 27.5 14.6094C26.8162 14.6094 26.1605 14.3378 25.677 13.8543C25.1935 13.3708 24.9219 12.715 24.9219 12.0312V11.1719H20.625V12.0312C20.625 12.715 20.3534 13.3708 19.8699 13.8543C19.3864 14.3378 18.7306 14.6094 18.0469 14.6094C17.3631 14.6094 16.7074 14.3378 16.2239 13.8543C15.7404 13.3708 15.4688 12.715 15.4688 12.0312V11.1719H12.8906V42.9688C12.8906 43.6525 13.1622 44.3083 13.6457 44.7918C14.1292 45.2752 14.785 45.5469 15.4688 45.5469H39.5312C40.215 45.5469 40.8708 45.2752 41.3543 44.7918C41.8377 44.3083 42.1094 43.6525 42.1094 42.9688V11.1719Z" fill="#F27E17"/>
         </svg>
         SCHEMES
         </h1>
-        <p className="text-sm sm:text-base text-left leading-relaxed sm:leading-6 text-[#000000]">
+        <p className="text-sm sm:text-base text-left leading-relaxed sm:leading-6 text-[#616161]">
         Explore a wide range of schemes designed to support students from diverse backgrounds. Find financial aid opportunities based on merit, need, and special categories. Click to discover and apply for scholarships that match your eligibility!
         </p>
         <p className="flex mt-6 sm:mt-10  hover:underline cursor-pointer gap-2 text-[#2F3291]">
@@ -358,7 +367,7 @@ const App = () => {
           {/* Your existing sections until Mission/Vision/Values */}
           
           {/* Mission, Vision, and Values Section */}
-          <div className="relative flex flex-col lg:flex-row justify-between items-stretch gap-8 m-8 px-6 sm:mt-[100px] mx-auto w-[82.9vw]">
+          <div className="relative flex flex-col lg:flex-row justify-between items-stretch gap-8 m-8 sm:px-6  sm:mt-[100px] mx-auto sm:w-[82.9vw]">
             {/* Mission Section */}
             <div className="flex flex-col gap-4 p-6 border-[0.3px] border-[#000000] rounded-lg min-h-[250px] w-full lg:w-[calc(50%-1rem)] relative hover:shadow-lg hover:border-[#3F3BE1] transition-all duration-300 transform hover:scale-[1.02]">
               <p className="font-semibold text-[#2F3291] text-lg lg:text-left text-[16px] sm:text-[20px]">
@@ -411,52 +420,56 @@ const App = () => {
           </div>
 
           {/* Values Section */}
-          <div className="px-6 sm:px-8 md:px-10 mb-12">
-            <div className="flex flex-col gap-4 p-6 sm:p-8 border-[0.3px] border-[#000000] rounded-lg sm:w-[70vw] lg:w-[80vw] md:w-[80vw] mx-auto relative hover:shadow-lg hover:border-[#3F3BE1] transition-all duration-300 transform hover:scale-[1.01]">
-              <p className="font-semibold text-[18px] sm:text-[22px] text-[#2F3291] mb-4">
-                Our Values
-              </p>
-              <ul className="list-none space-y-4">
-                <li className="text-[#616161] text-[14px] sm:text-[16px] leading-relaxed flex items-start">
-                  <span className="text-[#3F3BE1] font-semibold mr-2">1.</span>
-                  Commitment to the Ideology.
-                </li>
-                <li className="text-[#616161] text-[14px] sm:text-[16px] leading-relaxed flex items-start">
-                  <span className="text-[#3F3BE1] font-semibold mr-2">2.</span>
-                  Positivity in every action.
-                </li>
-                <li className="text-[#616161] text-[14px] sm:text-[16px] leading-relaxed flex items-start">
-                  <span className="text-[#3F3BE1] font-semibold mr-2">3.</span>
-                  Transparency in all the activities.
-                </li>
-                <li className="text-[#616161] text-[14px] sm:text-[16px] leading-relaxed flex items-start">
-                  <span className="text-[#3F3BE1] font-semibold mr-2">4.</span>
-                  Being unbiased in our studies and research.
-                </li>
-                <li className="text-[#616161] text-[14px] sm:text-[16px] leading-relaxed flex items-start">
-                  <span className="text-[#3F3BE1] font-semibold mr-2">5.</span>
-                  Meaningful contribution in eradicating the feeling of inequality.
-                </li>
-              </ul>
-              <div className="absolute bottom-4 right-4 text-gray-400 transition-all duration-300 mt-[4rem] ">
-                <svg
-                  width="65"
-                  height="65"
-                  viewBox="0 0 50 50"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M34.5982 17.0726C34.1984 16.3537 33.5502 15.8388 32.773 15.6226C31.9958 15.4065 31.1864 15.516 30.4937 15.9311L22.2953 20.843C22.1992 19.4469 21.2695 18.1994 19.8962 17.8115L10.7452 15.2267C10.7216 15.22 10.6975 15.215 10.6731 15.2117C9.31092 15.0246 8.06751 15.3691 6.97734 16.2357L4.44907 18.2449L4.31991 17.7449C4.28314 17.6013 4.21931 17.4667 4.13211 17.349C4.04491 17.2312 3.93607 17.1325 3.81189 17.0586C3.68817 16.9839 3.55141 16.9354 3.40952 16.916C3.26763 16.8965 3.12342 16.9063 2.98523 16.945L0.807837 17.5504C0.227409 17.7119 -0.118254 18.3333 0.0372496 18.9357L3.19392 31.1613C3.23068 31.3049 3.29451 31.4395 3.38173 31.5573C3.46894 31.6751 3.57781 31.7737 3.70202 31.8476C3.86722 31.9472 4.05486 31.9998 4.24594 32C4.3403 32 4.4352 31.9871 4.52867 31.9612L6.706 31.3558C7.28643 31.1943 7.63209 30.573 7.47658 29.9706L7.34318 29.4539C8.67374 28.4056 9.89341 28.1086 11.3759 28.4614L16.6174 29.7084C17.077 29.8177 17.5189 29.8726 17.9457 29.8726C18.8163 29.8726 19.6242 29.6444 20.3906 29.1853L33.4984 21.3319C34.933 20.4724 35.4263 18.5616 34.5982 17.0726ZM4.25239 30.8584L1.0999 18.649L3.26145 18.0479L6.41393 30.2573L4.25239 30.8584ZM32.9494 20.345L19.8416 28.1985C18.9509 28.7322 17.9764 28.8629 16.8628 28.5978L11.6213 27.3508C9.94728 26.9526 8.50836 27.2381 7.03931 28.2771L4.75651 19.4358L7.64492 17.1402C8.49806 16.462 9.43012 16.1988 10.4935 16.3365L19.6078 18.9109C20.761 19.2367 21.4438 20.4754 21.13 21.6721C20.8161 22.8687 19.6229 23.5773 18.4694 23.2517L13.5812 21.871C13.4408 21.8314 13.2909 21.8513 13.1645 21.9263C13.0382 22.0013 12.9457 22.1253 12.9074 22.2711C12.8885 22.3433 12.8834 22.4186 12.8925 22.4929C12.9016 22.5671 12.9248 22.6387 12.9606 22.7036C12.9964 22.7686 13.0441 22.8256 13.1012 22.8714C13.1582 22.9171 13.2234 22.9508 13.2929 22.9704L18.1811 24.3511C18.4603 24.4302 18.7483 24.4703 19.0377 24.4704C20.3736 24.4704 21.6081 23.6115 22.0924 22.2802L31.0427 16.9178C31.4814 16.655 31.9947 16.5858 32.4888 16.7231C32.9826 16.8605 33.394 17.1868 33.6472 17.642C34.1728 18.5871 33.8598 19.7997 32.9494 20.345ZM7.50458 12.3728H15.1841C15.0904 12.803 15.0429 13.2427 15.0426 13.6838C15.0426 13.8349 15.1004 13.9798 15.2034 14.0867C15.3064 14.1935 15.446 14.2536 15.5916 14.2536H25.9952C26.1409 14.2536 26.2805 14.1935 26.3834 14.0867C26.4864 13.9798 26.5442 13.8349 26.5442 13.6838C26.5442 13.2333 26.4943 12.795 26.4027 12.3728H34.0823C34.2279 12.3728 34.3675 12.3128 34.4705 12.2059C34.5734 12.0991 34.6313 11.9542 34.6313 11.8031C34.6313 9.26779 33.0993 7.09812 30.946 6.23491C31.7333 5.5961 32.2409 4.60235 32.2409 3.48731C32.2409 1.56441 30.7333 0 28.8804 0C27.0274 0 25.52 1.56441 25.52 3.48731C25.52 4.60377 26.0287 5.59859 26.8176 6.23733C25.6455 6.70892 24.6357 7.57334 23.9675 8.7106C23.62 8.47107 23.2483 8.2716 22.859 8.11573C23.6462 7.47692 24.1538 6.48317 24.1538 5.36813C24.1538 3.44523 22.6463 1.88082 20.7934 1.88082C18.9404 1.88082 17.4329 3.44523 17.4329 5.36813C17.4329 6.48317 17.9404 7.47692 18.7277 8.11573C18.3385 8.27163 17.9668 8.4711 17.6192 8.7106C16.9511 7.57327 15.9412 6.70892 14.7691 6.23726C15.558 5.59852 16.0668 4.6037 16.0668 3.48731C16.0668 1.56441 14.5593 0 12.7063 0C10.8534 0 9.34599 1.56434 9.34599 3.48724C9.34599 4.60235 9.85354 5.59603 10.6407 6.23484C8.48756 7.09805 6.95559 9.26772 6.95559 11.803C6.95558 11.8778 6.96977 11.9519 6.99736 12.0211C7.02494 12.0902 7.06538 12.153 7.11636 12.2059C7.16734 12.2588 7.22786 12.3008 7.29448 12.3294C7.36109 12.3581 7.43248 12.3728 7.50458 12.3728ZM26.6179 3.48724C26.6179 2.1926 27.6328 1.13939 28.8803 1.13939C30.1278 1.13939 31.1428 2.19268 31.1428 3.48724C31.1428 4.78181 30.1278 5.8351 28.8803 5.8351C27.6328 5.8351 26.6179 4.78188 26.6179 3.48724ZM28.8803 6.97456C31.2602 6.97456 33.2285 8.83836 33.501 11.2334H26.035C25.7427 10.563 25.334 9.95416 24.8292 9.43743C25.6524 7.92914 27.2018 6.97456 28.8803 6.97456ZM18.5309 5.36799C18.5309 4.07335 19.5459 3.02014 20.7934 3.02014C22.041 3.02014 23.0558 4.07342 23.0558 5.36799C23.0558 6.66256 22.041 7.71585 20.7934 7.71585C19.5459 7.71585 18.5309 6.66263 18.5309 5.36799ZM25.414 13.1141H16.1727C16.4452 10.7192 18.4134 8.85531 20.7934 8.85531C23.1733 8.85531 25.1416 10.7192 25.414 13.1141ZM12.7064 1.13939C13.9539 1.13939 14.9688 2.19268 14.9688 3.48724C14.9688 4.78181 13.9539 5.8351 12.7064 5.8351C11.4589 5.8351 10.444 4.78188 10.444 3.48724C10.444 2.1926 11.4589 1.13939 12.7064 1.13939ZM12.7065 6.97456C14.385 6.97456 15.9344 7.92914 16.7575 9.43743C16.2528 9.95417 15.844 10.563 15.5518 11.2334H8.08577C8.35821 8.83836 10.3266 6.97456 12.7065 6.97456Z"
-                    fill="#F27E17"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
+          <div className="sm:px-3 md:px-[20px] mb-12">
+  <div className="flex flex-col gap-4 p-6 sm:p-8 border-[0.3px] border-[#000000] rounded-lg sm:w-[77vw] lg:w-[80vw] md:w-[77vw] mx-auto relative hover:shadow-lg hover:border-[#3F3BE1] transition-all duration-300 transform hover:scale-[1.01]">
+    <div className="flex flex-col h-full"> {/* Added flex container with full height */}
+      <p className="font-semibold text-[18px] sm:text-[22px] text-[#2F3291] mb-4">
+        Our Values
+      </p>
+      <ul className="list-none space-y-4 flex-1"> {/* Added flex-1 to push icon down */}
+        <li className="text-[#616161] text-[14px] sm:text-[16px] leading-relaxed flex items-start">
+          <span className="text-[#616161] font-semibold mr-2">1.</span>
+          Commitment to the Ideology.
+        </li>
+        <li className="text-[#616161] text-[14px] sm:text-[16px] leading-relaxed flex items-start">
+          <span className="text-[#616161] font-semibold mr-2">2.</span>
+          Positivity in every action.
+        </li>
+        <li className="text-[#616161] text-[14px] sm:text-[16px] leading-relaxed flex items-start">
+          <span className="text-[#616161] font-semibold mr-2">3.</span>
+          Transparency in all the activities.
+        </li>
+        <li className="text-[#616161] text-[14px] sm:text-[16px] leading-relaxed flex items-start">
+          <span className="text-[#616161] font-semibold mr-2">4.</span>
+          Being unbiased in our studies and research.
+        </li>
+        <li className="text-[#616161] text-[14px] sm:text-[16px] leading-relaxed flex items-start">
+          <span className="text-[#616161] font-semibold mr-2">5.</span>
+          Meaningful contribution in eradicating the feeling of inequality.
+        </li>
+      </ul>
+      <div className="flex justify-end mt-4"> {/* Changed to flex container with justify-end */}
+        <div className="text-gray-400 transition-all duration-300">
+          <svg
+            width="65"
+            height="65"
+            viewBox="0 0 50 50"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M34.5982 17.0726C34.1984 16.3537 33.5502 15.8388 32.773 15.6226C31.9958 15.4065 31.1864 15.516 30.4937 15.9311L22.2953 20.843C22.1992 19.4469 21.2695 18.1994 19.8962 17.8115L10.7452 15.2267C10.7216 15.22 10.6975 15.215 10.6731 15.2117C9.31092 15.0246 8.06751 15.3691 6.97734 16.2357L4.44907 18.2449L4.31991 17.7449C4.28314 17.6013 4.21931 17.4667 4.13211 17.349C4.04491 17.2312 3.93607 17.1325 3.81189 17.0586C3.68817 16.9839 3.55141 16.9354 3.40952 16.916C3.26763 16.8965 3.12342 16.9063 2.98523 16.945L0.807837 17.5504C0.227409 17.7119 -0.118254 18.3333 0.0372496 18.9357L3.19392 31.1613C3.23068 31.3049 3.29451 31.4395 3.38173 31.5573C3.46894 31.6751 3.57781 31.7737 3.70202 31.8476C3.86722 31.9472 4.05486 31.9998 4.24594 32C4.3403 32 4.4352 31.9871 4.52867 31.9612L6.706 31.3558C7.28643 31.1943 7.63209 30.573 7.47658 29.9706L7.34318 29.4539C8.67374 28.4056 9.89341 28.1086 11.3759 28.4614L16.6174 29.7084C17.077 29.8177 17.5189 29.8726 17.9457 29.8726C18.8163 29.8726 19.6242 29.6444 20.3906 29.1853L33.4984 21.3319C34.933 20.4724 35.4263 18.5616 34.5982 17.0726ZM4.25239 30.8584L1.0999 18.649L3.26145 18.0479L6.41393 30.2573L4.25239 30.8584ZM32.9494 20.345L19.8416 28.1985C18.9509 28.7322 17.9764 28.8629 16.8628 28.5978L11.6213 27.3508C9.94728 26.9526 8.50836 27.2381 7.03931 28.2771L4.75651 19.4358L7.64492 17.1402C8.49806 16.462 9.43012 16.1988 10.4935 16.3365L19.6078 18.9109C20.761 19.2367 21.4438 20.4754 21.13 21.6721C20.8161 22.8687 19.6229 23.5773 18.4694 23.2517L13.5812 21.871C13.4408 21.8314 13.2909 21.8513 13.1645 21.9263C13.0382 22.0013 12.9457 22.1253 12.9074 22.2711C12.8885 22.3433 12.8834 22.4186 12.8925 22.4929C12.9016 22.5671 12.9248 22.6387 12.9606 22.7036C12.9964 22.7686 13.0441 22.8256 13.1012 22.8714C13.1582 22.9171 13.2234 22.9508 13.2929 22.9704L18.1811 24.3511C18.4603 24.4302 18.7483 24.4703 19.0377 24.4704C20.3736 24.4704 21.6081 23.6115 22.0924 22.2802L31.0427 16.9178C31.4814 16.655 31.9947 16.5858 32.4888 16.7231C32.9826 16.8605 33.394 17.1868 33.6472 17.642C34.1728 18.5871 33.8598 19.7997 32.9494 20.345ZM7.50458 12.3728H15.1841C15.0904 12.803 15.0429 13.2427 15.0426 13.6838C15.0426 13.8349 15.1004 13.9798 15.2034 14.0867C15.3064 14.1935 15.446 14.2536 15.5916 14.2536H25.9952C26.1409 14.2536 26.2805 14.1935 26.3834 14.0867C26.4864 13.9798 26.5442 13.8349 26.5442 13.6838C26.5442 13.2333 26.4943 12.795 26.4027 12.3728H34.0823C34.2279 12.3728 34.3675 12.3128 34.4705 12.2059C34.5734 12.0991 34.6313 11.9542 34.6313 11.8031C34.6313 9.26779 33.0993 7.09812 30.946 6.23491C31.7333 5.5961 32.2409 4.60235 32.2409 3.48731C32.2409 1.56441 30.7333 0 28.8804 0C27.0274 0 25.52 1.56441 25.52 3.48731C25.52 4.60377 26.0287 5.59859 26.8176 6.23733C25.6455 6.70892 24.6357 7.57334 23.9675 8.7106C23.62 8.47107 23.2483 8.2716 22.859 8.11573C23.6462 7.47692 24.1538 6.48317 24.1538 5.36813C24.1538 3.44523 22.6463 1.88082 20.7934 1.88082C18.9404 1.88082 17.4329 3.44523 17.4329 5.36813C17.4329 6.48317 17.9404 7.47692 18.7277 8.11573C18.3385 8.27163 17.9668 8.4711 17.6192 8.7106C16.9511 7.57327 15.9412 6.70892 14.7691 6.23726C15.558 5.59852 16.0668 4.6037 16.0668 3.48731C16.0668 1.56441 14.5593 0 12.7063 0C10.8534 0 9.34599 1.56434 9.34599 3.48724C9.34599 4.60235 9.85354 5.59603 10.6407 6.23484C8.48756 7.09805 6.95559 9.26772 6.95559 11.803C6.95558 11.8778 6.96977 11.9519 6.99736 12.0211C7.02494 12.0902 7.06538 12.153 7.11636 12.2059C7.16734 12.2588 7.22786 12.3008 7.29448 12.3294C7.36109 12.3581 7.43248 12.3728 7.50458 12.3728ZM26.6179 3.48724C26.6179 2.1926 27.6328 1.13939 28.8803 1.13939C30.1278 1.13939 31.1428 2.19268 31.1428 3.48724C31.1428 4.78181 30.1278 5.8351 28.8803 5.8351C27.6328 5.8351 26.6179 4.78188 26.6179 3.48724ZM28.8803 6.97456C31.2602 6.97456 33.2285 8.83836 33.501 11.2334H26.035C25.7427 10.563 25.334 9.95416 24.8292 9.43743C25.6524 7.92914 27.2018 6.97456 28.8803 6.97456ZM18.5309 5.36799C18.5309 4.07335 19.5459 3.02014 20.7934 3.02014C22.041 3.02014 23.0558 4.07342 23.0558 5.36799C23.0558 6.66256 22.041 7.71585 20.7934 7.71585C19.5459 7.71585 18.5309 6.66263 18.5309 5.36799ZM25.414 13.1141H16.1727C16.4452 10.7192 18.4134 8.85531 20.7934 8.85531C23.1733 8.85531 25.1416 10.7192 25.414 13.1141ZM12.7064 1.13939C13.9539 1.13939 14.9688 2.19268 14.9688 3.48724C14.9688 4.78181 13.9539 5.8351 12.7064 5.8351C11.4589 5.8351 10.444 4.78188 10.444 3.48724C10.444 2.1926 11.4589 1.13939 12.7064 1.13939ZM12.7065 6.97456C14.385 6.97456 15.9344 7.92914 16.7575 9.43743C16.2528 9.95417 15.844 10.563 15.5518 11.2334H8.08577C8.35821 8.83836 10.3266 6.97456 12.7065 6.97456Z"
+              fill="#F27E17"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
           {/* FAQ Section */}
-          <div className="w-full sm:p-0 md:px-[100px] px-[20px] py-12 sm:py-16">
+          <div className="w-full sm:p-0 md:px-[40px] lg:px-[100px] sm:px-7 sm:py-16">
             <div className="max-w-[1500px] mx-auto">
               <FAQSection />
             </div>

@@ -10,12 +10,12 @@ const AboutUs = () => {
      
 
       {/* About Us Content */}
-      <div className="max-w-6xl rounded-[20px] text-center mt-5 bg-[#EEEEFF] p-10">
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+      <div className="max-w-6xl rounded-[20px] text-center sm:mt-5 lg:mt-5  bg-[#EEEEFF] p-10">
+        <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">
           About Us
         </h1>
-        <p className="text-lg text-gray-700 leading-relaxed">
-          At <span className="font-semibold text-[#3330BA]">The Launchpad</span>,
+        <p className="lg:text-lg mg:text-lg sm:text-lg text-[16px] text-gray-700 leading-relaxed">
+          At <span className="font-semibold text-[#2B3E80]">The Launchpad</span>,
           we are dedicated to bridging the information gap and promoting equal
           opportunities for education, financial aid, and employment. Our
           mission is to create an accessible and user-friendly platform that
@@ -26,16 +26,16 @@ const AboutUs = () => {
 
       {/* Why Choose Us Section */}
       <div className="max-w-4xl mt-10 space-y-6">
-        <h2 className="text-2xl font-semibold text-gray-900 text-center mb-4">
+        <h2 className="text-2xl font-semibold text-[#2B3E80] text-center mb-4">
           Why Choose Us?
         </h2>
 
         <div className="grid md:grid-cols-2 gap-6">
           <div className="p-6 bg-white shadow-md rounded-lg">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              📚 Comprehensive Resources
+            <h3 className="text-xl font-semibold text-[#2B3E80] mb-2">
+               Comprehensive Resources
             </h3>
-            <p className="text-gray-700">
+            <p className="text-gray-700 text-[16px] sm:text-lg">
               We bring together a wide range of opportunities—scholarships,
               government schemes, and job openings—into a single, centralized
               platform.
@@ -43,8 +43,8 @@ const AboutUs = () => {
           </div>
 
           <div className="p-6 bg-white shadow-md rounded-lg">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              🖥️ User-Friendly Interface
+            <h3 className="text-xl font-semibold text-[#2B3E80] mb-2">
+              User-Friendly Interface
             </h3>
             <p className="text-gray-700">
               Our platform is designed to be intuitive and accessible, ensuring
@@ -53,8 +53,8 @@ const AboutUs = () => {
           </div>
 
           <div className="p-6 bg-white shadow-md rounded-lg">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              🔄 Regular Updates
+            <h3 className="text-xl font-semibold text-[#2B3E80] mb-2">
+              Regular Updates
             </h3>
             <p className="text-gray-700">
               Our team ensures the portal is continuously updated with the
@@ -64,8 +64,8 @@ const AboutUs = () => {
           </div>
 
           <div className="p-6 bg-white shadow-md rounded-lg">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              🌍 Accessible Anytime, Anywhere
+            <h3 className="text-xl font-semibold text-[#2B3E80] mb-2">
+              Accessible Anytime, Anywhere
             </h3>
             <p className="text-gray-700">
               The web application is accessible on multiple devices, allowing
