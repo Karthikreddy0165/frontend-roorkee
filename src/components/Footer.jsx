@@ -371,7 +371,7 @@ const Footer = () => {
           {/* Copyright */}
           <div className="border-t border-gray-700 mt-8 pt-6 text-center text-white">
             <p className="text-sm">
-              &copy; {new Date().getFullYear()} LaunchPad. All Rights Reserved.
+              &copy; {new Date().getFullYear()} Empower Hub. All Rights Reserved.
             </p>
           </div>
         </div>
