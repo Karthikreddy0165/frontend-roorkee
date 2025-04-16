@@ -640,7 +640,7 @@ const handleReportSubmit = async (e) => {
 
 
       {isHowToApplyOpen && (
-        <HowToApply closeModal={handleCloseHowToApply} schemeId={scheme.id} /> 
+        <HowToApply closeModal={handleCloseHowToApply} schemeId={scheme.id} scheme={scheme}/> 
       )}
       {isSavedModalOpen && (
           <SavedModal
@@ -658,6 +658,7 @@ const handleReportSubmit = async (e) => {
             tag={'report'}
           />
         )}
+      
       
     </div>
   );

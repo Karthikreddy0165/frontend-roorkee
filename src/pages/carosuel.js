@@ -4,10 +4,11 @@ import Slider from "react-slick";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import bannerfirst from "../assets/bannerfirst.jpeg";
-// import image2 from "../assets/cnext.jpeg";
 import bannerthird from "../assets/csecond.jpeg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import mobilebanner from "../assets/mobilebanner.jpeg";
+import mobilebanner1 from "../assets/mobilebanner1.jpeg";
 import { useAuth } from "@/Context/AuthContext";
 
 const Carousel = () => {
@@ -15,17 +16,41 @@ const Carousel = () => {
     const { authState } = useAuth();
     const [categories, setCategories] = useState([]);
     const [displayText, setDisplayText] = useState("");
+    const [announcements, setAnnouncements] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    // Fetch announcement data from the API
+    useEffect(() => {
+        const fetchAnnouncements = async () => {
+            try {
+                setIsLoading(true);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/announcements/`);
+                const data = await response.json();
+                if (Array.isArray(data) && data.length > 0) {
+                    setAnnouncements(data);
+                }
+            } catch (error) {
+                console.error("Error fetching announcements:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchAnnouncements();
+    }, []);
 
     useEffect(() => {
         async function fetchCategories() {
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/layout-items/`);
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/layout-items/`
+                );
                 const data = await response.json();
                 if (Array.isArray(data)) {
-                    const sorted = data.sort((a, b) => a.order - b.order);
-                    const names = sorted.map((item) => item.column_name);
-                    setDisplayText(names);
-                    setCategories(sorted.map((item) => ({
+                    const sortedCategories = data.sort((a, b) => a.order - b.order);
+                    const availableCategories = sortedCategories.map((item) => item.column_name);
+                    setDisplayText(availableCategories);
+                    setCategories(sortedCategories.map((item) => ({
                         name: item.column_name,
                         label: item.column_name.toUpperCase(),
                     })));
@@ -36,6 +61,15 @@ const Carousel = () => {
         }
         fetchCategories();
     }, [router.query]);
+
+    useEffect(() => {
+        if (announcements.length > 1) {
+            const interval = setInterval(() => {
+                setActiveIndex((prev) => (prev + 1) % announcements.length);
+            }, 9000);
+            return () => clearInterval(interval);
+        }
+    }, [announcements]);
 
     const handleClickGetStarted = () => {
         router.push("/login");
@@ -59,69 +93,101 @@ const Carousel = () => {
     };
 
     return (
-        <div className="relative w-full max-w-[1200px] mt-5 mx-auto">
+        <div className="relative w-full max-w-[1200px] mt-5 mx-auto z-0">
             <Slider {...settings}>
-
                 {/* Slide 1 */}
                 <div className="relative">
-                    <Image src={bannerfirst} alt="Banner" className="w-full object-contain" priority />
-                    <div className="absolute inset-0 flex flex-col items-start justify-center px-4">
-                        <h1 className="text-[#3330BA] text-3xl md:text-5xl font-semibold">
+                    {/* Desktop Banner */}
+                    <div className="hidden md:hidden lg:block ">
+                        <Image
+                            src={bannerfirst}
+                            alt="Desktop Banner"
+                            className="w-full h-auto"
+                            priority
+                            width={1200}
+                            height={400}
+                        />
+                    </div>
+                    {/* Mobile Banner */}
+                    <div className="block md:block lg:hidden">
+                        <Image
+                            src={mobilebanner}
+                            alt="Mobile Banner"
+                            className="w-full h-auto"
+                            priority
+                            width={600}
+                            height={300}
+                        />
+                    </div>
+                    
+                    {/* Text Content - Hidden on mobile */}
+                    <div className="hidden md:hidden lg:block lg:flex absolute inset-0 flex-col items-start justify-center px-8">
+                        <h1 className="text-[#3330BA] text-3xl lg:text-4xl font-semibold">
                             Empowering the marginalized <br /> community
                         </h1>
-                        <p className="text-[#3330BA] text-base md:text-lg mt-4 max-w-2xl drop-shadow-lg">
+                        <p className="text-[#3330BA] text-base lg:text-lg mt-4 max-w-2xl drop-shadow-lg">
                             Helping all communities across India find personalized scholarships based on eligibility.
                         </p>
                     </div>
                 </div>
 
-                {/* Slide 2 (Static Image) */}
-                {/* <div className="relative">
-                    <Image src={image2} alt="Banner" className="w-full object-contain" />
-                </div> */}
-
                 {/* Slide 3 */}
                 <div className="relative">
-                    <Image src={bannerthird} alt="Banner" className="w-full object-contain" />
-                    <div className="absolute bottom-1/4 left-6 transform -translate-y-1/2 flex flex-col items-start gap-4">
-                        <h1 className="text-[#3330BA] text-xl md:text-xl font-semibold">
-                            "Strengthening India by supporting dreams from every corner of the nation."
+                    {/* Desktop Banner */}
+                    <div className="hidden md:hidden lg:block">
+                        <Image
+                            src={bannerthird}
+                            alt="Desktop Banner"
+                            className="w-full h-auto"
+                            width={1200}
+                            height={400}
+                        />
+                    </div>
+                    {/* Mobile Banner */}
+                    <div className="block md:block lg:hidden">
+                        <Image
+                            src={mobilebanner1}
+                            alt="Mobile Banner"
+                            className="w-full h-auto"
+                            width={600}
+                            height={300}
+                        />
+                    </div>
+
+                    {/* Text Content - Hidden on mobile */}
+                    <div className="hidden md:hidden lg:flex absolute bottom-1/4 left-6 transform -translate-y-1/2 flex-col items-start gap-4">
+                        <h1 className="text-[#3330BA] text-xl font-semibold">
+                            Strengthening India by supporting dreams from every corner of the nation.
                         </h1>
-                        <div className="bg-white px-6 py-4 rounded-[16px] shadow-[0px_3px_8px_rgba(0,0,0,0.1),_0px_-2px_6px_rgba(0,0,0,0.1)] flex flex-row items-center gap-4">
+
+                        {/* Text Box */}
+                        <div className="bg-white px-6 py-4 rounded-lg shadow-md flex flex-row items-center gap-4">
                             {displayText.includes("schemes") && (
-                                <div className="text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold pr-4 border-r border-[#808080]">
+                                <div className="text-[#000000] font-inter text-sm font-bold pr-4 border-r border-[#808080]">
                                     Thousands of schemes
                                 </div>
                             )}
                             {displayText.includes("jobs") && (
-                                <div className={`text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold px-4 ${displayText.includes("scholarships") ? 'border-r border-[#808080]' : ''}`}>
+                                <div className={`text-[#000000] font-inter text-sm font-bold px-4 ${displayText.includes("scholarships") ? 'border-r border-[#808080]' : ''}`}>
                                     100+ job postings
                                 </div>
                             )}
                             {displayText.includes("scholarships") && (
-                                <div className="text-[#000000] font-inter text-[14px] sm:text-[16px] font-bold pl-4">
+                                <div className="text-[#000000] font-inter text-sm font-bold pl-4">
                                     Multiple scholarships
                                 </div>
                             )}
                         </div>
-                        {authState.token ? (
-                            <button
-                                className="flex h-[44px] px-[44px] ml-[10px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#F58220] text-white hidden sm:flex"
-                                onClick={handleClickAfterLogin}
-                            >
-                                My {firstCategory}
-                            </button>
-                        ) : (
-                            <button
-                                className="flex h-[44px] px-[44px] py-[10px] justify-center items-center gap-[10px] rounded-[8px] bg-[#F58220] text-white hidden sm:flex"
-                                onClick={handleClickGetStarted}
-                            >
-                                Get Started
-                            </button>
-                        )}
+
+                        {/* Button - Hidden on mobile */}
+                        <button
+                            className="hidden md:flex h-[44px] px-[44px] py-2 justify-center items-center gap-2 rounded-lg bg-[#F58220] text-white text-base"
+                            onClick={authState.token ? handleClickAfterLogin : handleClickGetStarted}
+                        >
+                            {authState.token ? `My ${firstCategory}` : "Get Started"}
+                        </button>
                     </div>
                 </div>
-
             </Slider>
         </div>
     );

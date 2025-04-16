@@ -2,38 +2,39 @@ import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
 import { useRouter } from "next/router";
 import { IoClose } from "react-icons/io5";
-
+import { useState } from "react";
 export default function PrivacyPolicy() {
   const router = useRouter();
+  const [infoUsage, setInfoUsage] = useState(false);
+  const [infoSharing, setInfoSharing] = useState(false);
 
   const handleClose = () => {
     router.back();
   };
-
+  const handleRejectAll = () => {
+    setInfoUsage(false);
+    setInfoSharing(false);
+  };
   return (
     <>
       <NavBar />
       <div className="bg-[#e8e6e6] min-h-screen flex flex-col">
-        <div className="flex justify-center px-8 flex-grow">
-          <div className="w-full max-w-7xl bg-white shadow-lg rounded-xl p-8 sm:p-10 m-[5rem]">
+        <div className="flex justify-center md:p-8 flex-grow">
+          <div className="w-full lg:max-w-7xl md:max-w-5xl max-w-full bg-white shadow-lg rounded-xl p-8 sm:p-10  lg:mt-[5rem]  md:mb-[5rem] md:mt-[5rem] xl:mt-[5rem] xl:mb-[5rem] lg:mb-[5rem]">
             <div className="flex items-center justify-center relative mb-6">
-              <h1 className="text-3xl text-[#2B3E80] font-extrabold text-center w-full">
+              <h1 className="lg:text-3xl md:text-3xl text-xl text-[#2B3E80] font-extrabold text-center w-full">
                 Privacy Policy
               </h1>
               <button
-                type="button"
-                className=" absolute left-0 flex gap-[8px] text-sm font-inter  items-center justify-between"
-                onClick={() => router.back()}
+                className="absolute left-0 text-gray-600 hover:text-gray-900 transition hidden md:block lg:block xl:block"
+                onClick={handleClose}
               >
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.5005 10.0003C17.5005 10.1661 17.4346 10.3251 17.3174 10.4423C17.2002 10.5595 17.0413 10.6253 16.8755 10.6253H4.63409L9.19268 15.1832C9.25075 15.2412 9.29681 15.3102 9.32824 15.386C9.35966 15.4619 9.37584 15.5432 9.37584 15.6253C9.37584 15.7075 9.35966 15.7888 9.32824 15.8647C9.29681 15.9405 9.25075 16.0095 9.19268 16.0675C9.13461 16.1256 9.06567 16.1717 8.9898 16.2031C8.91393 16.2345 8.83261 16.2507 8.75049 16.2507C8.66837 16.2507 8.58705 16.2345 8.51118 16.2031C8.43531 16.1717 8.36637 16.1256 8.3083 16.0675L2.6833 10.4425C2.62519 10.3845 2.57909 10.3156 2.54764 10.2397C2.51619 10.1638 2.5 10.0825 2.5 10.0003C2.5 9.91821 2.51619 9.83688 2.54764 9.76101C2.57909 9.68514 2.62519 9.61621 2.6833 9.55816L8.3083 3.93316C8.42558 3.81588 8.58464 3.75 8.75049 3.75C8.91634 3.75 9.0754 3.81588 9.19268 3.93316C9.30996 4.05044 9.37584 4.2095 9.37584 4.37535C9.37584 4.5412 9.30996 4.70026 9.19268 4.81753L4.63409 9.37535H16.8755C17.0413 9.37535 17.2002 9.4412 17.3174 9.55841C17.4346 9.67562 17.5005 9.83459 17.5005 10.0003Z" fill="black"/>
-            </svg>
-
-                Back
+                <IoClose size={25} />
               </button>
             </div>
 
             <div className="text-gray-700 space-y-6 text-sm sm:text-base leading-relaxed">
+             
               <p>
                 At Empower Hub, we are committed to protecting and respecting your privacy. This Privacy Policy outlines the information we collect from you, how we use it, and the steps we take to ensure your data is protected.
               </p>
@@ -125,7 +126,76 @@ export default function PrivacyPolicy() {
                   We may modify this policy anytime. Changes will be posted here, and significant updates will be communicated.
                 </p>
               </section>
+              <div className="pt-10 mt-10 border-t border-gray-300">
+            <h2 className="text-xl font-semibold text-[#2B3E80] mb-4">
+              Consent Preferences
+            </h2>
 
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-gray-700 font-medium">
+                  Strictly Necessary Cookies
+                </span>
+                <span className="text-[#838383] font-medium">Always Active</span>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <span className="text-gray-700">
+                  Cookies & Tracking Technologies
+                </span>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="sr-only peer"
+                    checked={infoUsage}
+                    onChange={() => setInfoUsage(!infoUsage)}
+                  />
+                  <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                </label>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <span className="text-gray-700">Information Usage</span>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="sr-only peer"
+                    checked={infoUsage}
+                    onChange={() => setInfoUsage(!infoUsage)}
+                  />
+                  <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                </label>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <span className="text-gray-700">Information Sharing</span>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="sr-only peer"
+                    checked={infoSharing}
+                    onChange={() => setInfoSharing(!infoSharing)}
+                  />
+                  <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                </label>
+              </div>
+            </div>
+
+            <div className="flex gap-4 mt-8 justify-end">
+              <button
+                className="bg-gray-100 text-gray-800 lg:px-5 lg:py-2 md:px-5 px-2 py-0 rounded-lg hover:bg-gray-200 border border-gray-300"
+                onClick={handleRejectAll}
+              >
+                Reject All
+              </button>
+              <button
+                className="bg-[#2B3E80] text-white md:px-3 px-2 lg:px-5 py-2 rounded-lg hover:bg-[#1e2f66] shadow-md"
+                onClick={handleClose}
+              >
+                Submit My Choices
+              </button>
+            </div>
+          </div>
              
             </div>
           </div>

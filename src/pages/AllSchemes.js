@@ -105,14 +105,14 @@ const SchemesAll = () => {
 
       {/* Banner Image */}
       <div className="relative max-w-[90%] mx-auto mb-[16px] sm:mb-8 mt-[2rem] sm:block hidden">
-        <div className="relative w-full">
+        <div className="relative w-full ">
           <Image
             src={img || bannerImage || backUpBannerImage}
             alt="Loading Image..."
             layout="responsive"
             width={100}
             height={50}
-            className="rounded-[15px] object-contain"
+            className="rounded-[15px] object-contain "
           />
         </div>
       </div>
