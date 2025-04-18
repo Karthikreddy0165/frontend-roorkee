@@ -45,6 +45,7 @@ const PrivacyModal = ({ isOpen, onClose }) => {
           </button>
         </div>
         
+        
         <div className="overflow-y-auto p-4 sm:p-6 flex-1">
           <div className="space-y-6">
             <div>
@@ -106,6 +107,19 @@ const PrivacyModal = ({ isOpen, onClose }) => {
               </div>
             </div>
           </div>
+          <p className="text-sm text-gray-600 mt-4">
+            For more information, please read our{" "}
+            <a
+              href="/privacy-policy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#2B3E80] font-medium hover:underline"
+            >
+              Privacy Policy
+            </a>
+            .
+          </p>
+
         </div>
 
         <div className="border-t p-4 flex justify-end space-x-3">
