@@ -21,8 +21,8 @@ import DynamicCarousel from "@/components/DynamicCarousel";
 import { useFormData } from "@/Context/FormContext";
 import AccCreatSucc from "@/utils/AccountCreated";
 import Checkbox from "@/components/Checkbox";
-import TermsAndConditions from "./Terms-conditions";
-import PrivacyPolicy from "./privacy-policy";
+import TermsModal from "@/components/Modals/TermsModal";
+import PrivacyModal from "@/components/Modals/PrivacyModal";
 
 
 const CreateAcc01 = () => {
@@ -323,8 +323,8 @@ const CreateAcc01 = () => {
                     className="mt-4 cursor-pointer"
                   />
                            <p className=" font-normal text-base p-3 pl-0 mt-2">By continuing, you agree to our <span> </span>
-                    <span className=" underline font-medium cursor-pointer" data-testid="terms-link" onClick={()=>router.push('/Terms-conditions')}>T&C</span> and <span> </span>
-                    <span className=" underline font-medium cursor-pointer" data-testid="privacy-link"  onClick={()=>router.push('/privacy-policy')}>Privacy Policy.</span></p>
+                    <span className=" underline font-medium cursor-pointer" data-testid="terms-link" onClick={openModal}>T&C</span> and <span> </span>
+                    <span className=" underline font-medium cursor-pointer" data-testid="privacy-link"  onClick={openPrivacyModal}>Privacy Policy.</span></p>
                   {formik.touched.terms && formik.errors.terms && (
           <div className="text-red-500 text-sm mt-1" data-test-id="email-password-error">{formik.errors.terms}</div>
         )}
@@ -345,34 +345,9 @@ const CreateAcc01 = () => {
         </Formik>
       </div>
        
-     {isModalOpen && (
-      <div 
-        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-        onClick={closeModal}
-        data-testid="terms-modal-overlay"
-      >
-        <div 
-        data-testid="terms-modal-content"
-        onClick={(e) => e.stopPropagation()}>
-          <TermsAndConditions handleClose={closeModal} />
-        </div>
-      </div>
-    )}
-
-     {isPrivacyModalOpen && (
-      <div 
-        data-testid="privacy-modal-overlay"
-        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-        onClick={closePrivacyModal}
-      >
-        <div 
-        className=""
-        onClick={(e) => e.stopPropagation()} 
-        data-testid="privacy-modal-content">
-          <PrivacyPolicy handleClose={closePrivacyModal} />
-        </div>
-      </div>
-    )}
+     <TermsModal isOpen={isModalOpen} onClose={closeModal} />
+     
+     <PrivacyModal isOpen={isPrivacyModalOpen} onClose={closePrivacyModal} />
     
     </div>
   );
