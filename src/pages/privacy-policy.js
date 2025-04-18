@@ -1,20 +1,25 @@
-import Footer from "@/components/Footer";
+import React from "react";
 import NavBar from "@/components/NavBar";
-import { useRouter } from "next/router";
+import Footer from "@/components/Footer";
 import { IoClose } from "react-icons/io5";
-import { useState } from "react";
+import  {usePrivacy}  from "@/Context/PrivacyContext";
+import { useRouter } from "next/router";
 export default function PrivacyPolicy() {
   const router = useRouter();
-  const [infoUsage, setInfoUsage] = useState(false);
-  const [infoSharing, setInfoSharing] = useState(false);
+  const 
+  { cookiesConsent,
+    setCookiesConsent,
+    infoUsage,
+    setInfoUsage,
+    infoSharing,
+    setInfoSharing,
+    handleRejectAll
+  } = usePrivacy();
 
   const handleClose = () => {
     router.back();
   };
-  const handleRejectAll = () => {
-    setInfoUsage(false);
-    setInfoSharing(false);
-  };
+
   return (
     <>
       <NavBar />
@@ -147,8 +152,8 @@ export default function PrivacyPolicy() {
                   <input
                     type="checkbox"
                     className="sr-only peer"
-                    checked={infoUsage}
-                    onChange={() => setInfoUsage(!infoUsage)}
+                    checked={cookiesConsent}
+                    onChange={() => setCookiesConsent(!cookiesConsent)}
                   />
                   <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
                 </label>

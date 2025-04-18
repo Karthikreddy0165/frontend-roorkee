@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
+import {usePrivacy} from '../../Context/PrivacyContext'
 
 const PrivacyModal = ({ isOpen, onClose }) => {
-  const [cookiesConsent, setCookiesConsent] = useState(true);
-  const [infoUsage, setInfoUsage] = useState(true);
-  const [infoSharing, setInfoSharing] = useState(true);
+  const 
+  { cookiesConsent,
+    setCookiesConsent,
+    infoUsage,
+    setInfoUsage,
+    infoSharing,
+    setInfoSharing,
+    handleRejectAll
+  } = usePrivacy();
 
   if (!isOpen) return null;
 
-  const handleRejectAll = () => {
-    setCookiesConsent(false);
-    setInfoUsage(false);
-    setInfoSharing(false);
-  };
+
 
   const handleSubmit = () => {
     onClose();

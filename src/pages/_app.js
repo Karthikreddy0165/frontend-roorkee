@@ -4,17 +4,15 @@ import Head from 'next/head';
 import { FormProvider } from "@/Context/FormContext";
 import { TabProvider } from "@/Context/TabContext";
 import "@/styles/globals.css";
-
-
-import { PrimeReactProvider } from "primereact/api";
 import { AuthProvider } from "@/Context/AuthContext";
 import { PageProvider } from "@/Context/PageContext";
 import { FilterProvider } from "@/Context/FilterContext";
 import { SchemeProvider } from "@/Context/schemeContext";
 import { BookmarkProvider } from "@/Context/BookmarkContext";
 import { PreferenceProvider } from "@/Context/preferenceContext";
+import { PrivacyProvider } from '@/Context/PrivacyContext';
 import RedirectHandler from "@/components/ComponentsUtils/RedirectHandler";
-
+import { PrimeReactProvider } from "primereact/api";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -139,6 +137,7 @@ export default function App({ Component, pageProps }) {
                     <PrimeReactProvider>
                       <BookmarkProvider>
                         <ProfileProvider>
+                        <PrivacyProvider>
                         <div className="flex flex-col min-h-screen">
                           {/* Main Content */}
                           <div className="flex-grow">
@@ -146,6 +145,7 @@ export default function App({ Component, pageProps }) {
                             <Component {...pageProps} />
                           </div>
                         </div>
+                        </PrivacyProvider>
                         </ProfileProvider>
                       </BookmarkProvider>
                     </PrimeReactProvider>
