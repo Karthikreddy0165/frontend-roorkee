@@ -13,10 +13,16 @@ export default function PrivacyPolicy() {
     setInfoUsage,
     infoSharing,
     setInfoSharing,
-    handleRejectAll
+    handleRejectAll,
+    handleSubmitChoices
   } = usePrivacy();
 
   const handleClose = () => {
+    router.back();
+  };
+
+  const handleSubmit = () => {
+    handleSubmitChoices();
     router.back();
   };
 
@@ -195,7 +201,7 @@ export default function PrivacyPolicy() {
               </button>
               <button
                 className="bg-[#2B3E80] text-white md:px-3 px-2 lg:px-5 py-2 rounded-lg hover:bg-[#1e2f66] shadow-md"
-                onClick={handleClose}
+                onClick={handleSubmit}
               >
                 Submit My Choices
               </button>

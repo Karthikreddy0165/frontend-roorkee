@@ -21,7 +21,7 @@ export const PrivacyProvider = ({ children }) => {
     }
   }, []);
 
-  useEffect(() => {
+  const handleSubmitChoices = () => {
     try {
       localStorage.setItem('privacyPreferences', JSON.stringify({
         cookiesConsent,
@@ -31,8 +31,7 @@ export const PrivacyProvider = ({ children }) => {
     } catch (error) {
       console.error('Error saving privacy preferences:', error);
     }
-  }, [cookiesConsent, infoUsage, infoSharing]);
-
+  };
   const handleRejectAll = () => {
     setCookiesConsent(false);
     setInfoUsage(false);
@@ -47,6 +46,7 @@ export const PrivacyProvider = ({ children }) => {
     infoSharing,
     setInfoSharing,
     handleRejectAll,
+    handleSubmitChoices,
   };
 
   return (

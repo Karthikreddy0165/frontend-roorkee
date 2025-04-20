@@ -25,7 +25,7 @@ const FAQSection = () => {
   }, [router.query]);
 
   return (
-    <div className="flex flex-col items-center  bg-[#2F329114]   sm:px-8 lg:px-16 xl:px-24 overflow-hidden w-full">
+    <div  id="faq" className="flex flex-col items-center  bg-[#2F329114]   sm:px-8 lg:px-16 xl:px-24 overflow-hidden w-full">
       <div className="w-full max-w-3xl text-center">
         <h1 className="text-black font-inter text-[20px] sm:text-3xl font-semibold leading-[150%] mb-8 border-b-4 border-gray-300 inline-block px-4">
           Frequently Asked Questions

@@ -10,7 +10,8 @@ const PrivacyModal = ({ isOpen, onClose }) => {
     setInfoUsage,
     infoSharing,
     setInfoSharing,
-    handleRejectAll
+    handleRejectAll,
+    handleSubmitChoices
   } = usePrivacy();
 
   if (!isOpen) return null;
@@ -18,9 +19,9 @@ const PrivacyModal = ({ isOpen, onClose }) => {
 
 
   const handleSubmit = () => {
+    handleSubmitChoices();
     onClose();
   };
-
   return (
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity"
@@ -49,9 +50,6 @@ const PrivacyModal = ({ isOpen, onClose }) => {
         <div className="overflow-y-auto p-4 sm:p-6 flex-1">
           <div className="space-y-6">
             <div>
-              <h2 className="text-xl font-semibold text-[#2B3E80] mb-4">
-                Consent Preferences
-              </h2>
               <p className="text-gray-700 mb-6">
                 Please select your privacy preferences below. You can choose which types of cookies and data processing you allow.
               </p>
