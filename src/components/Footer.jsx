@@ -285,7 +285,7 @@ const Footer = () => {
               </h4>
               <ul className="space-y-2 text-white">
                 <li>
-                  <a className="hover:text-[#F58220] cursor-pointer">FAQ's</a>
+                  <a  href="#faq" className="hover:text-[#F58220] cursor-pointer">FAQ's</a>
                 </li>
                 <li>
                   <FeedbackButton className="hover:text-[#F58220]" />
