@@ -216,11 +216,18 @@ const renderFilterButton = (filterValue, filterType) => {
             );
           })()}
         </div>
+        
       </div>
+      
     </div>
     
     {/* Right side with preference button - fixed width */}
-    <div className="flex-shrink-0 w-[140px] mt-4 z-10">
+    <div className="flex justify-center items-center gap-20">
+    <div className="sorting">
+      <SortSelector onSortChange={handleSortChange}/>
+      </div>
+    <div className="flex-shrink-0 w-[140px] z-10">
+      
       <ToolTips tooltip="Set Your Preferences Here">
         <button
           className="w-full px-4 py-2 rounded-lg border border-gray-400 bg-[#3330BA] text-white font-inter text-[12px] font-medium sm:text-sm"
@@ -230,6 +237,7 @@ const renderFilterButton = (filterValue, filterType) => {
         </button>
       </ToolTips>
     </div>
+  </div>
   </div>
 ) : (
   <div className="flex justify-between mt-[1rem]">
