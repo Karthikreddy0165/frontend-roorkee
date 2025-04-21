@@ -4,9 +4,11 @@ import Categories from "./Categories";
 import PageContext from "@/Context/PageContext";
 import FilterContext from "@/Context/FilterContext";
 import { useTabContext } from "@/Context/TabContext";
+import { useSort } from '@/Context/SortContext';
 // import Scholarships from "./Scholarships";
 
 export default function Scholarships() {
+  const { ordering } = useSort();
   const { query } = useTabContext();
   const { states, departments, beneficiaries, sponsoredBy, profileFieldData } =
     useContext(FilterContext);
@@ -19,7 +21,7 @@ export default function Scholarships() {
     const fetchState = async () => {
       try {
         setDataOfApi({});
-        let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
+        let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/multi-state-departments/?limit=10&page=${currentPage}&ordering=${ordering}`;
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -61,7 +63,7 @@ export default function Scholarships() {
     };
 
     fetchState();
-  }, [query, currentPage, sponsoredBy, states, departments, beneficiaries]);
+  }, [query, currentPage, sponsoredBy, states, departments, beneficiaries, ordering]);
 
   if (
     dataOfApi.count === 0 &&

@@ -4,8 +4,9 @@ import { useTabContext } from "@/Context/TabContext";
 import { useContext, useEffect, useState } from "react";
 import Categories from "../Categories";
 import JobCount from "./JobCount";
-
+import { useSort } from '@/Context/SortContext';
 export default function JobOpenings() {
+  const { ordering } = useSort();
   const { searchQuery } = useTabContext();
   const { states, departments, beneficiaries, sponsoredBy, profileFieldData } =
     useContext(FilterContext);
@@ -18,7 +19,7 @@ export default function JobOpenings() {
     const fetchState = async () => {
       try {
         setDataOfApi({});
-        let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
+        let url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/multi-state-departments/?limit=10&page=${currentPage}&ordering=${ordering}`;
 
         // const cachedData = localStorage.getItem(url);
         // if (cachedData) {
@@ -72,6 +73,7 @@ export default function JobOpenings() {
     states,
     departments,
     beneficiaries,
+    ordering
   ]);
 
   // console.log(dataOfApi,'shemesdata');
