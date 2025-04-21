@@ -23,6 +23,7 @@ import { data } from "autoprefixer";
 import HowToApply from "./Modals/HowToApply.js";
 import { toast } from "react-toastify";
 import ShareModal from "./ShareModal.jsx";
+import * as chrono from 'chrono-node';
 
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const router = useRouter();
@@ -452,6 +453,73 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       setBeneficiaries((prev) => [...prev, "SC"]);
   };
 
+  function getSchemeTag(validUptoRaw) {
+    const dateStr = extractDate(validUptoRaw);
+    if (!dateStr) return null;
+  
+    const date = new Date(dateStr); // ✅ convert string to Date
+    const today = new Date();
+  
+    // Set time to 00:00:00 to avoid partial-day issues
+    date.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+    
+    const diffInDays = Math.floor((date - today) / (1000 * 60 * 60 * 24));
+  
+    if (diffInDays < 0) return { label: 'Archived', type: 'archived' };
+    if (diffInDays <= 7) return { label: `Expiring in ${diffInDays} days`, type: 'expiring' };
+  
+    return null;
+  }
+  
+  function SchemeTag({ validUpto }) {
+    const tag = getSchemeTag(validUpto);
+    if (!tag) return null;
+  
+    const tagStyle = {
+      archived: 'bg-red-100 text-red-700 border-red-300',
+      expiring: 'bg-yellow-100 text-yellow-800 border-yellow-300',
+    };
+  
+    return (
+      <span
+        className={`ml-4 inline-block px-2 py-1 text-xs font-semibold border rounded-full ${tagStyle[tag.type]}`}
+      >
+        {tag.label}
+      </span>
+    );
+  }
+
+  function extractDate(input, format = 'iso') {
+    if (!input || typeof input !== 'string') return null;
+  
+    // Use chrono-node for accurate fuzzy parsing
+    const chronoDate = chrono.parseDate(input);
+    if (chronoDate && !isNaN(chronoDate.getTime())) {
+      return formatDate(chronoDate, format);
+    }
+  
+    return null;
+  }
+  
+  function formatDate(date, format) {
+    switch (format) {
+      case 'indian':
+        return date.toLocaleDateString('en-IN');
+      case 'readable':
+        return date.toLocaleDateString('en-GB', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+        });
+      case 'iso':
+      default:
+        return date.toISOString().split('T')[0];
+    }
+  }
+  
+  
+
   return (
     <>
       {/* We have found {378} schemes based on your profile */}
@@ -472,14 +540,16 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                 }}
               >
                 <div onClick={() => handleClick(item.id)}>
-                  <div className="gap-[12px] pt-[16px] pd-[16px] w-[140px] md:w-full">
+                  <div className="gap-[12px] pt-[16px] pd-[16px] sm:w-full">
                     <p
                       className="font-inter text-[16px] sm:text-[18px] leading-[21.6px] cursor-pointer font-semibold mb-[10px] line-clamp-2 text-gray-700"
                       role="button"
                       tabIndex="0"
                     >
                       {item.title}
+                      <SchemeTag validUpto={item.valid_upto} />
                     </p>
+                    
                     <p
                       className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[10px] line-clamp-2"
                       onClick={() => handleClick(item.id)}
@@ -589,6 +659,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
         {isModalOpen && selectedScheme && (
           <ApplyModal
             isOpen={isModalOpen}
+            tag={getSchemeTag(selectedScheme.valid_upto)}
             onRequestClose={() => {
               setIsModalOpen(false);
               setSelectedScheme(null);
