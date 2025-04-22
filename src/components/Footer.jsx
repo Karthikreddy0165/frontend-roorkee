@@ -329,9 +329,9 @@ const Footer = () => {
               <h4 className="text-xl font-semibold mb-4 text-[#F58220]">
                 Contact Us
               </h4>
-              <div className="space-y-2 text-white">
-                <div className="mt-4">
-                  <h3 className="font-semibold">Contact :</h3>
+              <div className="space-y-2 text-white grid grid-cols-2  gap-x-48 sm:grid-cols-1 sm:gap-8">
+                <div className="mt-2">
+                  <h3 className="font-semibold">Contact</h3>
                   {meta.email && (
                     <p className="pl-4 hover:text-[#F58220]">
                       <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${meta.email}`}>{meta.email}</a>
@@ -353,7 +353,7 @@ const Footer = () => {
                 </div>
 
                 <div className="mt-4">
-                  <h3 className="font-semibold">Address :</h3>
+                  <h3 className="font-semibold">Address</h3>
                   <p className="pl-4">{meta.address_line1}</p>
                   <p className="pl-4">{meta.address_line2}</p>
                   <p className="pl-4">

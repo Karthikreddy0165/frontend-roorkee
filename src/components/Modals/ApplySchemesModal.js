@@ -282,8 +282,8 @@ const handleReportSubmit = async (e) => {
     if (!tag) return null;
   
     const tagStyle = {
-      archived: 'bg-red-100 text-red-700 border-red-300',
-      expiring: 'bg-yellow-100 text-yellow-800 border-yellow-300',
+      archived: 'bg-gray-100 text-gray-700 border-gray-300',
+      expiring: 'bg-red-100 text-red-700 border-red-300',   
     };
   
     return (

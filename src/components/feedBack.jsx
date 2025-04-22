@@ -133,6 +133,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
             </div>
             <button
               className="absolute top-3 right-0 p-[18px] text-lg hover:text-red-500"
+               data-icon="close"
               onClick={onRequestClose}
             >
               <IoMdClose className="w-[24px] h-[24px]" />
@@ -205,6 +206,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
         {/* Submit and Cancel Buttons */}
         <div className="flex justify-center items-centre p-5 h-full">
           <button
+            data-cy="feedback-submit"
             onClick={handleSubmitFeedback}
             className=" px-4 py-2 rounded-lg text-[13px] bg-[#3330BA] text-white hover:bg-blue-700"
             disabled={loading}

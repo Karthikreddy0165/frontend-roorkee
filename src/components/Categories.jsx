@@ -477,8 +477,8 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     if (!tag) return null;
   
     const tagStyle = {
-      archived: 'bg-red-100 text-red-700 border-red-300',
-      expiring: 'bg-yellow-100 text-yellow-800 border-yellow-300',
+      archived: 'bg-gray-100 text-gray-700 border-gray-300',
+      expiring: 'bg-red-100 text-red-700 border-red-300',      
     };
   
     return (
@@ -490,34 +490,64 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
     );
   }
 
-  function extractDate(input, format = 'iso') {
-    if (!input || typeof input !== 'string') return null;
-  
-    // Use chrono-node for accurate fuzzy parsing
-    const chronoDate = chrono.parseDate(input);
-    if (chronoDate && !isNaN(chronoDate.getTime())) {
-      return formatDate(chronoDate, format);
-    }
-  
-    return null;
+
+function extractDate(input, format = 'iso') {
+  console.log("date",input)
+  if (!input || typeof input !== 'string') return null;
+
+  const invalidPhrases = [
+    'not available',
+    'not specified',
+    'present',
+    'null',
+    '-none-',
+    'till the scheme is amended or terminated',
+    '18 years of age',
+    'ongoing',
+  ];
+
+  const cleaned = input.trim().toLowerCase();
+  if (invalidPhrases.includes(cleaned)) return null;
+
+  // Patterns for structured formats (just to check if it’s likely a date)
+  const datePatterns = [
+    /\b\d{4}-\d{2}-\d{2}\b/,                                               // 2022-09-30
+    /\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/,                               // 20/12/2022 or 20-12-2022
+    /\b\d{1,2}[ ]?(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*[ ,\-]?\d{2,4}\b/i, // 20 Dec 2022
+    /\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{4}\b/i, // December 2022
+    /\b\d{4}\b/                                                           // Just a year
+  ];
+
+  const looksLikeDate = datePatterns.some(pattern => pattern.test(input));
+  console.log("looksLikeDate",looksLikeDate)
+  if (!looksLikeDate) return null;
+
+  let parsedDate = chrono.parseDate(input);
+  if (!parsedDate && /^\d{4}$/.test(input.trim())) {
+    parsedDate = new Date(Number(input.trim()), 11, 31); // Dec 31st of the year
   }
-  
-  function formatDate(date, format) {
-    switch (format) {
-      case 'indian':
-        return date.toLocaleDateString('en-IN');
-      case 'readable':
-        return date.toLocaleDateString('en-GB', {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-        });
-      case 'iso':
-      default:
-        return date.toISOString().split('T')[0];
-    }
+  if (!parsedDate || isNaN(parsedDate.getTime())) return null;
+  console.log("parsedDate",parsedDate)
+  console.log("transformed date",formatDate(parsedDate, format))
+  return formatDate(parsedDate, format);
+}
+
+function formatDate(date, format) {
+  switch (format) {
+    case 'indian':
+      return date.toLocaleDateString('en-IN');
+    case 'readable':
+      return date.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      });
+    case 'iso':
+    default:
+      return date.toISOString().split('T')[0];
   }
-  
+}
+
   
 
   return (
