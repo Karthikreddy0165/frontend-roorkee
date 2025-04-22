@@ -119,13 +119,13 @@ const Footer = () => {
             Empower Hub
           </h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2  lg:grid-cols-4 gap-8">
             {/* Logo and Description - Desktop */}
             <div className="hidden sm:block">
               <h1 className="text-3xl font-semibold mb-4 text-[#F58220]">
                 Empower Hub
               </h1>
-              <h1 className="text-lg font-bold mb-4 text-white">Follow Us</h1>
+              { (meta.facebook_url || meta.instagram_url || meta.linkedin_url || meta.twitter_url )  ? <h1 className="text-lg font-bold mb-4 text-white">Follow Us</h1> : ''}
 
               <div className="flex space-x-4">
                 {meta.facebook_url && (
@@ -329,26 +329,23 @@ const Footer = () => {
               <h4 className="text-xl font-semibold mb-4 text-[#F58220]">
                 Contact Us
               </h4>
-              <div className="space-y-2 text-white">
-                <h3 className="font-semibold">{meta.name || "Company Name"}</h3>
-                <p className="text-sm">{meta.tagline}</p>
-
-                <div className="mt-4">
+              <div className="space-y-2 text-white grid grid-cols-2  gap-x-48 sm:grid-cols-1 sm:gap-8">
+                <div className="mt-2">
                   <h3 className="font-semibold">Contact</h3>
                   {meta.email && (
-                    <p className="hover:text-[#F58220]">
-                      <a href={`mailto:${meta.email}`}>{meta.email}</a>
+                    <p className="pl-4 hover:text-[#F58220]">
+                      <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${meta.email}`}>{meta.email}</a>
                     </p>
                   )}
                   {meta.phone && (
-                    <p className="hover:text-[#F58220]">
+                    <p className=" pl-4 hover:text-[#F58220]">
                       <a href={`tel:${meta.phone}`}>{meta.phone}</a>
                     </p>
                   )}
                   {meta.support_email && (
-                    <p className="hover:text-[#F58220]">
+                    <p className=" pl-4 hover:text-[#F58220]">
                       Support:{" "}
-                      <a href={`mailto:${meta.support_email}`}>
+                      <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${meta.support_email}`}>
                         {meta.support_email}
                       </a>
                     </p>
@@ -357,12 +354,12 @@ const Footer = () => {
 
                 <div className="mt-4">
                   <h3 className="font-semibold">Address</h3>
-                  <p>{meta.address_line1}</p>
-                  <p>{meta.address_line2}</p>
-                  <p>
+                  <p className="pl-4">{meta.address_line1}</p>
+                  <p className="pl-4">{meta.address_line2}</p>
+                  <p className="pl-4">
                     {meta.city}, {meta.state} {meta.postal_code}
                   </p>
-                  <p>{meta.country}</p>
+                  <p className="pl-4" >{meta.country}</p>
                 </div>
               </div>
             </div>

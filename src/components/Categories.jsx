@@ -23,6 +23,7 @@ import { data } from "autoprefixer";
 import HowToApply from "./Modals/HowToApply.js";
 import { toast } from "react-toastify";
 import ShareModal from "./ShareModal.jsx";
+import * as chrono from 'chrono-node';
 
 export default function Categories({ ffff, dataFromApi, totalPages }) {
   const router = useRouter();
@@ -452,6 +453,103 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
       setBeneficiaries((prev) => [...prev, "SC"]);
   };
 
+  function getSchemeTag(validUptoRaw) {
+    const dateStr = extractDate(validUptoRaw);
+    if (!dateStr) return null;
+  
+    const date = new Date(dateStr); // ✅ convert string to Date
+    const today = new Date();
+  
+    // Set time to 00:00:00 to avoid partial-day issues
+    date.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+    
+    const diffInDays = Math.floor((date - today) / (1000 * 60 * 60 * 24));
+  
+    if (diffInDays < 0) return { label: 'Archived', type: 'archived' };
+    if (diffInDays <= 7) return { label: `Expiring in ${diffInDays} days`, type: 'expiring' };
+  
+    return null;
+  }
+  
+  function SchemeTag({ validUpto }) {
+    const tag = getSchemeTag(validUpto);
+    if (!tag) return null;
+  
+    const tagStyle = {
+      archived: 'bg-gray-100 text-gray-700 border-gray-300',
+      expiring: 'bg-red-100 text-red-700 border-red-300',      
+    };
+  
+    return (
+      <span
+        className={`ml-4 inline-block px-2 py-1 text-xs font-semibold border rounded-full ${tagStyle[tag.type]}`}
+      >
+        {tag.label}
+      </span>
+    );
+  }
+
+
+function extractDate(input, format = 'iso') {
+  console.log("date",input)
+  if (!input || typeof input !== 'string') return null;
+
+  const invalidPhrases = [
+    'not available',
+    'not specified',
+    'present',
+    'null',
+    '-none-',
+    'till the scheme is amended or terminated',
+    '18 years of age',
+    'ongoing',
+  ];
+
+  const cleaned = input.trim().toLowerCase();
+  if (invalidPhrases.includes(cleaned)) return null;
+
+  // Patterns for structured formats (just to check if it’s likely a date)
+  const datePatterns = [
+    /\b\d{4}-\d{2}-\d{2}\b/,                                               // 2022-09-30
+    /\b\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}\b/,                               // 20/12/2022 or 20-12-2022
+    /\b\d{1,2}[ ]?(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*[ ,\-]?\d{2,4}\b/i, // 20 Dec 2022
+    /\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{4}\b/i, // December 2022
+    /\b\d{4}\b/                                                           // Just a year
+  ];
+
+  const looksLikeDate = datePatterns.some(pattern => pattern.test(input));
+  console.log("looksLikeDate",looksLikeDate)
+  if (!looksLikeDate) return null;
+
+  let parsedDate = chrono.parseDate(input);
+  if (!parsedDate && /^\d{4}$/.test(input.trim())) {
+    parsedDate = new Date(Number(input.trim()), 11, 31); // Dec 31st of the year
+  }
+  if (!parsedDate || isNaN(parsedDate.getTime())) return null;
+  console.log("parsedDate",parsedDate)
+  console.log("transformed date",formatDate(parsedDate, format))
+  return formatDate(parsedDate, format);
+}
+
+function formatDate(date, format) {
+  switch (format) {
+    case 'indian':
+      return date.toLocaleDateString('en-IN');
+    case 'readable':
+      return date.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      });
+    case 'iso':
+    default:
+      return date.toISOString().split('T')[0];
+  }
+}
+
+  
+
   return (
     <>
       {/* We have found {378} schemes based on your profile */}
@@ -472,14 +570,16 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
                 }}
               >
                 <div onClick={() => handleClick(item.id)}>
-                  <div className="gap-[12px] pt-[16px] pd-[16px] w-[140px] md:w-full">
+                  <div className="gap-[12px] pt-[16px] pd-[16px] sm:w-full">
                     <p
                       className="font-inter text-[16px] sm:text-[18px] leading-[21.6px] cursor-pointer font-semibold mb-[10px] line-clamp-2 text-gray-700"
                       role="button"
                       tabIndex="0"
                     >
                       {item.title}
+                      <SchemeTag validUpto={item.valid_upto} />
                     </p>
+                    
                     <p
                       className="font-inter text-[14px] opacity-60 leading-[21.6px] mb-[10px] line-clamp-2"
                       onClick={() => handleClick(item.id)}
@@ -589,6 +689,7 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
         {isModalOpen && selectedScheme && (
           <ApplyModal
             isOpen={isModalOpen}
+            tag={getSchemeTag(selectedScheme.valid_upto)}
             onRequestClose={() => {
               setIsModalOpen(false);
               setSelectedScheme(null);

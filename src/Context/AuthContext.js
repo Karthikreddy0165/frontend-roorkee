@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const login = (token, user) => {
     setAuthState({ token, user });
     localStorage.setItem("token", token);
-    const decodedToken = JSON.parse(atob(token.split(".")[1])); 
+    const decodedToken = JSON?.parse(atob(token?.split(".")[1])); 
   const expiryTime = decodedToken.exp * 1000; 
 
   localStorage.setItem("sessionExpiry", expiryTime);
