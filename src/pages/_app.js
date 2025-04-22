@@ -9,6 +9,7 @@ import { PageProvider } from "@/Context/PageContext";
 import { FilterProvider } from "@/Context/FilterContext";
 import { SchemeProvider } from "@/Context/schemeContext";
 import { BookmarkProvider } from "@/Context/BookmarkContext";
+import { SortProvider } from '@/Context/SortContext';
 import { PreferenceProvider } from "@/Context/preferenceContext";
 import { PrivacyProvider } from '@/Context/PrivacyContext';
 import RedirectHandler from "@/components/ComponentsUtils/RedirectHandler";
@@ -126,7 +127,7 @@ export default function App({ Component, pageProps }) {
           </div>
         </div>
       )}
-
+    <SortProvider>
       <PreferenceProvider>
         <FilterProvider>
           <PageProvider>
@@ -156,6 +157,7 @@ export default function App({ Component, pageProps }) {
           </PageProvider>
         </FilterProvider>
       </PreferenceProvider>
+    </SortProvider>
     </>
   );
 }
