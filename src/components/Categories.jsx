@@ -492,7 +492,6 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
 
 
 function extractDate(input, format = 'iso') {
-  console.log("date",input)
   if (!input || typeof input !== 'string') return null;
 
   const invalidPhrases = [
@@ -519,7 +518,7 @@ function extractDate(input, format = 'iso') {
   ];
 
   const looksLikeDate = datePatterns.some(pattern => pattern.test(input));
-  console.log("looksLikeDate",looksLikeDate)
+
   if (!looksLikeDate) return null;
 
   let parsedDate = chrono.parseDate(input);
@@ -527,8 +526,7 @@ function extractDate(input, format = 'iso') {
     parsedDate = new Date(Number(input.trim()), 11, 31); // Dec 31st of the year
   }
   if (!parsedDate || isNaN(parsedDate.getTime())) return null;
-  console.log("parsedDate",parsedDate)
-  console.log("transformed date",formatDate(parsedDate, format))
+
   return formatDate(parsedDate, format);
 }
 
