@@ -88,7 +88,7 @@ const Footer = () => {
   useEffect(() => {
     const fetchMeta = async () => {
       try {
-        const res = await fetch("http://43.204.236.103:8000/api/company-meta/");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/company-meta/`);
         const json = await res.json();
         setMeta(json);
       } catch (err) {
