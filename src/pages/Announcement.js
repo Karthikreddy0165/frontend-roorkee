@@ -10,7 +10,7 @@ const AnnouncementPopup = () => {
     const fetchAnnouncement = async () => {
       try {
         const response = await fetch(
-          "http://43.204.236.103:8000/api/announcements/"
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/announcements/`
         );
         const data = await response.json();
         const activeAnnouncement = data.find((a) => a.is_active);
