@@ -68,7 +68,7 @@ export default function Saved() {
         // console.log(data, "saveddata")
         setDataOfApi(data);
         setTotalPages(Math.ceil(data.count / 10));
-        console.log("Data fetched and state updated:", data);
+        // console.log("Data fetched and state updated:", data);
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }

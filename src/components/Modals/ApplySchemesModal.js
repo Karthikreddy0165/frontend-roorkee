@@ -60,12 +60,12 @@ const ApplyModal = ({
         try {
           
           const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/proxy/?url=${scheme.scheme_link}`);
-            console.log(response, "I am the res")
+            // console.log(response, "I am the res")
             if (response.status === 500 || response.status === 404 || !response.ok) {
                 setIsError(true);
             }
         } catch (error) {
-          console.log(error, "I am the err")
+          console.error(error, "I am the err")
             setIsError(true);
         }
     };
@@ -116,7 +116,7 @@ const ApplyModal = ({
       }
 
       const data = await response.json();
-      console.log("Event logged successfully:", data);
+      // console.log("Event logged successfully:", data);
     } catch (error) {
       console.error("Error logging event:", error);
     }

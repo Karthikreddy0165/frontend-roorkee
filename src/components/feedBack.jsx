@@ -90,7 +90,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
 
   if (!isOpen) return null;
 
-  console.log(reportFormData);
+  // console.log(reportFormData);
 
   return (
     <div className="fixed inset-0 z-50 bg-gray-800 bg-opacity-50 flex justify-center items-center">
