@@ -126,7 +126,7 @@ const renderFilterButton = (filterValue, filterType) => {
     }
   };
   const handleSortChange = (sortBy) => {
-    console.log('Sort selected:', sortBy);
+    // console.log('Sort selected:', sortBy);
   };
   const logUserEvent = async (eventType, schemeId = null, details = {}) => {
     const eventBody = {
@@ -153,7 +153,7 @@ const renderFilterButton = (filterValue, filterType) => {
       }
 
       const data = await response.json();
-      console.log("Event logged successfully:", data);
+      // console.log("Event logged successfully:", data);
     } catch (error) {
       console.error("Error logging event:", error);
     }

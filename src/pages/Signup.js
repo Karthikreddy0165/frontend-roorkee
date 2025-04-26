@@ -122,7 +122,7 @@ const CreateAcc01 = () => {
         localStorage.setItem("token", result.access);
         login(result.access, user);
 
-        console.log("Login successful. Token received:", result.access);
+        // console.log("Login successful. Token received:", result.access);
 
         // Show success message and redirect
         setShowSuccess(true);

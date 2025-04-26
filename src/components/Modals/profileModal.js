@@ -152,7 +152,7 @@ const ProfileModal = ({ onClose }) => {
 
 useEffect(() => {
     const filledFields = Object.values(profileData).filter((value) =>typeof value === 'string' && value.trim() !== "").length;
-    console.log(profileData)
+    // console.log(profileData)
 
     const percentage = Math.round((filledFields / fieldsCount) * 100);
     setProgress(percentage);
@@ -236,7 +236,7 @@ useEffect(() => {
 
   // console.log(sentEmailText)
 
-console.log(" this is emaildata", emailData)
+// console.log(" this is emaildata", emailData)
   const renderField = (field) => {
     switch (field.type) {
       case "choice":

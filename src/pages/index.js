@@ -81,7 +81,7 @@ const App = () => {
 
     fetchCategories();
   }, [router.query, setCategories ]);
-  console.log(displayText, "displayText")
+  // console.log(displayText, "displayText")
 
   const firstCategory = categories.length > 0 ? categories[0]?.name : "opportunity";
   

@@ -70,7 +70,7 @@ export default function Schemes() {
     fetchState();
   }, [query, currentPage, sponsoredBy, states, departmentIds, beneficiaries, ordering]);
 
-  console.log(dataOfApi);
+  // console.log(dataOfApi);
 
   if (error) {
     return <div className="text-center text-red-500">{error}</div>;
