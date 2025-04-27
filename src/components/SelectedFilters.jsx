@@ -5,7 +5,6 @@ import ToolTips from "./ComponentsUtils/tooltips";
 import PreferenceContext from "@/Context/preferenceContext";
 import { useRouter } from "next/router";
 import { useProfile } from "@/Context/ProfileContext";
-import SortSelector from '@/components/SortingOptions'
 
 function SelectedFilters() {
   const [showAllFilters, setShowAllFilters] = useState(false);
@@ -223,9 +222,6 @@ const renderFilterButton = (filterValue, filterType) => {
     
     {/* Right side with preference button - fixed width */}
     <div className="flex justify-center items-center gap-20">
-    <div className="sorting">
-      <SortSelector onSortChange={handleSortChange}/>
-      </div>
     <div className="flex-shrink-0 w-[140px] z-10">
       
       <ToolTips tooltip="Set Your Preferences Here">
@@ -252,7 +248,6 @@ const renderFilterButton = (filterValue, filterType) => {
       </div>
     </div>
     <div className="sorting">
-    <SortSelector onSortChange={handleSortChange}/>
     </div>
     <div className="flex-shrink-0 w-[140px] z-10">
       <ToolTips tooltip={`${isPreferenceApplied ? "Clear your preferences" : "Apply your preference"}`}>

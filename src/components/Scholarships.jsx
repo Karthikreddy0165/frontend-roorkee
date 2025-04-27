@@ -5,6 +5,7 @@ import PageContext from "@/Context/PageContext";
 import FilterContext from "@/Context/FilterContext";
 import { useTabContext } from "@/Context/TabContext";
 import { useSort } from '@/Context/SortContext';
+import SortSelector from '@/components/SortingOptions'
 // import Scholarships from "./Scholarships";
 
 export default function Scholarships() {
@@ -78,7 +79,12 @@ export default function Scholarships() {
 
   return (
     <div className="bg-white font-sans">
-      <ScholarshipCount dataFromApi={dataOfApi} />
+      <div className="test flex justify-between items-center">
+          <ScholarshipCount dataFromApi={dataOfApi} />
+          <div className="sorting">
+            <SortSelector />
+          </div>
+        </div>
       <Categories
         ffff={"scholarship"}
         dataFromApi={dataOfApi}

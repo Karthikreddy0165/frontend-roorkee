@@ -8,6 +8,7 @@ import Footer from "./Footer";
 import { data } from "autoprefixer";
 import { useRouter } from "next/router.js";
 import { useSort } from '@/Context/SortContext';
+import SortSelector from '@/components/SortingOptions'
 export default function Schemes() {
   const { ordering } = useSort();
   const { query } = useTabContext();
@@ -87,7 +88,13 @@ export default function Schemes() {
   return (
     <>
       <div className="bg-white font-sans">
-        <SchemeCount dataFromApi={dataOfApi} />
+        <div className="test flex justify-between items-center">
+          <SchemeCount dataFromApi={dataOfApi} />
+          <div className="sorting">
+            <SortSelector />
+          </div>
+        </div>
+        
         <Categories
           ffff={"schemes"}
           dataFromApi={dataOfApi}
