@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import FilterContext from "@/Context/FilterContext";
+import SortSelector from '@/components/SortingOptions'
 
 function JobCount(dataFromApi) {
   const { states, departments, beneficiaries, sponsoredBy } =

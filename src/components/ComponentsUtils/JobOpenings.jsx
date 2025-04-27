@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import Categories from "../Categories";
 import JobCount from "./JobCount";
 import { useSort } from '@/Context/SortContext';
+import SortSelector from '@/components/SortingOptions'
 export default function JobOpenings() {
   const { ordering } = useSort();
   const { searchQuery } = useTabContext();
@@ -90,7 +91,12 @@ export default function JobOpenings() {
 
   return (
     <div className="bg-white font-sans">
-      <JobCount dataFromApi={dataOfApi} />
+      <div className="test flex justify-between items-center">
+          <JobCount dataFromApi={dataOfApi} />
+          <div className="sorting">
+            <SortSelector />
+          </div>
+        </div>
       <Categories
         ffff={"jobopening"}
         dataFromApi={dataOfApi}
