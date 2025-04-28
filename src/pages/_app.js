@@ -73,7 +73,7 @@ export default function App({ Component, pageProps }) {
     <>
       {/* Add a Head tag for global metadata */}
       <Head>
-        <title>launchpad.com</title>
+        <title>Empower Hub</title>
 <link rel="icon" href="/_next/static/media/favicon.e9847d9a.ico" type="image/x-icon" />      </Head>
 
       <ToastContainer />
