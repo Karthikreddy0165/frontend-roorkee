@@ -25,6 +25,8 @@ const App = () => {
   const [displayText, setDisplayText] = useState("");
   const [categories, setCategories] = useState([]);
 
+  console.log(process.env.NEXT_PUBLIC_API_BASE_URL)
+
   const handleClickGetStarted = () => {
     router.push("/login");
   };

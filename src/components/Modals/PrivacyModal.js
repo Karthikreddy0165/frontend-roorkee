@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import {usePrivacy} from '../../Context/PrivacyContext'
+import { useRouter } from "next/router";
 
 const PrivacyModal = ({ isOpen, onClose }) => {
   const 
@@ -13,7 +14,7 @@ const PrivacyModal = ({ isOpen, onClose }) => {
     handleRejectAll,
     handleSubmitChoices
   } = usePrivacy();
-
+  const router = useRouter()
   if (!isOpen) return null;
 
 
@@ -107,14 +108,12 @@ const PrivacyModal = ({ isOpen, onClose }) => {
           </div>
           <p className="text-sm text-gray-600 mt-4">
             For more information, please read our{" "}
-            <a
-              href="/privacy-policy"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+            onClick={()=>    router.push("/privacy-policy")}
               className="text-[#2B3E80] font-medium hover:underline"
             >
               Privacy Policy
-            </a>
+            </button>
             .
           </p>
 
