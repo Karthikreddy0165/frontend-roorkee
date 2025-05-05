@@ -313,7 +313,7 @@ function SelectedFilters() {
           </button>
         </div>
       </div>
-      <div className="flex-shrink-0 w-[140px] z-0">
+      <div className="flex-shrink-0 w-[140px] z-10">
         {renderPreferenceButton()}
       </div>
     </div>

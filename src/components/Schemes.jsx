@@ -7,8 +7,10 @@ import SchemeCount from "./ComponentsUtils/SchemeCount";
 import Footer from "./Footer";
 import { data } from "autoprefixer";
 import { useRouter } from "next/router.js";
-
+import { useSort } from '@/Context/SortContext';
+import SortSelector from '@/components/SortingOptions'
 export default function Schemes() {
+  const { ordering } = useSort();
   const { query } = useTabContext();
   const { states, departments, beneficiaries, sponsoredBy, profileFieldData } =
     useContext(FilterContext);
@@ -31,7 +33,7 @@ export default function Schemes() {
       try {
         setError(null);
         setDataOfApi({});
-        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/multi-state-departments/?limit=10&page=${currentPage}`;
+        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/schemes/multi-state-departments/?limit=10&page=${currentPage}&ordering=${ordering}`;
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -67,9 +69,9 @@ export default function Schemes() {
     };
 
     fetchState();
-  }, [query, currentPage, sponsoredBy, states, departmentIds, beneficiaries]);
+  }, [query, currentPage, sponsoredBy, states, departmentIds, beneficiaries, ordering]);
 
-  console.log(dataOfApi);
+  // console.log(dataOfApi);
 
   if (error) {
     return <div className="text-center text-red-500">{error}</div>;
@@ -86,7 +88,13 @@ export default function Schemes() {
   return (
     <>
       <div className="bg-white font-sans">
-        <SchemeCount dataFromApi={dataOfApi} />
+        <div className="test flex justify-between items-center">
+          <SchemeCount dataFromApi={dataOfApi} />
+          <div className="sorting">
+            <SortSelector />
+          </div>
+        </div>
+        
         <Categories
           ffff={"schemes"}
           dataFromApi={dataOfApi}

@@ -19,8 +19,7 @@ const ApplyModal = ({
   isOpen,
   onRequestClose,
   scheme,
-
-  
+  tag,
   activeTab
 }) => {
   const [loading, setLoading] = useState(true);
@@ -61,12 +60,12 @@ const ApplyModal = ({
         try {
           
           const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/proxy/?url=${scheme.scheme_link}`);
-            console.log(response, "I am the res")
+            // console.log(response, "I am the res")
             if (response.status === 500 || response.status === 404 || !response.ok) {
                 setIsError(true);
             }
         } catch (error) {
-          console.log(error, "I am the err")
+          console.error(error, "I am the err")
             setIsError(true);
         }
     };
@@ -117,7 +116,7 @@ const ApplyModal = ({
       }
 
       const data = await response.json();
-      console.log("Event logged successfully:", data);
+      // console.log("Event logged successfully:", data);
     } catch (error) {
       console.error("Error logging event:", error);
     }
@@ -279,6 +278,22 @@ const handleReportSubmit = async (e) => {
 
   if (!isOpen) return null;
 
+  function SchemeTag({ tag }) {
+    if (!tag) return null;
+  
+    const tagStyle = {
+      archived: 'bg-gray-100 text-gray-700 border-gray-300',
+      expiring: 'bg-red-100 text-red-700 border-red-300',   
+    };
+  
+    return (
+      <span
+        className={`ml-4 inline-block px-2 py-1 text-xs font-semibold border rounded-full ${tagStyle[tag.type]}`}
+      >
+        {tag.label}
+      </span>
+    );
+  }
 
 
   
@@ -308,7 +323,7 @@ const handleReportSubmit = async (e) => {
           <div className="flex flex-col items-start w-full py-[20px] overflow-hidden">
   {/* Title and Report Button */}
   <div className="flex items-center justify-between w-full flex-wrap ">
-    <h1 className="text-[18px] sm:text-[20px] font-bold mb-2 w-full sm:w-auto ">{scheme.title}</h1>
+    <h1 className="text-[18px] sm:text-[20px] font-bold mb-2 w-full sm:w-auto ">{scheme.title}<SchemeTag tag={tag} /></h1>
   </div>
 
   {/* Date and Report Button aligned */}
