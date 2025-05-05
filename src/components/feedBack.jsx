@@ -1,111 +1,178 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useAuth } from "@/Context/AuthContext";
 import SavedModal from "@/components/Modals/savedModal";
 import { IoMdClose } from "react-icons/io";
-import { FiAlertCircle } from "react-icons/fi";
+import { FiAlertCircle, FiUpload } from "react-icons/fi";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const FeedbackModal = ({ isOpen, onRequestClose }) => {
   const [rating, setRating] = useState(0);
+  const [feedbackType, setFeedbackType] = useState("general");
   const [reportFormData, setReportFormData] = useState({
     category: "",
     description: "",
+  });
+  const [missingSchemeData, setMissingSchemeData] = useState({
+    schemeName: "",
+    schemeLink: "",
+    description: "",
+    document: null,
+    documentPreview: null,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { authState } = useAuth();
 
-  // Handle form data changes
   const handleReportFormChange = (e) => {
     const { name, value } = e.target;
     setReportFormData({ ...reportFormData, [name]: value });
   };
 
-  // Handle rating change
+  const handleMissingSchemeChange = (e) => {
+    const { name, value } = e.target;
+    setMissingSchemeData({ ...missingSchemeData, [name]: value });
+  };
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        setError("File size should be less than 5MB");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setMissingSchemeData({
+          ...missingSchemeData,
+          document: file,
+          documentPreview: reader.result,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleRatingChange = (rating) => {
     setRating(rating);
   };
 
-  // Handle feedback submission
+  const handleClose = () => {
+    setRating(0);
+    setFeedbackType("general");
+    setReportFormData({ category: "", description: "" });
+    setMissingSchemeData({
+      schemeName: "",
+      schemeLink: "",
+      description: "",
+      document: null,
+      documentPreview: null,
+    });
+    setError(null);
+    onRequestClose();
+  };
+
   const handleSubmitFeedback = async () => {
-    const { category, description } = reportFormData;
-
-    if (rating === 0 || !category || !description) {
-      setError("Please provide a rating, category, and description.");
-      return;
-    }
-
     setLoading(true);
     setError(null);
 
     const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${authState.token}`);
 
-    const raw = JSON.stringify({
-      category,
-      description,
-    });
-
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/feedback/website-feedback/`,
-        requestOptions
-      );
+      if (feedbackType === "missingScheme") {
+        if (!missingSchemeData.schemeName || !missingSchemeData.description) {
+          setError("Please provide scheme name and description.");
+          return;
+        }
 
-      if (!response.ok) {
-        throw new Error("Failed to submit feedback.");
+        const formData = new FormData();
+        formData.append("schemeName", missingSchemeData.schemeName);
+        formData.append("schemeLink", missingSchemeData.schemeLink);
+        formData.append("description", missingSchemeData.description);
+        if (missingSchemeData.document) {
+          formData.append("document", missingSchemeData.document);
+        }
+
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/feedback/missing-scheme/`,
+          {
+            method: "POST",
+            headers: myHeaders,
+            body: formData,
+          }
+        );
+        if (!response.ok) throw new Error("Failed to submit missing scheme.");
+      } else {
+        if (
+          rating === 0 ||
+          !reportFormData.category ||
+          !reportFormData.description
+        ) {
+          setError("Please provide a rating, category, and description.");
+          return;
+        }
+
+        myHeaders.append("Content-Type", "application/json");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/feedback/website-feedback/`,
+          {
+            method: "POST",
+            headers: myHeaders,
+            body: JSON.stringify({
+              category: reportFormData.category,
+              description: reportFormData.description,
+              rating: rating,
+            }),
+          }
+        );
+        if (!response.ok) throw new Error("Failed to submit feedback.");
       }
 
-      // Clear form and close modal on success
-      setRating(0);
-
-      // Success toast notification
-      toast.success("Feedback recieved successfully", {
-        position: "top-right",
-        autoClose: 3000,
-      });
-
-      setReportFormData({ category: "", description: "" });
-      onRequestClose();
+      toast.success(
+        feedbackType === "missingScheme"
+          ? "Missing scheme suggestion submitted successfully"
+          : "Feedback received successfully",
+        { position: "top-right", autoClose: 3000 }
+      );
+      handleClose();
     } catch (err) {
-      // Error toast notification
-      toast.error("Failed to give feedback. Please try again later.", {
-        position: "top-right",
-        autoClose: 3000,
-      });
-      onRequestClose();
+      toast.error(
+        feedbackType === "missingScheme"
+          ? "Failed to submit missing scheme. Please try again later."
+          : "Failed to submit feedback. Please try again later.",
+        { position: "top-right", autoClose: 3000 }
+      );
     } finally {
       setLoading(false);
     }
   };
+  const handleClickLogo = () => {
+    router.push("/");
+  };
 
   if (!isOpen) return null;
 
-  console.log(reportFormData);
-
   return (
-    <div className="fixed inset-0 z-50 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-      <div className="relative bg-white rounded-lg w-[80%] max-w-md">
-        <div className="py-2 text-black flex items-center justify-between shadow-md">
-          {/* Left Section: Logo & Launchpad */}
-          <div className="flex items-center ">
-            <div className="sm:text-[16px] mt-2 font-semibold text-[#3431BB] text-sm hover:text-blue-700 cursor-pointer flex items-center  gap-2 ">
+    <div className="fixed inset-0 z-50 bg-gray-800 bg-opacity-50 flex justify-center items-center p-4">
+      <div className="relative bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        {/* Header */}
+
+        <div className="sticky top-0 bg-white z-10 p-6 pb-4 border-b border-gray-200">
+          {/* Logo and Close Button */}
+          <div className="flex justify-between items-center mb-4">
+            <div
+              className="flex items-center justify-center cursor-pointer"
+              onClick={handleClickLogo}
+            >
               <svg
-                width="200" // Adjusted to a more reasonable size
-                height="70" // Adjusted to maintain aspect ratio
-                viewBox="0 0 1528 681" // Keep original viewBox to maintain proportions
+                viewBox="0 0 1528 580"
                 fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-auto h-[40px] sm:h-[50px] md:h-[60px] lg:h-[60px] xl:h-[60px]"
+                preserveAspectRatio="xMidYMid meet"
               >
-                <rect x="1" width="1527" height="581" fill="white" />
+                <rect x="1" width="1527" height="500" fill="white" />
                 <path
                   d="M1354.95 384.112C1354.95 480.159 508.998 539.5 665.259 539.5C821.52 539.5 1473.5 519.159 1473.5 423.112C1473.5 327.065 1024.26 183 868 183C711.739 183 1354.95 288.065 1354.95 384.112Z"
                   fill="#008000"
@@ -132,85 +199,288 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
               </svg>
             </div>
             <button
-              className="absolute top-3 right-0 p-[18px] text-lg hover:text-red-500"
-              onClick={onRequestClose}
+              onClick={handleClose}
+              className="text-gray-500 hover:text-gray-700 transition-colors"
             >
-              <IoMdClose className="w-[24px] h-[24px]" />
+              <IoMdClose className="w-6 h-6" />
             </button>
           </div>
 
-          {/* Center Section: Profile */}
+          {/* Title and Feedback Type Selector */}
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-[#3330BA] mb-4">
+              {feedbackType === "missingScheme"
+                ? "Suggest a Missing Scheme"
+                : "Share Your Feedback"}
+            </h2>
 
-          {/* Right Section: Close Button */}
+            {/* Feedback type selector */}
+            <div className="flex justify-center gap-3">
+              <button
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  feedbackType === "general"
+                    ? "bg-[#3330BA] text-white shadow-md"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+                onClick={() => setFeedbackType("general")}
+              >
+                General Feedback
+              </button>
+              <button
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  feedbackType === "missingScheme"
+                    ? "bg-[#3330BA] text-white shadow-md"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+                onClick={() => setFeedbackType("missingScheme")}
+              >
+                Missing Scheme
+              </button>
+            </div>
+          </div>
         </div>
-        <h2 className="text-[20px] text-[#3330BA] font-bold mb-4 text-center mt-[1rem]">
-          Feedback Form
-        </h2>
-        {error && (
-          <div className="text-red-500 text-center text-sm mb-4">{error}</div>
-        )}
 
-        {/* Star Rating */}
-        <div className="flex justify-center p-[1rem] mb-4">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <svg
-              key={star}
-              className={`w-[40px] h-[40px] cursor-pointer ${
-                star <= rating ? "text-yellow-500" : "text-gray-300"
-              }`}
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              onClick={() => handleRatingChange(star)}
+        {/* Content */}
+        <div className="p-6">
+          {error && (
+            <div className="mb-6 p-3 bg-red-50 text-red-600 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
+
+          {feedbackType === "general" ? (
+            <>
+              {/* Star Rating */}
+              <div className="mb-8">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  How would you rate your experience?
+                </label>
+                <div className="flex justify-center gap-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => handleRatingChange(star)}
+                      className="focus:outline-none"
+                    >
+                      <svg
+                        className={`w-10 h-10 transition-transform hover:scale-110 ${
+                          star <= rating ? "text-yellow-400" : "text-gray-300"
+                        }`}
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path d="M10 15.27L16.18 19l-1.64-7.03L19 7.24l-7.19-.61L10 0 8.19 6.63 1 7.24l4.46 4.73L3.82 19z" />
+                      </svg>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Feedback Form */}
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Category
+                  </label>
+                  <select
+                    name="category"
+                    value={reportFormData.category}
+                    onChange={handleReportFormChange}
+                    required
+                    className="w-full text-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3330BA] focus:border-[#3330BA] transition-colors"
+                  >
+                    <option value="">Select a category</option>
+                    <option value="bug">Problem or Bug</option>
+                    <option value="improvement">
+                      Suggestion for New Feature
+                    </option>
+                    <option value="ui">Design or Usability Feedback</option>
+                    <option value="performance">
+                      Speed or Performance Issue
+                    </option>
+                    <option value="content">
+                      Incorrect or Outdated Information
+                    </option>
+                    <option value="other">Other (Not Listed Above)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Detailed Feedback
+                  </label>
+                  <textarea
+                    name="description"
+                    value={reportFormData.description}
+                    onChange={handleReportFormChange}
+                    required
+                    rows="5"
+                    placeholder="Please describe your feedback in detail..."
+                    className="w-full px-4 py-2 border text-black border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3330BA] focus:border-[#3330BA] transition-colors"
+                  />
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Missing Scheme Form */}
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Scheme Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="schemeName"
+                    value={missingSchemeData.schemeName}
+                    onChange={handleMissingSchemeChange}
+                    required
+                    placeholder="Official name of the scheme"
+                    className="w-full text-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3330BA] focus:border-[#3330BA] transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Scheme Link (if available)
+                  </label>
+                  <input
+                    type="url"
+                    name="schemeLink"
+                    value={missingSchemeData.schemeLink}
+                    onChange={handleMissingSchemeChange}
+                    placeholder="Official website or documentation link"
+                    className="w-full text-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3330BA] focus:border-[#3330BA] transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Description <span className="text-red-500">*</span>
+                  </label>
+                  <textarea
+                    name="description"
+                    value={missingSchemeData.description}
+                    onChange={handleMissingSchemeChange}
+                    required
+                    rows="5"
+                    placeholder="Describe the scheme, its benefits, eligibility criteria, etc."
+                    className="w-full px-4 py-2 border border-gray-300 text-black rounded-lg focus:ring-2 focus:ring-[#3330BA] focus:border-[#3330BA] transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Supporting Document (Optional)
+                  </label>
+                  <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xl">
+                    <div className="space-y-1 text-center">
+                      {missingSchemeData.documentPreview ? (
+                        <div className="flex flex-col items-center">
+                          {missingSchemeData.document.type.startsWith(
+                            "image"
+                          ) ? (
+                            <img
+                              src={missingSchemeData.documentPreview}
+                              alt="Preview"
+                              className="max-h-40 mb-3 rounded-lg"
+                            />
+                          ) : (
+                            <div className="bg-gray-100 p-4 rounded-lg mb-3">
+                              <FiUpload className="w-12 h-12 mx-auto text-gray-400" />
+                            </div>
+                          )}
+                          <p className="text-sm text-gray-600">
+                            {missingSchemeData.document.name}
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setMissingSchemeData({
+                                ...missingSchemeData,
+                                document: null,
+                                documentPreview: null,
+                              })
+                            }
+                            className="mt-2 text-sm text-red-600 hover:text-red-800"
+                          >
+                            Remove file
+                          </button>
+                        </div>
+                      ) : (
+                        <>
+                          <FiUpload className="mx-auto h-12 w-12 text-gray-400" />
+                          <div className="flex text-sm text-gray-600 justify-center">
+                            <label className="relative cursor-pointer bg-white rounded-md font-medium text-[#3330BA] hover:text-[#2a28a8] focus-within:outline-none">
+                              <span>Upload a file</span>
+                              <input
+                                type="file"
+                                accept=".pdf,.jpg,.jpeg,.png"
+                                onChange={handleFileUpload}
+                                className="sr-only"
+                              />
+                            </label>
+                            <p className="pl-1">or drag and drop</p>
+                          </div>
+                          <p className="text-xs text-gray-500">
+                            PDF, JPG, PNG up to 5MB
+                          </p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="sticky bottom-0 bg-white z-10 p-6 pt-4 border-t border-gray-200">
+          <div className="flex justify-end gap-3">
+            <button
+              onClick={handleClose}
+              disabled={loading}
+              className="px-6 py-2 rounded-lg text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
             >
-              <path d="M10 15.27L16.18 19l-1.64-7.03L19 7.24l-7.19-.61L10 0 8.19 6.63 1 7.24l4.46 4.73L3.82 19z" />
-            </svg>
-          ))}
-        </div>
-
-        {/* Feedback Form */}
-        <div className="mb-4 pt-[1rem] px-5 pb-[1rem]">
-          <label className="block text-[13px] text-[#000000] font-semibold mb-2">
-            Select the category
-          </label>
-          <select
-            name="category"
-            value={reportFormData.category}
-            onChange={handleReportFormChange}
-            required
-            className="w-full p-2 border text-sm rounded-md text-[#000000]"
-          >
-            <option value="">Select Category</option>
-            <option value="bug">Issue</option>
-            <option value="improvement">Improvement</option>
-            <option value="general">General</option>
-          </select>
-        </div>
-
-        <div className="mb-4 px-5">
-          <label className="block text-[13px] text-[#000000] font-semibold mb-2">
-            Please write your feedback below. 
-          </label>
-          <textarea
-            name="description"
-            value={reportFormData.description}
-            onChange={handleReportFormChange}
-            required
-            rows="4"
-            placeholder="Here is your answer..."
-            className="w-full p-2 border rounded-md text-[#000000]"
-          />
-        </div>
-
-        {/* Submit and Cancel Buttons */}
-        <div className="flex justify-center items-centre p-5 h-full">
-          <button
-            onClick={handleSubmitFeedback}
-            className=" px-4 py-2 rounded-lg text-[13px] bg-[#3330BA] text-white hover:bg-blue-700"
-            disabled={loading}
-          >
-            {loading ? "Submitting..." : "Submit"}
-          </button>
+              Cancel
+            </button>
+            <button
+              onClick={handleSubmitFeedback}
+              disabled={loading}
+              className="px-6 py-2 rounded-lg text-sm font-medium text-white bg-[#3330BA] hover:bg-[#2a28a8] shadow-md transition-colors disabled:opacity-70"
+            >
+              {loading ? (
+                <span className="flex items-center justify-center">
+                  <svg
+                    className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Submitting...
+                </span>
+              ) : (
+                "Submit Feedback"
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -218,14 +488,15 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
 };
 
 export const FeedbackButtonFooter = () => {
-  const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   return (
     <>
-      <button className="text-lg" onClick={() => setModalOpen(true)}>
+      <button
+        onClick={() => setModalOpen(true)}
+        className="text-base font-medium text-gray-700 hover:text-[#3330BA] transition-colors"
+      >
         Feedback
       </button>
-      ;
       <FeedbackModal
         isOpen={isModalOpen}
         onRequestClose={() => setModalOpen(false)}
@@ -251,23 +522,20 @@ const FeedbackButton = ({ className }) => {
     <>
       <button
         className={
-          className
-            ? className
-            : "w-full text-left p-3 text-[14px] hover:bg-[#EEEEFF] hover:border-l-[3px] hover:border-[#3431BB] flex items-center gap-2"
+          className ||
+          "w-full text-left p-3 text-sm font-medium hover:bg-[#EEEEFF] hover:border-l-[3px] hover:border-[#3431BB] flex items-center gap-2 transition-colors"
         }
         onClick={handleFeedbackClick}
       >
-        {!className && <FiAlertCircle size={20} />}
+        {!className && <FiAlertCircle size={18} className="text-gray-600" />}
         Feedback
       </button>
 
-      {/* Feedback Modal */}
       <FeedbackModal
         isOpen={isModalOpen}
         onRequestClose={() => setModalOpen(false)}
       />
 
-      {/* Saved Modal */}
       {isSavedModalOpen && (
         <SavedModal
           isOpen={isSavedModalOpen}
