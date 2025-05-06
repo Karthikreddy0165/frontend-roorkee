@@ -1,31 +1,62 @@
-import React from "react";
-import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-import { IoClose } from "react-icons/io5";
-import  {usePrivacy}  from "@/Context/PrivacyContext";
+import NavBar from "@/components/NavBar";
 import { useRouter } from "next/router";
+import { IoClose } from "react-icons/io5";
+import { useState } from "react";
+import { useAuth } from "../Context/AuthContext";
+import { toast } from "react-toastify";
 export default function PrivacyPolicy() {
   const router = useRouter();
-  const 
-  { cookiesConsent,
-    setCookiesConsent,
-    infoUsage,
-    setInfoUsage,
-    infoSharing,
-    setInfoSharing,
-    handleRejectAll,
-    handleSubmitChoices
-  } = usePrivacy();
-
+  const [infoUsage, setInfoUsage] = useState(false);
+  const [infoSharing, setInfoSharing] = useState(false);
+  const [cookiesTracking, setCookiesTracking] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const {authState} = useAuth()
   const handleClose = () => {
     router.back();
   };
-
-  const handleSubmit = () => {
-    handleSubmitChoices();
-    router.back();
+  const handleRejectAll = () => {
+    setInfoUsage(false);
+    setInfoSharing(false);
   };
+  const submitPrivacySettings = async () => {
+    if (!authState?.token) {
+      toast.error("Please login to update privacy settings");
+      return;
+    }
 
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/privacy-settings/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authState.token}`,
+          },
+          body: JSON.stringify({
+            allow_information_usage: infoUsage,
+            allow_information_sharing: infoSharing,
+            allow_cookies_tracking: cookiesTracking,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to update privacy settings");
+      }
+
+      const data = await response.json();
+      toast.success("Privacy settings updated successfully");
+      handleClose();
+    } catch (error) {
+      toast.error(error.message || "Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <>
       <NavBar />
@@ -138,81 +169,130 @@ export default function PrivacyPolicy() {
                 </p>
               </section>
               <div className="pt-10 mt-10 border-t border-gray-300">
-            <h2 className="text-xl font-semibold text-[#2B3E80] mb-4">
-              Consent Preferences
-            </h2>
+              <h2 className="text-xl font-semibold text-[#2B3E80] mb-4">
+                Consent Preferences
+              </h2>
 
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-gray-700 font-medium">
-                  Strictly Necessary Cookies
-                </span>
-                <span className="text-[#838383] font-medium">Always Active</span>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-700 font-medium">
+                    Strictly Necessary Cookies
+                  </span>
+                  <span className="text-[#838383] font-medium">Always Active</span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-700">
+                    Cookies & Tracking Technologies
+                  </span>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="sr-only peer"
+                      checked={cookiesTracking}
+                      onChange={() => setCookiesTracking(!cookiesTracking)}
+                    />
+                    <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                  </label>
+                </div>
+
+  
+
+<div className="flex items-center justify-between">
+  <span className="text-gray-700">Information Usage</span>
+  <label className="relative inline-flex items-center cursor-pointer">
+    <input
+      type="checkbox"
+      className="sr-only peer"
+      checked={infoUsage}
+      onChange={() => {
+        const newUsageValue = !infoUsage;
+        const newSharingValue = !infoSharing;
+        setInfoUsage(newUsageValue);
+        setInfoSharing(newSharingValue);
+        // If enabling usage, also enable sharing
+        if (newUsageValue) {
+          setInfoSharing(true);
+        }
+      }}
+    />
+    <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+  </label>
+</div>
+
+<div className="flex items-center justify-between">
+  <span className="text-gray-700">Information Sharing</span>
+  <label className="relative inline-flex items-center cursor-pointer">
+    <input
+      type="checkbox"
+      className="sr-only peer"
+      checked={infoSharing}
+      onChange={() => {
+        const newSharingValue = !infoSharing;
+        const newUsageValue = !infoUsage;
+        setInfoSharing(newSharingValue);
+        setInfoUsage(newUsageValue)
+        // If enabling sharing, also enable usage
+        if (newSharingValue) {
+          setInfoUsage(true);
+        }
+      }}
+    />
+    <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+  </label>
+</div>
+
+              <div className="flex gap-4 mt-8 justify-end">
+                <button
+                  className="bg-gray-100 text-gray-800 lg:px-5 lg:py-2 md:px-5 px-2 py-0 rounded-lg hover:bg-gray-200 border border-gray-300"
+                  onClick={handleRejectAll}
+                >
+                  Reject All
+                </button>
+                <button
+                  className={`bg-[#2B3E80] text-white md:px-3 px-2 lg:px-5 py-2 rounded-lg hover:bg-[#1e2f66] shadow-md flex items-center justify-center min-w-[150px] ${
+                    isLoading ? "opacity-70 cursor-not-allowed" : ""
+                  }`}
+                  onClick={submitPrivacySettings}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <svg
+                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Saving...
+                    </>
+                  ) : (
+                    "Submit My Choices"
+                  )}
+                </button>
               </div>
-
-              <div className="flex items-center justify-between">
-                <span className="text-gray-700">
-                  Cookies & Tracking Technologies
-                </span>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="sr-only peer"
-                    checked={cookiesConsent}
-                    onChange={() => setCookiesConsent(!cookiesConsent)}
-                  />
-                  <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
-                </label>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className="text-gray-700">Information Usage</span>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="sr-only peer"
-                    checked={infoUsage}
-                    onChange={() => setInfoUsage(!infoUsage)}
-                  />
-                  <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
-                </label>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className="text-gray-700">Information Sharing</span>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="sr-only peer"
-                    checked={infoSharing}
-                    onChange={() => setInfoSharing(!infoSharing)}
-                  />
-                  <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
-                </label>
-              </div>
-            </div>
-
-            <div className="flex gap-4 mt-8 justify-end">
-              <button
-                className="bg-gray-100 text-gray-800 lg:px-5 lg:py-2 md:px-5 px-2 py-0 rounded-lg hover:bg-gray-200 border border-gray-300"
-                onClick={handleRejectAll}
-              >
-                Reject All
-              </button>
-              <button
-                className="bg-[#2B3E80] text-white md:px-3 px-2 lg:px-5 py-2 rounded-lg hover:bg-[#1e2f66] shadow-md"
-                onClick={handleSubmit}
-              >
-                Submit My Choices
-              </button>
-            </div>
-          </div>
-             
             </div>
           </div>
         </div>
-        <Footer />
+        </div>
+     
       </div>
+      </div>
+      <Footer />
     </>
   );
 }

@@ -604,6 +604,9 @@ const handleReportSubmit = async (e) => {
                   <option value="">Select Category</option>
                   <option value="incorrect_info">Incorrect information</option>
                   <option value="outdated_info">Outdated information</option>
+                  <option value="broken_link">Broken link or document</option>
+                  <option value="language_issue">Unclear or difficult language</option>
+                  <option value="irrelevant">Irrelevant or misleading scheme</option>
                   <option value="other">Other</option>
                 </select>
               </div>
