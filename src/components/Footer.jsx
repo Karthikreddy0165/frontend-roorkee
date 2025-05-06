@@ -88,7 +88,9 @@ const Footer = () => {
   useEffect(() => {
     const fetchMeta = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/company-meta/`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/company-meta/`
+        );
         const json = await res.json();
         setMeta(json);
       } catch (err) {
@@ -125,7 +127,14 @@ const Footer = () => {
               <h1 className="text-3xl font-semibold mb-4 text-[#F58220]">
                 Empower Hub
               </h1>
-              { (meta.facebook_url || meta.instagram_url || meta.linkedin_url || meta.twitter_url )  ? <h1 className="text-lg font-bold mb-4 text-white">Follow Us</h1> : ''}
+              {meta.facebook_url ||
+              meta.instagram_url ||
+              meta.linkedin_url ||
+              meta.twitter_url ? (
+                <h1 className="text-lg font-bold mb-4 text-white">Follow Us</h1>
+              ) : (
+                ""
+              )}
 
               <div className="flex space-x-4">
                 {meta.facebook_url && (
@@ -285,7 +294,12 @@ const Footer = () => {
               </h4>
               <ul className="space-y-2 text-white">
                 <li>
-                  <a  href="#faq" className="hover:text-[#F58220] cursor-pointer">FAQ's</a>
+                  <a
+                    href="#faq"
+                    className="hover:text-[#F58220] cursor-pointer"
+                  >
+                    FAQ's
+                  </a>
                 </li>
                 <li>
                   <FeedbackButton className="hover:text-[#F58220]" />
@@ -334,7 +348,11 @@ const Footer = () => {
                   <h3 className="font-semibold">Contact</h3>
                   {meta.email && (
                     <p className="pl-4 hover:text-[#F58220]">
-                      <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${meta.email}`}>{meta.email}</a>
+                      <a
+                        href={`https://mail.google.com/mail/?view=cm&fs=1&to=${meta.email}`}
+                      >
+                        {meta.email}
+                      </a>
                     </p>
                   )}
                   {meta.phone && (
@@ -345,7 +363,9 @@ const Footer = () => {
                   {meta.support_email && (
                     <p className=" pl-4 hover:text-[#F58220]">
                       Support:{" "}
-                      <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${meta.support_email}`}>
+                      <a
+                        href={`https://mail.google.com/mail/?view=cm&fs=1&to=${meta.support_email}`}
+                      >
                         {meta.support_email}
                       </a>
                     </p>
@@ -359,7 +379,7 @@ const Footer = () => {
                   <p className="pl-4">
                     {meta.city}, {meta.state} {meta.postal_code}
                   </p>
-                  <p className="pl-4" >{meta.country}</p>
+                  <p className="pl-4">{meta.country}</p>
                 </div>
               </div>
             </div>
@@ -368,7 +388,8 @@ const Footer = () => {
           {/* Copyright */}
           <div className="border-t border-gray-700 mt-8 pt-6 text-center text-white">
             <p className="text-sm">
-              &copy; {new Date().getFullYear()} Empower Hub. All Rights Reserved.
+              &copy; {new Date().getFullYear()} Empower Hub. All Rights
+              Reserved.
             </p>
           </div>
         </div>
