@@ -29,12 +29,19 @@ export default function SortSelector() {
   } = useContext(FilterContext);
   const { profileData } = useProfile();
 
-  const [isPreferenceApplied, setIsPreferenceApplied] = useState(false);
+  const [isPreferenceApplied, setIsPreferenceApplied] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("isPreferenceApplied") === "true";
+    }
+    return false;
+  });
+  
 
   const { authState } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDefaultFilter = async () => {
+    setIsOpen(false)
     if (!authState.token) {
       router.push("/login");
       return;
@@ -49,7 +56,10 @@ export default function SortSelector() {
     try {
       if (isPreferenceApplied) {
         // Clear preferences
-        setIsPreferenceApplied(false);
+        
+      setIsPreferenceApplied(false);
+      localStorage.setItem("isPreferenceApplied", "false");
+      setOrdering("")
         setProfileFieldData({});
         setBeneficiaries([]);
         setStates([]);
@@ -59,6 +69,8 @@ export default function SortSelector() {
       } else {
         // Apply preferences
         setIsPreferenceApplied(true);
+        setOrdering("")
+        localStorage.setItem("isPreferenceApplied", "true");
 
         if (profileData) {
           setProfileFieldData(profileData);
@@ -119,6 +131,19 @@ export default function SortSelector() {
   const handleSelect = (value) => {
     setOrdering(value);
     setIsOpen(false);
+    if (isPreferenceApplied) {
+      // Clear preferences
+      
+    setIsPreferenceApplied(false);
+    localStorage.setItem("isPreferenceApplied", "false");
+    setOrdering("")
+      setProfileFieldData({});
+      setBeneficiaries([]);
+      setStates([]);
+      setDepartments({});
+      setSponsoredBy([]);
+      setFundingBy([]);
+    }
   };
 
   return (
@@ -134,7 +159,7 @@ export default function SortSelector() {
             <button
               onClick={handleDefaultFilter}
               className={`block w-full text-left px-4 py-2 text-sm ${
-                ordering === "relevance"
+                isPreferenceApplied
                   ? "bg-gray-100 text-[#3330BA]"
                   : "text-gray-700 hover:bg-gray-100"
               }`}
