@@ -8,7 +8,7 @@ describe('signup Page Tests', () => {
     it('should display all required elements', () => {
       cy.get('input[type="email"]').should('exist')
       cy.get('input[type="password"]').should('exist')
-      cy.contains('button', 'Continue').should('exist')
+      cy.contains('button', 'Sign Up').should('exist')
       cy.get('input[id="terms"]').should('exist')
       cy.get('svg').should('exist') // Logo should be present
       cy.contains('button', 'Back').should('exist')
@@ -18,7 +18,7 @@ describe('signup Page Tests', () => {
       cy.get('input#password').should('have.attr', 'type', 'password');
       cy.get('[data-test-id="toggle-password-visibility"]').click();
       cy.get('input#password').should('have.attr', 'type', 'text');
-      cy.get('[data-test-id="toggle-password-visibility"]').click();
+      cy.get('[data-test-id="toggle-password-visibility"]').first().click();
       cy.get('input#password').should('have.attr', 'type', 'password');
     });    
   })
@@ -34,7 +34,7 @@ describe('signup Page Tests', () => {
 //Tests for Validation of empty fields and email format
   describe('Form Validation', () => {
     it('should show validation for empty fields', () => {
-      cy.contains('button', 'Continue').click()
+      cy.contains('button', 'Sign Up').click()
       cy.get('form').should('exist')
       cy.get('[data-test-id="email-password-error"]').should('exist')
       // Verify no POST request was made
@@ -46,8 +46,8 @@ describe('signup Page Tests', () => {
 
     it('should validate email format', () => {
       cy.get('input[type="email"]').type('invalid-email')
-      cy.contains('button', 'Continue').click()
-      cy.get('[data-test-id="email-password-error"]').should('exist')
+      cy.contains('button', 'Sign Up').click()
+      cy.get('[data-test-id="email-error"]').should('exist')
     });
      
   });
@@ -68,7 +68,7 @@ describe('API Integration', () => {
     cy.get('input[type="email"]').type(validEmail)
     cy.get('input[type="password"]').type(validPassword)
     cy.get('input[id="terms"]').check({force: true}).should('be.checked');
-    cy.contains('button', 'Continue').click()
+    cy.contains('button', 'Sign Up').click()
 
     cy.wait('@loginRequest').then((interception) => {
       expect(interception.request.body).to.deep.equal({
@@ -91,7 +91,7 @@ describe('API Integration', () => {
       cy.get('input[type="email"]').type('karthikreddy0165@gmail.com')
       cy.get('input[type="password"]').type('Test@123')
       cy.get('input[id="terms"]').check({force: true}).should('be.checked');
-      cy.contains('button', 'Continue').click()
+      cy.contains('button', 'Sign Up').click()
       cy.wait('@signupFailure')
     });
 
@@ -107,7 +107,7 @@ describe('API Integration', () => {
       cy.get('input[type="email"]').type('test@example.com')
       cy.get('input[type="password"]').type('password123')
       cy.get('input[id="terms"]').check({force: true}).should('be.checked');
-      cy.contains('button', 'Continue').click()
+      cy.contains('button', 'Sign Up').click()
 
       cy.contains('Loading...').should('be.visible')
       cy.get('.animate-spin').should('be.visible')

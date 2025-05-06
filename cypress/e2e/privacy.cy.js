@@ -1,6 +1,8 @@
 const expectLocalStorage = (expected) => {
   cy.window().then((win) => {
+    console.log(JSON.parse(win.localStorage.getItem('privacyPreferences')))
     const prefs = JSON.parse(win.localStorage.getItem('privacyPreferences'));
+    console.log(prefs, "I am prefs")
     expect(prefs).to.deep.equal(expected);
   });
 };
@@ -29,6 +31,7 @@ describe('Privacy Preferences E2E', () => {
   });
 
   it('privacyPreferences should be true by default', () => {
+    cy.login()
     cy.visit('/privacy-policy');
     cy.contains('Submit My Choices').click();
 
@@ -140,7 +143,7 @@ describe('Privacy Preferences E2E', () => {
     // Simulate browser history for back button
     cy.visit('/');
     cy.visit('/privacy-policy');
-    cy.get('button').first().click();
+    cy.get('svg').first().click();
     cy.url().should('eq', Cypress.config().baseUrl + '/');
   });
 

@@ -92,6 +92,7 @@ const DropdownMenu = ({
 
                     return (
                         <li
+                            data-testid="sponsored-state"
                             key={item.value}
                             className="flex items-center justify-between hover:bg-gray-100 p-[8px] cursor-pointer hover:rounded-[8px]"
                             onClick={() => handleItemClick(item)}

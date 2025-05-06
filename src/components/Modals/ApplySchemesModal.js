@@ -41,6 +41,7 @@ const ApplyModal = ({
   const router = useRouter()
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const descriptionRef = useRef(null);
   const [isHowToApplyOpen, setIsHowToApplyOpen] = useState(false); 
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -218,7 +219,6 @@ const handleReportSubmit = async (e) => {
       },
       body: JSON.stringify(reportFormData),
     });
-
     if (!response.ok) {
       throw new Error(`Error creating report: ${response.statusText}`);
     }
@@ -302,7 +302,7 @@ const handleReportSubmit = async (e) => {
 
 
     <div
-    className={`fixed inset-0 z-50 gap-[10px] ${isHowToApplyOpen || isReportModalOpen || isSavedModalOpen ? '' : 'pointer-events-none'}`}
+    className={`fixed inset-0 z-50 gap-[10px] ${isHowToApplyOpen || isReportModalOpen || isSavedModalOpen || isApplyModalOpen ? '' : 'pointer-events-none'}`}
   >
 <div
   className={`absolute h-full sm:h-screen bg-white transition-all w-full sm:w-[100%] md:w-[72.5%] lg:w-[48%] xl:w-[42.5%] right-0 top-0 p-4 sm:p-6 rounded-lg border gap-[10px] border-gray-200 shadow-lg z-50 pointer-events-auto`}
@@ -486,23 +486,30 @@ const handleReportSubmit = async (e) => {
 
      {/* Apply Button */}
      <a
-       href={isError ? "#" : scheme.scheme_link}
-       target="_blank"
-       rel="noopener noreferrer"
-       className={`px-4 py-2 rounded-lg text-white text-xs sm:text-sm transition 
-         ${isError
-           ? "bg-gray-400 cursor-not-allowed opacity-50"
-           : "bg-[#3431BB] hover:bg-blue-700"}`}
-       onClick={(e) => {
-         if (isError) {
-           e.preventDefault();
-         } else {
-           logUserEvent("apply", scheme.id);
-         }
-       }}
-     >
-       Apply
-     </a>
+  href={isError ? "#" : scheme.scheme_link}
+  target="_blank"
+  rel="noopener noreferrer"
+  className={`px-4 py-2 rounded-lg text-white text-xs sm:text-sm transition 
+    ${isError
+      ? "bg-gray-400 cursor-not-allowed opacity-50"
+      : "bg-[#3431BB] hover:bg-blue-700"}`}
+  onClick={(e) => {
+    if (!authState.token) {
+      e.preventDefault(); // Prevent navigation if not logged in
+      setIsApplyModalOpen(true);
+      return;
+    }
+
+    if (isError) {
+      e.preventDefault(); // Prevent navigation on error
+    } else {
+      logUserEvent("apply", scheme.id);
+    }
+  }}
+>
+  Apply
+</a>
+
    </div>
  </div>
 
@@ -623,18 +630,16 @@ const handleReportSubmit = async (e) => {
 
              
 
-              <div className="flex justify-center mt-4 space-x-4">
-              <button
-                type="submit"
-                className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
-              >
-                Submit
-              </button>
+  <div className="flex justify-center mt-4 space-x-4">
+    <button
+      type="submit"
+      className="flex-shrink-0 px-4 py-2 rounded-lg border border-transparent bg-[#3431Bb] text-white hover:bg-blue-700 text-[12px] sm:text-sm"
+    >
+      Submit
+    </button>
+  </div>
+</form>
 
-             
-            </div>
-
-            </form>
           </div>
         </div>
       )}
@@ -671,6 +676,15 @@ const handleReportSubmit = async (e) => {
             onRequestClose={() => setIsReportModalOpen(false)}
             heading={'Report'}
             tag={'report'}
+          />
+        )}
+
+        {isApplyModalOpen && (
+          <SavedModal
+            isOpen={isApplyModalOpen}
+            onRequestClose={() => setIsApplyModalOpen(false)}
+            heading={'Apply'}
+            tag={'apply'}
           />
         )}
       

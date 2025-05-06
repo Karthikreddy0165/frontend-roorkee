@@ -256,7 +256,7 @@ const CreateAcc01 = () => {
                   value={formik.values.email.toLowerCase()}
                 />
                 {formik.touched.email && formik.errors.email ? (
-          <p className="text-red-500 text-xs" data-testid="email-error">{formik.errors.email}</p>
+          <p className="text-red-500 text-xs" data-test-id="email-error">{formik.errors.email}</p>
         ) : null}
               </div>
               <div className="mt-[24px]">
@@ -280,7 +280,7 @@ const CreateAcc01 = () => {
 
                   <div
                     className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
-                    data-testid="toggle-password-visibility"
+                    data-test-id="toggle-password-visibility"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <FaEye /> : <FaEyeSlash />}

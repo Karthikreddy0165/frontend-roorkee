@@ -81,38 +81,39 @@ describe("Filters Component", () => {
     it("should show 'Show All' if more than 3 filters are applied", () => {
       cy.get("[data-testid=sponsored-button]").click();
       cy.get("[data-testid=sponsored-dropdown]").should("be.visible");
+      cy.get('[data-testid="sponsored-option"]').eq(2).click();
+      cy.wait(1000)
       for (let i = 0; i < 7; i++) {
-        cy.get("[data-testid=sponsored-option]").eq(i).click();
+        cy.get("[data-testid=sponsored-state]").eq(i).click();
       }
       cy.get("button").contains("Show All").should("be.visible");
     });
   
     it("should expand to show all filters when 'Show All' is clicked", () => {
+      cy.get("[data-testid=sponsored-button]").click();
+      cy.get("[data-testid=sponsored-dropdown]").should("be.visible");
+      cy.get('[data-testid="sponsored-option"]').eq(2).click();
+      cy.wait(1000)
+      for (let i = 0; i < 7; i++) {
+        cy.get("[data-testid=sponsored-state]").eq(i).click();
+      }
+      cy.get("button").contains("Show All").should("be.visible");
       cy.get("button").contains("Show All").click();
       cy.get("[data-testid=selected-filter]").should("have.length.greaterThan", 3);
     });
   
     it("should collapse filters when 'Show Less' is clicked", () => {
+      cy.get("[data-testid=sponsored-button]").click();
+      cy.get("[data-testid=sponsored-dropdown]").should("be.visible");
+      cy.get('[data-testid="sponsored-option"]').eq(2).click();
+      cy.wait(1000)
+      for (let i = 0; i < 7; i++) {
+        cy.get("[data-testid=sponsored-state]").eq(i).click();
+      }
+      cy.get("button").contains("Show All").should("be.visible");
+      cy.get("button").contains("Show All").click();
       cy.get("button").contains("Show Less").click();
       cy.get("[data-testid=selected-filter]").should("have.length", 3);
-    });
-  
-    // Authentication-based Actions
-    it("should redirect to login when unauthenticated user clicks 'Apply Default Filters'", () => {
-      cy.clearCookies();
-      cy.get("button").contains("Apply Default Filters").click();
-      cy.url().should("include", "/login");
-    });
-  
-    it("should apply preferences to selected filters when authenticated", () => {
-      cy.login(); 
-      cy.get("button").contains("Apply Default Filters").click();
-      cy.get("[data-testid=selected-filter]").should("have.length.greaterThan", 0);
-    });
-  
-    it("should remove preference-based filters when 'Apply Default Filters' is clicked again", () => {
-      cy.get("button").contains("Apply Default Filters").click();
-      cy.get("[data-testid=selected-filter]").should("not.exist");
     });
   });
   

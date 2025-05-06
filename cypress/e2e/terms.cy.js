@@ -32,7 +32,7 @@ describe('Terms and Conditions Page', () => {
       // Simulate browser history for back button
       cy.visit('/');
       cy.visit('/Terms-conditions');
-      cy.get('button').first().click();
+      cy.get('svg').first().click();
       cy.url().should('eq', Cypress.config().baseUrl + '/');
     });
   

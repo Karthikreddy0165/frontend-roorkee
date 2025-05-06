@@ -10,7 +10,7 @@ describe('Login Page Tests', () => {
     it('should display all required elements', () => {
       cy.get('input[type="email"]').should('exist')
       cy.get('input[type="password"]').should('exist')
-      cy.contains('button', 'Continue').should('exist')
+      cy.contains('button', 'Sign In').should('exist')
       cy.contains('Forgot password?').should('exist')
       cy.contains('Create new account').should('exist')
       cy.get('svg').should('exist') // Logo should be present
@@ -46,7 +46,7 @@ describe('Login Page Tests', () => {
 //Tests for Validation of empty fields and email format
   describe('Form Validation', () => {
     it('should show validation for empty fields', () => {
-      cy.contains('button', 'Continue').click()
+      cy.contains('button', 'Sign In').click()
       cy.get('form').should('exist')
       cy.get('[data-testid="email-error"]').should('exist')
       cy.get('[data-testid="password-error"]').should('exist')
@@ -59,7 +59,7 @@ describe('Login Page Tests', () => {
 
     it('should validate email format', () => {
       cy.get('input[type="email"]').type('invalid-email')
-      cy.contains('button', 'Continue').click()
+      cy.contains('button', 'Sign In').click()
       cy.get('[data-testid="email-error"]').should('exist')
     });
      
@@ -79,7 +79,7 @@ describe('Login Page Tests', () => {
 
       cy.get('input[type="email"]').type(validEmail)
       cy.get('input[type="password"]').type(validPassword)
-      cy.contains('button', 'Continue').click()
+      cy.contains('button', 'Sign In').click()
 
       cy.wait('@loginRequest').then((interception) => {
         expect(interception.request.body).to.deep.equal({
@@ -102,7 +102,7 @@ describe('Login Page Tests', () => {
 
       cy.get('input[type="email"]').type('wrong@email.com')
       cy.get('input[type="password"]').type('wrongpassword')
-      cy.contains('button', 'Continue').click()
+      cy.contains('button', 'Sign In').click()
 
       cy.wait('@loginFailure')
       cy.get('[data-test-id="login-error"]').should('exist')
@@ -119,7 +119,7 @@ describe('Login Page Tests', () => {
 
       cy.get('input[type="email"]').type('test@example.com')
       cy.get('input[type="password"]').type('password123')
-      cy.contains('button', 'Continue').click()
+      cy.contains('button', 'Sign In').click()
 
       cy.contains('Loading...').should('be.visible')
       cy.get('.animate-spin').should('be.visible')
