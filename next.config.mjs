@@ -1,7 +1,5 @@
-/**
- * @type {import('next').NextConfig}
- */
-const nextConfig = {
+/** @type {import('next').NextConfig} */
+const baseConfig = {
   env: {
     NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
   },
@@ -13,6 +11,25 @@ const nextConfig = {
         pathname: '/media/banners/**',
       },
     ],
+  },
+};
+
+const nextConfig = {
+  ...baseConfig,
+  webpack(config, { isServer }) {
+    // Instrument code only in test environment
+    if (process.env.NODE_ENV === 'test') {
+      config.module.rules.push({
+        test: /\.js$/,
+        loader: 'babel-loader',
+        options: {
+          presets: ['next/babel'],
+          plugins: ['babel-plugin-istanbul'],  // Add the Istanbul plugin for coverage
+        },
+      });
+    }
+
+    return config;
   },
 };
 

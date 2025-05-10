@@ -60,6 +60,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^14.3.2"
+    "@babel/preset-react": "^7.27.1",
+    "@cypress/code-coverage": "^3.14.0",
+    "babel-plugin-istanbul": "^7.0.0",
+    "cypress": "^14.3.3",
+    "istanbul": "^0.4.5",
+    "nyc": "^17.1.0"
   }
 }
