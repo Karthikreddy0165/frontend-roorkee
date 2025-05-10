@@ -87,11 +87,11 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
         }
 
         const formData = new FormData();
-        formData.append("schemeName", missingSchemeData.schemeName);
-        formData.append("schemeLink", missingSchemeData.schemeLink);
+        formData.append("scheme_name", missingSchemeData.schemeName);
+        formData.append("scheme_link", missingSchemeData.schemeLink);
         formData.append("description", missingSchemeData.description);
         if (missingSchemeData.document) {
-          formData.append("document", missingSchemeData.document);
+          formData.append("supporting_document", missingSchemeData.document);
         }
 
         const response = await fetch(

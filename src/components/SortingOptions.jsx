@@ -177,16 +177,7 @@ export default function SortSelector() {
           >
             Latest First
           </button>
-          <button
-            onClick={() => handleSelect("title")}
-            className={`block w-full text-left px-4 py-2 text-sm ${
-              ordering === "title"
-                ? "bg-gray-100 text-[#3330BA]"
-                : "text-gray-700 hover:bg-gray-100"
-            }`}
-          >
-            Title
-          </button>
+          
         </div>
       )}
     </div>
