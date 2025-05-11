@@ -1,11 +1,9 @@
-import { useEffect, useRef, useState,useContext } from "react";
-import { MdClose } from "react-icons/md";
-import { useAuth } from "../../Context/AuthContext";
-import { MdVerified } from "react-icons/md";
-import { VscUnverified } from "react-icons/vsc";
 import FilterContext from "@/Context/FilterContext";
-import { values } from "lodash";
-import { useProfile } from "@/Context/ProfileContext"; 
+import { useProfile } from "@/Context/ProfileContext";
+import { useContext, useEffect, useRef, useState } from "react";
+import { MdClose, MdVerified } from "react-icons/md";
+import { VscUnverified } from "react-icons/vsc";
+import { useAuth } from "../../Context/AuthContext";
 
 
 const ProfileModal = ({ onClose }) => {
@@ -29,6 +27,7 @@ const ProfileModal = ({ onClose }) => {
   
 
   const fieldsCount = Object.keys(profileData).length;
+
 
   const resendEmail = async () => {
     setSentEmailText(true);
@@ -152,9 +151,9 @@ const ProfileModal = ({ onClose }) => {
 
 useEffect(() => {
     const filledFields = Object.values(profileData).filter((value) =>typeof value === 'string' && value.trim() !== "").length;
-    // console.log(profileData)
-
+  
     const percentage = Math.round((filledFields / fieldsCount) * 100);
+  
     setProgress(percentage);
   }, [profileData]);
 
