@@ -37,6 +37,8 @@ describe("Feedback Modal", () => {
   
     it("shows SavedModal when not logged in", () => {
       cy.logout()
+      cy.visit('/')
+      cy.wait(2000)
       cy.contains("Feedback").click();
       cy.contains("give feedback").should("be.visible");
     });
