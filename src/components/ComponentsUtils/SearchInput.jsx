@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useTabContext } from "@/Context/TabContext";
 import { IoCloseSharp } from "react-icons/io5";
 import { useAuth } from "@/Context/AuthContext";
@@ -6,6 +6,18 @@ import { useAuth } from "@/Context/AuthContext";
 function SearchInput() {
   const { query, setquery } = useTabContext();
   const { authState } = useAuth();
+
+  function useDebouncedValue(value, delay) {
+    const [debounced, setDebounced] = useState(value);
+  
+    useEffect(() => {
+      const handler = setTimeout(() => setDebounced(value), delay);
+      return () => clearTimeout(handler);
+    }, [value, delay]);
+  
+    return debounced;
+  }
+
   // console.log("query", query);
   const logUserEvent = async (eventType, schemeId = null, details = {}) => {
     const eventBody = {
@@ -42,15 +54,12 @@ function SearchInput() {
 
   const DEBOUNCE_DELAY = 500;
 
+  const debouncedQuery = useDebouncedValue(query, DEBOUNCE_DELAY);
   useEffect(() => {
-    if (!query.trim()) return;
-
-    const handler = setTimeout(() => {
-      logUserEvent("search", null, { query });
-    }, DEBOUNCE_DELAY);
-
-    return () => clearTimeout(handler);
-  }, [query]);
+    if (!debouncedQuery.trim()) return;
+  
+    logUserEvent("search", null, { query: debouncedQuery });
+  }, [debouncedQuery]);
 
   return (
     <div className="sticky top-0 z-0 flex items-center gap-3 h-14 px-3 rounded-lg border border-gray-300 bg-white hidden sm:flex">
