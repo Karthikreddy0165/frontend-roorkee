@@ -1,15 +1,15 @@
 'use client';
+import { useAuth } from "@/Context/AuthContext";
+import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Slider from "react-slick";
-import { useRouter } from "next/router";
-import Image from "next/image";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 import bannerfirst from "../assets/bannerfirst.jpeg";
 import bannerthird from "../assets/csecond.jpeg";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import mobilebanner from "../assets/mobilebanner.jpeg";
 import mobilebanner1 from "../assets/mobilebanner1.jpeg";
-import { useAuth } from "@/Context/AuthContext";
 
 const Carousel = () => {
     const router = useRouter();
