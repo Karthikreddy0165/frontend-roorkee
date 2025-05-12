@@ -182,6 +182,7 @@ describe('Homepage Tests', () => {
       if (availableCategories.scholarships) {
         cy.intercept('GET', '**/api/layout-items/').as('getLayoutItems');
         cy.wait('@getLayoutItems').its('response.statusCode').should('eq', 200);
+        cy.wait(3000)
         cy.contains(/scholarships/i).click({ force: true });
         cy.url().should('include', '/AllSchemes?tab=scholarships');
       } else {

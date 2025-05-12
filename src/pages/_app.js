@@ -32,6 +32,12 @@ export default function App({ Component, pageProps }) {
 
     if (expiryTime && new Date().getTime() > expiryTime) {
       localStorage.clear();
+      const defaultPrefs = {
+        cookiesConsent: true,
+        infoUsage: true,
+        infoSharing: true,
+      };
+      localStorage.setItem("privacyPreferences", JSON.stringify(defaultPrefs));
       alert("Session expired! Please log in again.");
       router.push("/login");
     }

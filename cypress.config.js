@@ -8,7 +8,13 @@ module.exports = defineConfig({
     baseUrl: 'http://localhost:3000', 
     env: {
       apiUrl:'https://django.empowerhub.info',
-    },
+    }
+    ,
+    retries:{
+      runMode: 3,
+      openMode: 0
+    }
+    ,
     setupNodeEvents(on, config) {
       codeCoverageTask(on, config);
       return config;

@@ -23,6 +23,12 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setAuthState({ token: null, user: null });
     localStorage.clear();
+    const defaultPrefs = {
+      cookiesConsent: true,
+      infoUsage: true,
+      infoSharing: true,
+    };
+    localStorage.setItem("privacyPreferences", JSON.stringify(defaultPrefs));
   };
 
   // Function to make an authenticated request

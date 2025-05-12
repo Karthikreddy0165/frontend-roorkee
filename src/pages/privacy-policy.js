@@ -30,7 +30,6 @@ export default function PrivacyPolicy() {
     setCookiesConsent(false);
     setInfoUsage(false);
     setInfoSharing(false);
-    setCookiesTracking(false)
   };
 
   const submitPrivacySettings = async () => {

@@ -21,7 +21,7 @@ Cypress.Commands.add('login', (email = 'test@example.com', password = 'password1
 });
 
 Cypress.Commands.add('logout',()=>{
-  cy.contains('Profile ').click()
+  cy.contains('Profile').click()
   cy.contains('Log Out').click()
 })
 

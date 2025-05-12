@@ -238,15 +238,19 @@ const NavBar = () => {
 
               {/* Profile Button for Desktop */}
               <button
-                className="flex items-center px-4 py-2 bg-[#F58220] text-white text-sm font-semibold rounded-lg shadow-md sm:hidden lg:block lg:flex md:flex md:block hidden"
+                className="flex items-center justify-between px-4 py-2 bg-[#F58220] text-white 
+                w-28 text-sm font-semibold rounded-lg shadow-md sm:hidden lg:block lg:flex md:flex md:block hidden"
                 onClick={toggleDropdown}
               >
-                Profile <IoIosArrowDown className="ml-2" />
+              <span>Profile</span>
+              <IoIosArrowDown 
+              onClick={toggleDropdown}
+              className="ml-2" />
               </button>
 
               {/* Dropdown Menu */}
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10 w-24">
+                <div className="absolute right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10 w-28">
                   <ul>
                     <li>
                       <button

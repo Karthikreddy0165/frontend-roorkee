@@ -89,11 +89,12 @@ export default function Categories({ ffff, dataFromApi, totalPages }) {
             `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/saved_schemes/`,
             requestOptions
           );
+
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           const data = await response.json();
-          const savedSchemes = data.map((scheme) => scheme.id);
+          const savedSchemes = data?.results.map((scheme) => scheme.id);
           const bookmarks = savedSchemes.reduce((acc, id) => {
             acc[id] = true;
             return acc;
