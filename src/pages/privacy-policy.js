@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { toast } from "react-toastify";
 import { useAuth } from "../Context/AuthContext";
-import { toast } from "react-toastify";
 import { usePrivacy } from "@/Context/PrivacyContext";
 export default function PrivacyPolicy() {
 
@@ -25,7 +24,6 @@ export default function PrivacyPolicy() {
   const handleClose = () => {
     router.back();
   };
-  const [initialLoad, setInitialLoad] = useState(true);
 
 
     const handleRejectAll = () => {
@@ -75,39 +73,7 @@ export default function PrivacyPolicy() {
     }
   };
 
-  const toggleCookies = () => {
-    // Can only toggle if not in initial load state
-    if (!initialLoad) {
-      setCookiesTracking(!cookiesTracking);
-    }
-  }
-  const toggleInfoUsage = () => {
-    // Can only toggle off if it was previously on
-    if (infoUsage || initialLoad) {
-      setInfoUsage(!infoUsage);}
 
-      else if (!infoUsage){
-        setInfoSharing(true);
-        setInfoUsage(true)
-      }
-      // If turning off usage, also turn off sharing
-      if (infoUsage) {
-        setInfoSharing(false);
-        setInfoUsage(false)
-      
-    }
-  };
-
-  const toggleInfoSharing = () => {
-    // Can only toggle sharing if usage is enabled
-    if (infoUsage) {
-      setInfoSharing(!infoSharing);
-    } else if (!infoSharing) {
-      // If trying to enable sharing, enable usage first
-      setInfoUsage(true);
-      setInfoSharing(true);
-    }
-  };
 
   return (
     <>
@@ -259,7 +225,16 @@ export default function PrivacyPolicy() {
       disabled={!authState?.token}
       className="sr-only peer"
       checked={infoUsage}
-      onChange={toggleInfoUsage}
+      onChange={() => {
+        const newUsageValue = !infoUsage;
+        const newSharingValue = !infoSharing;
+        setInfoUsage(newUsageValue);
+        setInfoSharing(newSharingValue);
+        // If enabling usage, also enable sharing
+        if (newUsageValue) {
+          setInfoSharing(true);
+        }
+      }}
     />
     <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
   </label>
@@ -273,7 +248,16 @@ export default function PrivacyPolicy() {
       className="sr-only peer"
       disabled={!authState?.token}
       checked={infoSharing}
-      onChange={toggleInfoSharing}
+      onChange={() => {
+        const newSharingValue = !infoSharing;
+        const newUsageValue = !infoUsage;
+        setInfoSharing(newSharingValue);
+        setInfoUsage(newUsageValue)
+        // If enabling sharing, also enable usage
+        if (newSharingValue) {
+          setInfoUsage(true);
+        }
+      }}
     />
     <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
   </label>
