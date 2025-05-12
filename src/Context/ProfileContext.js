@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthContext";
 
 const ProfileContext = createContext();
@@ -12,7 +12,7 @@ export const ProfileProvider = ({ children }) => {
     community: "",
     minority: "",
     state: "",
-    bpl_card_holder: "",
+    
     education: "",
     disability: "",
     occupation: "",

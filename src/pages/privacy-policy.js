@@ -1,10 +1,10 @@
 import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
-import { useState } from "react";
-import { useAuth } from "../Context/AuthContext";
 import { toast } from "react-toastify";
+import { useAuth } from "../Context/AuthContext";
 export default function PrivacyPolicy() {
   const router = useRouter();
   const [infoUsage, setInfoUsage] = useState(false);
@@ -15,10 +15,42 @@ export default function PrivacyPolicy() {
   const handleClose = () => {
     router.back();
   };
+  const [initialLoad, setInitialLoad] = useState(true);
+
   const handleRejectAll = () => {
     setInfoUsage(false);
     setInfoSharing(false);
+    setCookiesTracking(false)
   };
+  useEffect(() => {
+    if (!authState?.token) return;
+
+    const fetchPrivacySettings = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/privacy-settings/`,
+          {
+            headers: {
+              Authorization: `Bearer ${authState.token}`,
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          setInfoUsage(data.allow_information_usage);
+          setInfoSharing(data.allow_information_sharing);
+          setCookiesTracking(data.allow_cookies_tracking);
+        }
+      } catch (error) {
+        console.error("Failed to fetch privacy settings:", error);
+      } finally {
+        setInitialLoad(false);
+      }
+    };
+
+    fetchPrivacySettings();
+  }, [authState?.token]);
   const submitPrivacySettings = async () => {
     if (!authState?.token) {
       toast.error("Please login to update privacy settings");
@@ -57,6 +89,41 @@ export default function PrivacyPolicy() {
       setIsLoading(false);
     }
   };
+
+  const toggleCookies = () => {
+    // Can only toggle if not in initial load state
+    if (!initialLoad) {
+      setCookiesTracking(!cookiesTracking);
+    }
+  }
+  const toggleInfoUsage = () => {
+    // Can only toggle off if it was previously on
+    if (infoUsage || initialLoad) {
+      setInfoUsage(!infoUsage);}
+
+      else if (!infoUsage){
+        setInfoSharing(true);
+        setInfoUsage(true)
+      }
+      // If turning off usage, also turn off sharing
+      if (infoUsage) {
+        setInfoSharing(false);
+        setInfoUsage(false)
+      
+    }
+  };
+
+  const toggleInfoSharing = () => {
+    // Can only toggle sharing if usage is enabled
+    if (infoUsage) {
+      setInfoSharing(!infoSharing);
+    } else if (!infoSharing) {
+      // If trying to enable sharing, enable usage first
+      setInfoUsage(true);
+      setInfoSharing(true);
+    }
+  };
+
   return (
     <>
       <NavBar />
@@ -190,7 +257,7 @@ export default function PrivacyPolicy() {
                       type="checkbox"
                       className="sr-only peer"
                       checked={cookiesTracking}
-                      onChange={() => setCookiesTracking(!cookiesTracking)}
+                      onChange={toggleCookies}
                     />
                     <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
                   </label>
@@ -205,16 +272,7 @@ export default function PrivacyPolicy() {
       type="checkbox"
       className="sr-only peer"
       checked={infoUsage}
-      onChange={() => {
-        const newUsageValue = !infoUsage;
-        const newSharingValue = !infoSharing;
-        setInfoUsage(newUsageValue);
-        setInfoSharing(newSharingValue);
-        // If enabling usage, also enable sharing
-        if (newUsageValue) {
-          setInfoSharing(true);
-        }
-      }}
+      onChange={toggleInfoUsage}
     />
     <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
   </label>
@@ -227,16 +285,7 @@ export default function PrivacyPolicy() {
       type="checkbox"
       className="sr-only peer"
       checked={infoSharing}
-      onChange={() => {
-        const newSharingValue = !infoSharing;
-        const newUsageValue = !infoUsage;
-        setInfoSharing(newSharingValue);
-        setInfoUsage(newUsageValue)
-        // If enabling sharing, also enable usage
-        if (newSharingValue) {
-          setInfoUsage(true);
-        }
-      }}
+      onChange={toggleInfoSharing}
     />
     <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
   </label>
