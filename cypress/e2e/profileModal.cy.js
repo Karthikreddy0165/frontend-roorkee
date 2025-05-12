@@ -6,7 +6,7 @@ describe("Profile Modal - Core Functionality", () => {
       }).as("anyGetRequest");
   
       // Intercept dynamic fields API (mock response if it occurs)
-      cy.intercept("GET", "http://43.204.236.103:8000/api/dynamic-fields/", {
+      cy.intercept("GET", "**/api/dynamic-fields/", {
         statusCode: 200,
         body: {
           profile_fields: [
@@ -59,7 +59,7 @@ describe("Profile Modal - Core Functionality", () => {
       }).as("getProfileFields");
   
       // Intercept login request
-      cy.intercept("POST", "http://43.204.236.103:8000/api/login/", (req) => {
+      cy.intercept("POST", "**/api/login/", (req) => {
         console.log("Login request intercepted:", req);
       }).as("loginRequest");
   
@@ -102,7 +102,7 @@ describe("Profile Modal - Core Functionality", () => {
       // Intercept profile update request
       cy.intercept(
         "PUT",
-        "http://43.204.236.103:8000/api/user/profile/",
+        "**/api/user/profile/",
         (req) => {
           console.log("Profile update request intercepted:", req);
         }

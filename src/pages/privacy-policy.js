@@ -5,20 +5,32 @@ import { IoClose } from "react-icons/io5";
 import { useState } from "react";
 import { useAuth } from "../Context/AuthContext";
 import { toast } from "react-toastify";
+import { usePrivacy } from "@/Context/PrivacyContext";
 export default function PrivacyPolicy() {
+
   const router = useRouter();
-  const [infoUsage, setInfoUsage] = useState(false);
-  const [infoSharing, setInfoSharing] = useState(false);
-  const [cookiesTracking, setCookiesTracking] = useState(false);
+    const 
+    { cookiesConsent,
+      setCookiesConsent,
+      infoUsage,
+      setInfoUsage,
+      infoSharing,
+      setInfoSharing,
+      handleSubmitChoices
+    } = usePrivacy();
+
   const [isLoading, setIsLoading] = useState(false);
   const {authState} = useAuth()
   const handleClose = () => {
     router.back();
   };
-  const handleRejectAll = () => {
+
+    const handleRejectAll = () => {
+    setCookiesConsent(false);
     setInfoUsage(false);
     setInfoSharing(false);
   };
+
   const submitPrivacySettings = async () => {
     if (!authState?.token) {
       toast.error("Please login to update privacy settings");
@@ -26,7 +38,8 @@ export default function PrivacyPolicy() {
     }
 
     setIsLoading(true);
-
+    
+    handleSubmitChoices()
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/privacy-settings/`,
@@ -39,7 +52,7 @@ export default function PrivacyPolicy() {
           body: JSON.stringify({
             allow_information_usage: infoUsage,
             allow_information_sharing: infoSharing,
-            allow_cookies_tracking: cookiesTracking,
+            allow_cookies_tracking: cookiesConsent,
           }),
         }
       );
@@ -188,9 +201,10 @@ export default function PrivacyPolicy() {
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
+                      disabled={!authState?.token}
                       className="sr-only peer"
-                      checked={cookiesTracking}
-                      onChange={() => setCookiesTracking(!cookiesTracking)}
+                      checked={cookiesConsent}
+                      onChange={() => setCookiesConsent(!cookiesConsent)}
                     />
                     <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
                   </label>
@@ -203,6 +217,7 @@ export default function PrivacyPolicy() {
   <label className="relative inline-flex items-center cursor-pointer">
     <input
       type="checkbox"
+      disabled={!authState?.token}
       className="sr-only peer"
       checked={infoUsage}
       onChange={() => {
@@ -226,6 +241,7 @@ export default function PrivacyPolicy() {
     <input
       type="checkbox"
       className="sr-only peer"
+      disabled={!authState?.token}
       checked={infoSharing}
       onChange={() => {
         const newSharingValue = !infoSharing;

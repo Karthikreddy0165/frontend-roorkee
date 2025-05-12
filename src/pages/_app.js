@@ -36,6 +36,18 @@ export default function App({ Component, pageProps }) {
     }
   };
 
+  useEffect(() => {
+    const storedPrefs = localStorage.getItem("privacyPreferences");
+    if (!storedPrefs) {
+      const defaultPrefs = {
+        cookiesConsent: true,
+        infoUsage: true,
+        infoSharing: true,
+      };
+      localStorage.setItem("privacyPreferences", JSON.stringify(defaultPrefs));
+    }
+  }, []);
+
   
   
   useEffect(() => {

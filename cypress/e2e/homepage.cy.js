@@ -1,14 +1,12 @@
-describe('Home Page Tests', () => {
-  beforeEach(() => {
-    cy.visit('/');
-    
-    // Detect available categories
+describe('Homepage Tests', () => {
+  // Helper function to detect available categories
+  const detectCategories = () => {
     cy.get('body').then($body => {
       const bodyText = $body.text().toLowerCase();
       const availableCategories = {
-        schemes: bodyText.includes('schemes') || bodyText.includes('scheme'),
-        jobs: bodyText.includes('jobs') || bodyText.includes('job'),
-        scholarships: bodyText.includes('scholarships') || bodyText.includes('scholarship')
+        schemes: bodyText.includes('schemes'),
+        jobs: bodyText.includes('jobs'),
+        scholarships: bodyText.includes('scholarships')
       };
       
       // Get the first available category for button text
@@ -16,266 +14,272 @@ describe('Home Page Tests', () => {
         .filter(([_, exists]) => exists)
         .map(([name, _]) => name);
       
-      const firstCategory = categoryNames.length > 0 ? categoryNames[0] : 'scheme';
+      const firstCategory = categoryNames.length > 0 ? categoryNames[0] : 'opportunity';
       
-      // Store in Cypress environment variables for access across tests
+      // Store in Cypress environment variables
       Cypress.env('availableCategories', availableCategories);
       Cypress.env('firstCategory', firstCategory);
-      
-      cy.log(`Detected categories: ${JSON.stringify(availableCategories)}`);
-      cy.log(`First category: ${firstCategory}`);
     });
-  });
+  };
 
-  // Header and Main Content Tests
-  describe('Header and Main Content', () => {
-    it('should display main heading correctly', () => {
-      cy.contains(/Empowering|community/i)
-        .should('be.visible');
+  // 1. Test landing page elements for non-authenticated users
+  describe('Non-authenticated User View', () => {
+    beforeEach(() => {
+      cy.visit('/');
+      detectCategories();
     });
 
-    it('should display subheading text with key phrases', () => {
-      // Check for partial text matches instead of exact string
-      cy.get('body').then($body => {
-        const bodyText = $body.text();
-        const hasKey = 
-          /helping all communities/i.test(bodyText) || 
-          /personalized/i.test(bodyText) || 
-          /eligibility/i.test(bodyText);
-        expect(hasKey).to.be.true;
-      });
+    it('should display navbar with login option', () => {
+      cy.get('nav').should('be.visible');
+      cy.contains('button:visible', /login/i).should('be.visible');
     });
 
-    it('should show "Get Started" button when not logged in', () => {
-      cy.get('button')
-        .contains('Get Started')
-        .should('be.visible');
+    it('should display carousel section properly', () => {
+      // Test the main carousel component exists
+      cy.get('[class*="slick-list"]').should('exist');
     });
 
-    it('should navigate to login page when clicking Get Started', () => {
-      cy.get('button')
-        .contains('Get Started')
-        .click();
-      cy.url().should('include', '/login');
-    });
-  });
-
-  // Stats Section Tests
-  describe('Stats Section', () => {
-    it('should display available stats sections', () => {
-      const availableCategories = Cypress.env('availableCategories');
-      
-      if (availableCategories.schemes) {
-        cy.contains(/thousands of schemes|schemes/i).should('exist');
-      }
-      
-      if (availableCategories.jobs) {
-        cy.contains(/job postings|jobs/i).should('exist');
-      }
-      
-      if (availableCategories.scholarships) {
-        cy.contains(/scholarships/i).should('exist');
-      }
-    });
-  });
-
-  // How It Works Section Tests
-  describe('How It Works Section', () => {
-    it('should display "HOW IT WORKS" section heading', () => {
-      cy.contains(/how it works/i).should('exist');
-    });
-
-    it('should display all three steps', () => {
-      cy.contains(/step\s*1/i).should('exist');
-      cy.contains(/step\s*2/i).should('exist');
-      cy.contains(/step\s*3/i).should('exist');
-    });
-
-    it('should display step descriptions', () => {
-      cy.get('body').then($body => {
-        const bodyText = $body.text();
-        const hasDescriptions = 
-          /tell us about yourself/i.test(bodyText) || 
-          /find the best results/i.test(bodyText) || 
-          /apply to/i.test(bodyText);
-        expect(hasDescriptions).to.be.true;
-      });
-    });
-
-    it('should have personalized button based on available categories', () => {
-      const firstCategory = Cypress.env('firstCategory');
-      
-      // More flexible regex pattern to match different button formats
-      const buttonRegex = new RegExp(`find.*${firstCategory}|${firstCategory}.*for me`, 'i');
-      
-      cy.get('body').then($body => {
-        if (buttonRegex.test($body.text())) {
-          cy.contains(buttonRegex).should('be.visible');
+    it('should display announcements ticker', () => {
+      cy.get('body').then(($body) => {
+        if ($body.text().match(/announcement/i)) {
+          cy.contains(/announcement/i).should('be.visible');
         } else {
-          // Fallback to any CTA button
-          cy.contains(/find|get started/i).should('exist');
+          cy.log('No announcements present, which is acceptable.');
         }
       });
     });
-  });
 
-  //Categories Tests
-  describe('Categories', () => {
-    it('should display available categories', () => {
-      const availableCategories = Cypress.env('availableCategories');
-      
-      // Check each category for visibility based on availability
-      if (availableCategories.schemes) {
-        cy.contains(/schemes/i).should('exist');
-      }
-      
-      if (availableCategories.jobs) {
-        cy.contains(/jobs/i).should('exist');
-      }
-      
-      if (availableCategories.scholarships) {
-        cy.contains(/scholarships/i).should('exist');
-      }
+    it('should navigate to login page when clicking login button', () => {
+      cy.contains('button:visible', /login/i).should('be.visible').click({force:true});
+      cy.url().should('include', '/login');
     });
 
-    it('should navigate to correct page when clicking Schemes', () => {
+    it('should display footer with links', () => {
+      cy.get('footer').should('be.visible');
+    });
+  });
+
+  // 2. Test landing page elements for authenticated users
+  describe('Authenticated User View', () => {
+    beforeEach(() => {
+      cy.login(); // Use the custom login command
+      detectCategories();
+    });
+
+    it('should display profile information after login', () => {
+      cy.contains(/profile/i).should('be.visible');
+    });
+
+    it('should allow navigating to schemes from buttons', () => {
       const availableCategories = Cypress.env('availableCategories');
       
       if (availableCategories.schemes) {
         cy.contains(/schemes/i).click({ force: true });
-        cy.url().should('include', 'scheme');
+        cy.url().should('include', '/AllSchemes');
+      } else {
+        cy.log('Schemes category not available on the page');
+      }
+    });
+
+    it('should allow logging out', () => {
+      cy.logout();
+      cy.url().should('include', '/login');
+    });
+  });
+
+  // 3. Test the "How It Works" section
+  describe('How It Works Section', () => {
+    beforeEach(() => {
+      cy.visit('/');
+      detectCategories();
+    });
+
+    it('should display "HOW IT WORKS" heading', () => {
+      cy.contains(/how it works/i).should('be.visible');
+    });
+
+    it('should display all three steps with correct content', () => {
+      // Check Step 1
+      cy.contains(/step 1/i).should('be.visible');
+      cy.contains(/tell us about yourself/i).should('be.visible');
+
+      // Check Step 2
+      cy.contains(/step 2/i).should('be.visible');
+      cy.contains(/best results for you/i).should('be.visible');
+
+      // Check Step 3
+      cy.contains(/step 3/i).should('be.visible');
+      cy.contains(/apply for the best match/i).should('be.visible');
+    });
+
+    it('should display "Find the right" button with the correct category', () => {
+      const firstCategory = Cypress.env('firstCategory');
+      cy.contains(new RegExp(`find the right ${firstCategory}`, 'i')).should('be.visible');
+    });
+
+    it('should navigate to preferences page when clicking the "Find" button', () => {
+      cy.contains(/find the right/i).click();
+      cy.url().should('include', '/my-preference');
+    });
+  });
+
+  // 4. Test main categories section (Schemes, Jobs, Scholarships)
+  describe('Categories Section', () => {
+    beforeEach(() => {
+      cy.visit('/');
+      detectCategories();
+    });
+
+    it('should display "One solution for all information" heading', () => {
+      cy.contains(/one solution for all information/i).should('be.visible');
+    });
+
+    it('should display available category options', () => {
+      const availableCategories = Cypress.env('availableCategories');
+      
+      if (availableCategories.schemes) {
+        cy.contains(/schemes/i).should('be.visible');
+      }
+      
+      if (availableCategories.jobs) {
+        cy.contains(/jobs/i).should('be.visible');
+      }
+      
+      if (availableCategories.scholarships) {
+        cy.contains(/scholarships/i).should('be.visible');
+      }
+    });
+
+    it('should navigate to schemes page when clicking Schemes', () => {
+      const availableCategories = Cypress.env('availableCategories');
+      
+      if (availableCategories.schemes) {
+        cy.intercept('GET', '**/api/layout-items/').as('getLayoutItems');
+        cy.wait('@getLayoutItems').its('response.statusCode').should('eq', 200);
+        cy.contains(/schemes/i).click({ force: true });
+        cy.url().should('include', '/AllSchemes');
       } else {
         cy.log('Schemes category not available, skipping test');
       }
     });
 
-    it('should navigate to correct page when clicking Jobs', () => {
+    it('should navigate to jobs page when clicking Jobs', () => {
       const availableCategories = Cypress.env('availableCategories');
       
       if (availableCategories.jobs) {
+        cy.intercept('GET', '**/api/layout-items/').as('getLayoutItems');
+        cy.wait('@getLayoutItems').its('response.statusCode').should('eq', 200);
         cy.contains(/jobs/i).click({ force: true });
-        cy.url().should('include', 'job');
+        cy.url().should('include', '/AllSchemes?tab=jobs');
       } else {
         cy.log('Jobs category not available, skipping test');
       }
     });
 
-    it('should navigate to correct page when clicking Scholarships', () => {
+    it('should navigate to scholarships page when clicking Scholarships', () => {
       const availableCategories = Cypress.env('availableCategories');
       
       if (availableCategories.scholarships) {
+        cy.intercept('GET', '**/api/layout-items/').as('getLayoutItems');
+        cy.wait('@getLayoutItems').its('response.statusCode').should('eq', 200);
         cy.contains(/scholarships/i).click({ force: true });
-        cy.url().should('include', 'scholarship');
+        cy.url().should('include', '/AllSchemes?tab=scholarships');
       } else {
         cy.log('Scholarships category not available, skipping test');
       }
     });
   });
 
-  // Mission, Vision, and Values Tests
-  describe('Mission, Vision, and Values Section', () => {
-    it('should display Mission section', () => {
-      cy.contains(/mission/i).should('exist');
-    });
-
-    it('should display Vision section', () => {
-      cy.contains(/vision/i).should('exist');
-    });
-
-    it('should display Values section', () => {
-      cy.contains(/values/i).should('exist');
-    });
-  });
-
-  // Authenticated User Tests
-  describe('Authenticated User View', () => {
+  // 5. Test Mission, Vision and Values sections
+  describe('Mission, Vision and Values Sections', () => {
     beforeEach(() => {
-      cy.window().then((win) => {
-        win.localStorage.setItem('token', 'fake-token');
-      });
-      cy.reload();
+      cy.visit('/');
     });
 
-    it('should show appropriate category button when logged in', () => {
-      // Try to find any button with "My" in it, without requiring specific categories
-      cy.contains(/my\s/i)
-        .should('exist');
+    it('should display Mission section with content', () => {
+      cy.contains(/mission/i).should('be.visible');
+      cy.contains(/harmony|discrimination-free/i).should('be.visible');
     });
 
-    it('should navigate to appropriate page when clicking category button', () => {
-      // Find any button with "My" in it and click it
-      cy.contains(/my\s/i)
-        .click({ force: true });
-        
-      // Just check that we navigated somewhere
-      cy.url().should('not.eq', Cypress.config().baseUrl + '/');
-    });
-  });
-
-  // Responsive Design Tests
-  describe('Responsive Design', () => {
-    it('should display mobile layout on small screens', () => {
-      cy.viewport('iphone-6');
-      cy.get('button')
-        .should('be.visible');
+    it('should display Vision section with content', () => {
+      cy.contains(/vision/i).should('be.visible');
+      cy.contains(/contributor|harmonious society/i).should('be.visible');
     });
 
-    it('should display desktop layout on large screens', () => {
-      cy.viewport('macbook-15');
-      cy.get('button')
-        .should('be.visible');
+    it('should display Values section with list items', () => {
+      cy.contains(/our values/i).should('be.visible');
+      
+      // Check for all 5 values
+      cy.contains(/commitment to the ideology/i).should('be.visible');
+      cy.contains(/positivity in every action/i).should('be.visible');
+      cy.contains(/transparency/i).should('be.visible');
+      cy.contains(/unbiased/i).should('be.visible');
+      cy.contains(/meaningful contribution/i).should('be.visible');
+    });
+
+    it('should have hover effects on Mission and Vision cards', () => {
+      // Test hover effect on Mission card
+      cy.contains(/mission/i).parent().trigger('mouseover');
+      cy.contains(/mission/i).parent().should('have.css', 'transform');
+      
+      // Test hover effect on Vision card
+      cy.contains(/vision/i).parent().trigger('mouseover');
+      cy.contains(/vision/i).parent().should('have.css', 'transform');
     });
   });
 
-  // NavBar Tests
-  describe('NavBar Component', () => {
-    it('should display the logo and brand name', () => {
-      cy.get('svg').should('exist');
-      cy.contains(/launch/i).should('exist');
+  // 6. Test user state transitions (login/logout)
+  describe('User State Transitions', () => {
+    it('should allow login and display user profile', () => {
+      cy.visit('/');
+      cy.login();
+      cy.contains(/profile/i).should('be.visible');
     });
 
-    describe('When not logged in', () => {
-      it('should show login button and handle click', () => {
-        cy.contains(/login|sign in/i, { matchCase: false })
-          .should('exist')
-          .click({ force: true });
-        
-        cy.url().should('include', '/');
-      });
-    });
-
-    describe('When logged in', () => {
-      beforeEach(() => {
-        cy.window().then(win => win.localStorage.setItem('token', 'fake-token'));
-        cy.reload();
-      });
-
-      it('should show profile dropdown on desktop', () => {
-        cy.viewport('macbook-15');
-        cy.contains(/profile|account/i)
-          .should('exist');
-      });
-
-      it('should handle logout correctly', () => {
-        cy.contains(/profile|account/i).click({ force: true });
-        cy.contains(/log out|logout|sign out/i).click({ force: true });
-      });
+    it('should allow logout and return to non-authenticated state', () => {
+      cy.visit('/');
+      cy.login();
+      cy.contains(/profile/i).should('be.visible');
+      
+      cy.logout();
+      cy.contains(/login|sign in/i).should('be.visible');
     });
   });
 
-  // Footer Tests
-  describe('Footer Component', () => {
-    it('should display logo, brand name, and links', () => {
-      cy.get('footer, .footer')
-        .should('exist');
-    });
-  });
-
-  // FAQ Tests  
+  // Testing FAQ section
   describe('FAQ Section', () => {
-    it('should display FAQ section title and all questions', () => {
-      cy.contains(/faq|frequently asked questions/i)
-        .should('exist');
+    beforeEach(() => {
+      cy.visit('/');
+    });
+
+    it('should display FAQ section with questions', () => {
+      cy.contains(/faq|frequently asked questions/i).should('be.visible');
+    });
+    
+    it('should expand first FAQ item when clicked', () => {
+      cy.get('button[id^="headlessui-disclosure-button"]').first().click();
+      cy.get('div[id^="headlessui-disclosure-panel"]').first().should('be.visible');
+    });    
+  });
+  
+  // Testing responsive design
+  describe('Responsive Design', () => {
+    it('should adapt layout for mobile devices', () => {
+      cy.viewport('iphone-6');
+      cy.visit('/');
+      
+      // Verify mobile layout elements
+      cy.get('nav').should('be.visible');
+      cy.get('[class*="slick-list"]').should('exist');
+    });
+    
+    it('should adapt layout for desktop devices', () => {
+      cy.viewport('macbook-15');
+      cy.visit('/');
+      
+      // Verify desktop layout elements
+      cy.get('nav').should('be.visible');
+      cy.get('[class*="slick-list"]').should('exist');
     });
   });
 });

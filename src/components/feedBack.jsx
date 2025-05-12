@@ -201,6 +201,7 @@ const FeedbackModal = ({ isOpen, onRequestClose }) => {
             <button
               onClick={handleClose}
               className="text-gray-500 hover:text-gray-700 transition-colors"
+              data-icon="close"
             >
               <IoMdClose className="w-6 h-6" />
             </button>

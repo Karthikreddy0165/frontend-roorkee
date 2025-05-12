@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setAuthState({ token: null, user: null });
-    localStorage.removeItem("token");
+    localStorage.clear();
   };
 
   // Function to make an authenticated request

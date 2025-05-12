@@ -85,7 +85,16 @@ const PrivacyModal = ({ isOpen, onClose }) => {
                       type="checkbox"
                       className="sr-only peer"
                       checked={infoUsage}
-                      onChange={() => setInfoUsage(!infoUsage)}
+                      onChange={() => {
+                        const newUsageValue = !infoUsage;
+                        const newSharingValue = !infoSharing;
+                        setInfoUsage(newUsageValue);
+                        setInfoSharing(newSharingValue);
+                        // If enabling usage, also enable sharing
+                        if (newUsageValue) {
+                          setInfoSharing(true);
+                        }
+                      }}
                     />
                     <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
                   </label>
@@ -98,7 +107,16 @@ const PrivacyModal = ({ isOpen, onClose }) => {
                       type="checkbox"
                       className="sr-only peer"
                       checked={infoSharing}
-                      onChange={() => setInfoSharing(!infoSharing)}
+                      onChange={() => {
+                        const newSharingValue = !infoSharing;
+                        const newUsageValue = !infoUsage;
+                        setInfoSharing(newSharingValue);
+                        setInfoUsage(newUsageValue)
+                        // If enabling sharing, also enable usage
+                        if (newSharingValue) {
+                          setInfoUsage(true);
+                        }
+                      }}
                     />
                     <div className="w-14 h-7 bg-gray-300 peer-focus:ring-2 peer-focus:ring-[#2B3E80] rounded-full peer-checked:bg-[#2B3E80] peer-checked:after:translate-x-7 after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
                   </label>

@@ -77,43 +77,22 @@ describe("Filters Component", () => {
       cy.get("[data-testid=selected-filter]").should("not.exist");
     });
   
-    // Show More / Show Less
-    it("should show 'Show All' if more than 3 filters are applied", () => {
-      cy.get("[data-testid=sponsored-button]").click();
-      cy.get("[data-testid=sponsored-dropdown]").should("be.visible");
-      cy.get('[data-testid="sponsored-option"]').eq(2).click();
-      cy.wait(1000)
-      for (let i = 0; i < 7; i++) {
-        cy.get("[data-testid=sponsored-state]").eq(i).click();
-      }
-      cy.get("button").contains("Show All").should("be.visible");
-    });
   
     it("should expand to show all filters when 'Show All' is clicked", () => {
-      cy.get("[data-testid=sponsored-button]").click();
-      cy.get("[data-testid=sponsored-dropdown]").should("be.visible");
-      cy.get('[data-testid="sponsored-option"]').eq(2).click();
-      cy.wait(1000)
-      for (let i = 0; i < 7; i++) {
-        cy.get("[data-testid=sponsored-state]").eq(i).click();
-      }
-      cy.get("button").contains("Show All").should("be.visible");
-      cy.get("button").contains("Show All").click();
-      cy.get("[data-testid=selected-filter]").should("have.length.greaterThan", 3);
-    });
-  
-    it("should collapse filters when 'Show Less' is clicked", () => {
-      cy.get("[data-testid=sponsored-button]").click();
-      cy.get("[data-testid=sponsored-dropdown]").should("be.visible");
-      cy.get('[data-testid="sponsored-option"]').eq(2).click();
-      cy.wait(1000)
-      for (let i = 0; i < 7; i++) {
-        cy.get("[data-testid=sponsored-state]").eq(i).click();
-      }
-      cy.get("button").contains("Show All").should("be.visible");
-      cy.get("button").contains("Show All").click();
-      cy.get("button").contains("Show Less").click();
-      cy.get("[data-testid=selected-filter]").should("have.length", 3);
+      cy.intercept('GET', '**/multi-state-departments*').as('fetchSchemes');
+
+      cy.get('[data-testid=sponsored-button]').click();
+      cy.get('[data-testid=sponsored-dropdown]').should('be.visible');
+      cy.get('[data-testid=sponsored-option]').eq(2).click({force:true});
+      cy.wait(10000)
+      cy.get('[data-testid=sponsored-state]').each(($el) => {
+        cy.wrap($el).click();
+      });
+
+      cy.contains('button', 'Show All').click();
+      cy.get('[data-testid=selected-filter]').should('have.length.greaterThan', 3);
+      cy.contains('button', 'Show Less').click();
+      cy.get('[data-testid=selected-filter]').should('have.length', 3);
     });
   });
   

@@ -122,19 +122,44 @@ const CreateAcc01 = () => {
         localStorage.setItem("token", result.access);
         login(result.access, user);
 
-        // console.log("Login successful. Token received:", result.access);
-
         // Show success message and redirect
         setShowSuccess(true);
         setTimeout(() => {
           setShowSuccess(false);
           router.replace("/my-preference");          
         }, 1500);
+
+        const prefs = JSON.parse(localStorage.getItem("privacyPreferences") || "{}");
+
+        if (prefs.cookiesConsent !== undefined) {
+          await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/privacy-settings/`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${result.access}`,
+            },
+            body: JSON.stringify({
+              allow_information_usage: prefs.infoUsage,
+              allow_information_sharing: prefs.infoSharing,
+              allow_cookies_tracking: prefs.cookiesConsent,
+            }),
+          });
+        }
+        // console.log("Login successful. Token received:", result.access);
+
       }
     } catch (error) {
       console.error("Login failed:", error);
     }
   };
+
+  const getLocalPrivacyPreferences = () => {
+    const prefs = localStorage.getItem("privacyPreferences");
+    if (!prefs) return null;
+    return JSON.parse(prefs);
+  };
+  
+
 
 
 
