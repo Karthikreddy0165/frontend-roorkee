@@ -154,11 +154,11 @@ useEffect(() => {
     return (typeof value === 'string' && value.trim() !== "") || (typeof value === 'number' && !isNaN(value));
   }).length;
   
-    console.log(profileData, "profileData")
+    // console.log(profileData, "profileData")
 
     const percentage = Math.round((filledFields / fieldsCount) * 100);
-    console.log(filledFields,"filledFields")
-    console.log(fieldsCount,"fieldsCount")
+    // console.log(filledFields,"filledFields")
+    // console.log(fieldsCount,"fieldsCount")
     setProgress(percentage);
   }, [profileData]);
 
@@ -212,11 +212,6 @@ useEffect(() => {
 
   const handleSave = async () => {
     if (authState.token) {
-      fields.forEach(field => {
-        console.log("Field name:", field.name);
-        console.log("Converted key:", field.name.toLowerCase().replace(" ", "_"));
-        console.log("Value in profileData:", profileData[field.name.toLowerCase().replace(" ", "_")]);
-      });
       
       const dynamicFields = fields.reduce((acc, field) => {
         const key = field.name;
@@ -225,8 +220,8 @@ useEffect(() => {
         return acc;
       }, {});
 
-      console.log(dynamicFields,"dynamicFields")
-      console.log(fields)
+      // console.log(dynamicFields,"dynamicFields")
+      // console.log(fields)
   
       const requestOptions = {
         method: "PUT",
@@ -241,8 +236,8 @@ useEffect(() => {
       };
   
       try {
-        console.log("Final profileData before saving:", profileData);
-        console.log(dynamicFields,"dynamicFields")
+        // console.log("Final profileData before saving:", profileData);
+        // console.log(dynamicFields,"dynamicFields")
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/profile/`,
           requestOptions

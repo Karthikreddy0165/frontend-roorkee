@@ -23,7 +23,7 @@ export const ProfileProvider = ({ children }) => {
         fields.name = '';
         fields.email = '';  // We'll update this later
         setProfileData(fields);
-        console.log("Profile fields:", fields);
+        // console.log("Profile fields:", fields);
       } catch (error) {
         console.error("Failed to fetch profile fields:", error);
       }

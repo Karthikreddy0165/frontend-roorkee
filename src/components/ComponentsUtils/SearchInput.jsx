@@ -6,7 +6,7 @@ import { useAuth } from "@/Context/AuthContext";
 function SearchInput() {
   const { query, setquery } = useTabContext();
   const { authState } = useAuth();
-  console.log("query", query);
+  // console.log("query", query);
   const logUserEvent = async (eventType, schemeId = null, details = {}) => {
     const eventBody = {
       event_type: eventType,
@@ -32,7 +32,7 @@ function SearchInput() {
       }
 
       const data = await response.json();
-      console.log("Event logged successfully:", data);
+      // console.log("Event logged successfully:", data);
     } catch (error) {
       console.error("Error logging event:", error);
     }
