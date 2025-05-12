@@ -560,6 +560,7 @@ function formatDate(date, format) {
           (item) =>
             item.title && (
               <div
+              data-testid="scheme-item"
                 className="flex items-start justify-between self-stretch relative border-[1px] border-gray-300 rounded-[12px] mb-2 py-[16px] px-[16px] my-6 hover:bg-violet-100 gap-[20px] pr-8"
                 key={item.id}
                 style={{
@@ -639,6 +640,7 @@ function formatDate(date, format) {
                 <div className="flex items-center gap-4">
                   <ToolTips tooltip="Save scheme">
                     <div
+                      data-testid="save-icon"
                       className="cursor-pointer px-2 py-2 right-[8.25px]"
                       onClick={(e) => handleBookmarkToggle(e, item.id)}
                     >
@@ -652,6 +654,7 @@ function formatDate(date, format) {
 
                   <ToolTips tooltip="Share scheme">
                     <div
+                      data-testid="share-icon"
                       className="cursor-pointer px-2 py-2 right-[8.25px]"
                       onClick={() => handleShare(item.id)}
                     >

@@ -17,14 +17,15 @@ import { PrimeReactProvider } from "primereact/api";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 import { ProfileProvider } from "@/Context/ProfileContext";
 
 
 export default function App({ Component, pageProps }) {
+
   const [loading, setLoading] = useState(false); 
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const router = useRouter();
-
 
   const checkSession = () => {
     const expiryTime = localStorage.getItem("sessionExpiry");
@@ -34,21 +35,7 @@ export default function App({ Component, pageProps }) {
       alert("Session expired! Please log in again.");
       router.push("/login");
     }
-  };
-
-  useEffect(() => {
-    const storedPrefs = localStorage.getItem("privacyPreferences");
-    if (!storedPrefs) {
-      const defaultPrefs = {
-        cookiesConsent: true,
-        infoUsage: true,
-        infoSharing: true,
-      };
-      localStorage.setItem("privacyPreferences", JSON.stringify(defaultPrefs));
-    }
-  }, []);
-
-  
+  };  
   
   useEffect(() => {
     checkSession(); 
@@ -139,18 +126,18 @@ export default function App({ Component, pageProps }) {
           </div>
         </div>
       )}
+   <PrivacyProvider>
+   <AuthProvider>
     <SortProvider>
       <PreferenceProvider>
         <FilterProvider>
           <PageProvider>
             <TabProvider>
-              <AuthProvider>
                 <SchemeProvider>
                   <FormProvider>
                     <PrimeReactProvider>
                       <BookmarkProvider>
                         <ProfileProvider>
-                        <PrivacyProvider>
                         <div className="flex flex-col min-h-screen">
                           {/* Main Content */}
                           <div className="flex-grow">
@@ -158,18 +145,18 @@ export default function App({ Component, pageProps }) {
                             <Component {...pageProps} />
                           </div>
                         </div>
-                        </PrivacyProvider>
                         </ProfileProvider>
                       </BookmarkProvider>
                     </PrimeReactProvider>
                   </FormProvider>
                 </SchemeProvider>
-              </AuthProvider>
             </TabProvider>
           </PageProvider>
         </FilterProvider>
       </PreferenceProvider>
     </SortProvider>
+    </AuthProvider>
+    </PrivacyProvider>
     </>
   );
 }

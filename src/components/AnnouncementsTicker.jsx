@@ -15,7 +15,7 @@ const AnnouncementsTicker = () => {
 
   const tickerItems = isActiveAnnouncements.map((item, index) =>(
     <span
-      key={index}
+      key={item.id}
       className="mx-8 text-[15px] md:text-base flex-shrink-0 text-gray-800 whitespace-nowrap"
     >
       <strong className="text-blue-800">{item.title}:</strong> {item.description}

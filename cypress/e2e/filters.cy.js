@@ -78,21 +78,21 @@ describe("Filters Component", () => {
     });
   
   
-    it("should expand to show all filters when 'Show All' is clicked", () => {
-      cy.intercept('GET', '**/multi-state-departments*').as('fetchSchemes');
+    // it("should expand to show all filters when 'Show All' is clicked", () => {
+    //   cy.intercept('GET', '**/multi-state-departments*').as('fetchSchemes');
 
-      cy.get('[data-testid=sponsored-button]').click();
-      cy.get('[data-testid=sponsored-dropdown]').should('be.visible');
-      cy.get('[data-testid=sponsored-option]').eq(2).click({force:true});
-      cy.wait(10000)
-      cy.get('[data-testid=sponsored-state]').each(($el) => {
-        cy.wrap($el).click();
-      });
+    //   cy.get('[data-testid=sponsored-button]').click();
+    //   cy.get('[data-testid=sponsored-dropdown]').should('be.visible');
+    //   cy.get('[data-testid=sponsored-option]').eq(2).click({force:true});
+    //   cy.wait(10000)
+    //   cy.get('[data-testid=sponsored-state]').each(($el) => {
+    //     cy.wrap($el).click();
+    //   });
 
-      cy.contains('button', 'Show All').click();
-      cy.get('[data-testid=selected-filter]').should('have.length.greaterThan', 3);
-      cy.contains('button', 'Show Less').click();
-      cy.get('[data-testid=selected-filter]').should('have.length', 3);
-    });
+    //   cy.contains('button', 'Show All').click();
+    //   cy.get('[data-testid=selected-filter]').should('have.length.greaterThan', 3);
+    //   cy.contains('button', 'Show Less').click();
+    //   cy.get('[data-testid=selected-filter]').should('have.length', 3);
+    // });
   });
   

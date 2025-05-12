@@ -150,7 +150,10 @@ const ProfileModal = ({ onClose }) => {
   }, [authState.token]);
 
 useEffect(() => {
-    const filledFields = Object.values(profileData).filter((value) =>typeof value === 'string' && value.trim() !== "").length;
+  const filledFields = Object.values(profileData).filter((value) => {
+    return (typeof value === 'string' && value.trim() !== "") || (typeof value === 'number' && !isNaN(value));
+  }).length;
+  
     console.log(profileData, "profileData")
 
     const percentage = Math.round((filledFields / fieldsCount) * 100);
@@ -176,24 +179,54 @@ useEffect(() => {
     fetchProfileFields();
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = (e, field) => {
     const { name, value } = e.target;
-
+  
+    // Check if this field is an integer field
+    const isIntegerField = field?.type === "integer";
+  
+    let finalValue = value;
+  
+    if (isIntegerField) {
+      // Allow empty string or valid integers only
+      if (value === "") {
+        finalValue = "";
+      } else {
+        // Remove non-numeric chars and parse int
+        const numeric = value.replace(/[^0-9-]/g, "");
+        const parsed = parseInt(numeric, 10);
+        finalValue = isNaN(parsed) ? "" : parsed;
+  
+        if (field.min_value !== undefined) finalValue = Math.max(field.min_value, finalValue);
+        if (field.max_value !== undefined) finalValue = Math.min(field.max_value, finalValue);
+      }
+    }
+  
     setProfileData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: finalValue,
     }));
   };
+  
 
 
   const handleSave = async () => {
     if (authState.token) {
+      fields.forEach(field => {
+        console.log("Field name:", field.name);
+        console.log("Converted key:", field.name.toLowerCase().replace(" ", "_"));
+        console.log("Value in profileData:", profileData[field.name.toLowerCase().replace(" ", "_")]);
+      });
+      
       const dynamicFields = fields.reduce((acc, field) => {
         const key = field.name;
         const value = profileData[key.toLowerCase().replace(" ", "_")];
-        if (value) acc[key] = value;
+        acc[key] = value;
         return acc;
       }, {});
+
+      console.log(dynamicFields,"dynamicFields")
+      console.log(fields)
   
       const requestOptions = {
         method: "PUT",
@@ -208,6 +241,8 @@ useEffect(() => {
       };
   
       try {
+        console.log("Final profileData before saving:", profileData);
+        console.log(dynamicFields,"dynamicFields")
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/profile/`,
           requestOptions
@@ -274,31 +309,7 @@ useEffect(() => {
               className="w-full h-[44px] border border-gray-300 p-2 rounded-lg text-sm font-semibold text-[#757575]"
               placeholder={field.placeholder || `Enter your ${field.name}`}
               value={profileData[field.name.toLowerCase().replace(" ", "_")] ?? ""}
-              onChange={(e) => {
-                let rawValue = e.target.value;
-
-                // Remove non-numeric characters (except "-" for negative numbers)
-                rawValue = rawValue.replace(/[^0-9-]/g, "");
-
-                // Prevent multiple "-" signs or "-" in the wrong place
-                if (rawValue.includes("-") && rawValue.indexOf("-") !== 0) {
-                  rawValue = rawValue.replace("-", "");
-                }
-
-                // Convert to number (ignores empty or invalid values)
-                let value = rawValue === "-" ? rawValue : Number.parseInt(rawValue, 10);
-
-                // Prevent NaN (invalid number)
-                if (isNaN(value)) {
-                  value = "";
-                }
-
-                // Apply min/max limits
-                if (value !== "" && field.min_value !== undefined) value = Math.max(field.min_value, value);
-                if (value !== "" && field.max_value !== undefined) value = Math.min(field.max_value, value);
-
-                handleChange({ target: { name: e.target.name, value } }, field);
-              }}
+              onChange={(e)=>handleChange(e,field)}
             />
           </div>
         );
@@ -456,7 +467,7 @@ useEffect(() => {
                   className="w-full h-[44px] border border-gray-300 p-2 rounded-lg  text-sm font-semibold text-[#757575]"
                   placeholder="Enter your name"
                   value={profileData.name}
-                  onChange={handleChange}
+                  onChange={(e)=>handleChange(e)}
                 />
               </div>
               <div className="gap-4 w-full ">
@@ -469,7 +480,7 @@ useEffect(() => {
                       type="text"
                       className="w-full h-[44px] border border-gray-300 p-2 rounded-lg  text-sm font-semibold text-[#757575] px-[2rem]"
                       value={emailData?.email || ""}
-                      onChange={handleChange}
+                      onChange={(e)=>handleChange(e)}
                       readOnly
                     />
                     {emailData?.is_email_verified ? (

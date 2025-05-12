@@ -8,6 +8,18 @@ export const PrivacyProvider = ({ children }) => {
   const [infoSharing, setInfoSharing] = useState(true);
 
 
+  useEffect(() => {
+    const storedPrefs = localStorage.getItem("privacyPreferences");
+    if (!storedPrefs) {
+      const defaultPrefs = {
+        cookiesConsent: true,
+        infoUsage: true,
+        infoSharing: true,
+      };
+      localStorage.setItem("privacyPreferences", JSON.stringify(defaultPrefs));
+    }
+  }, []);
+
   const handleSubmitChoices = () => {
     try {
       localStorage.setItem('privacyPreferences', JSON.stringify({

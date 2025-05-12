@@ -122,12 +122,12 @@ const CreateAcc01 = () => {
         localStorage.setItem("token", result.access);
         login(result.access, user);
 
-        // Show success message and redirect
-        setShowSuccess(true);
-        setTimeout(() => {
-          setShowSuccess(false);
-          router.replace("/my-preference");          
-        }, 1500);
+            // Show success message and redirect
+            setShowSuccess(true);
+            setTimeout(() => {
+              setShowSuccess(false);
+              router.replace("/my-preference");          
+            }, 1500);
 
         const prefs = JSON.parse(localStorage.getItem("privacyPreferences") || "{}");
 

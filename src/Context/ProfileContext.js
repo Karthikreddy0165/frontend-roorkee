@@ -5,10 +5,10 @@ const ProfileContext = createContext();
 
 export const ProfileProvider = ({ children }) => {
   const { authState } = useAuth();
-  const [profileData, setProfileData] = useState();
-
+  const [profileData, setProfileData] = useState({});  // Initialize as an empty object
   const [loading, setLoading] = useState(true);
 
+  // Fetch dynamic fields (profile fields) for the profile
   useEffect(() => {
     const fetchProfileFields = async () => {
       try {
@@ -17,19 +17,22 @@ export const ProfileProvider = ({ children }) => {
           throw new Error(`Failed to fetch fields: ${response.statusText}`);
         }
         const data = await response.json();
-        const fields = Object.fromEntries(data.profile_fields.map(it=>[it.name.toLowerCase(),'']))
-        fields.name = ''
-        fields.email = ''
+        const fields = Object.fromEntries(
+          data.profile_fields.map(it => [it.name.toLowerCase(), ''])
+        );
+        fields.name = '';
+        fields.email = '';  // We'll update this later
         setProfileData(fields);
-        console.log("I am profile fields", fields)
+        console.log("Profile fields:", fields);
       } catch (error) {
-        console.error("Failed to fetch profile fields", error);
+        console.error("Failed to fetch profile fields:", error);
       }
     };
 
     fetchProfileFields();
   }, []);
 
+  // Fetch profile data including dynamic fields and email verification status
   useEffect(() => {
     const fetchProfileData = async () => {
       if (authState.token) {
@@ -51,9 +54,12 @@ export const ProfileProvider = ({ children }) => {
           if (!response.ok) throw new Error("Failed to fetch profile data");
 
           const pData = await response.json();
+
+          // Update profile data with fetched data and add email verification status
           setProfileData((prevData) => ({
             ...prevData,
             name: pData.name || "",
+            email: pData.email || "",
             ...Object.entries(pData.dynamic_fields || {}).reduce((acc, [key, value]) => {
               acc[key.toLowerCase().replace(" ", "_")] = value;
               return acc;
@@ -70,12 +76,6 @@ export const ProfileProvider = ({ children }) => {
     fetchProfileData();
   }, [authState.token]);
 
-  const getLocalPrivacyPreferences = () => {
-    const prefs = localStorage.getItem("privacyPreferences");
-    if (!prefs) return null;
-    return JSON.parse(prefs);
-  };
-  
   return (
     <ProfileContext.Provider value={{ profileData, setProfileData, loading }}>
       {children}
